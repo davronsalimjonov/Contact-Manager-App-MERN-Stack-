@@ -1,0 +1,32 @@
+:root {
+  font-family: Raleway, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --main-color: #F5F8FE;
+  --blue-gray-color: #0F172A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: inherit;
+}
+
+body {
+  display: flex;
+  place-items: center;
+  min-height: 100vh;
+  background-color: var(--main-color);
+  color: var(--blue-gray-color);
+}
+
+
+button {
+  border: none;
+  background-color: transparent;
+}
