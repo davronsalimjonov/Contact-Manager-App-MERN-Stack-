@@ -1,10 +1,15 @@
+@import url('../public/fonts/fonts.css');
+
 :root {
   font-family: Raleway, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
+  --base-white-color: #fff;
   --main-color: #F5F8FE;
   --blue-gray-color: #0F172A;
+  --blue-300-color: #F3F7FD;
+  --blue-gray-600-color: #475569;
 }
 
 * {
@@ -18,8 +23,7 @@ a {
 }
 
 body {
-  display: flex;
-  place-items: center;
+  width: 100%;
   min-height: 100vh;
   background-color: var(--main-color);
   color: var(--blue-gray-color);
