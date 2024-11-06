@@ -2,9 +2,9 @@ import cls from './Navbar.module.scss';
 
 const Navbar = () => {
     return (
-        <div>
+        <nav className={cls.navbar}>
             
-        </div>
+        </nav>
     );
 }
 

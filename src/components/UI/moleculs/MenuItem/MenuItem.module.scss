@@ -1,7 +1,7 @@
 .item {
     display: flex;
     align-items: center;
-    gap: 12px;
+    cursor: pointer;
 
     &__icon {
         width: 40px;
@@ -12,12 +12,34 @@
         justify-content: center;
         background-color: var(--blue-300-color);
         border-radius: 8px;
+        flex-shrink: 0;
+
+        & > svg{
+            transition: all 0.3s;
+
+            & > path{
+                fill: var(--blue-gray-600-color);
+            }
+        }
     }
 
     &__label {
+        margin-left: 12px;
         color: var(--blue-gray-600-color);
         font-size: 16px;
         font-weight: 600;
         line-height: 24px;
+        transform-origin: left;
+        white-space: nowrap;
+        transition: all 0.3s;
+    }
+}
+
+.close{
+    .item{
+        &__label{
+            margin-left: 0;
+            transform: scaleX(0);
+        }
     }
 }

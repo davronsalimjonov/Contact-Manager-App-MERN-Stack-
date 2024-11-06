@@ -1,0 +1,14 @@
+
+.btn{
+    & > span{
+        color: var(--blue-color);
+    }
+}
+
+.rotate{
+    & > div{
+        & > svg{
+            transform: rotate(180deg);
+        }
+    }
+}

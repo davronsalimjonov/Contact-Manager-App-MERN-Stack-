@@ -1,0 +1,13 @@
+.active {
+    &>div {
+        &>div {
+            & path {
+                fill: var(--blue-color);
+            }
+        }
+
+        & > span{
+            color: var(--blue-color);
+        }
+    }
+}

@@ -1,5 +1,4 @@
-
-.sidebar{
+.sidebar {
     max-width: 268px;
     width: 100%;
     height: 100%;
@@ -7,5 +6,48 @@
     padding: 16px;
     display: flex;
     flex-direction: column;
-    
+    align-items: flex-start;
+    transition: all 0.3s;
+
+    &__menuBtn {
+        margin-top: 42px;
+    }
+
+    &__links {
+        margin-top: 32px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__bottomList {
+        margin-top: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    & > a{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & path{
+            transition: all 0.3s;
+        }
+    }
+}
+
+.close {
+    max-width: 72px;
+    overflow: hidden;
+}
+
+.closeLogo {
+    transform: scale(0.87);
+
+    &>g>path:nth-child(n+5) {
+        transform: scale(0.9);
+        opacity: 0;
+    }
 }

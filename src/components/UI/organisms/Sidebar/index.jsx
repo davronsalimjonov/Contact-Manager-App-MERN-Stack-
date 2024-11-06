@@ -1,15 +1,52 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MyTeacherLogo } from '../../atoms/icons';
+import { cn } from '@/utils/lib';
+import { links } from './data';
+import MenuButton from '../../moleculs/MenuButton';
+import SidebarLink from '../../moleculs/SidebarLink';
+import LogoutButton from '../../moleculs/LogoutButton';
+import LanguageButton from '../../moleculs/LanguageButton';
+import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
 import cls from './Sidebar.module.scss';
-import MenuItem from '../../moleculs/MenuItem';
 
 const Sidebar = () => {
+    const [isOpen, setIsOpen] = useState()
+
     return (
-        <aside className={cls.sidebar}>
+        <aside className={cn(cls.sidebar, !isOpen && cls.close)}>
             <Link to='/'>
-                <MyTeacherLogo />
+                <MyTeacherLogo className={!isOpen && cls.closeLogo} />
             </Link>
-            <MenuItem />
+            <MenuButton
+                className={cls.sidebar__menuBtn}
+                onClick={() => setIsOpen(state => !state)}
+                isOpen={isOpen}
+            />
+            <div className={cls.sidebar__links}>
+                {links.length > 0 && links.map(link => (
+                    <SidebarLink
+                        key={link.id}
+                        label={link.label}
+                        icon={link.icon}
+                        to={link.link}
+                        isOpen={isOpen}
+                    />
+                ))}
+            </div>
+            <div className={cls.sidebar__bottomList}>
+                <LanguageButton
+                    isOpen={isOpen}
+                />
+                <SidebarLink
+                    to='/settings'
+                    label='Sozlamalar'
+                    icon={<SettingsIcon />}
+                    isOpen={isOpen}
+                />
+                <LogoutButton
+                    isOpen={isOpen}
+                />
+            </div>
         </aside>
     );
 }

@@ -9,13 +9,13 @@ const router = createBrowserRouter([
             {
                 path: '',
                 element: <></>
+            },
+            {
+                path: '*',
+                element: <></>,
             }
         ]
     },
-    {
-        path: '*',
-        element: <></>,
-    }
 ])
 
 const Routers = () => {
