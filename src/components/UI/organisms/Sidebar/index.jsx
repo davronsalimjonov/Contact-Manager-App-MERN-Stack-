@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/utils/lib';
+import usePersistentState from '@/hooks/usePersistentState';
 import { links } from './data';
 import MenuButton from '../../moleculs/MenuButton';
 import SidebarLink from '../../moleculs/SidebarLink';
@@ -10,7 +10,7 @@ import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
 import cls from './Sidebar.module.scss';
 
 const Sidebar = () => {
-    const [isOpen, setIsOpen] = useState()
+    const [isOpen, setIsOpen] = usePersistentState(true)
 
     return (
         <aside className={cn(cls.sidebar, !isOpen && cls.close)}>
