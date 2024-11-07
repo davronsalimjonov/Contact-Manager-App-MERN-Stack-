@@ -1,0 +1,19 @@
+.table {
+    max-height: 680px;
+    overflow-y: auto;
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    grid-template-columns: 
+        minmax(44px, 44px)
+        minmax(150px, 1.6fr)
+        minmax(150px, 1fr)
+        minmax(150px, 1fr)
+        minmax(150px, 1fr)
+        minmax(150px, 1fr)
+        minmax(50px, 50px);
+
+    & tbody{
+      display: contents;
+    }
+}

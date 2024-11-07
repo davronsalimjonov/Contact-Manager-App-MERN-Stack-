@@ -3,9 +3,10 @@ import cls from './Tabs.module.scss';
 import TabButton from '../../atoms/TabButton';
 
 const Tabs = ({
-    options = []
+    options = [],
+    defaultValue,
 }) => {
-    const [activeTab, setActiveTab] = useState()
+    const [activeTab, setActiveTab] = useState(defaultValue || options?.[0]?.value)
 
     return (
         <div className={cls.tabs}>

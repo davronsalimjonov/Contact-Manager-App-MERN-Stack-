@@ -9,7 +9,9 @@ const options = [
     { value: 'Unit 4', label: 'Unit 4' },
 ]
 
-const Select = () => {
+const Select = ({
+    placeholder = ''
+}) => {
     return (
         <ReactSelect
             components={{
@@ -17,6 +19,7 @@ const Select = () => {
             }}
             className={cls.select}
             options={options}
+            placeholder={placeholder}
         />
     );
 }

@@ -1,0 +1,19 @@
+.row {
+    display: contents;
+    
+    &>td {
+        display: flex;
+        
+        padding: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: left;
+        
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        background-color: var(--base-white-color);
+        border-bottom: 1px solid var(--dark-gray-300-color);
+    }
+}

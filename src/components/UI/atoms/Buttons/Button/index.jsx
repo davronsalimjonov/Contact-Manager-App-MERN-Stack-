@@ -1,8 +1,12 @@
+import { cn } from '@/utils/lib';
 import cls from './Button.module.scss';
 
-const Button = ({ children }) => {
+const Button = ({ 
+    children,
+    className = '' 
+}) => {
     return (
-        <button className={cls.btn}>
+        <button className={cn(cls.btn, className)}>
             {children}
         </button>
     );

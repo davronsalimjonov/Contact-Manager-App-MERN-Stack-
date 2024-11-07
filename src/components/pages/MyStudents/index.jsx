@@ -1,8 +1,7 @@
 import Tabs from '@/components/UI/moleculs/Tabs';
+import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
 import cls from './MyStudents.module.scss';
-import Select from '@/components/UI/atoms/Form/Select';
-import DatePicker from '@/components/UI/atoms/Form/DatePicker';
-import Button from '@/components/UI/atoms/Buttons/Button';
+import StudentsTable from '@/components/UI/organisms/StudentsTable';
 
 const MyStudents = () => {
     const tabOptions = [
@@ -14,12 +13,11 @@ const MyStudents = () => {
         { value: 'c1', label: 'C1' },
     ]
     return (
-        <>
-        <Tabs options={tabOptions} />
-        <Select />
-        <DatePicker />
-        <Button>Guruh qo’shish</Button>
-        </>
+        <div className={cls.page}>
+            <Tabs options={tabOptions} />
+            <StudentsSearchBar />
+            <StudentsTable />
+        </div>
     );
 }
 
