@@ -1,0 +1,19 @@
+.MainCardHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & > p {
+        color: #475569;
+        font-family: 'Raleway';
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    & > h1 {
+        color: #0F172A;
+        font-weight: 700;
+        font-size: 28px;
+        font-family: 'Raleway';
+    }
+}

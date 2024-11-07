@@ -31,5 +31,4 @@ export const links = [
         label: 'Workspace',
         icon: MenuBookIcon()
     },
-
 ]

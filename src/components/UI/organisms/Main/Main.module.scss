@@ -1,0 +1,13 @@
+.Main {
+    margin: 25px;
+}
+
+.MainCard {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2%;
+
+    & > div {
+        width: 25%;
+    }
+}

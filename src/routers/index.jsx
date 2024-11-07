@@ -1,4 +1,5 @@
 import MainLayout from "@/components/templates/MainLayout";
+import Main from "@/components/UI/organisms/Main";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -8,7 +9,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <></>
+                element: <Main />
             },
             {
                 path: '*',
