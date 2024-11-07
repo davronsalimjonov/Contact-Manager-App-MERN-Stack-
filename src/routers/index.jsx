@@ -1,3 +1,4 @@
+import MyStudents from "@/components/pages/MyStudents";
 import MainLayout from "@/components/templates/MainLayout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -8,7 +9,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <></>
+                element: <MyStudents />
             },
             {
                 path: '*',
