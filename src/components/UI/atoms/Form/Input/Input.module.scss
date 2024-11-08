@@ -1,0 +1,19 @@
+
+.input{
+    padding: 10px 16px;
+    background-color: var(--base-white-color);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--black-color);
+    border-radius: 4px;
+    border: 1px solid transparent;
+
+    &::placeholder{
+       color: #A2A0B3;
+       font-family: Raleway;
+    }
+
+    &:focus{
+        border-color: var(--blue-color);
+    }
+}
