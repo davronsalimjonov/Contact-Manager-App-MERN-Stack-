@@ -34,10 +34,10 @@ const TableActionButton = () => {
             {isOpen && (
                 <div
                     ref={setPopperElement}
-                    style={{...styles.popper, zIndex: 1}}
+                    style={{ ...styles.popper, zIndex: 1 }}
                     {...attributes.popper}
                 >
-                    <DropdownMenu />
+                    <DropdownMenu items={[{ label: 'O’quvchi ma’lumotlari' }, { label: 'Transfer student' }]} />
                 </div>
             )}
         </div>
