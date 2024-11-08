@@ -157,3 +157,9 @@ input:focus {
 .react-datepicker__navigation-icon::before {
   border-color: #333;
 }
+
+[data-popper-reference-hidden="true"] {
+  visibility: hidden;
+  pointer-events: none;
+  display: none;
+}

@@ -1,7 +1,7 @@
 import Tabs from '@/components/UI/moleculs/Tabs';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
 import cls from './MyStudents.module.scss';
-import StudentsTable from '@/components/UI/organisms/StudentsTable';
+import StudentsTable from '@/components/templates/StudentsTable';
 
 const MyStudents = () => {
     const tabOptions = [
