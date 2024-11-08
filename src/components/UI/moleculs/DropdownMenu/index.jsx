@@ -1,12 +1,24 @@
-import DropdownMenuItem from '../../atoms/DropdownMenuItem';
 import cls from './DropdownMenu.module.scss';
 
-const DropdownMenu = () => {
+const DropdownMenu = ({
+    items = []
+}) => {
     return (
-        <div className={cls.menu}>
-            <button className={cls.menu__item}>O’quvchi ma’lumotlari</button>
-            <button className={cls.menu__item}>Transfer student</button>
-        </div>
+        items?.length > 0 && (
+            <div className={cls.menu}>
+                {
+                    items?.map((item, index) => (
+                        <button
+                            key={index}
+                            className={cls.menu__item}
+                            onClick={item?.onClick}
+                        >
+                            {item?.label}
+                        </button>
+                    ))
+                }
+            </div>
+        )
     );
 }
 
