@@ -15,7 +15,7 @@ const Sidebar = () => {
     return (
         <aside className={cn(cls.sidebar, !isOpen && cls.close)}>
             <Link to='/'>
-                <MyTeacherLogo className={!isOpen && cls.closeLogo} />
+                <MyTeacherLogo className={cn(!isOpen && cls.closeLogo)} />
             </Link>
             <MenuButton
                 className={cls.sidebar__menuBtn}

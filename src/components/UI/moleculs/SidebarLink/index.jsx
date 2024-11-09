@@ -9,7 +9,7 @@ const SidebarLink = ({
     isOpen = false
 }) => {
     return (
-        <NavLink to={to} className={({isActive}) => isActive && cls.active}>
+        <NavLink to={to} className={({isActive}) => isActive ? cls.active : ''}>
             <MenuItem 
                 className={''}
                 label={label}

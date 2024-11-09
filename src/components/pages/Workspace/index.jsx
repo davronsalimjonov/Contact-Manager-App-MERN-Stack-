@@ -1,10 +1,8 @@
-import WorkspaceColumn from "@/components/UI/organisms/WorkspaceColumn";
+import WorkspaceTable from "@/components/templates/WorkspaceTable";
 
 const Workspace = () => {
     return (
-        <div>
-            <WorkspaceColumn />
-        </div>
+        <WorkspaceTable />
     );
 }
 
