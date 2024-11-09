@@ -4,6 +4,7 @@ import { cardItems, pieChartData } from './data'
 import cls from './Main.module.scss'
 import PieChartCards from '../../moleculs/PieChartCards'
 import LineChartCard from '../../moleculs/LineChartCard'
+import NotFound from '../../moleculs/NotFound'
 
 const Main = () => {
   return (

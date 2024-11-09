@@ -30,6 +30,10 @@ body {
   color: var(--blue-gray-color);
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 
 button {
   border: none;
