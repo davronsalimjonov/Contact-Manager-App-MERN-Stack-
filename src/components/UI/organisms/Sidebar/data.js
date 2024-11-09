@@ -31,4 +31,9 @@ export const links = [
         label: 'Workspace',
         icon: MenuBookIcon()
     },
+    {
+        id: 5,
+        link: '/settings',
+        lable: 'Settings',
+    }
 ]

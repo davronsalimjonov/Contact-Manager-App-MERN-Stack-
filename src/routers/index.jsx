@@ -1,5 +1,6 @@
 import MainLayout from "@/components/templates/MainLayout";
 import Main from "@/components/UI/organisms/Main";
+import Settings from "@/components/UI/organisms/Settings";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -12,8 +13,8 @@ const router = createBrowserRouter([
                 element: <Main />
             },
             {
-                path: '*',
-                element: <></>,
+                path: '/settings',
+                element: <Settings />,
             }
         ]
     },
