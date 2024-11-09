@@ -83,6 +83,6 @@ export const lineChartData = {
     August: Array(31).fill().map(() => Math.floor(Math.random() * 100)),
     September: Array(30).fill().map(() => Math.floor(Math.random() * 100)),
     October: Array(31).fill().map(() => Math.floor(Math.random() * 100)),
-    November: Array(30).fill().map(() => Math.floor(Math.random() * 100)),
+    November: [0, 69, 17, 32, 20, 41, 11, 57, 52, 92, 42],
     December: Array(31).fill().map(() => Math.floor(Math.random() * 100)),
 }

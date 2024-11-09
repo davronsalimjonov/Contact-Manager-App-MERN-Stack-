@@ -1,0 +1,16 @@
+.tab {
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--dark-grey-700-color);
+    border-bottom: 1px solid #CED2D8;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.active{
+    border-bottom-color: var(--blue-color);
+    font-weight: 600;
+    color: var(--blue-color);
+}

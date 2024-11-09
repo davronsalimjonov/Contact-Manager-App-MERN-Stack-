@@ -59,26 +59,40 @@ function LineChart() {
 
     const options = {
         responsive: true,
-        plugins: {
-            legend: {
-                display: false,
-                position: 'top',
-            },
-        },
+        maintainAspectRatio: false,
         scales: {
             x: {
+                grid: {
+                    display: true,
+                    color: "rgba(0, 0, 0, 0.1)",
+                },
                 title: {
-                    display: false,
-                    text: 'Days',
+                    display: true,
+                    text: "Days",
                 },
             },
             y: {
+                min: 0,
+                max: 100,
+                grid: {
+                    display: true,
+                    color: "rgba(0, 0, 0, 0.1)",
+                },
                 title: {
-                    display: false,
-                    text: 'Values',
+                    display: true,
+                    text: "Value",
                 },
             },
         },
+        plugins: {
+            legend: {
+                display: true,
+                position: "bottom",
+            },
+            tooltip: {
+                enabled: true,
+            },
+        },    
     };
 
     return (

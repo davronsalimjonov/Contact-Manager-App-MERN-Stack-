@@ -8,6 +8,9 @@ export default defineConfig({
   server: {
     host: true
   },
+  optimizeDeps: {
+    exclude: ['js-big-decimal']
+  },
   resolve: {
     alias: [
       {
