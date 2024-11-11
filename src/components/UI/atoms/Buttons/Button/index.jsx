@@ -3,10 +3,20 @@ import cls from './Button.module.scss';
 
 const Button = ({ 
     children,
-    className = '' 
+    className = '',
+    onClick,
+    disabled,
+    type = 'button',
+    ...otherProps
 }) => {
     return (
-        <button className={cn(cls.btn, className)}>
+        <button 
+            type={type}
+            className={cn(cls.btn, className)}
+            onClick={onClick}
+            disabled={disabled}
+            {...otherProps}
+        >
             {children}
         </button>
     );

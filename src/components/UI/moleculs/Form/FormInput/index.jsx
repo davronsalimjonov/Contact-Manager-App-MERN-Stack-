@@ -2,17 +2,29 @@ import Input from '../../../atoms/Form/Input';
 import FormElementWrapper from '../FormElementWrapper';
 
 const FormInput = ({
-    label = '',
     type = 'text',
+    label = '',
+    value,
+    onChange,
+    readOnly,
+    disabled,
     placeholder,
-    onChange
+    defaultValue,
+    register = {},
+    ...otherProps
 }) => {
     return (
         <FormElementWrapper label={label}>
             <Input
                 type={type}
-                placeholder={placeholder}
+                value={value}
                 onChange={onChange}
+                readOnly={readOnly}
+                disabled={disabled}
+                placeholder={placeholder}
+                defaultValue={defaultValue}
+                register={register}
+                {...otherProps}
             />
         </FormElementWrapper>
     );
