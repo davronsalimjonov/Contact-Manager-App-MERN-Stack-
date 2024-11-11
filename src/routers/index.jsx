@@ -1,5 +1,4 @@
 import MyStudents from "@/components/pages/MyStudents";
-import Settings from "@/components/pages/Settings";
 import SingleStudent from "@/components/pages/SingleStudent";
 import Workspace from "@/components/pages/Workspace";
 import MainLayout from "@/components/templates/MainLayout";
