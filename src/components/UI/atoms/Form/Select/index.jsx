@@ -10,7 +10,9 @@ const options = [
 ]
 
 const Select = ({
-    placeholder = ''
+    placeholder = '',
+    onChange,
+    ...otherProps
 }) => {
     return (
         <ReactSelect
@@ -20,6 +22,8 @@ const Select = ({
             className={cls.select}
             options={options}
             placeholder={placeholder}
+            onChange={onChange}
+            {...otherProps}
         />
     );
 }

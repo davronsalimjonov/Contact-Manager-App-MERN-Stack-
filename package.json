@@ -19,6 +19,8 @@
     "react-beautiful-dnd": "^13.1.1",
     "react-datepicker": "^7.5.0",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.2",
+    "react-input-mask": "^2.0.4",
     "react-paginate": "^8.2.0",
     "react-popper": "^2.3.0",
     "react-query": "^3.39.3",

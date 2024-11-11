@@ -1,4 +1,6 @@
 import MyStudents from "@/components/pages/MyStudents";
+import Settings from "@/components/pages/Settings";
+import SingleStudent from "@/components/pages/SingleStudent";
 import Workspace from "@/components/pages/Workspace";
 import MainLayout from "@/components/templates/MainLayout";
 import NotFound from "@/components/UI/moleculs/NotFound";
@@ -28,8 +30,16 @@ const router = createBrowserRouter([
                 element: <MyStudents />
             },
             {
+                path: '/students/:studentId',
+                element: <SingleStudent />
+            },
+            {
                 path: '/workspace',
                 element: <Workspace />
+            },
+            {   
+                path: '/settings',
+                element: <Settings />
             },
             {
                 path: '/settings',
