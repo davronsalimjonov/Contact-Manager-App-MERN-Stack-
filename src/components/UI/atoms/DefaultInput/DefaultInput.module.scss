@@ -1,0 +1,19 @@
+.DefaultInput {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+    & > label {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    & > input {
+        background-color: #F6F9FD;
+        border: none;
+        color: #A2A0B3;
+        outline: none;
+        padding: 10px 16px;
+        border-radius: 4px;
+    }
+}

@@ -1,7 +1,10 @@
 import React from 'react'
 import MainMenuCard from '../../moleculs/MainMenuCard'
-import { cardItems } from './data'
+import { cardItems, pieChartData } from './data'
 import cls from './Main.module.scss'
+import PieChartCards from '../../moleculs/PieChartCards'
+import LineChartCard from '../../moleculs/LineChartCard'
+import NotFound from '../../moleculs/NotFound'
 
 const Main = () => {
   return (
@@ -19,6 +22,24 @@ const Main = () => {
                     />
                 </div>
             ))}
+        </div>
+        <div className={cls.pieChartCards}>
+            {pieChartData.map((item) => (
+                <div className={cls.pieChartCard} key={`pieChartCard-${item?.id}`}>
+                    <PieChartCards
+                        id={item?.id}
+                        title={item?.title}
+                        labels={item?.labels}
+                        values={item?.values}
+                        colors={item?.chartColors}
+                        background={item?.background}
+                        borders={item?.borders}
+                    />
+                </div>
+            ))}
+        </div>
+        <div>
+            <LineChartCard />
         </div>
     </div>
   )

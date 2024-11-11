@@ -1,5 +1,6 @@
 .Main {
-    margin: 25px;
+    margin:     25px;
+    padding-bottom: 25px;
 }
 
 .MainCard {
@@ -10,4 +11,18 @@
     & > div {
         width: 25%;
     }
+}
+
+.pieChartCards {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.pieChartCard {
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.05);
+    width: 50%;
+    border-radius: 12px;
+    padding: 20px;
 }
