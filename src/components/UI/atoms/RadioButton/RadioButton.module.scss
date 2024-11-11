@@ -1,0 +1,17 @@
+.radio {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--blue-color);
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background-color: var(--blue-200-color);
+
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 4px;
+}

@@ -6,10 +6,13 @@
   --blue-color: #1256DB;
   --blue-gray-color: #0F172A;
   --blue-300-color: #F3F7FD;
+  --blue-200-color: #F6F9FD;
   --blue-gray-600-color: #475569;
   --dark-gray-700-color: #6D7789;
   --dark-gray-300-color: #F3F4F5;
   --dark-gray-200-color: #FAFAFA;
+
+  --red-color: #FF0000;
 }
 
 * {
@@ -61,6 +64,10 @@ input:focus {
   outline: none;
 }
 
+img{
+  object-fit: cover;
+}
+
 /* Container and header styles */
 .react-datepicker-popper > svg{
   display: none;
@@ -70,6 +77,7 @@ input:focus {
   border: none;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #2828281A;
   padding: 1rem;
 }
 
@@ -105,10 +113,15 @@ input:focus {
   margin: 0;
 }
 
+.react-datepicker__day--selected{
+  background-color: #1256DB !important;
+  border-radius: 10px !important;
+}
+
 .react-datepicker__day--selected,
 .react-datepicker__day--keyboard-selected {
   background-color: #0064e6;
-  color: #fff;
+  color: #fff !important;
   border-radius: 10px;
 }
 

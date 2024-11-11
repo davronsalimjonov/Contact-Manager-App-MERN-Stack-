@@ -11,10 +11,13 @@ const DatePicker = () => {
         <ReactDatePicker 
             showIcon
             selected={date}
+            wrapperClassName={cls.wrapper}
             className={cls.datepicker}
             icon={<CalendarIcon />}
             onChange={setDate}
             locale={'ru'}
+            dateFormat={'dd.MM.YYYY'}
+            shouldCloseOnSelect={true}
         />
     );
 }
