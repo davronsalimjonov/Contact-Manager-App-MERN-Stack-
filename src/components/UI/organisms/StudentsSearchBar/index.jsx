@@ -15,6 +15,7 @@ const StudentsSearchBar = () => {
             />
             <form className={cls.bar__form}>
                 <Input
+                    className={cls.bar__form__input}
                     placeholder='Status ID'
                 />
                 <Button className={cls.bar__form__btn}>Qidirish <SearchIcon /></Button>

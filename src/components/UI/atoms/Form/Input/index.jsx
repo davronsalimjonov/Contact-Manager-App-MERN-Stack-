@@ -7,6 +7,8 @@ const Input = forwardRef(({
     className = '',
     placeholder = '',
     value,
+    readOnly,
+    disabled,
     onChange,
     defaultValue,
     register = {},
@@ -21,6 +23,8 @@ const Input = forwardRef(({
             placeholder={placeholder}
             defaultValue={defaultValue}
             onChange={onChange}
+            disabled={disabled}
+            readOnly={readOnly}
             {...otherProps}
             {...register}
         />
