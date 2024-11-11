@@ -18,13 +18,12 @@ import cls from './StudentInformationForm.module.scss';
 const StudentInformationForm = () => {
     const navigate = useNavigate()
     const [isEditable, setIsEditable] = useState(false)
-    const { register, watch, control, reset, handleSubmit, formState: { isValid, isDirty, errors } } = useForm({
-        mode: 'onChange',
+    const { register, watch, control, reset, handleSubmit, setValue, formState: { isDirty, errors } } = useForm({
+        mode: 'onSubmit',
         resolver: yupResolver(studentInfoSchema)
     })
     console.log(watch());
-    console.log(errors);
-    
+
     return (
         <form className={cls.form} onSubmit={handleSubmit(console.log)}>
             <div className={cls.form__header}>
@@ -35,7 +34,10 @@ const StudentInformationForm = () => {
                 >
                     <LeftArrowIcon />
                 </button>
-                <AvatarUpload />
+                <AvatarUpload
+                    disabled={!isEditable}
+                    onChange={file => setValue('avatar', file, { shouldDirty: true, shouldValidate: true })}
+                />
                 <button
                     type='button'
                     className={cn(cls.form__header__btn, isEditable && cls.form__header__btn__edit)}
@@ -48,14 +50,14 @@ const StudentInformationForm = () => {
                 <FormInput
                     label='Ismi'
                     placeholder='Ismi'
-                    readOnly={!isEditable}
+                    disabled={!isEditable}
                     register={{ ...register('firstName') }}
                     error={errors?.firstName?.message}
                 />
                 <FormInput
                     label='Familyasi'
                     placeholder='Familyasi'
-                    readOnly={!isEditable}
+                    disabled={!isEditable}
                     register={{ ...register('lastName') }}
                     error={errors?.lastName?.message}
                 />
@@ -63,19 +65,20 @@ const StudentInformationForm = () => {
                     name='phone'
                     placeholder='+998'
                     label='Telefon nomer'
-                    readOnly={!isEditable}
+                    disabled={!isEditable}
                     control={control}
                     error={errors?.phone?.message}
                 />
                 <FormDatepicker
+                    name='birthday'
                     label='Tug’ilgan sanasi'
                     placeholder='Tug’ilgan sanasi'
-                    readOnly={!isEditable}
-                // error={errors?.firstName?.message}
+                    disabled={!isEditable}
+                    control={control}
+                    error={errors?.birthday?.message}
                 />
                 <FormRadioGroup
                     label='Jinsi'
-                    // name='gender'
                     disabled={!isEditable}
                     options={GENDER_OPTIONS}
                     register={{ ...register('gender', { valueAsNumber: true }) }}
@@ -94,7 +97,7 @@ const StudentInformationForm = () => {
                 </Button>
                 <RedButton
                     disabled={!isDirty || !isEditable}
-                    onClick={() => reset()}
+                    onClick={() => reset({})}
                 >
                     Bekor qilish
                 </RedButton>

@@ -1,19 +1,37 @@
 import { useState } from 'react';
+import { cn } from '@/utils/lib';
 import { PlusIcon, TrashIcon, UserIcon } from '../../atoms/icons';
 import cls from './AvatarUpload.module.scss';
-import { cn } from '@/utils/lib';
 
-const AvatarUpload = () => {
-    const [selectedFile, setSelectedFile] = useState()
+const AvatarUpload = ({
+    defaultValue,
+    onChange,
+    onDelete,
+    disabled
+}) => {
+    const [src, setSrc] = useState(defaultValue)
+
+    const handleChange = (e) => {
+        const image = e.target.files?.[0]
+        setSrc(URL.createObjectURL(image))
+        typeof onChange === 'function' && onChange(image)
+    }
+
+    const handleDelete = () => {
+        setSrc(null)
+        typeof onChange === 'function' && onDelete()
+    }
 
     return (
         <div className={cls.wrapper}>
-            {selectedFile ? (
+            {src ? (
                 <div className={cls.avatar}>
-                    <img src={URL.createObjectURL(selectedFile)} alt="avatar" />
-                    <button 
+                    <img src={src} alt="avatar" />
+                    <button
+                        disabled={disabled}
+                        type='button'
                         className={cn(cls.badge, cls.badge__delete)}
-                        onClick={() => setSelectedFile(null)}
+                        onClick={handleDelete}
                     >
                         <TrashIcon />
                     </button>
@@ -22,9 +40,10 @@ const AvatarUpload = () => {
                 <label className={cls.upload}>
                     <UserIcon />
                     <input
+                        disabled={disabled}
                         type="file"
                         accept='image/png, image/jpeg, image/jpg'
-                        onChange={(e) => setSelectedFile(e.target.files?.[0])}
+                        onChange={handleChange}
                     />
                     <div className={cn(cls.badge, cls.badge__add)}>
                         <PlusIcon />

@@ -1,0 +1,45 @@
+.history {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+
+        &__title {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 23.48px;
+        }
+
+        &__date {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+
+            &__label {
+                font-size: 12px;
+                line-height: 14.09px;
+                color: var(--dark-gray-700-color);
+            }
+
+            &__value {
+                font-weight: 500;
+                line-height: 18.78px;
+            }
+        }
+    }
+
+    &__card{
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 24px;
+        background-color: var(--base-white-color);
+    }
+}

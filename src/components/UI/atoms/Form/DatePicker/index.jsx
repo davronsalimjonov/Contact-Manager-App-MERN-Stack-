@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import ReactDatePicker from 'react-datepicker'
+import { cn } from '@/utils/lib';
 import { CalendarIcon } from '../../icons';
 import cls from './DatePicker.module.scss';
 import 'react-datepicker/dist/react-datepicker.css'
-import { cn } from '@/utils/lib';
 
-const DatePicker = ({
+const DatePicker = forwardRef(({
     placeholder,
     className,
     onChange,
@@ -13,30 +13,31 @@ const DatePicker = ({
     readOnly,
     error,
     ...otherProps
-}) => {
+}, ref) => {
     const [date, setDate] = useState()
 
     const handleChange = (date) => { 
         setDate(date)
-        typeof onChange === 'function' && onChange(date)
+        typeof onChange === 'function' && onChange(new Date(date).toISOString())
     }
 
     return (
         <ReactDatePicker 
+            ref={ref}
             showIcon
             selected={date}
-            wrapperClassName={cls.wrapper}
-            className={cn(cls.datepicker, error && cls.error, className)}
+            wrapperClassName={cn(cls.wrapper, error && cls.error)}
+            className={cn(cls.datepicker, className)}
             icon={<CalendarIcon />}
             onChange={handleChange}
             dateFormat={'dd.MM.YYYY'}
             shouldCloseOnSelect={true}
-            placeholder={placeholder}
+            placeholderText={placeholder}
             disabled={disabled}
             readOnly={readOnly}
             {...otherProps}
         />
     );
-}
+})
 
 export default DatePicker;
