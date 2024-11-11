@@ -6,11 +6,12 @@ const FormRadioGroup = ({
     name = '',
     label = '',
     options = [],
+    register = {},
     disabled,
-    register = {}
+    error,
 }) => {
     return (
-        <FormElementWrapper label={label}>
+        <FormElementWrapper label={label} error={error}>
             {options?.length > 0 && (
                 <div className={cls.group}>
                     {options.map(option => (
@@ -22,6 +23,7 @@ const FormRadioGroup = ({
                             disabled={disabled}
                             register={register}
                             defaultChecked={option.defaultChecked}
+                            error={error}
                         />
                     ))}
                 </div>

@@ -9,10 +9,11 @@ const FormDatepicker = ({
     onChange,
     disabled,
     readOnly,
+    error,
     ...otherProps
 }) => {
     return (
-        <FormElementWrapper label={label}>
+        <FormElementWrapper label={label} error={error}>
             <div className={cls.datepicker}>
                 <DatePicker 
                     placeholder={placeholder}
@@ -20,6 +21,7 @@ const FormDatepicker = ({
                     disabled={disabled}
                     onChange={onChange}
                     readOnly={readOnly}
+                    error={error}
                     {...otherProps}
                 />
             </div>

@@ -12,12 +12,13 @@ const Input = forwardRef(({
     onChange,
     defaultValue,
     register = {},
+    error = '',
     ...otherProps
 }, ref) => {
     return (
         <input
             ref={ref}
-            className={cn(cls.input, className)}
+            className={cn(cls.input, error && cls.error, className)}
             type={type}
             value={value}
             placeholder={placeholder}

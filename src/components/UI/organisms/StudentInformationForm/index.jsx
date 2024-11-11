@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { cn } from '@/utils/lib';
 import { GENDER_OPTIONS } from '@/constants/form';
+import { studentInfoSchema } from '@/schemas/student';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
 import RedButton from '../../atoms/Buttons/RedButton';
@@ -16,11 +18,15 @@ import cls from './StudentInformationForm.module.scss';
 const StudentInformationForm = () => {
     const navigate = useNavigate()
     const [isEditable, setIsEditable] = useState(false)
-    const { register, watch, control, reset, formState: { isValid, isDirty } } = useForm()
+    const { register, watch, control, reset, handleSubmit, formState: { isValid, isDirty, errors } } = useForm({
+        mode: 'onChange',
+        resolver: yupResolver(studentInfoSchema)
+    })
     console.log(watch());
-
+    console.log(errors);
+    
     return (
-        <form className={cls.form}>
+        <form className={cls.form} onSubmit={handleSubmit(console.log)}>
             <div className={cls.form__header}>
                 <button
                     type='button'
@@ -44,31 +50,36 @@ const StudentInformationForm = () => {
                     placeholder='Ismi'
                     readOnly={!isEditable}
                     register={{ ...register('firstName') }}
+                    error={errors?.firstName?.message}
                 />
                 <FormInput
                     label='Familyasi'
                     placeholder='Familyasi'
                     readOnly={!isEditable}
                     register={{ ...register('lastName') }}
+                    error={errors?.lastName?.message}
                 />
                 <FormPhoneInput
-                    label='Telefon nomer'
-                    placeholder='+998'
                     name='phone'
+                    placeholder='+998'
+                    label='Telefon nomer'
                     readOnly={!isEditable}
                     control={control}
+                    error={errors?.phone?.message}
                 />
                 <FormDatepicker
                     label='Tug’ilgan sanasi'
                     placeholder='Tug’ilgan sanasi'
                     readOnly={!isEditable}
+                // error={errors?.firstName?.message}
                 />
                 <FormRadioGroup
                     label='Jinsi'
-                    name='gender'
+                    // name='gender'
                     disabled={!isEditable}
                     options={GENDER_OPTIONS}
                     register={{ ...register('gender', { valueAsNumber: true }) }}
+                    error={errors?.gender?.message}
                 />
                 <FormInput
                     label='Ro’yxatdan o’tgan sanasi'
@@ -77,7 +88,7 @@ const StudentInformationForm = () => {
                 />
                 <Button
                     type='submit'
-                    disabled={!isEditable || !isValid || !isDirty}
+                    disabled={!isEditable || !isDirty}
                 >
                     Tahrirlash
                 </Button>

@@ -19,7 +19,7 @@ const FormPhoneInput = ({
     ...otherProps
 }) => {
     return (
-        <FormElementWrapper label={label}>
+        <FormElementWrapper label={label} error={error}>
             {control ? (
                 <Controller
                     name={name}

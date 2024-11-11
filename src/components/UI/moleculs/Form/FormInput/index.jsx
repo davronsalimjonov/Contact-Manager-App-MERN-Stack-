@@ -10,11 +10,12 @@ const FormInput = ({
     disabled,
     placeholder,
     defaultValue,
+    error,
     register = {},
     ...otherProps
 }) => {
     return (
-        <FormElementWrapper label={label}>
+        <FormElementWrapper label={label} error={error}>
             <Input
                 type={type}
                 value={value}
@@ -24,6 +25,7 @@ const FormInput = ({
                 placeholder={placeholder}
                 defaultValue={defaultValue}
                 register={register}
+                error={error}
                 {...otherProps}
             />
         </FormElementWrapper>

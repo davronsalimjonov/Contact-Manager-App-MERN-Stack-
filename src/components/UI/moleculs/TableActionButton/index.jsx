@@ -5,7 +5,9 @@ import { DotsIcon } from '../../atoms/icons';
 import DropdownMenu from '../DropdownMenu';
 import cls from './TableActionButton.module.scss'
 
-const TableActionButton = () => {
+const TableActionButton = ({
+    menuItems = []
+}) => {
     const [isOpen, setIsOpen] = useState(false)
     const wrapperRef = useClickOutside({ onClickOutside: () => setIsOpen(false) })
     const [popperElement, setPopperElement] = useState(null);
@@ -37,7 +39,7 @@ const TableActionButton = () => {
                     style={{ ...styles.popper, zIndex: 1 }}
                     {...attributes.popper}
                 >
-                    <DropdownMenu items={[{ label: 'O’quvchi ma’lumotlari' }, { label: 'Transfer student' }]} />
+                    <DropdownMenu items={menuItems} />
                 </div>
             )}
         </div>

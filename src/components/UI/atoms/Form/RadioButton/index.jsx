@@ -1,3 +1,4 @@
+import { cn } from '@/utils/lib';
 import cls from './RadioButton.module.scss';
 
 const RadioButton = ({
@@ -5,11 +6,12 @@ const RadioButton = ({
     label = '',
     value = '',
     register = {},
+    error,
     disabled,
     defaultChecked,
 }) => {
     return (
-        <label className={cls.label}>
+        <label className={cn(cls.label, error && cls.error)}>
             <span>{label}</span>
             <input 
                 type="radio"
