@@ -4,6 +4,7 @@
     align-items: center;
     background-color: white;
     justify-content: space-between;
+    flex-grow: 0;
 
     &__name {
         padding: 8px 30px;

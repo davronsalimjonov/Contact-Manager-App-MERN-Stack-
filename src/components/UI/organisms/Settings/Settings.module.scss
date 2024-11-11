@@ -1,0 +1,44 @@
+.settings {
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 22px;
+    padding: 5% 10%;
+    flex-grow: 1;
+}
+
+.pfp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.radios {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    & > label {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    & > div {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+}
+
+.btns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 50px;
+}

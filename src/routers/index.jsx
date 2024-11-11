@@ -1,7 +1,9 @@
 import MyStudents from "@/components/pages/MyStudents";
 import Workspace from "@/components/pages/Workspace";
 import MainLayout from "@/components/templates/MainLayout";
+import NotFound from "@/components/UI/moleculs/NotFound";
 import Main from "@/components/UI/organisms/Main";
+import Settings from "@/components/UI/organisms/Settings";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -30,8 +32,12 @@ const router = createBrowserRouter([
                 element: <Workspace />
             },
             {
+                path: '/settings',
+                element: <Settings />,
+            },
+            {
                 path: '*',
-                element: <></>,
+                element: <NotFound />
             }
         ]
     },
