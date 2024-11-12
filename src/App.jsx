@@ -4,6 +4,7 @@ import { persistor, store } from "./store"
 import { QueryClientProvider } from "react-query"
 import { queryClinet } from "./services/api"
 import Routers from "./routers"
+import { Toaster } from "react-hot-toast"
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <PersistGate persistor={persistor}>
         <QueryClientProvider client={queryClinet}>
           <Routers />
+          <Toaster />
         </QueryClientProvider>
       </PersistGate>
     </Provider>

@@ -7,4 +7,9 @@ function useGetUser() {
     return query
 }
 
+export function useGetUserId() {
+    const { data: user } = useGetUser()
+    return user?.id
+}
+
 export default useGetUser

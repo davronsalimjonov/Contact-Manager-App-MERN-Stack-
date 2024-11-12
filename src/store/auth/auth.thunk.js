@@ -9,6 +9,8 @@ const useAuth = () => {
     return {
         login: () => dispatch(authActions.login()),
         logout: () => {
+            localStorage.removeItem('access-token')
+            localStorage.removeItem('refresh-token')
             dispatch(authActions.logout())
             queryClient.invalidateQueries(['user-info'])
         },

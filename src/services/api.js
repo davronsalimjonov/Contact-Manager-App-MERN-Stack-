@@ -1,5 +1,6 @@
 import { store } from "@/store";
 import { authActions } from "@/store/auth/auth.slice";
+import { removeEmptyKeys } from "@/utils/lib";
 import axios from "axios";
 import { QueryClient } from "react-query";
 
@@ -27,7 +28,7 @@ api.interceptors.response.use(
     error => {
         const { config, response } = error;
 
-        if (response?.status === 500 && ['/user/me', '/auth/login', '/auth/refresh'].includes(config?.url)) {
+        if (response?.status === 400 && ['/user/me', '/auth/login', '/auth/refresh'].includes(config?.url)) {
             store.dispatch(authActions.logout())
             return Promise.reject(error);
         }
@@ -56,6 +57,12 @@ api.interceptors.response.use(
         }
     }
 )
+
+export const paramsToString = (params) => {
+    params = removeEmptyKeys(params)
+    const paramsObj = new URLSearchParams(params)
+    return paramsObj.toString()
+}
 
 export const queryClinet = new QueryClient({
     defaultOptions: {

@@ -9,6 +9,7 @@ import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import Settings from "@/components/UI/organisms/Settings";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import Loader from "@/components/UI/atoms/Loader";
 
 const privateRoutes = createBrowserRouter([
     {
@@ -39,7 +40,7 @@ const privateRoutes = createBrowserRouter([
                 path: '/workspace',
                 element: <Workspace />
             },
-            {   
+            {
                 path: '/settings',
                 element: <Settings />
             },
@@ -66,11 +67,26 @@ const authRoutes = createBrowserRouter([
     }
 ])
 
+const loadingRoute = createBrowserRouter([
+    {
+        path: '*',
+        element: (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+                <Loader />
+            </div>
+        )
+    }
+])
+
 const Routers = () => {
     const user = useGetUser()
     const { isAuth } = useSelector(state => state.auth)
 
-    return <RouterProvider router={isAuth ? privateRoutes : authRoutes} />
+    return (user?.isLoading ? (
+        <RouterProvider router={loadingRoute} />
+    ) : (
+        <RouterProvider router={isAuth ? privateRoutes : authRoutes} />
+    ))
 }
 
 export default Routers;

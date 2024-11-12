@@ -1,0 +1,27 @@
+.loader {
+    max-width: 100% !important;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+
+    &>div{
+        width: clamp(50px, 20%, 120px);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background:
+            radial-gradient(farthest-side, var(--blue-color) 94%, #0000) top/8px 8px no-repeat,
+            conic-gradient(#0000 30%, var(--blue-color));
+        -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+        animation: l13 1s infinite linear;
+    }
+}
+
+
+@keyframes l13 {
+    100% {
+        transform: rotate(1turn)
+    }
+}
