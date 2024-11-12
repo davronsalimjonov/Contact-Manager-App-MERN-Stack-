@@ -17,3 +17,8 @@ export function cn(...args) {
         .filter(Boolean)
         .join(' ');
 }
+
+export const sanitizePhoneNumber = (value) => {
+    if (value) return value.replace(/[^\d+]/g, '')
+    return null
+}

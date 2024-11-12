@@ -404,3 +404,113 @@ export const SchoolOutlineIcon = () => {
         </svg>
     )
 }
+
+export const CloseToastIcon = () => {
+    return (
+        <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.2929 18.7071C17.6834 19.0976 18.3166 19.0976 18.7071 18.7071C19.0976 18.3166 19.0976 17.6834 18.7071 17.2929L13.4142 12L18.7071 6.70711C19.0976 6.31658 19.0976 5.68342 18.7071 5.29289C18.3166 4.90237 17.6834 4.90237 17.2929 5.29289L12 10.5858L6.70711 5.29289C6.31658 4.90237 5.68342 4.90237 5.29289 5.29289C4.90237 5.68342 4.90237 6.31658 5.29289 6.70711L10.5858 12L5.29289 17.2929C4.90237 17.6834 4.90237 18.3166 5.29289 18.7071C5.68342 19.0976 6.31658 19.0976 6.70711 18.7071L12 13.4142L17.2929 18.7071Z" fill="currentColor" />
+        </svg>
+    )
+}
+
+export const OpenEyesIcon = () => {
+    return (
+        <svg width={18} height={14} viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" clipRule="evenodd" d="M8.99903 3.66669C7.15795 3.66669 5.6661 5.15889 5.6661 7.00042C5.6661 8.84133 7.15812 10.3334 8.99903 10.3334C10.8396 10.3334 12.3328 8.84167 12.3328 7.00042C12.3328 5.15855 10.8398 3.66669 8.99903 3.66669ZM7.33276 7.00042C7.33276 6.07902 8.07877 5.33336 8.99903 5.33336C9.91964 5.33336 10.6661 6.07936 10.6661 7.00042C10.6661 7.92051 9.91982 8.66669 8.99903 8.66669C8.0786 8.66669 7.33276 7.92086 7.33276 7.00042Z" fill="#0F172A" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M12.5318 1.16788C10.3081 0.0560196 7.69068 0.0560196 5.46696 1.16788C4.12334 1.83969 2.99915 2.88073 2.22626 4.16887L1.21192 5.85943C0.790687 6.56149 0.790688 7.43856 1.21192 8.14061L2.22626 9.83118C2.99915 11.1193 4.12334 12.1604 5.46696 12.8322C7.69068 13.944 10.3081 13.944 12.5318 12.8322C13.8755 12.1604 14.9996 11.1193 15.7725 9.83118L16.7869 8.14061C17.2081 7.43856 17.2081 6.56149 16.7869 5.85943L15.7725 4.16887C14.9996 2.88072 13.8755 1.83969 12.5318 1.16788ZM6.21232 2.65859C7.96682 1.78134 10.032 1.78134 11.7865 2.65859C12.8466 3.18865 13.7336 4.01002 14.3434 5.02636L15.3577 6.71693C15.4623 6.89118 15.4623 7.10887 15.3577 7.28312L14.3434 8.97369C13.7336 9.99003 12.8466 10.8114 11.7865 11.3415C10.032 12.2187 7.96682 12.2187 6.21232 11.3415C5.1522 10.8114 4.26522 9.99003 3.65542 8.97369L2.64108 7.28312C2.53653 7.10887 2.53653 6.89118 2.64108 6.71693L3.65542 5.02636C4.26522 4.01002 5.1522 3.18865 6.21232 2.65859Z" fill="#0F172A" />
+        </svg>
+    )
+}
+
+export const CloseEyesIcon = () => {
+    return (
+        <svg width={18} height={16} viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" clipRule="evenodd" d="M2.79013 0.636526C2.46678 0.423811 2.02792 0.459662 1.74351 0.744078C1.41807 1.06951 1.41807 1.59715 1.74351 1.92259L3.44131 3.6204C2.97561 4.0816 2.56683 4.60123 2.22626 5.16884L1.21192 6.85941C0.790687 7.56147 0.790688 8.43853 1.21192 9.14059L2.22626 10.8312C2.99915 12.1193 4.12334 13.1603 5.46696 13.8321C7.69068 14.944 10.3081 14.944 12.5318 13.8321C12.778 13.7091 13.0168 13.5736 13.2474 13.4265L15.0768 15.2559C15.4023 15.5814 15.9299 15.5814 16.2554 15.2559C16.5808 14.9305 16.5808 14.4028 16.2554 14.0774L15.7914 13.6135C15.7448 13.5828 15.7005 13.5469 15.6595 13.5059L2.79013 0.636526ZM3.65542 6.02633C3.92552 5.57615 4.25001 5.16423 4.61984 4.79892L6.12754 6.30662C5.83434 6.80296 5.6661 7.38198 5.6661 8.0004C5.6661 9.84131 7.15812 11.3333 8.99903 11.3333C9.61725 11.3333 10.1963 11.165 10.6927 10.8718L12.0324 12.2115C11.9515 12.2566 11.8695 12.2999 11.7865 12.3414C10.032 13.2187 7.96682 13.2187 6.21232 12.3414C5.1522 11.8114 4.26522 10.99 3.65542 9.97366L2.64108 8.2831C2.53653 8.10884 2.53653 7.89115 2.64108 7.7169L3.65542 6.02633ZM7.33276 8.0004C7.33276 7.85093 7.3524 7.70608 7.38922 7.5683L9.43108 9.61016C9.29329 9.64702 9.14846 9.66667 8.99903 9.66667C8.0786 9.66667 7.33276 8.92083 7.33276 8.0004Z" fill="#0F172A" />
+            <path d="M15.6065 11.0959C15.6635 11.0088 15.7189 10.9206 15.7725 10.8312L16.7869 9.14059C17.2081 8.43853 17.2081 7.56146 16.7869 6.85941L15.7725 5.16884C14.9996 3.8807 13.8755 2.83967 12.5318 2.16785C10.5851 1.19449 8.33664 1.07325 6.31474 1.80412L7.65739 3.14677C9.03697 2.84262 10.4958 3.01322 11.7865 3.65857C12.8466 4.18862 13.7336 5.00999 14.3434 6.02633L15.3577 7.7169C15.4623 7.89115 15.4623 8.10884 15.3577 8.2831L14.3962 9.88559L15.6065 11.0959Z" fill="#0F172A" />
+            <path d="M12.3278 7.81719C12.236 6.12129 10.8772 4.76341 9.18224 4.67162L12.3278 7.81719Z" fill="#94A3B8" />
+        </svg>
+    )
+}
+
+export const PasswordLockIcon = () => {
+    return (
+        <svg width={20} height={20} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.834 13.1097C11.3322 12.8215 11.6673 12.2829 11.6673 11.666C11.6673 10.7455 10.9211 9.99935 10.0007 9.99935C9.08018 9.99935 8.33398 10.7455 8.33398 11.666C8.33398 12.2829 8.66915 12.8215 9.16732 13.1097V14.166C9.16732 14.6263 9.54041 14.9993 10.0007 14.9993C10.4609 14.9993 10.834 14.6263 10.834 14.166V13.1097Z" fill="#0F172A" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M10.0007 1.66602C7.69946 1.66602 5.83398 3.5315 5.83398 5.83268V7.01272C4.3624 7.65568 3.33398 9.12408 3.33398 10.8327V14.166C3.33398 16.4672 5.19946 18.3327 7.50065 18.3327H12.5007C14.8018 18.3327 16.6673 16.4672 16.6673 14.166V10.8327C16.6673 9.12408 15.6389 7.65568 14.1673 7.01272V5.83268C14.1673 3.5315 12.3018 1.66602 10.0007 1.66602ZM12.5007 8.33268H7.50065C6.11994 8.33268 5.00065 9.45197 5.00065 10.8327V14.166C5.00065 15.5467 6.11994 16.666 7.50065 16.666H12.5007C13.8814 16.666 15.0007 15.5467 15.0007 14.166V10.8327C15.0007 9.45197 13.8814 8.33268 12.5007 8.33268ZM7.50065 6.66602H12.5007V5.83268C12.5007 4.45197 11.3814 3.33268 10.0007 3.33268C8.61994 3.33268 7.50065 4.45197 7.50065 5.83268V6.66602Z" fill="#0F172A" />
+        </svg>
+    )
+}
+
+export const LoaderSpinner = ({ fill = '#fff' }) => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="17px" height="17px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style={{ margin: 'auto', background: 'none', display: 'block', shapeRendering: 'auto' }}>
+            <g transform="rotate(0 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.8519003931847968s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(25.714285714285715 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.7863695937090431s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(51.42857142857143 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.7208387942332896s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(77.14285714285714 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.655307994757536s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(102.85714285714286 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.5897771952817824s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(128.57142857142858 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.5242463958060288s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(154.28571428571428 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.4587155963302752s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(180 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.39318479685452157s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(205.71428571428572 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.327653997378768s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(231.42857142857142 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.2621231979030144s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(257.14285714285717 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.19659239842726078s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(282.85714285714283 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.1310615989515072s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(308.57142857142856 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="-0.0655307994757536s" repeatCount="indefinite"></animate>
+                </rect>
+            </g><g transform="rotate(334.2857142857143 50 50)">
+                <rect x="48.5" y="0" rx="0" ry="0" width="3" height="28" fill={fill}>
+                    <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="0.9174311926605504s" begin="0s" repeatCount="indefinite"></animate>
+                </rect>
+            </g>
+        </svg>
+    )
+}
+
+export const Spinner = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="118px" height="118px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <circle cx="50" cy="50" fill="none" stroke="#031933" strokeWidth="10" r="35" strokeDasharray="164.93361431346415 56.97787143782138">
+                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>
+            </circle>
+        </svg>
+    )
+}

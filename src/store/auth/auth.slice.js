@@ -6,8 +6,8 @@ export const {
 } = createSlice({
     name: "auth",
     initialState: {
-        isAuth: false,
-        isLoading: true
+        isAuth: Boolean(JSON.parse(localStorage.getItem('access-token'))),
+        isLoading: true,
     },
     reducers: {
         login: (state) => {
@@ -18,6 +18,6 @@ export const {
         },
         loading: (state, { payload }) => {
             state.isLoading = payload
-        }
+        },
     }
 })

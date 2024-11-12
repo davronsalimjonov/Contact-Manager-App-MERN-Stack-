@@ -1,13 +1,16 @@
-import MyStudents from "@/components/pages/MyStudents";
-import SingleStudent from "@/components/pages/SingleStudent";
-import Workspace from "@/components/pages/Workspace";
-import MainLayout from "@/components/templates/MainLayout";
-import NotFound from "@/components/UI/moleculs/NotFound";
+import { useSelector } from "react-redux";
+import useGetUser from "@/hooks/useGetUser";
+import Login from "@/components/pages/Login";
 import Main from "@/components/UI/organisms/Main";
+import Workspace from "@/components/pages/Workspace";
+import MyStudents from "@/components/pages/MyStudents";
+import NotFound from "@/components/UI/moleculs/NotFound";
+import MainLayout from "@/components/templates/MainLayout";
+import SingleStudent from "@/components/pages/SingleStudent";
 import Settings from "@/components/UI/organisms/Settings";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 
-const router = createBrowserRouter([
+const privateRoutes = createBrowserRouter([
     {
         path: '/',
         element: <MainLayout />,
@@ -52,8 +55,22 @@ const router = createBrowserRouter([
     },
 ])
 
+const authRoutes = createBrowserRouter([
+    {
+        path: '',
+        element: <Login />
+    },
+    {
+        path: '*',
+        element: <Navigate to='/' />
+    }
+])
+
 const Routers = () => {
-    return <RouterProvider router={router} />
+    const user = useGetUser()
+    const { isAuth } = useSelector(state => state.auth)
+
+    return <RouterProvider router={isAuth ? privateRoutes : authRoutes} />
 }
 
 export default Routers;

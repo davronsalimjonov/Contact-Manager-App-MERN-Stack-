@@ -2,13 +2,16 @@ import { cn } from '@/utils/lib';
 import cls from './TabButton.module.scss';
 
 const TabButton = ({ 
-    isActive = false,
+    className,
+    activeClassName,
     children,
-    onClick 
+    onClick,
+    isActive = false,
 }) => {
     return (
         <button 
-            className={cn(cls.tab, isActive && cls.active)}
+            type='button'
+            className={cn(cls.tab, (isActive && (activeClassName || cls.active)), className)}
             onClick={onClick}
         >
             {children}

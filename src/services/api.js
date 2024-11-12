@@ -27,6 +27,11 @@ api.interceptors.response.use(
     error => {
         const { config, response } = error;
 
+        if (response?.status === 500 && ['/user/me', '/auth/login', '/auth/refresh'].includes(config?.url)) {
+            store.dispatch(authActions.logout())
+            return Promise.reject(error);
+        }
+
         if (response?.status === 401 && config?.url !== '/auth/login' && config?.url !== '/auth/refresh' && !config?.sent) {
             config.sent = true
             const refreshToken = JSON.parse(localStorage.getItem('refresh-token'))
