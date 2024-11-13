@@ -1,4 +1,4 @@
-import { HouseIcon, ListIcon, MenuBookIcon, PersonsIcon, TranslateIcon } from "../../atoms/icons";
+import { HouseIcon, MenuBookIcon, PersonsIcon, TranslateIcon } from "../../atoms/icons";
 
 export const links = [
     {
@@ -18,12 +18,6 @@ export const links = [
         link: '/dictionary',
         label: 'Lug’at',
         icon: TranslateIcon()
-    },
-    {
-        id: 3,
-        link: '/class-shedule',
-        label: 'Dars jadvali',
-        icon: ListIcon()
     },
     {
         id: 4,

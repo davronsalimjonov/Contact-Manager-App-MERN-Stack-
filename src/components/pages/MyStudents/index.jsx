@@ -20,7 +20,7 @@ const MyStudents = () => {
         { value: '', label: 'Barchasi' },
     ]
 
-    groups.forEach(group => {
+    groups?.forEach(group => {
         tabOptions.push({value: group.id, label: group.title})
     })
 
