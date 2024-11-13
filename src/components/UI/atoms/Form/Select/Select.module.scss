@@ -57,6 +57,29 @@
     }
 }
 
+.closeIcon{
+    cursor: pointer;
+
+    & > svg{
+        width: 10px;
+        height: 10px;
+
+        & > path{
+            transition: all 0.3s;
+        }
+
+        &:hover{
+            & > path{
+                fill: var(--blue-gray-color);
+            }
+        }
+    }
+}
+
+.arrowIcon{
+    transform: translateX(5px);
+}
+
 @keyframes fadeIn {
     0% {
         opacity: 0;
