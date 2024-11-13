@@ -1,14 +1,15 @@
 import { debounce } from '@/utils/lib';
 import { STUDENT_STATUS_ENUMS } from '@/constants';
-import Button from '../../atoms/Buttons/Button';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
-import { PlusIcon, SearchIcon } from '../../atoms/icons';
+import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import cls from './StudentsSearchBar.module.scss';
 
 const StudentsSearchBar = ({
     onChangeStatus,
-    onChangeInput
+    onChangeFirstName,
+    onChangeLastName,
+    onChangePhone,
 }) => {
     const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
 
@@ -21,18 +22,28 @@ const StudentsSearchBar = ({
                 isClearable
             />
             <Input 
-                placeholder='Ism Familiya'
+                placeholder='Ism'
                 className={cls.bar__form__input}
-                onChange={debounce(onChangeInput)}
+                onChange={debounce(onChangeFirstName, 200)}
             />
-            <form className={cls.bar__form}>
+            <Input 
+                placeholder='Familiya'
+                className={cls.bar__form__input}
+                onChange={debounce(onChangeLastName, 200)}
+            />
+            <FormPhoneInput 
+                placeholder='+998'
+                className={cls.bar__form__input}
+                onChange={debounce(onChangePhone, 200)}
+            />
+            {/* <form className={cls.bar__form}>
                 <Input
                     className={cls.bar__form__input}
                     placeholder='Status ID'
                 />
                 <Button className={cls.bar__form__btn}>Qidirish <SearchIcon /></Button>
             </form>
-            <Button>Guruh qo’shish <PlusIcon /></Button>
+            <Button>Guruh qo’shish <PlusIcon /></Button> */}
         </div>
     );
 }
