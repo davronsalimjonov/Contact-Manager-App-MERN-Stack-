@@ -1,8 +1,8 @@
+import axios from "axios";
+import { QueryClient } from "react-query";
 import { store } from "@/store";
 import { authActions } from "@/store/auth/auth.slice";
 import { removeEmptyKeys } from "@/utils/lib";
-import axios from "axios";
-import { QueryClient } from "react-query";
 
 export const api = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL

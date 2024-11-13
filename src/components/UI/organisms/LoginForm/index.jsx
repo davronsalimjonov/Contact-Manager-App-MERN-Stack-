@@ -83,6 +83,10 @@ const LoginForm = () => {
                         register={{
                             ...register('email', {
                                 required: { value: authStrategy === 'email', message: "Emailni kiriting" },
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: "Notog'ri email address"
+                                }
                             })
                         }}
                         error={errors?.email?.message}
@@ -92,7 +96,7 @@ const LoginForm = () => {
                 <FormPasswordInput
                     label='Parol'
                     placeholder='Parolni kiriting'
-                    register={{ ...register('password') }}
+                    register={{ ...register('password', { required: 'Parolni kiriting' }) }}
                     error={errors?.password?.message}
                 />
                 <Link className={cls.form__inputs__link} to=''>Parolni unitdingizmi?</Link>

@@ -1,9 +1,9 @@
 import cls from './Loader.module.scss';
 
-const Loader = () => {
+const Loader = ({ size }) => {
     return (
         <div className={cls.loader}>
-            <div></div>
+            <div style={{ width: size }}></div>
         </div>
     );
 }

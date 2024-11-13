@@ -1,16 +1,68 @@
+import dayjs from 'dayjs';
+import { useParams } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { updateUser } from '@/services/user';
+import { customToast } from '@/utils/toast';
+import Loader from '@/components/UI/atoms/Loader';
+import useGetUserById from '@/hooks/useGetUserById';
+import { objectToFormData, sanitizePhoneNumber } from '@/utils/lib';
 import StudentInformationForm from '@/components/UI/organisms/StudentInformationForm';
 import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
 import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleStudent.module.scss';
 
 const SingleStudent = () => {
+    const { studentId } = useParams()
+    const queryClient = useQueryClient()
+    const { data: student, isLoading: isLoadingStudent } = useGetUserById(studentId)
+
+    const studentFormData = {
+        avatar: student?.url,
+        firstName: student?.firstName,
+        lastName: student?.lastName,
+        phone: student?.phone,
+        birthday: student?.birthday,
+        gender: String(student?.gender),
+        createdAt: student?.createdAt ? dayjs(student?.createdAt).format('DD.MM.YYYY') : ''
+    }
+
+    const handleUpdateUser = async (data) => {
+        try {
+            delete data.createdAt
+            data.phone = sanitizePhoneNumber(data.phone)
+            data.gender = String(data.gender)
+            if (!(data?.avatar instanceof File) && data?.avatar !== null) delete data.avatar
+            const fd = objectToFormData(data)
+
+            const updatedUser = await updateUser(studentId, fd) 
+            queryClient.setQueryData(['user', studentId], updatedUser)   
+        } catch (error) {
+            const res = error?.response?.data
+            customToast.error(res?.message || error?.message || 'Xatolik yuz berdi')
+        }
+
+    }
+
     return (
         <div className={cls.page}>
-            <StudentInformationForm />
-            <div className={cls.page__cards}>
-                <StudentActionHistory />
-                <StudentPersonalInfo />
-            </div>
+            {!isLoadingStudent ? (
+                <>
+                    <StudentInformationForm defaultValues={studentFormData} onSubmit={handleUpdateUser} />
+                    <div className={cls.page__cards}>
+                        <StudentActionHistory />
+                        <StudentPersonalInfo
+                            email={student?.email}
+                            direction={student?.onboarding?.learnField}
+                            purpose={student?.onboarding?.aim}
+                            level={student?.onboarding?.degree}
+                            address={student?.onboarding?.address}
+                            job={student?.onboarding?.job}
+                        />
+                    </div>
+                </>
+            ) : (
+                <Loader />
+            )}
         </div>
     );
 }

@@ -30,7 +30,7 @@ const FormDatepicker = ({
                                 placeholder={placeholder}
                                 className={className}
                                 disabled={disabled}
-                                onChange={date => onChange(date ? new Date(date).toISOString() : null)}
+                                onChange={onChange}
                                 readOnly={readOnly}
                                 error={error}
                                 {...otherProps}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,17 +15,26 @@ import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
 import cls from './StudentInformationForm.module.scss';
 
-const StudentInformationForm = () => {
+const StudentInformationForm = ({
+    defaultValues,
+    onSubmit
+}) => {
     const navigate = useNavigate()
     const [isEditable, setIsEditable] = useState(false)
-    const { register, watch, control, reset, handleSubmit, setValue, formState: { isDirty, errors } } = useForm({
+    const { register, control, reset, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
+        defaultValues,
         mode: 'onSubmit',
         resolver: yupResolver(studentInfoSchema)
     })
-    console.log(watch());
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset(defaultValues)
+        }
+    }, [isSubmitSuccessful])
 
     return (
-        <form className={cls.form} onSubmit={handleSubmit(console.log)}>
+        <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={cls.form__header}>
                 <button
                     type='button'
@@ -35,8 +44,10 @@ const StudentInformationForm = () => {
                     <LeftArrowIcon />
                 </button>
                 <AvatarUpload
+                    defaultValue={getValues('avatar')}
                     disabled={!isEditable}
                     onChange={file => setValue('avatar', file, { shouldDirty: true, shouldValidate: true })}
+                    onDelete={() => setValue('avatar', null, { shouldDirty: true })}
                 />
                 <button
                     type='button'
@@ -81,23 +92,25 @@ const StudentInformationForm = () => {
                     label='Jinsi'
                     disabled={!isEditable}
                     options={GENDER_OPTIONS}
-                    register={{ ...register('gender', { valueAsNumber: true }) }}
+                    register={{ ...register('gender') }}
                     error={errors?.gender?.message}
                 />
                 <FormInput
                     label='Ro’yxatdan o’tgan sanasi'
                     placeholder='Ro’yxatdan o’tgan sanasi'
                     disabled
+                    register={{ ...register('createdAt') }}
                 />
                 <Button
                     type='submit'
+                    isLoading={isSubmitting}
                     disabled={!isEditable || !isDirty}
                 >
                     Tahrirlash
                 </Button>
                 <RedButton
                     disabled={!isDirty || !isEditable}
-                    onClick={() => reset({})}
+                    onClick={() => reset(defaultValues)}
                 >
                     Bekor qilish
                 </RedButton>

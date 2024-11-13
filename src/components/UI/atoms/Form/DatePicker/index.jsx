@@ -18,7 +18,7 @@ const DatePicker = forwardRef(({
 
     const handleChange = (date) => { 
         setDate(date)
-        typeof onChange === 'function' && onChange(new Date(date).toISOString())
+        typeof onChange === 'function' && onChange(new Date(date  - (date.getTimezoneOffset() * 60000)).toISOString())
     }
 
     return (

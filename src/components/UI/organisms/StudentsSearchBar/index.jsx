@@ -1,3 +1,4 @@
+import { debounce } from '@/utils/lib';
 import { STUDENT_STATUS_ENUMS } from '@/constants';
 import Button from '../../atoms/Buttons/Button';
 import Input from '../../atoms/Form/Input';
@@ -6,7 +7,8 @@ import { PlusIcon, SearchIcon } from '../../atoms/icons';
 import cls from './StudentsSearchBar.module.scss';
 
 const StudentsSearchBar = ({
-    onChangeStatus
+    onChangeStatus,
+    onChangeInput
 }) => {
     const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
 
@@ -18,8 +20,10 @@ const StudentsSearchBar = ({
                 onChange={onChangeStatus}
                 isClearable
             />
-            <Select
-                placeholder='User turi'
+            <Input 
+                placeholder='Ism Familiya'
+                className={cls.bar__form__input}
+                onChange={debounce(onChangeInput)}
             />
             <form className={cls.bar__form}>
                 <Input

@@ -10,7 +10,7 @@ import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
 import cls from './Sidebar.module.scss';
 
 const Sidebar = () => {
-    const [isOpen, setIsOpen] = usePersistentState(true)
+    const [isOpen, setIsOpen] = usePersistentState('sidebar-state', true)
 
     return (
         <aside className={cn(cls.sidebar, !isOpen && cls.close)}>

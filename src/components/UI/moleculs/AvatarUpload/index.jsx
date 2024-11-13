@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { cn } from '@/utils/lib';
+import { cn, onImageError } from '@/utils/lib';
 import { PlusIcon, TrashIcon, UserIcon } from '../../atoms/icons';
 import cls from './AvatarUpload.module.scss';
 
@@ -26,7 +26,7 @@ const AvatarUpload = ({
         <div className={cls.wrapper}>
             {src ? (
                 <div className={cls.avatar}>
-                    <img src={src} alt="avatar" />
+                    <img src={src} alt="avatar" onError={onImageError} />
                     <button
                         disabled={disabled}
                         type='button'

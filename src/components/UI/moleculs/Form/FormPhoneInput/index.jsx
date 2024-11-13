@@ -30,10 +30,13 @@ const FormPhoneInput = ({
                         <ReactInputMask
                             mask='+\9\9\8 (99) 999-99-99'
                             onFocus={(readOnly || disabled) ? (e) => e.target.blur() : undefined}
-                            {...field}
+                            value={field.value}
+                            onChange={field.onChange}
+                            onBlur={field.onBlur}
                         >
                             {inputProps => (
                                 <Input
+                                    ref={field.ref}
                                     className={className}
                                     placeholder={placeholder}
                                     label={label}

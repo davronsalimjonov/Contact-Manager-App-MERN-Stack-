@@ -1,32 +1,43 @@
+import Mapper from '@/components/UI/atoms/Mapper';
+import Loader from '@/components/UI/atoms/Loader';
 import { getDayName, getUserFullName } from '@/utils/lib';
-import StudentsTableHeader from '../../UI/organisms/StudentsTableHeader';
 import StudentsTableRow from '../../UI/organisms/StudentsTableRow';
+import StudentsTableHeader from '../../UI/organisms/StudentsTableHeader';
 import cls from './StudentsTable.module.scss';
 
 const StudentsTable = ({
     students = [],
-    triggerRef
+    triggerRef,
+    isLoading
 }) => {
     return (
-        <div style={{ overflow: 'auto' }}>
-            <table className={cls.table}>
-                <StudentsTableHeader />
-                <tbody>
-                    {students?.length > 0 && students.map((student, index) => (
-                        <StudentsTableRow 
-                            key={student?.id}
-                            index={index + 1}
-                            fullName={getUserFullName(student?.user)}
-                            phoneNumber={student?.user?.phone}
-                            days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
-                            time={student?.connectionTime}
-                            status={student?.status}
-                            userId={student?.user?.id}
+        <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+            {students?.length > 0 && (
+                <table className={cls.table}>
+                    <StudentsTableHeader />
+                    <tbody>
+                        <Mapper
+                            data={students}
+                            isInfinityQuery
+                            isLoading={isLoading}
+                            renderItem={(student, index) => (
+                                <StudentsTableRow
+                                    key={student?.id}
+                                    index={index + 1}
+                                    fullName={getUserFullName(student?.user)}
+                                    phoneNumber={student?.user?.phone}
+                                    days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
+                                    time={student?.connectionTime}
+                                    status={student?.status}
+                                    userId={student?.user?.id}
+                                />
+                            )}
                         />
-                    ))}
-                    <div ref={triggerRef}></div>
-                </tbody>
-            </table>
+                        <tr ref={triggerRef}></tr>
+                    </tbody>
+                </table>
+            )}
+            {isLoading && <Loader size={80} />}
         </div>
     );
 }
