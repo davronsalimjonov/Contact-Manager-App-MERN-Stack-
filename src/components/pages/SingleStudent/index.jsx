@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
+import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
-import { updateUser } from '@/services/user';
 import { customToast } from '@/utils/toast';
+import { updateUser } from '@/services/user';
 import Loader from '@/components/UI/atoms/Loader';
 import useGetUserById from '@/hooks/useGetUserById';
 import { objectToFormData, sanitizePhoneNumber } from '@/utils/lib';
@@ -31,16 +32,31 @@ const SingleStudent = () => {
             delete data.createdAt
             data.phone = sanitizePhoneNumber(data.phone)
             data.gender = String(data.gender)
+
+            if(!data?.birthday) delete data.birthday
             if (!(data?.avatar instanceof File) && data?.avatar !== null) delete data.avatar
+            
             const fd = objectToFormData(data)
 
             const updatedUser = await updateUser(studentId, fd) 
-            queryClient.setQueryData(['user', studentId], updatedUser)   
+            queryClient.setQueryData(['user', studentId], updatedUser)  
+            queryClient.setQueriesData(['students'], oldData => ({
+                ...oldData,
+                pages: oldData?.pages?.map(page => ({
+                    ...page, 
+                    items: page?.items.map(item => {
+                        if(item?.user?.id === studentId) {
+                            item.user = updatedUser
+                        }
+                        return item
+                    })
+                }))
+            }))
+            toast.success("Malumotlar o'zgartirildi") 
         } catch (error) {
             const res = error?.response?.data
             customToast.error(res?.message || error?.message || 'Xatolik yuz berdi')
         }
-
     }
 
     return (

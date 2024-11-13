@@ -1,6 +1,7 @@
 import Mapper from '@/components/UI/atoms/Mapper';
 import Loader from '@/components/UI/atoms/Loader';
 import { getDayName, getUserFullName } from '@/utils/lib';
+import EmptyData from '@/components/UI/organisms/EmptyData';
 import StudentsTableRow from '../../UI/organisms/StudentsTableRow';
 import StudentsTableHeader from '../../UI/organisms/StudentsTableHeader';
 import cls from './StudentsTable.module.scss';
@@ -12,7 +13,7 @@ const StudentsTable = ({
 }) => {
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {students?.length > 0 && (
+            {students?.length > 0 ? (
                 <table className={cls.table}>
                     <StudentsTableHeader />
                     <tbody>
@@ -36,6 +37,8 @@ const StudentsTable = ({
                         <tr ref={triggerRef}></tr>
                     </tbody>
                 </table>
+            ) : (
+                !isLoading && <EmptyData />
             )}
             {isLoading && <Loader size={80} />}
         </div>

@@ -1,20 +1,17 @@
 import { useState } from 'react';
+import useGetGroups from '@/hooks/useGetGroups';
 import Tabs from '@/components/UI/moleculs/Tabs';
 import useGetStudents from '@/hooks/useGetStudents';
 import StudentsTable from '@/components/templates/StudentsTable';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
 import cls from './MyStudents.module.scss';
-import { useQuery } from 'react-query';
-import { useGetUserId } from '@/hooks/useGetUser';
-import { getMentorGroups } from '@/services/course';
 
 const MyStudents = () => {
-    const userId = useGetUserId()
     const [status, setStatus] = useState()
     const [inputValue, setInputValue] = useState()
     const [activeGroup, setActiveGroup] = useState()
+    const { data: groups } = useGetGroups()
     const { ref, data: students, isLoading: isLoadingStudents } = useGetStudents({ status, firstName: inputValue, group: activeGroup })
-    const { data: groups } = useQuery(['groups', userId], () => getMentorGroups(userId))
 
     const tabOptions = [
         { value: '', label: 'Barchasi' },

@@ -1,6 +1,6 @@
+import { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
 
 const useScrollPagination = (queryKey, queryFn, params) => {
     const { ref, inView } = useInView()
