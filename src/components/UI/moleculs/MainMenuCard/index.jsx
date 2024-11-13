@@ -1,5 +1,5 @@
 import React from 'react'
-import MainCardHeader from '../../atoms/MainCardHeader'
+import MainCardHeader from '../../atoms/mainCardHeader'
 import MainCardIcons from '../../atoms/MainCardIcons'
 import MainCardStats from '../../atoms/MainCardStats'
 import cls from "./MainMenuCard.module.scss"
