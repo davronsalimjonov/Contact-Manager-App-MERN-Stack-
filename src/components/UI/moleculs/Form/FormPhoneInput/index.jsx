@@ -2,6 +2,7 @@ import { Controller } from 'react-hook-form';
 import ReactInputMask from 'react-input-mask';
 import Input from '@/components/UI/atoms/Form/Input';
 import FormElementWrapper from '../FormElementWrapper';
+import PhoneInput from '@/components/UI/atoms/Form/PhoneInput';
 
 const FormPhoneInput = ({
     label = '',
@@ -26,46 +27,29 @@ const FormPhoneInput = ({
                     rules={rules}
                     control={control}
                     defaultValue={defaultValue}
-                    render={({ field }) => (
-                        <ReactInputMask
-                            mask='+\9\9\8 (99) 999-99-99'
-                            onFocus={(readOnly || disabled) ? (e) => e.target.blur() : undefined}
-                            value={field.value}
-                            onChange={field.onChange}
-                            onBlur={field.onBlur}
-                        >
-                            {inputProps => (
-                                <Input
-                                    ref={field.ref}
-                                    className={className}
-                                    placeholder={placeholder}
-                                    label={label}
-                                    error={error}
-                                    {...otherProps}
-                                    {...inputProps}
-                                />
-                            )}
-                        </ReactInputMask>
+                    render={({ field: { value, onChange } }) => (
+                        <PhoneInput
+                            value={value ? value : null}
+                            onChange={(newValue) => onChange(newValue || "")}
+                            placeholder={placeholder}
+                            disabled={disabled}
+                            readOnly={readOnly}
+                            className={className}
+                            error={error}
+                        // international
+                        />
                     )}
                 />
             ) : (
-                <ReactInputMask
-                    mask='+\9\9\8 (99) 999-99-99'
+                <PhoneInput
+                    value={value ? value : undefined}
                     onChange={onChange}
-                    defaultValue={defaultValue}
-                    onFocus={(readOnly || disabled) ? (e) => e.target.blur() : undefined}
-                >
-                    {inputProps => (
-                        <Input
-                            className={className}
-                            placeholder={placeholder}
-                            label={label}
-                            error={error}
-                            {...otherProps}
-                            {...inputProps}
-                        />
-                    )}
-                </ReactInputMask>
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    className={className}
+                    error={error}
+                />
             )}
         </FormElementWrapper>
     );

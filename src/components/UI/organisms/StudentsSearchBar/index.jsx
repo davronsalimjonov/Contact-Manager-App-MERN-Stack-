@@ -4,6 +4,7 @@ import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import cls from './StudentsSearchBar.module.scss';
+import PhoneInput from '../../atoms/Form/PhoneInput';
 
 const StudentsSearchBar = ({
     onChangeStatus,
@@ -31,9 +32,9 @@ const StudentsSearchBar = ({
                 className={cls.bar__form__input}
                 onChange={debounce(onChangeLastName, 200)}
             />
-            <FormPhoneInput 
-                placeholder='+998'
+            <PhoneInput 
                 className={cls.bar__form__input}
+                placeholder='Telefon raqam' 
                 onChange={debounce(onChangePhone, 200)}
             />
             {/* <form className={cls.bar__form}>

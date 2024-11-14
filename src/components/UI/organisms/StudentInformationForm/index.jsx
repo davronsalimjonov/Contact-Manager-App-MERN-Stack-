@@ -21,7 +21,7 @@ const StudentInformationForm = ({
 }) => {
     const navigate = useNavigate()
     const [isEditable, setIsEditable] = useState(false)
-    const { register, control, reset, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
+    const { register, control, reset, watch, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
         defaultValues,
         mode: 'onSubmit',
         resolver: yupResolver(studentInfoSchema)

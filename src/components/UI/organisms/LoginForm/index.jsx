@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useQueryClient } from 'react-query';
+import { isValidPhoneNumber } from 'react-phone-number-input';
 import { login } from '@/services/auth';
 import { customToast } from '@/utils/toast';
 import useAuth from '@/store/auth/auth.thunk';
@@ -66,14 +67,7 @@ const LoginForm = () => {
                         name='phone'
                         rules={{
                             required: { value: authStrategy === 'phone', message: 'Telefon raqamni kiriting' },
-                            validate: (value) => {
-                                if (value?.length > 0) {
-                                    return value?.replace(/\D/g, '').length == 12 || "Telefon raqamni to'liq kiriting"
-                                } else {
-                                    return true
-                                }
-                            }
-
+                            validate: (value) => value && isValidPhoneNumber(value) || "Telefon raqamni to'liq kiriting"
                         }}
                         error={errors?.phone?.message}
                         autoFocus

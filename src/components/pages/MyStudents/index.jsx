@@ -27,7 +27,7 @@ const MyStudents = () => {
                 onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
                 onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
                 onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
-                onChangePhone={e => setFilter(state => ({ ...state, phone: sanitizePhoneNumber(e.target.value) }))}
+                onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
             />
             <StudentsTable
                 triggerRef={ref}

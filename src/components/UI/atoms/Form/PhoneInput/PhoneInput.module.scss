@@ -1,0 +1,45 @@
+.input {
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    background: var(--blue-200-color);
+
+    & select {
+        display: none;
+    }
+
+    &>div>div>svg {
+        &>g {
+            display: none;
+        }
+
+        &>path {
+            display: none;
+        }
+    }
+
+    & div:global(.PhoneInputCountrySelectArrow) {
+        display: none;
+    }
+
+    & div:global(.PhoneInputCountryIcon):has(svg){
+        display: none;
+    }
+
+    &>input {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        background-color: transparent;
+    }
+
+    &:has(input:focus){
+        border-color: var(--blue-color);
+    }
+}
+
+.error{
+    border-color: var(--red-color) !important;
+}
