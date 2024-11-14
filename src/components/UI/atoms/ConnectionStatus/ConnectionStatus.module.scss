@@ -1,0 +1,12 @@
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &>span {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 19.1px;
+        color: var(--blue-color);
+    }
+}
