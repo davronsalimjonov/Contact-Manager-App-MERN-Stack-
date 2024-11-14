@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { useQueryClient } from 'react-query';
 import { login } from '@/services/auth';
 import { customToast } from '@/utils/toast';
 import useAuth from '@/store/auth/auth.thunk';
@@ -14,6 +15,7 @@ import cls from './LoginForm.module.scss';
 
 const LoginForm = () => {
     const authState = useAuth()
+    const queryClient = useQueryClient()
     const [savedErrors, setSavedErrors] = useState({});
     const [authStrategy, setAuthStrategy] = useState('phone')
     const { register, control, handleSubmit, clearErrors, setError, formState: { errors, isDirty, isSubmitting } } = useForm({ mode: 'onSubmit' })
@@ -36,6 +38,7 @@ const LoginForm = () => {
             localStorage.setItem('access-token', JSON.stringify(res.accessToken))
             localStorage.setItem('refresh-token', JSON.stringify(res.refreshToken))
 
+            queryClient.setQueryData(['user-info'], res?.user)
             authState.login()
         } catch (error) {
             const res = error?.response?.data
