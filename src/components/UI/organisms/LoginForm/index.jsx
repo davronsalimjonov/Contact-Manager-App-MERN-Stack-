@@ -62,7 +62,7 @@ const LoginForm = () => {
                 {authStrategy === 'phone' && (
                     <FormPhoneInput
                         label='Telefon nomer'
-                        placeholder='+998'
+                        placeholder='Telefon nomer'
                         control={control}
                         name='phone'
                         rules={{
