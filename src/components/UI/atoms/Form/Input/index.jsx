@@ -13,22 +13,28 @@ const Input = forwardRef(({
     defaultValue,
     register = {},
     error = '',
+    preffix,
+    suffix,
     ...otherProps
 }, ref) => {
     return (
-        <input
-            ref={ref}
-            className={cn(cls.input, error && cls.error, className)}
-            type={type}
-            value={value}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            onChange={onChange}
-            disabled={disabled}
-            readOnly={readOnly}
-            {...otherProps}
-            {...register}
-        />
+        <span className={cls.wrapper}>
+            {suffix && <span className={cls.input__suffix}>{suffix}</span>}
+            <input
+                ref={ref}
+                className={cn(cls.input, error && cls.error, className)}
+                type={type}
+                value={value}
+                placeholder={placeholder}
+                defaultValue={defaultValue}
+                onChange={onChange}
+                disabled={disabled}
+                readOnly={readOnly}
+                {...otherProps}
+                {...register}
+            />
+            {preffix && <span className={cls.input__preffix}>{preffix}</span>}
+        </span>
     );
 })
 

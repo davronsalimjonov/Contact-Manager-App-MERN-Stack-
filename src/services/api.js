@@ -28,7 +28,7 @@ api.interceptors.response.use(
     error => {
         const { config, response } = error;
 
-        if (response?.status === 400 && ['/user/me', '/auth/login', '/auth/refresh'].includes(config?.url)) {
+        if (response?.status === 400 && ['/user/me', '/employee/me', '/auth/login', '/auth/refresh'].includes(config?.url)) {
             store.dispatch(authActions.logout())
             return Promise.reject(error);
         }

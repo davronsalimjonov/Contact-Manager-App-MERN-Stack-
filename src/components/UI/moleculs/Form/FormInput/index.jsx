@@ -10,6 +10,8 @@ const FormInput = ({
     disabled,
     placeholder,
     defaultValue,
+    preffix,
+    suffix,
     error,
     register = {},
     ...otherProps
@@ -26,6 +28,8 @@ const FormInput = ({
                 defaultValue={defaultValue}
                 register={register}
                 error={error}
+                preffix={preffix}
+                suffix={suffix}
                 {...otherProps}
             />
         </FormElementWrapper>
