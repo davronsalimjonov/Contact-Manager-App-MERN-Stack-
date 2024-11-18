@@ -15,7 +15,7 @@ const MainLayout = () => {
             <div className={cls.layout__main}>
                 <Navbar onPerionChange={setPeriod} />
                 <div className={cls.layout__main__body}>
-                    <Outlet context={period} />
+                    <Outlet context={[period]} />
                 </div>
             </div>
         </div>

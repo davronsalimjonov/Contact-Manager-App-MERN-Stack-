@@ -27,6 +27,8 @@ import { lineChartData } from '../../../pages/Dashboard/data';
 
 import cls from './LineChart.module.scss'
 import PieChartHeader from '../PieChartHeader';
+import Select from '../Form/Select';
+import { MONTH_OPTIONS } from '@/constants/form';
 
 const getCurrentMonth = () => {
     const monthNames = [
@@ -45,7 +47,7 @@ function LineChart() {
         labels: getDaysInMonth(selectedMonth),
         datasets: [
             {
-                label: `${selectedMonth} Data`,
+                label: `2024`,
                 data: lineChartData[selectedMonth],
                 fill: false,
                 borderColor: 'rgba(18, 86, 219, 1)',
@@ -67,7 +69,7 @@ function LineChart() {
                     color: "rgba(0, 0, 0, 0.1)",
                 },
                 title: {
-                    display: true,
+                    display: false,
                     text: "Days",
                 },
             },
@@ -79,7 +81,7 @@ function LineChart() {
                     color: "rgba(0, 0, 0, 0.1)",
                 },
                 title: {
-                    display: true,
+                    display: false,
                     text: "Value",
                 },
             },
@@ -99,11 +101,12 @@ function LineChart() {
         <div className={cls.LineChart}>
             <div>
                 <PieChartHeader title="O'quvchilar Oqimi" />
-                <select onChange={(e) => setSelectedMonth(e.target.value)} value={selectedMonth}>
-                    {Object.keys(lineChartData).map((month) => (
-                        <option key={month} value={month}>{month}</option>
-                    ))}
-                </select>
+                <Select 
+                    placeholder='Month'
+                    isSearchable={false}
+                    className={cls.select}
+                    options={MONTH_OPTIONS}
+                />
             </div>
 
             <Line data={data} options={options} />

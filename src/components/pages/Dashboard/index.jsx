@@ -1,13 +1,16 @@
+import { useOutletContext } from 'react-router-dom'
+import useGetStatistic from '@/hooks/useGetStatistic'
 import { MetricCashIcon, MetricPersonsIcon, MetricStarsIcon, MetricTimeIcon, StarIcon } from '@/components/UI/atoms/icons'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import PieChartCards from '../../UI/moleculs/PieChartCards'
 import LineChartCard from '../../UI/moleculs/LineChartCard'
 import { pieChartData } from './data'
 import cls from './Dashboard.module.scss'
-import useGetStatistic from '@/hooks/useGetStatistic'
 
 const Dashboard = () => {
-    useGetStatistic({})
+    const [period] = useOutletContext()
+
+    useGetStatistic({ startDate: period.startDate, endDate: period.endDate })
     return (
         <div className={cls.main}>
             <div className={cls.mainCard}>

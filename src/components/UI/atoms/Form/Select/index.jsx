@@ -1,6 +1,7 @@
 import ReactSelect, { components } from 'react-select'
 import cls from './Select.module.scss';
 import { CloseIcon } from '../../icons';
+import { cn } from '@/utils/lib';
 
 const ClearIndicator = (props) => {
     return (
@@ -18,9 +19,11 @@ const DropdownIndicator = (props) => {
 
 const Select = ({
     onChange,
-    placeholder = '',
     options = [],
     isClearable,
+    placeholder = '',
+    className = '',
+    isSearchable = true,
     ...otherProps
 }) => {
     return (
@@ -30,11 +33,12 @@ const Select = ({
                 ClearIndicator,
                 DropdownIndicator
             }}
-            className={cls.select}
+            className={cn(cls.select, className)}
             options={options}
             placeholder={placeholder}
             onChange={onChange}
             isClearable={isClearable}
+            isSearchable={isSearchable}
             {...otherProps}
         />
     );

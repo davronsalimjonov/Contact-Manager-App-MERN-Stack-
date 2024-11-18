@@ -2,9 +2,8 @@ import { debounce } from '@/utils/lib';
 import { STUDENT_STATUS_ENUMS } from '@/constants';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
-import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
-import cls from './StudentsSearchBar.module.scss';
 import PhoneInput from '../../atoms/Form/PhoneInput';
+import cls from './StudentsSearchBar.module.scss';
 
 const StudentsSearchBar = ({
     onChangeStatus,

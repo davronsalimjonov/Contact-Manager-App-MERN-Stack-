@@ -23,3 +23,26 @@
         }
     }
 }
+
+.select{
+    min-width: 160px;
+
+    & > div:nth-child(3){
+        border-radius: 8px !important;
+        background-color: var(--blue-color);
+        display: flex;
+        justify-content: center;
+
+        & > div:first-child{
+            flex: none;
+
+            & > *{
+                color: var(--base-white-color);
+            }
+        }
+        
+        & path{
+            fill: var(--base-white-color) !important;
+        }
+    }
+}
