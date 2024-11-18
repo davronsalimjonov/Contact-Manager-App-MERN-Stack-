@@ -1,23 +1,23 @@
 
-.mainCard {
+.page{
+    height: 100%;
     display: flex;
-    gap: 24px;
+    flex-direction: column;
+    gap: 18px;
 
-    & > *{
-        flex: 1;
+    &__metrics{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 24px;
     }
-}
 
-.pieChartCards {
-    margin-top: 20px;
-    display: flex;
-    gap: 20px;
-}
+    &__charts{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
 
-.pieChartCard {
-    background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.05);
-    width: 50%;
-    border-radius: 12px;
-    padding: 20px;
+        & > *{
+            grid-column: 1fr;
+        }
+    }
 }

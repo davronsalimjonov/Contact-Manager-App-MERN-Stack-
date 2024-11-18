@@ -1,27 +1,40 @@
 import { useEffect, useState } from 'react';
+import { endOfISOWeek, lastDayOfMonth, startOfISOWeek, startOfMonth } from 'date-fns';
 import { cn } from '@/utils/lib';
 import useClickOutside from '@/hooks/useClickOutside';
-import { endOfISOWeek, lastDayOfMonth, startOfISOWeek, startOfMonth } from 'date-fns';
 import Button from '../../atoms/Buttons/Button';
 import { LeftArrowIcon } from '../../atoms/icons';
 import DatePicker from '../../atoms/Form/DatePicker';
 import cls from './TimePeriodPicker.module.scss';
 
-const defaultDate = new Date(Date.now()).toISOString()
+let defaultDate = new Date(Date.now())
+defaultDate.setHours(0, 0, 0, 0)
+defaultDate = new Date(defaultDate.getTime() + 5 * 60 * 60000).toISOString()
+
+let defaultEndDate = new Date(Date.now())
+defaultEndDate.setHours(23, 59, 59, 0)
+defaultEndDate = new Date(defaultEndDate.getTime() + 5 * 60 * 60000).toISOString()
 
 const TimePeriodPicker = ({ onChange }) => {
     const [timePeriod, setTimePeriod] = useState('day')
     const [isOpenPopover, setIsOpenPopover] = useState(false)
     const ref = useClickOutside({ onClickOutside: () => setIsOpenPopover(false) })
-    const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultDate, date: defaultDate })
+    const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate })
 
     const handleChangeDatepicker = (date) => {
+        date = new Date(date)
+        date.setHours(0, 0, 0, 0)
+        date = new Date(date.getTime() + 5 * 60 * 60000).toISOString()
+
         let startDate;
         let endDate;
 
         if (timePeriod === 'day') {
+            let lastHours = new Date(date)
+            lastHours.setHours(23, 59, 59, 0)
+
             startDate = date
-            endDate = date
+            endDate = new Date(lastHours.getTime() + 5 * 60 * 60000).toISOString()
         } else if (timePeriod === 'week') {
             startDate = new Date(startOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
             endDate = new Date(endOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
@@ -56,6 +69,8 @@ const TimePeriodPicker = ({ onChange }) => {
                     </div>
                     <DatePicker
                         inline
+                        selected={date?.date}
+                        maxDate={new Date(Date.now())}
                         className={cls.popover__datepicker}
                         showWeekPicker={timePeriod === 'week'}
                         showMonthYearPicker={timePeriod === 'month'}

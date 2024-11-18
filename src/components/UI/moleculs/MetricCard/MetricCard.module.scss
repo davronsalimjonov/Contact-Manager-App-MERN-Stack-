@@ -3,6 +3,12 @@
     border-radius: 8px;
     background-color: var(--base-white-color);
     box-shadow: 6.05px 6.05px 54.41px 0px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+
+    &>div:last-child{
+        margin-top: auto;
+    }
 
     &>div:nth-child(1) {
         display: flex;

@@ -6,9 +6,7 @@ const MetricCard = ({
   value = "",
   icon = <></>,
   iconBg = "",
-  stat = <></>,
   percentage = 0,
-  positively = true
 }) => {
   return (
     <div className={cls.card}>
@@ -20,8 +18,8 @@ const MetricCard = ({
               <div className={cls.card__icon} style={{ backgroundColor: iconBg }}>{icon}</div>
         </div>
         <PerformanceIndicator
-            value={percentage}
-            positively={positively}
+            value={Math.abs(percentage)}
+            positively={percentage >= 0}
             label='Bu oydagi natijalar'
         />
     </div>

@@ -92,3 +92,14 @@ export const onImageError = (e, url = '/images/not-found.jpg') => {
     e.target.id = url;
     e.target.src = url
 }
+
+export function convertSecondsToTimeFormat(seconds = 0) {
+    if(isNaN(seconds)) {
+        seconds = 0
+    }
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
+    return `${formattedMinutes}:${formattedSeconds}`;
+}  
