@@ -1,0 +1,18 @@
+.indicator {
+    display: flex;
+    align-items: center;
+
+    &>span {
+        font-weight: 600;
+        line-height: 18.78px;
+    }
+
+    &__value{
+        margin-left: 8px;
+    }
+
+    &__label{
+        margin-left: 4px;
+        color: var(--blue-gray-400-color);
+    }
+}

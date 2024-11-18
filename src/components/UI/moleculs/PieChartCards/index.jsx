@@ -1,4 +1,3 @@
-import React from 'react'
 import PieChart from '../../atoms/PieChart'
 import PieChartHeader from '../../atoms/PieChartHeader'
 import PieChartLegend from '../../atoms/PieChartLegend'

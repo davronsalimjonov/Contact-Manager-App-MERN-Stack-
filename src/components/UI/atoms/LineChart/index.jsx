@@ -23,14 +23,14 @@ ChartJS.register(
 
 );
 
-import { lineChartData } from '../../organisms/Main/data';
+import { lineChartData } from '../../../pages/Dashboard/data';
 
 import cls from './LineChart.module.scss'
 import PieChartHeader from '../PieChartHeader';
 
 const getCurrentMonth = () => {
     const monthNames = [
-        "January", "February", "March", "April", "May", "June", 
+        "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
     return monthNames[new Date().getMonth()];
@@ -42,11 +42,11 @@ function LineChart() {
     const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth());
 
     const data = {
-        labels: getDaysInMonth(selectedMonth), 
+        labels: getDaysInMonth(selectedMonth),
         datasets: [
             {
                 label: `${selectedMonth} Data`,
-                data: lineChartData[selectedMonth], 
+                data: lineChartData[selectedMonth],
                 fill: false,
                 borderColor: 'rgba(18, 86, 219, 1)',
                 pointHoverRadius: 7,
@@ -92,7 +92,7 @@ function LineChart() {
             tooltip: {
                 enabled: true,
             },
-        },    
+        },
     };
 
     return (

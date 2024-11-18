@@ -1,15 +1,10 @@
-.Main {
-    margin:     25px;
-    padding-bottom: 25px;
-}
 
-.MainCard {
+.mainCard {
     display: flex;
-    justify-content: space-evenly;
-    gap: 2%;
+    gap: 24px;
 
-    & > div {
-        width: 25%;
+    & > *{
+        flex: 1;
     }
 }
 

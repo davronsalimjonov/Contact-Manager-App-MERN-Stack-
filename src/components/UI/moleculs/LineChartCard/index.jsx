@@ -1,4 +1,3 @@
-import React from 'react'
 import LineChart from '../../atoms/LineChart'
 import cls from "./LineChartCard.module.scss"
 

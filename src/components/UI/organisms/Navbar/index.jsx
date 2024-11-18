@@ -1,17 +1,20 @@
 import Avatar from 'react-avatar';
-import cls from './Navbar.module.scss';
-import NotificationButton from '../../moleculs/NotificationButton';
+import { useLocation } from 'react-router-dom';
 import useGetUser from '@/hooks/useGetUser';
 import { getUserFullName } from '@/utils/lib';
+import TimePeriodPicker from '../TimePeriodPicker';
+import NotificationButton from '../../moleculs/NotificationButton';
+import cls from './Navbar.module.scss';
 
-const Navbar = () => {
+const Navbar = ({ onPerionChange }) => {
+    const location = useLocation()
     const { data: user } = useGetUser()
 
     return (
         <nav className={cls.navbar}>
             <span className={cls.navbar__name}>Dashboard</span>
             <div className={cls.navbar__controls}>
-
+                {location.pathname === '/' && <TimePeriodPicker onChange={onPerionChange} />}
                 <NotificationButton />
                 <Avatar src={user?.url} name={getUserFullName(user)} size={56} round />
             </div>

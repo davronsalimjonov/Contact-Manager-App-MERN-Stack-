@@ -1,4 +1,3 @@
-import React from 'react'
 import cls from './DefaultInput.module.scss'
 
 const DefaultInput = ({

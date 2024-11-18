@@ -27,8 +27,8 @@ api.interceptors.response.use(
     res => res,
     error => {
         const { config, response } = error;
-
-        if (response?.status === 400 && ['/user/me', '/employee/me', '/auth/login', '/auth/refresh'].includes(config?.url)) {
+        
+        if ([!response || [400, 500].includes(response?.status)] && ['/user/me', '/employee/me', '/auth/login', '/auth/refresh'].includes(config?.url)) {
             store.dispatch(authActions.logout())
             return Promise.reject(error);
         }
@@ -64,7 +64,7 @@ export const paramsToString = (params) => {
     return paramsObj.toString()
 }
 
-export const queryClinet = new QueryClient({
+export const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
             refetchOnWindowFocus: false,

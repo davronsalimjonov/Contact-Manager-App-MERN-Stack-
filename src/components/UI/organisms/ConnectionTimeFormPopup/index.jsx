@@ -10,7 +10,7 @@ import cls from './ConnectionTimeFormPopup.module.scss';
 const ConnectionTimeFormPopup = ({
     onSubmit
 }) => {
-    const { control, watch, setValue, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+    const { control, setValue, handleSubmit, formState: { errors, isSubmitting } } = useForm({
         resolver: yupResolver(connectionTimeSchema),
         mode: 'onSubmit'
     })

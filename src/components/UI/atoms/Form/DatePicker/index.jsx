@@ -35,6 +35,7 @@ const DatePicker = forwardRef(({
             placeholderText={placeholder}
             disabled={disabled}
             readOnly={readOnly}
+            calendarStartDay={1}
             {...otherProps}
         />
     );

@@ -1,4 +1,3 @@
-import React from 'react'
 import cls from "./NotFound.module.scss"
 import NotFoundImg from '../../atoms/NotFound'
 import NotFoundText from '../../atoms/NotFoundText'

@@ -1,43 +1,3 @@
-import { PersonBlue, PersonGreen, PersonOrange, PersonRed, StatFal, StatGrow } from "../../atoms/icons";
-
-export const cardItems = [
-    {
-        id: 0,
-        header: "O'quvchilar Soni",
-        count: "40689",
-        percentage: "8.5%",
-        icon: PersonGreen(),
-        iconBg: "rgba(0, 182, 155, 0.1)",
-        stat: StatGrow()
-    },
-    {
-        id: 1,
-        header: "Faolligi",
-        count: "88%",
-        percentage: "1.3%",
-        icon: PersonOrange(),
-        iconBg: "rgba(254, 197, 61, 0.1)",
-        stat: StatGrow()
-    },
-    {
-        id: 2,
-        header: "Natijalar",
-        count: "2300",
-        percentage: "4.3%",
-        icon: PersonRed(),
-        iconBg: "rgba(255, 0, 0, 0.1)",
-        stat: StatFal()
-    },
-    {
-        id: 3,
-        header: "Adaptatsiya Faolligi",
-        count: "05:24 s",
-        percentage: "1.8%",
-        icon: PersonBlue(),
-        iconBg: "rgba(160, 188, 241, 0.5)",
-        stat: StatGrow()
-    }
-]
 
 export const pieChartData = [
     {
@@ -54,20 +14,20 @@ export const pieChartData = [
         values: [20, 35, 20, 20, 73, 18],
         chartColors: ["rgba(18, 86, 219, 0.8)", "rgba(255, 52, 219, 0.8)", "rgba(255, 210, 95, 0.8)", "rgba(255, 51, 51, 0.8)", "rgba(100, 2, 205, 0.8)", "rgba(39, 205, 2, 0.8)"],
         background: [
-            "rgba(18, 86, 219, 0.1)",  
-            "rgba(255, 52, 219, 0.1)", 
-            "rgba(255, 210, 95, 0.1)",  
-            "rgba(255, 51, 51, 0.1)",  
-            "rgba(100, 2, 205, 0.1)", 
-            "rgba(235, 250, 239, 1)"   
+            "rgba(18, 86, 219, 0.1)",
+            "rgba(255, 52, 219, 0.1)",
+            "rgba(255, 210, 95, 0.1)",
+            "rgba(255, 51, 51, 0.1)",
+            "rgba(100, 2, 205, 0.1)",
+            "rgba(235, 250, 239, 1)"
         ],
         borders: [
-            "rgba(18, 86, 219, 0.2)",  
-            "rgba(255, 52, 219, 0.2)", 
-            "rgba(255, 210, 95, 0.2)",  
-            "rgba(255, 51, 51, 0.2)",  
-            "rgba(100, 2, 205, 0.2)", 
-            "rgba(214, 244, 222, 1)"   
+            "rgba(18, 86, 219, 0.2)",
+            "rgba(255, 52, 219, 0.2)",
+            "rgba(255, 210, 95, 0.2)",
+            "rgba(255, 51, 51, 0.2)",
+            "rgba(100, 2, 205, 0.2)",
+            "rgba(214, 244, 222, 1)"
         ]
     }
 ]

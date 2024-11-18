@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import useGetUser from "@/hooks/useGetUser";
 import Login from "@/components/pages/Login";
-import Main from "@/components/UI/organisms/Main";
+import Dashboard from "@/components/pages/Dashboard";
 import Workspace from "@/components/pages/Workspace";
 import MyStudents from "@/components/pages/MyStudents";
 import NotFound from "@/components/UI/moleculs/NotFound";
@@ -18,7 +18,7 @@ const privateRoutes = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <Main />
+                element: <Dashboard />
             },
             {
                 path: '/students',
@@ -43,10 +43,6 @@ const privateRoutes = createBrowserRouter([
             {
                 path: '/settings',
                 element: <Settings />
-            },
-            {
-                path: '/settings',
-                element: <Settings />,
             },
             {
                 path: '*',

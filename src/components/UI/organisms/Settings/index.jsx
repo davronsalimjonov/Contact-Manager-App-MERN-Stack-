@@ -1,4 +1,3 @@
-import React from 'react'
 import cls from "./Settings.module.scss"
 import DefaultInput from '../../atoms/DefaultInput'
 import DefaultDateInput from '../../atoms/DefaultDateInput'
