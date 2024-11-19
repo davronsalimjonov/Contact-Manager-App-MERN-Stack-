@@ -19,6 +19,7 @@ const SingleStudent = () => {
     const student = course?.user
 
     const studentFormData = {
+        id: student?.id,
         avatar: student?.url,
         firstName: student?.firstName,
         lastName: student?.lastName,
@@ -30,6 +31,8 @@ const SingleStudent = () => {
 
     const handleUpdateUser = async (data) => {
         try {
+            const studentId = data?.id
+            delete data.id
             delete data.createdAt
             data.phone = sanitizePhoneNumber(data.phone)
             data.gender = String(data.gender)
@@ -39,13 +42,13 @@ const SingleStudent = () => {
 
             const fd = objectToFormData(data)
 
-            const updatedUser = await updateUser(courseId, fd)
+            const updatedUser = await updateUser(studentId, fd)
             queryClient.setQueryData(['user-course', courseId], (oldData) => ({ ...oldData, user: updatedUser }))
             queryClient.setQueriesData(['students'], oldData => ({
                 ...oldData,
                 pages: oldData?.pages?.map(page => ({
                     ...page,
-                    items: page?.items.map(item => {
+                    items: page?.items?.map(item => {
                         if (item?.user?.id === courseId) {
                             item.user = updatedUser
                         }

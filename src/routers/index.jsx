@@ -1,15 +1,15 @@
 import { useSelector } from "react-redux";
 import useGetUser from "@/hooks/useGetUser";
 import Login from "@/components/pages/Login";
+import Loader from "@/components/UI/atoms/Loader";
 import Dashboard from "@/components/pages/Dashboard";
 import Workspace from "@/components/pages/Workspace";
 import MyStudents from "@/components/pages/MyStudents";
+import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
-import Settings from "@/components/UI/organisms/Settings";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import Loader from "@/components/UI/atoms/Loader";
-import PageNotFound from "@/components/pages/PageNotFound";
+import Settings from "@/components/pages/Settings";
 
 const privateRoutes = createBrowserRouter([
     {
