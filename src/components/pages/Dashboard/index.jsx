@@ -1,4 +1,5 @@
 import { useOutletContext } from 'react-router-dom'
+import Loader from '@/components/UI/atoms/Loader'
 import useGetStatistic from '@/hooks/useGetStatistic'
 import { convertSecondsToTimeFormat } from '@/utils/lib'
 import CoursesChart from '@/components/UI/organisms/CoursesChart'
@@ -7,7 +8,6 @@ import NewStudentsCountChart from '@/components/UI/organisms/NewStudentsCountCha
 import { MetricCashIcon, MetricPersonsIcon, MetricStarsIcon, MetricTimeIcon, StarIcon } from '@/components/UI/atoms/icons'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './Dashboard.module.scss'
-import Loader from '@/components/UI/atoms/Loader'
 
 const Dashboard = () => {
     const [period] = useOutletContext()

@@ -43,6 +43,11 @@
         }
     }
 
+    &__body{
+        max-height: 280px;
+        height: 280px;
+    }
+
     &__chart {
         padding-bottom: 8px;
         padding-left: 18px;

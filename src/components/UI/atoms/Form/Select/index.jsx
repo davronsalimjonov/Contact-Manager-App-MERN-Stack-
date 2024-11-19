@@ -1,7 +1,7 @@
 import ReactSelect, { components } from 'react-select'
-import cls from './Select.module.scss';
-import { CloseIcon } from '../../icons';
 import { cn } from '@/utils/lib';
+import { CloseIcon } from '../../icons';
+import cls from './Select.module.scss';
 
 const ClearIndicator = (props) => {
     return (

@@ -16,7 +16,7 @@ defaultEndDate.setHours(23, 59, 59, 0)
 defaultEndDate = new Date(defaultEndDate.getTime() + 5 * 60 * 60000).toISOString()
 
 const TimePeriodPicker = ({ onChange }) => {
-    const [timePeriod, setTimePeriod] = useState('day')
+    const [timePeriod, setTimePeriod] = useState('month')
     const [isOpenPopover, setIsOpenPopover] = useState(false)
     const ref = useClickOutside({ onClickOutside: () => setIsOpenPopover(false) })
     const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate })

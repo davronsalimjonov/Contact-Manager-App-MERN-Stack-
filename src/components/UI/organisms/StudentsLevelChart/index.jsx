@@ -22,21 +22,25 @@ const StudentsLevelChart = ({
     title = '',
     levels = []
 }) => {
-   
+
     const colors = [
         { color: 'rgba(18, 86, 219, 0.8)', borderColor: 'rgba(18, 86, 219, 0.2)', backgroundColor: 'rgba(18, 86, 219, 0.1)' },
         { color: 'rgba(39, 205, 2, 0.8)', borderColor: 'rgba(214, 244, 222, 0.2)', backgroundColor: 'rgba(235, 250, 239, 1)' },
         { color: 'rgba(100, 2, 205, 0.8)', borderColor: 'rgba(100, 2, 205, 0.2)', backgroundColor: 'rgba(100, 2, 205, 0.1)' },
         { color: 'rgba(255, 51, 51, 0.8)', borderColor: 'rgba(255, 51, 51, 0.2)', backgroundColor: 'rgba(255, 51, 51, 0.1)' },
         { color: 'rgba(255, 52, 219, 0.8)', borderColor: 'rgba(255, 52, 219, 0.2)', backgroundColor: 'rgba(255, 52, 219, 0.1)' },
-        { color: 'rgba(255, 210, 95, 0.8)', borderColor: 'rgba(255, 210, 95, 0.2)', backgroundColor: 'rgba(255, 210, 95, 0.8)' },
+        { color: 'rgba(255, 210, 95, 0.8)', borderColor: 'rgba(255, 210, 95, 0.2)', backgroundColor: 'rgba(255, 210, 95, 0.1)' },
     ]
+
+    const getLevelColor = (index) => {
+        return colors[index % colors.length]
+    }
 
     const data = {
         labels: levels?.map(level => (level?.level)),
         datasets: [{
             data: levels?.map(level => level?.count),
-            backgroundColor: colors.map(color => color.color),
+            backgroundColor: levels?.map((_, index) => getLevelColor(index)?.color),
             label: 'Oquvchilar soni'
         }]
     }
@@ -44,9 +48,9 @@ const StudentsLevelChart = ({
     const legends = levels?.map((level, index) => ({
         name: level?.level,
         count: level?.count,
-        color: colors?.[index].color,
-        borderColor: colors?.[index].borderColor,
-        backgroundColor: colors?.[index]?.backgroundColor
+        color: getLevelColor(index).color,
+        borderColor: getLevelColor(index).borderColor,
+        backgroundColor: getLevelColor(index)?.backgroundColor
     }))
 
     return (
