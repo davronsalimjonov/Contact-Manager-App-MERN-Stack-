@@ -31,6 +31,7 @@ const StudentsTable = ({
                                     time={student?.connectionTime}
                                     status={student?.status}
                                     userId={student?.user?.id}
+                                    courseId={student.id}
                                 />
                             )}
                         />

@@ -9,3 +9,13 @@ export const getMentorGroups = async (mentorId) => {
     const res = await api.get(`/group/mentor-groups/${mentorId}`)
     return res.data
 }
+
+export const getUserCourseById = async (courseId) => {
+    const res = await api.get(`/user-course/single-course-for-web/${courseId}`)
+    return res.data
+}
+
+export const updateUserCourse = async (courseId, data) => {
+    const res = await api.put(`/user-course/${courseId}`, data)
+    return res.data
+}

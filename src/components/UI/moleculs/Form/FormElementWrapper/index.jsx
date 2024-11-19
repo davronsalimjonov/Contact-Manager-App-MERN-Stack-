@@ -1,6 +1,6 @@
 import LabelText from '@/components/UI/atoms/LabelText';
-import cls from './FormElementWrapper.module.scss';
 import ErrorLabel from '@/components/UI/atoms/ErrorLabel';
+import cls from './FormElementWrapper.module.scss';
 
 const FormElementWrapper = ({
     label = '',

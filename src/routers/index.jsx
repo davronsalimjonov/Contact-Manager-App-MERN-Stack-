@@ -33,7 +33,7 @@ const privateRoutes = createBrowserRouter([
                 element: <MyStudents />
             },
             {
-                path: '/students/:studentId',
+                path: '/students/:courseId',
                 element: <SingleStudent />
             },
             {

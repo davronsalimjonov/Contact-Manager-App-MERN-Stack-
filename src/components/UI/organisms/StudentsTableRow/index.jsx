@@ -11,6 +11,7 @@ const StudentsTableRow = ({
     time = '',
     status = '',
     userId = '',
+    courseId = '',
     fullName = '',
     phoneNumber = '',
 }) => {
@@ -18,8 +19,7 @@ const StudentsTableRow = ({
     const formatedPhoneNumber = formatPhoneNumber(phoneNumber)
     
     const dropdownMenuItems = [
-        { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(userId) },
-        { label: 'Transfer student' },
+        { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(courseId) },
     ]
 
     return (

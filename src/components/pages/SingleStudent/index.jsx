@@ -5,17 +5,18 @@ import { useQueryClient } from 'react-query';
 import { customToast } from '@/utils/toast';
 import { updateUser } from '@/services/user';
 import Loader from '@/components/UI/atoms/Loader';
-import useGetUserById from '@/hooks/useGetUserById';
 import { objectToFormData, sanitizePhoneNumber } from '@/utils/lib';
+import useGetStudentCourseById from '@/hooks/useGetStudentCourseById';
 import StudentInformationForm from '@/components/UI/organisms/StudentInformationForm';
 import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
 import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleStudent.module.scss';
 
 const SingleStudent = () => {
-    const { studentId } = useParams()
+    const { courseId } = useParams()
     const queryClient = useQueryClient()
-    const { data: student, isLoading: isLoadingStudent } = useGetUserById(studentId)
+    const { data: course, isLoading: isLoadingStudent } = useGetStudentCourseById(courseId)
+    const student = course?.user
 
     const studentFormData = {
         avatar: student?.url,
@@ -33,26 +34,26 @@ const SingleStudent = () => {
             data.phone = sanitizePhoneNumber(data.phone)
             data.gender = String(data.gender)
 
-            if(!data?.birthday) delete data.birthday
+            if (!data?.birthday) delete data.birthday
             if (!(data?.avatar instanceof File) && data?.avatar !== null) delete data.avatar
-            
+
             const fd = objectToFormData(data)
 
-            const updatedUser = await updateUser(studentId, fd) 
-            queryClient.setQueryData(['user', studentId], updatedUser)  
+            const updatedUser = await updateUser(courseId, fd)
+            queryClient.setQueryData(['user-course', courseId], (oldData) => ({ ...oldData, user: updatedUser }))
             queryClient.setQueriesData(['students'], oldData => ({
                 ...oldData,
                 pages: oldData?.pages?.map(page => ({
-                    ...page, 
+                    ...page,
                     items: page?.items.map(item => {
-                        if(item?.user?.id === studentId) {
+                        if (item?.user?.id === courseId) {
                             item.user = updatedUser
                         }
                         return item
                     })
                 }))
             }))
-            toast.success("Malumotlar o'zgartirildi") 
+            toast.success("Malumotlar o'zgartirildi")
         } catch (error) {
             const res = error?.response?.data
             customToast.error(res?.message || error?.message || 'Xatolik yuz berdi')
@@ -63,7 +64,13 @@ const SingleStudent = () => {
         <div className={cls.page}>
             {!isLoadingStudent ? (
                 <>
-                    <StudentInformationForm defaultValues={studentFormData} onSubmit={handleUpdateUser} />
+                    <StudentInformationForm 
+                        connectionDays={course?.days}
+                        connectionTime={course?.connectionTime}
+                        onSubmit={handleUpdateUser} 
+                        defaultValues={studentFormData} 
+                        courseId={courseId}
+                    />
                     <div className={cls.page__cards}>
                         <StudentActionHistory />
                         <StudentPersonalInfo

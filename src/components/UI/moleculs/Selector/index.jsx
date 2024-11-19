@@ -9,9 +9,10 @@ const Selector = ({
     onRemove,
     onChange,
     label = '',
-    error = ''
+    error = '',
+    defaultValue = []
 }) => {
-    const [activeBtns, setActiveBtns] = useState([])
+    const [activeBtns, setActiveBtns] = useState(defaultValue)
 
     const handleClickBtn = (value) => {     
         let updatedState

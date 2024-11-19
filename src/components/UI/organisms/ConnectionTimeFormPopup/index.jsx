@@ -8,17 +8,20 @@ import FormTimeRangaInput from '../../moleculs/Form/FormTimeRangaInput';
 import cls from './ConnectionTimeFormPopup.module.scss';
 
 const ConnectionTimeFormPopup = ({
+    defaultValues = {},
     onSubmit
 }) => {
-    const { control, setValue, handleSubmit, formState: { errors, isSubmitting } } = useForm({
+    const { control, setValue, handleSubmit, getValues, formState: { errors, isSubmitting, isDirty } } = useForm({
         resolver: yupResolver(connectionTimeSchema),
-        mode: 'onSubmit'
+        mode: 'onSubmit',
+        defaultValues
     })
 
     return (
         <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
             <Selector
                 label='Hafta kunlari'
+                defaultValue={getValues('days') || []}
                 items={DAY_OF_WEEK_OPTIONS}
                 onChange={value => setValue('days', value, { shouldDirty: true, shouldValidate: true })}
                 error={errors?.days?.message}
@@ -32,8 +35,9 @@ const ConnectionTimeFormPopup = ({
             <Button 
                 type='submit'
                 isLoading={isSubmitting}
+                disabled={!isDirty}
             >
-                Qo’shish
+                Saqlash
             </Button>
         </form>
     );

@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { cn } from '@/utils/lib';
+import { cn, getDayName } from '@/utils/lib';
+import { useGetUserId } from '@/hooks/useGetUser';
 import { GENDER_OPTIONS } from '@/constants/form';
+import { updateUserCourse } from '@/services/course';
 import { studentInfoSchema } from '@/schemas/student';
 import Dialog from '../../moleculs/Dialog';
 import Button from '../../atoms/Buttons/Button';
@@ -18,10 +22,15 @@ import { EditIcon, LeftArrowIcon, PlusIcon } from '../../atoms/icons';
 import cls from './StudentInformationForm.module.scss';
 
 const StudentInformationForm = ({
+    courseId = '',
+    connectionDays = [],
+    connectionTime = '',
     defaultValues,
     onSubmit
 }) => {
+    const userId = useGetUserId()
     const navigate = useNavigate()
+    const queryClient = useQueryClient()
     const [isOpenDialog, setIsOpenDialog] = useState(false)
     const [isEditable, setIsEditable] = useState(false)
     const { register, control, reset, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
@@ -30,16 +39,50 @@ const StudentInformationForm = ({
         resolver: yupResolver(studentInfoSchema)
     })
 
+    const connectionTimesLabel = [
+        `${connectionDays?.length > 0 ? `${connectionDays?.map(day => getDayName(day, 'short')).join(', ')} kunlari` : ''}`,
+        `${connectionTime ? `${connectionTime} oralig’ida` : ''}`
+    ].filter(text => text).join('; ')
+
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset(defaultValues)
         }
     }, [isSubmitSuccessful])
 
+    const handleUpdateConnectionTimes = async (data) => {
+        try {
+            data.days = data?.days?.sort((a, b) => a - b)
+            await updateUserCourse(courseId, data)
+            queryClient.setQueryData(['user-course', courseId], oldData => ({ ...oldData, ...data }))
+            queryClient.setQueryData(['students', userId], oldData => ({
+                ...oldData,
+                pages: oldData?.pages?.map(page => ({
+                    ...page,
+                    items: page.items?.map(item => {
+                        if(item.id === courseId){
+                            item.days = data.days
+                            item.connectionTime = data.connectionTime 
+                        }
+                        return item
+                    })
+                }))
+            }))
+            toast.success("Bog'lanish vaqti o'zgartirildi!")
+            setIsOpenDialog(false)
+        } catch (error) {
+            const errorMessage = error?.response?.data?.message || error?.message || 'Xatolik yuz berdi'
+            toast.error(errorMessage)
+        }
+    }
+
     return (
         <>
             <Dialog isOpen={isOpenDialog} onClose={() => setIsOpenDialog(false)}>
-                <ConnectionTimeFormPopup />
+                <ConnectionTimeFormPopup
+                    onSubmit={handleUpdateConnectionTimes}
+                    defaultValues={{ days: connectionDays, connectionTime }}
+                />
             </Dialog>
             <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={cls.form__header}>
@@ -111,6 +154,7 @@ const StudentInformationForm = ({
                     <FormInput
                         label='Bog’lanish kunlari'
                         placeholder='Bog’lanish kunlarini kiriting'
+                        value={connectionTimesLabel}
                         readOnly
                         preffix={(
                             <button
@@ -118,7 +162,7 @@ const StudentInformationForm = ({
                                 className={cls.form__elements__btn}
                                 onClick={() => setIsOpenDialog(true)}
                             >
-                                <PlusIcon fill='#5F6C86' />
+                                {connectionTimesLabel ? <EditIcon /> : <PlusIcon fill='#5F6C86' />}
                             </button>
                         )}
                     />
