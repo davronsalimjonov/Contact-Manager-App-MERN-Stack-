@@ -65,7 +65,7 @@ const CoursesChart = ({
                     <LegendItem
                         key={index}
                         name={legend?.name}
-                        value={legend?.value}
+                        value={`${legend?.value || 0}%`}
                         color={legend?.color}
                     />
                 ))}

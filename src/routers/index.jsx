@@ -4,12 +4,12 @@ import Login from "@/components/pages/Login";
 import Dashboard from "@/components/pages/Dashboard";
 import Workspace from "@/components/pages/Workspace";
 import MyStudents from "@/components/pages/MyStudents";
-import NotFound from "@/components/UI/moleculs/NotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import Settings from "@/components/UI/organisms/Settings";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Loader from "@/components/UI/atoms/Loader";
+import PageNotFound from "@/components/pages/PageNotFound";
 
 const privateRoutes = createBrowserRouter([
     {
@@ -46,7 +46,7 @@ const privateRoutes = createBrowserRouter([
             },
             {
                 path: '*',
-                element: <NotFound />
+                element: <PageNotFound />
             }
         ]
     },
