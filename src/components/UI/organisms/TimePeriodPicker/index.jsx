@@ -1,5 +1,6 @@
+import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { endOfISOWeek, lastDayOfMonth, startOfISOWeek, startOfMonth } from 'date-fns';
+import { endOfISOWeek, startOfISOWeek } from 'date-fns';
 import { cn } from '@/utils/lib';
 import useClickOutside from '@/hooks/useClickOutside';
 import Button from '../../atoms/Buttons/Button';
@@ -7,13 +8,8 @@ import { LeftArrowIcon } from '../../atoms/icons';
 import DatePicker from '../../atoms/Form/DatePicker';
 import cls from './TimePeriodPicker.module.scss';
 
-let defaultDate = new Date(Date.now())
-defaultDate.setHours(0, 0, 0, 0)
-defaultDate = new Date(defaultDate.getTime() + 5 * 60 * 60000).toISOString()
-
-let defaultEndDate = new Date(Date.now())
-defaultEndDate.setHours(23, 59, 59, 0)
-defaultEndDate = new Date(defaultEndDate.getTime() + 5 * 60 * 60000).toISOString()
+let defaultDate = dayjs().startOf('month').format('YYYY-MM-DD')
+let defaultEndDate = dayjs().endOf('month').format('YYYY-MM-DD')
 
 const TimePeriodPicker = ({ onChange }) => {
     const [timePeriod, setTimePeriod] = useState('month')
@@ -39,8 +35,8 @@ const TimePeriodPicker = ({ onChange }) => {
             startDate = new Date(startOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
             endDate = new Date(endOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
         } else if (timePeriod === 'month') {
-            startDate = new Date(startOfMonth(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
-            endDate = new Date(lastDayOfMonth(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
+            startDate = dayjs(date).startOf('month').format('YYYY-MM-DD')
+            endDate = dayjs(date).endOf('month').format('YYYY-MM-DD')
         } else {
             startDate = date
             endDate = date

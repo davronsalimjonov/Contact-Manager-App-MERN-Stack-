@@ -10,13 +10,14 @@ import Routers from "./routers"
 Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement);
 
 function App() {
-  // useGetStudents()
-  // useGetGroups()
+  useGetStudents()
+  useGetGroups()
+  
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-          <Routers />
-          <Toaster />
+        <Routers />
+        <Toaster />
       </PersistGate>
     </Provider>
   )
