@@ -1,4 +1,4 @@
-import { api } from "./api"
+import { api, paramsToString } from "./api"
 
 export const getUserById = async (userId) => {
     const res = await api.get(`/user/${userId}`)
@@ -10,7 +10,7 @@ export const updateUser = async (userId, data) => {
     return res.data
 }
 
-export const updateEmployee = async (mentorId, data) => {
-    const res = await api.put(`/employee/${mentorId}`, data, { headers: { "Content-Type": 'multipart/form-data' } })
+export const updateEmployee = async (mentorId, data, params) => {
+    const res = await api.put(`/employee/${mentorId}?${paramsToString(params)}`, data, { headers: { "Content-Type": 'multipart/form-data' } })
     return res.data
 }

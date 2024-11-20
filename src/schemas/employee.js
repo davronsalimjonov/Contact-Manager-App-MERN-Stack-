@@ -7,4 +7,5 @@ export const employeeSchema = Yup.object().shape({
     phone: phoneNumberSchema,
     gender: genderSchema,
     birthday: Yup.string().nullable(),
+    degree: Yup.string().required('Til bilish darajasini tanlang')
 })

@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn, onImageError } from '@/utils/lib';
 import { PlusIcon, TrashIcon, UserIcon } from '../../atoms/icons';
 import cls from './AvatarUpload.module.scss';
 
 const AvatarUpload = ({
+    value,
     defaultValue,
     onChange,
     onDelete,
@@ -22,11 +23,17 @@ const AvatarUpload = ({
         typeof onChange === 'function' && onDelete()
     }
 
+    useEffect(() => {
+        if(value === undefined && defaultValue !== src) {
+            setSrc(value)
+        }
+    }, [value])
+
     return (
         <div className={cls.wrapper}>
-            {src ? (
+            {(value || src) ? (
                 <div className={cls.avatar}>
-                    <img src={src} alt="avatar" onError={onImageError} />
+                    <img src={value || src} alt="avatar" onError={onImageError} />
                     <button
                         disabled={disabled}
                         type='button'

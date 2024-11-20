@@ -16,6 +16,7 @@ const StudentsSearchBar = ({
     return (
         <div className={cls.bar}>
             <Select
+                className={cls.bar__form__select}
                 placeholder='Status user'
                 options={statusOptions}
                 onChange={onChangeStatus}

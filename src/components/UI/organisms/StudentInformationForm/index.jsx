@@ -33,12 +33,12 @@ const StudentInformationForm = ({
     const queryClient = useQueryClient()
     const [isOpenDialog, setIsOpenDialog] = useState(false)
     const [isEditable, setIsEditable] = useState(false)
-    const { register, control, reset, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
+    const { register, control, reset, watch, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
         defaultValues,
         mode: 'onSubmit',
         resolver: yupResolver(studentInfoSchema)
     })
-
+    const avatar = watch('avatar')
     const connectionTimesLabel = [
         `${connectionDays?.length > 0 ? `${connectionDays?.map(day => getDayName(day, 'short')).join(', ')} kunlari` : ''}`,
         `${connectionTime ? `${connectionTime} oralig’ida` : ''}`
@@ -49,6 +49,7 @@ const StudentInformationForm = ({
             reset(defaultValues)
         }
     }, [isSubmitSuccessful])
+console.log(avatar instanceof File ? URL.createObjectURL(avatar) : avatar);
 
     const handleUpdateConnectionTimes = async (data) => {
         try {
@@ -94,7 +95,7 @@ const StudentInformationForm = ({
                         <LeftArrowIcon />
                     </button>
                     <AvatarUpload
-                        defaultValue={getValues('avatar')}
+                        value={avatar instanceof File ? URL.createObjectURL(avatar) : avatar}
                         disabled={!isEditable}
                         onChange={file => setValue('avatar', file, { shouldDirty: true, shouldValidate: true })}
                         onDelete={() => setValue('avatar', null, { shouldDirty: true })}

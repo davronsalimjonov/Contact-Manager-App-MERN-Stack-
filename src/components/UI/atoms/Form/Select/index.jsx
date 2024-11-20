@@ -24,6 +24,7 @@ const Select = ({
     placeholder = '',
     className = '',
     isSearchable = true,
+    error,
     ...otherProps
 }) => {
     return (
@@ -33,7 +34,7 @@ const Select = ({
                 ClearIndicator,
                 DropdownIndicator
             }}
-            className={cn(cls.select, className)}
+            className={cn(cls.select, error && cls.error, className)}
             options={options}
             placeholder={placeholder}
             onChange={onChange}

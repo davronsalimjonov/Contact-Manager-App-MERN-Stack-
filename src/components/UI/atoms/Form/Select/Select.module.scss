@@ -1,9 +1,14 @@
 .select {
+    background-color: var(--blue-300-color);
+    border-radius: 4px;
+    
     &>div:nth-child(3) {
         border-radius: 4px;
         padding: 10px 16px;
         border: none;
         box-shadow: none;
+        background-color: transparent;
+        cursor: pointer;
 
         &>div {
             &:first-child {
@@ -78,6 +83,10 @@
 
 .arrowIcon{
     transform: translateX(5px);
+}
+
+.error{
+    border: 1px solid var(--red-color);
 }
 
 @keyframes fadeIn {
