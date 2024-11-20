@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--dark-gray-400-color);
+
+    &__user {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        &__name {
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 21.13px;
+        }
+
+        &__phone {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 16.44px;
+            color: var(--dark-gray-700-color);
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+}

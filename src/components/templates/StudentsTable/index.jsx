@@ -2,7 +2,7 @@ import Mapper from '@/components/UI/atoms/Mapper';
 import Loader from '@/components/UI/atoms/Loader';
 import { getDayName, getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
-import StudentsTableRow from '../../UI/organisms/StudentsTableRow';
+import StudentsTableRow from '../../UI/moleculs/StudentsTableRow';
 import StudentsTableHeader from '../../UI/organisms/StudentsTableHeader';
 import cls from './StudentsTable.module.scss';
 
@@ -31,7 +31,8 @@ const StudentsTable = ({
                                     time={student?.connectionTime}
                                     status={student?.status}
                                     userId={student?.user?.id}
-                                    courseId={student.id}
+                                    userCourseId={student.id}
+                                    courseId={student?.course?.id}
                                 />
                             )}
                         />

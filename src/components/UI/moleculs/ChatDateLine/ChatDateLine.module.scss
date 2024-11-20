@@ -1,0 +1,14 @@
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-weight: 600;
+    line-height: 18.78px;
+
+    &__line{
+        flex: 1;
+        height: 1px;
+        background-color: var(--dark-gray-400-color);
+    }
+}
