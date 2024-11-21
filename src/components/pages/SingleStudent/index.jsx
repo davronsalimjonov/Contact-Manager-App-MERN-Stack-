@@ -5,7 +5,7 @@ import { useQueryClient } from 'react-query';
 import { customToast } from '@/utils/toast';
 import { updateUser } from '@/services/user';
 import Loader from '@/components/UI/atoms/Loader';
-import { objectToFormData, sanitizePhoneNumber } from '@/utils/lib';
+import { objectToFormData } from '@/utils/lib';
 import useGetStudentCourseById from '@/hooks/useGetStudentCourseById';
 import StudentInformationForm from '@/components/UI/organisms/StudentInformationForm';
 import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
@@ -34,7 +34,7 @@ const SingleStudent = () => {
             const studentId = data?.id
             delete data.id
             delete data.createdAt
-            data.phone = sanitizePhoneNumber(data.phone)
+            data.phone = data.phone
             data.gender = String(data.gender)
 
             if (!data?.birthday) delete data.birthday

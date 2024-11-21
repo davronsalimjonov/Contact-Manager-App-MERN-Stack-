@@ -3,6 +3,8 @@
 :root {
   --base-white-color: #fff;
   --main-color: #F5F8FE;
+
+  --light-green-color: rgba(214, 244, 222, 1);
   
   --blue-color: #1256DB;
   --blue-300-color: #F3F7FD;
@@ -12,11 +14,13 @@
   --blue-gray-400-color: #94A3B8;
   --blue-gray-600-color: #475569;
   
+  --dark-gray-200-color: #FAFAFA;
   --dark-gray-300-color: #F3F4F5;
   --dark-gray-400-color: rgba(231, 232, 235, 1);
+  --dark-gray-500-color: rgba(206, 210, 216, 1);
   --dark-gray-700-color: #6D7789;
-  --dark-gray-200-color: #FAFAFA;
-
+  --dark-gray-800-color: rgba(61, 73, 98, 1);
+  
   --red-color: #FF0000;
 }
 
@@ -62,6 +66,15 @@ button {
   background-color: transparent;
   font-family: Raleway;
   cursor: pointer;
+}
+
+button:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button:focus{
+  outline: none;
 }
 
 input {

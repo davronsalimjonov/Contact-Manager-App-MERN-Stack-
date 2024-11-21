@@ -6,7 +6,6 @@ import { isValidPhoneNumber } from 'react-phone-number-input';
 import { login } from '@/services/auth';
 import { customToast } from '@/utils/toast';
 import useAuth from '@/store/auth/auth.thunk';
-import { sanitizePhoneNumber } from '@/utils/lib';
 import Tabs from '../../moleculs/Tabs';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
@@ -32,7 +31,7 @@ const LoginForm = () => {
 
     const handleLogin = async (data) => {
         try {
-            const userLogin = authStrategy === 'phone' ? sanitizePhoneNumber(data.phone) : data.email
+            const userLogin = authStrategy === 'phone' ? data.phone : data.email
             const body = { password: data.password, login: userLogin }
             const res = await login(body)
 

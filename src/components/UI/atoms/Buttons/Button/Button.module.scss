@@ -11,9 +11,4 @@
     color: var(--base-white-color);
     background-color: var(--blue-color);
     transition: all 0.2s;
-
-    &:disabled{
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
 }

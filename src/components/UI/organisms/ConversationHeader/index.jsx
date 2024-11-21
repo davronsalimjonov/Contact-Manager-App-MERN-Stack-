@@ -1,24 +1,28 @@
+import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import { BlockIcon, CallIcon, CloseIcon, VideoCamIcon } from '../../atoms/icons';
 import cls from './ConversationHeader.module.scss';
 
-const ConversationHeader = () => {
+const ConversationHeader = ({
+    fullName = '',
+    phoneNumber = ''
+}) => {
     return (
         <div className={cls.header}>
             <div className={cls.header__user}>
-                <h4 className={cls.header__user__name}>Sardor Xudoyberdiyev</h4>
-                <span className={cls.header__user__phone}>+998 94 252 66 55</span>
+                <h4 className={cls.header__user__name}>{fullName}</h4>
+                <span className={cls.header__user__phone}>{formatPhoneNumberIntl(phoneNumber)}</span>
             </div>
             <div className={cls.header__actions}>
-                <button>
+                <button disabled>
                     <VideoCamIcon />
                 </button>
-                <button>
+                <button disabled>
                     <CallIcon />
                 </button>
-                <button>
+                <button disabled>
                     <BlockIcon />
                 </button>
-                <button>
+                <button disabled>
                     <CloseIcon />
                 </button>
             </div>

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { formatPhoneNumber } from '@/utils/lib';
+import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import TableActionButton from '../TableActionButton';
@@ -17,7 +17,7 @@ const StudentsTableRow = ({
     phoneNumber = '',
 }) => {
     const navigate = useNavigate()
-    const formatedPhoneNumber = formatPhoneNumber(phoneNumber)
+    const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const dropdownMenuItems = [
         { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(userCourseId) },

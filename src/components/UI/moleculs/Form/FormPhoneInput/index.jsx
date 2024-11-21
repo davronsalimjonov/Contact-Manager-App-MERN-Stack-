@@ -1,6 +1,4 @@
 import { Controller } from 'react-hook-form';
-import ReactInputMask from 'react-input-mask';
-import Input from '@/components/UI/atoms/Form/Input';
 import FormElementWrapper from '../FormElementWrapper';
 import PhoneInput from '@/components/UI/atoms/Form/PhoneInput';
 
@@ -36,7 +34,7 @@ const FormPhoneInput = ({
                             readOnly={readOnly}
                             className={className}
                             error={error}
-                        // international
+                            {...otherProps}
                         />
                     )}
                 />
@@ -49,6 +47,7 @@ const FormPhoneInput = ({
                     readOnly={readOnly}
                     className={className}
                     error={error}
+                    {...otherProps}
                 />
             )}
         </FormElementWrapper>

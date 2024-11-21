@@ -1,16 +1,22 @@
-import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
 import ConversationInput from '@/components/UI/organisms/ConversationInput';
-import ChatDateLine from '@/components/UI/moleculs/ChatDateLine';
+import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
+import ConversationMessages from '@/components/UI/organisms/ConversationMessages';
 import cls from './ChatConversation.module.scss';
 
-const ChatConversation = () => {
+const ChatConversation = ({
+    partnerFullName = '',
+    partnerPhoneNumber = '',
+    messages = []
+}) => {
     return (
         <div className={cls.chat}>
-            <ConversationHeader />
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <ChatDateLine />
-                <ChatDateLine />
-            </div>
+            <ConversationHeader 
+                fullName={partnerFullName}
+                phoneNumber={partnerPhoneNumber}
+            />
+            <ConversationMessages 
+                messages={messages}
+            />
             <ConversationInput />
         </div>
     );

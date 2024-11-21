@@ -1,0 +1,55 @@
+.msg {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: var(--blue-300-color);
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        flex-grow: 1;
+
+        &__header {
+            display: flex;
+            align-items: center;
+
+            &__name {
+                font-weight: 700;
+                line-height: 18.78px;
+                color: var(--blue-color);
+                margin-right: 8px;
+            }
+
+            &__record{
+                margin-right: 10px;
+                flex-grow: 1;
+            }
+
+            &__time {
+                font-size: 14px;
+                font-weight: 600;
+                line-height: 16.44px;
+                color: var(--dark-gray-500-color);
+            }
+        }
+
+        &__text {
+            font-weight: 500;
+            line-height: 18.78px;
+
+            &>span {
+                text-decoration-line: underline;
+            }
+        }
+    }
+}

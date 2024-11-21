@@ -16,7 +16,7 @@ const PhoneInput = ({
     const handlePhoneChange = (value) => {
         const cursorPosition = inputRef.current ? inputRef.current.selectionStart : 0;
 
-        if(value?.length <= 2){
+        if (value?.length <= 2) {
             setTimeout(() => {
                 if (inputRef.current) {
                     inputRef.current.selectionStart = cursorPosition;
@@ -26,11 +26,11 @@ const PhoneInput = ({
         }
 
         onChange(value)
-      };
-    
+    };
+
     return (
         <ReactPhoneInput
-        ref={inputRef}
+            ref={inputRef}
             onChange={handlePhoneChange}
             className={cn(cls.input, error && cls.error, className)}
             placeholder={placeholder}

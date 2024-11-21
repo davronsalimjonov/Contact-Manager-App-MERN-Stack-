@@ -19,26 +19,9 @@ export function cn(...args) {
         .join(' ');
 }
 
-export const sanitizePhoneNumber = (value) => {
-    if (value) return value.replace(/[^\d+]/g, '')
-    return null
-}
-
 export const getUserFullName = (user) => {
     const { firstName, lastName } = user || {}
     return `${firstName || ''} ${lastName || ''}`
-}
-
-export function formatPhoneNumber(phoneNumber) {
-    phoneNumber = '' + phoneNumber
-    const cleaned = phoneNumber.replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})$/);
-
-    if (match) {
-        return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
-    }
-
-    return null;
 }
 
 export function removeEmptyKeys(obj) {

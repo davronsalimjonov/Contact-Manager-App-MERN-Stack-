@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import useGetGroups from '@/hooks/useGetGroups';
 import Tabs from '@/components/UI/moleculs/Tabs';
-import { sanitizePhoneNumber } from '@/utils/lib';
 import useGetStudents from '@/hooks/useGetStudents';
 import StudentsTable from '@/components/templates/StudentsTable';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
