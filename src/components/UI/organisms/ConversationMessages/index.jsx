@@ -718,7 +718,7 @@ const ConversationMessages = ({
             case 'call': return (
                 <div key={message?.id} style={{ paddingBottom: '37px' }}>
                     <ChatCallMessage
-                        recordUrl={message?.call?.audio}
+                        recordUrl={'https://cdn.pixabay.com/audio/2024/10/03/audio_ac73a74132.mp3'}
                         recordDuration={message?.call?.duration}
                     />
                 </div>
