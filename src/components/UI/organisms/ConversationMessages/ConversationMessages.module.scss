@@ -1,9 +1,13 @@
 
 .chat{
-    padding: 20px 0;
+    // padding: 20px 0;
     display: flex;
     flex-direction: column;
     gap: 32px;
     flex-grow: 1;
     overflow-y: auto;
+
+    &  *::-webkit-scrollbar{
+        width: 0 !important;
+    }
 }

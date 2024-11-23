@@ -14,9 +14,7 @@ const ChatConversation = ({
                 fullName={partnerFullName}
                 phoneNumber={partnerPhoneNumber}
             />
-            <ConversationMessages 
-                messages={messages}
-            />
+            <ConversationMessages />
             <ConversationInput />
         </div>
     );
