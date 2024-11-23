@@ -248,7 +248,7 @@ const messages = [
             "id": "17f8cc82-080f-4833-b4ae-fd501ae53806",
             "duration": 400,
             "status": "failed",
-            "audio": null
+            "audio": "https://api.myteacher.uz:3014/2024-11-07/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-1730973569140.mp3"
         },
         "comment": null,
         "message": null,
@@ -263,7 +263,7 @@ const messages = [
             "id": "4a5fafb4-595c-446b-97db-280be668052e",
             "duration": 400,
             "status": "failed",
-            "audio": null
+            "audio": "https://api.myteacher.uz:3014/2024-11-07/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-1730973569140.mp3"
         },
         "comment": null,
         "message": null,
@@ -503,7 +503,7 @@ const messages = [
             "id": "ed070c87-4021-487b-8104-2208930d8a3f",
             "duration": 400,
             "status": "failed",
-            "audio": null
+            "audio": "https://api.myteacher.uz:3014/2024-11-07/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-1730973569140.mp3"
         },
         "comment": null,
         "message": null,
@@ -563,7 +563,7 @@ const messages = [
             "id": "ed070c87-4021-487b-8104-2208930d8a3f",
             "duration": 400,
             "status": "failed",
-            "audio": null
+            "audio": "https://api.myteacher.uz:3014/2024-11-07/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-1730973569140.mp3"
         },
         "comment": null,
         "message": null,
@@ -578,7 +578,7 @@ const messages = [
             "id": "ed070c87-4021-487b-8104-2208930d8a3f",
             "duration": 400,
             "status": "failed",
-            "audio": null
+            "audio": "https://api.myteacher.uz:3014/2024-11-07/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-1730973569140.mp3"
         },
         "comment": null,
         "message": null,
@@ -593,7 +593,7 @@ const messages = [
             "id": "ed070c87-4021-487b-8104-2208930d8a3f",
             "duration": 400,
             "status": "failed",
-            "audio": null
+            "audio": "https://api.myteacher.uz:3014/2024-11-07/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-1730973569140.mp3"
         },
         "comment": null,
         "message": null,
@@ -608,7 +608,7 @@ const messages = [
             "id": "ed070c87-4021-487b-8104-2208930d8a3f",
             "duration": 400,
             "status": "failed",
-            "audio": null
+            "audio": "https://api.myteacher.uz:3014/2024-11-07/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-1730973569140.mp3"
         },
         "comment": null,
         "message": null,
@@ -623,7 +623,7 @@ const messages = [
             "id": "ed070c87-4021-487b-8104-2208930d8a3f",
             "duration": 400,
             "status": "failed",
-            "audio": null
+            "audio": "https://api.myteacher.uz:3014/2024-11-07/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-1730973569140.mp3"
         },
         "comment": null,
         "message": null,
