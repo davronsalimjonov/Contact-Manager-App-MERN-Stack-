@@ -209,3 +209,12 @@ img{
   pointer-events: none;
   display: none;
 }
+
+#waveform::part(wave) {
+  height: 2px;
+  transition: all 0.3s ease;
+}
+
+#waveform::part(wave):hover {
+  height: 4px;
+}

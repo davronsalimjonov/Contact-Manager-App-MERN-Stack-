@@ -1,0 +1,65 @@
+.track {
+    width: 100%;
+    min-height: 43px;
+
+    &__nav {
+        padding: 4px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &__btn {
+            background-color: transparent;
+
+            &>div {
+                font-size: 22px;
+                border-color: transparent transparent transparent black;
+            }
+
+            & path {
+                fill: black;
+            }
+        }
+
+        &__details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+
+            &__name {
+                font-weight: 600;
+                line-height: 18.78px;
+                text-align: center;
+            }
+
+            &__type {
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 14.09px;
+                text-align: center;
+                color: var(--dark-gray-700-color);
+            }
+        }
+
+        &__controls{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            &__btn{
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+
+            }
+        }
+    }
+
+    &__bar{
+        width: 100%;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+}

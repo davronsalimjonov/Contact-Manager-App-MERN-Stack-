@@ -1,11 +1,13 @@
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { VariableSizeList as List } from 'react-window';
-import { Fragment, memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
+import { Fragment, memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import useWindowSize from '@/hooks/useWindowSize';
 import useRenderItemsHandler from '@/hooks/useItemsRenderHandler';
 import ChatCallMessage from '../../moleculs/ChatCallMessage';
 import ChatTextMessage from '../../moleculs/ChatTextMessage';
 import cls from './ConversationMessages.module.scss';
+import AudioTrackBar from '../AudioTrackBar';
+import { WavesurferProvider } from '@/providers/WavesurferProvider';
 
 const messages = [
     {
@@ -670,24 +672,14 @@ const ConversationMessages = ({
 
     const firstUnreadIndex = messages.findIndex((msg) => !msg.isViewed);
 
-    // useLayoutEffect(() => {
-    //     setTimeout(() => {
-    //         if (firstUnreadIndex !== -1 && listRef.current) {
-    //             listRef.current.scrollToItem(firstUnreadIndex, 'start');
-    //         }
-    //     }, 0)
-    // }, [firstUnreadIndex, listRef.current]);
-
     const getInitialOffset = useCallback((unreadIndex, totalHeight) => {
         if (unreadIndex === -1) return 0;
-        
+
         let offset = 0;
         for (let i = 0; i < unreadIndex; i++) {
             offset += getItemSize(i);
         }
 
-        // Если смещение больше чем высота контейнера минус высота первого непрочитанного сообщения,
-        // показываем непрочитанное сообщение вверху
         if (offset > totalHeight - getItemSize(unreadIndex)) {
             return offset;
         }
@@ -718,7 +710,7 @@ const ConversationMessages = ({
             case 'call': return (
                 <div key={message?.id} style={{ paddingBottom: '37px' }}>
                     <ChatCallMessage
-                        recordUrl={'https://cdn.pixabay.com/audio/2024/10/03/audio_ac73a74132.mp3'}
+                        recordUrl={message?.call?.audio}
                         recordDuration={message?.call?.duration}
                     />
                 </div>
@@ -728,15 +720,12 @@ const ConversationMessages = ({
     }
 
     const ListComponent = memo(({ height, width }) => {
-        // Используем ref для предотвращения повторных рендеров
         const heightRef = useRef(height);
         heightRef.current = height;
 
-        // Рассчитываем начальное смещение только при первом рендере
         const initialOffset = useMemo(() => {
-            // if (!isFirstRender.current) return 0;
             return getInitialOffset(firstUnreadIndex, height);
-        }, [height]); // Зависимость только от height, чтобы не пересчитывать при изменении сообщений
+        }, [height]);
 
         useEffect(() => {
             isFirstRender.current = false;
@@ -752,7 +741,7 @@ const ConversationMessages = ({
                 overscanCount={10}
                 onItemsRendered={handleRenderItems}
                 initialScrollOffset={initialOffset}
-                style={{ opacity: isFirstRender.current ? 0 : 1, transition: 'all 0.3s' }} // Скрываем список до завершения начального рендера
+                style={{ opacity: isFirstRender.current ? 0 : 1, transition: 'all 0.3s' }}
             >
                 {renderRow}
             </List>
@@ -760,13 +749,18 @@ const ConversationMessages = ({
     });
 
     return (
-        <div className={cls.chat}>
-            <AutoSizer style={{ width: '100%', height: '100%', }}>
-                {({ width, height }) => {
-                    return <ListComponent width={width} height={height} />
-                }}
-            </AutoSizer>
-        </div>
+        <WavesurferProvider>
+            <div className={cls.chat}>
+                <AudioTrackBar className={cls.chat__audiobar} />
+                <div className={cls.chat__window}>
+                    <AutoSizer style={{ width: '100%', height: '100%', overflowY: 'auto' }}>
+                        {({ width, height }) => {
+                            return <ListComponent width={width} height={height} />
+                        }}
+                    </AutoSizer>
+                </div>
+            </div>
+        </WavesurferProvider>
     );
 }
 

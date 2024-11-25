@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import { convertSecondsToTimeFormat } from '@/utils/lib';
+import { WavesurferContext } from '@/providers/WavesurferProvider';
 import CallRecordPlayer from '../CallRecordPlayer';
 import { PhoneForwardedIcon } from '../../atoms/icons';
 import cls from './ChatCallMessage.module.scss';
@@ -7,6 +9,8 @@ const ChatCallMessage = ({
     recordUrl = '',
     recordDuration = 0
 }) => {
+    const { setAudio } = useContext(WavesurferContext)
+
     return (
         <div className={cls.msg}>
             <div className={cls.msg__icon}>
@@ -16,8 +20,9 @@ const ChatCallMessage = ({
                 <div className={cls.msg__body__header}>
                     <span className={cls.msg__body__header__name}>Chiquvchi qo’g’iroq</span>
                     <CallRecordPlayer
-                        className={cls.msg__body__header__record}
                         url={recordUrl}
+                        className={cls.msg__body__header__record}
+                        onReady={(wavesurfer) => setAudio((state) => ({ ...state, sourseAudio: wavesurfer, url: recordUrl }))}
                     />
                     <span className={cls.msg__body__header__time}>19:01</span>
                 </div>

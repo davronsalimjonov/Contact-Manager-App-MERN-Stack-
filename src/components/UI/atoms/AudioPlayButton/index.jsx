@@ -4,6 +4,7 @@ import cls from './AudioPlayButton.module.scss';
 import { CloseIcon } from '../icons';
 
 const AudioPlayButton = ({
+    className = '',
     onClick,
     isPlaying,
     percentage = 0,
@@ -15,7 +16,7 @@ const AudioPlayButton = ({
     const progress = String((100 - percentage) / 100 * circumference);
 
     return (
-        <button className={cls.btn} onClick={onClick}>
+        <button className={cn(cls.btn, className)} onClick={onClick}>
             {isLoading && (
                 <div className={cls.btn__loader}>
                     <svg>

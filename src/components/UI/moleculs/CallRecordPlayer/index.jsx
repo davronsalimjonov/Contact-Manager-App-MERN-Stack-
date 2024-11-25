@@ -6,8 +6,9 @@ import AudioPlayButton from '../../atoms/AudioPlayButton';
 import cls from './CallRecordPlayer.module.scss';
 
 const CallRecordPlayer = ({
-    className = '',
     url = '',
+    className = '',
+    onReady
 }) => {
     const containerRef = useRef()
     const abortControllerRef = useRef(new AbortController());
@@ -16,7 +17,7 @@ const CallRecordPlayer = ({
     const [isAudioLoaded, setIsAudioLoaded] = useState(false);
     const [loadingProgress, setLoadingProgress] = useState(0);
 
-    const { wavesurfer, isReady, isPlaying, currentTime } = useWavesurfer({
+    const { wavesurfer, isPlaying } = useWavesurfer({
         container: containerRef,
         height: 24,
         barGap: 2,
@@ -47,7 +48,7 @@ const CallRecordPlayer = ({
             try {
                 setIsLoading(true);
                 await wavesurfer.load(url);
-
+                
                 setIsAudioLoaded(true);
                 setIsLoading(false);
                 wavesurfer.play();
@@ -71,6 +72,7 @@ const CallRecordPlayer = ({
                 setLoadingProgress(percent);
             });
             wavesurfer.on('ready', () => {
+                onReady?.(wavesurfer)
                 setIsLoading(false);
                 setLoadingProgress(100);
             });
