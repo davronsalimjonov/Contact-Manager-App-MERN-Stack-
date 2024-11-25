@@ -86,3 +86,24 @@ export function convertSecondsToTimeFormat(seconds = 0) {
     const formattedSeconds = String(remainingSeconds).padStart(2, '0');
     return `${formattedMinutes}:${formattedSeconds}`;
 }  
+
+export const adjustHeight = (e, { minHeight = 50, maxHeight = 200 } = {}) => {
+    const textarea = e.target;
+    if (!textarea) return;
+
+    textarea.style.height = 'inherit';
+
+    const computed = window.getComputedStyle(textarea);
+    const height = textarea.scrollHeight
+        + parseInt(computed.paddingTop)
+        + parseInt(computed.paddingBottom);
+
+    const limitedHeight = Math.max(
+        Math.min(height, maxHeight),
+        minHeight
+    );
+
+    textarea.style.height = `${limitedHeight}px`;
+
+    textarea.style.overflowY = height > maxHeight ? 'auto' : 'hidden';
+};

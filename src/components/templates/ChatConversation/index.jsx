@@ -2,19 +2,27 @@ import ConversationInput from '@/components/UI/organisms/ConversationInput';
 import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
 import ConversationMessages from '@/components/UI/organisms/ConversationMessages';
 import cls from './ChatConversation.module.scss';
+import Loader from '@/components/UI/atoms/Loader';
 
 const ChatConversation = ({
     partnerFullName = '',
     partnerPhoneNumber = '',
-    messages = []
+    messages = [],
+    isLoadingMessages = false
 }) => {
     return (
         <div className={cls.chat}>
-            <ConversationHeader 
+            <ConversationHeader
                 fullName={partnerFullName}
                 phoneNumber={partnerPhoneNumber}
             />
-            <ConversationMessages />
+            {isLoadingMessages ? (
+                <div>
+                    <Loader />
+                </div>
+            ) : (
+                <ConversationMessages messages={messages} />
+            )}
             <ConversationInput />
         </div>
     );

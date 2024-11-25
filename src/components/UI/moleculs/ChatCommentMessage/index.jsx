@@ -1,11 +1,15 @@
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatCommentMessage.module.scss';
 
-const ChatCommentMessage = () => {
+const ChatCommentMessage = ({
+    text = '',
+    fullName = '',
+    time = ''
+}) => {
     return (
-        <ChatMessageLayout fullName='Diyora Shomamatova' time='Commented 19:01'>
+        <ChatMessageLayout fullName={fullName} time='Commented 19:01'>
             <div className={cls.comment}>
-                <span>Bu test komment</span>
+                <span>{text}</span>
             </div>
         </ChatMessageLayout>
     );

@@ -1,0 +1,50 @@
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+
+        &__name {
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 18.78px;
+            color: var(--dark-gray-700-color);
+        }
+
+        &__icon {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 23.48px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+
+            & > svg{
+                width: 16px;
+                transform: rotate(-90deg);
+                transition: all 0.3s;
+            }
+        }
+    }
+
+    &__body{
+        overflow: hidden;
+        transform-origin: top;
+        transition: all 0.3s;
+    }
+}
+
+.open{
+    transform: scaleY(1);
+    max-height: 1000px;
+}
+
+.close{
+    transform: scaleY(0);
+    max-height: 0;
+}
