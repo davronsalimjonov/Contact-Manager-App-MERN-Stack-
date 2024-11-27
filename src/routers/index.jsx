@@ -11,11 +11,12 @@ import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Settings from "@/components/pages/Settings";
 import Chat from "@/components/pages/Chat";
+import { callMentorSidebarLinks, mainMentorSidebarLinks } from "./data";
 
-const privateRoutes = createBrowserRouter([
+const callTecherRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout />,
+        element: <MainLayout sidebarLinks={callMentorSidebarLinks} />,
         children: [
             {
                 path: '',
@@ -57,6 +58,19 @@ const privateRoutes = createBrowserRouter([
     },
 ])
 
+const mainMentorRoutes = createBrowserRouter([
+    {
+        path: '/',
+        element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
+        children: [
+            {
+                path: '*',
+                element: <PageNotFound />
+            }
+        ]
+    }
+])
+
 const authRoutes = createBrowserRouter([
     {
         path: '',
@@ -80,13 +94,24 @@ const loadingRoute = createBrowserRouter([
 ])
 
 const Routers = () => {
-    const user = useGetUser()
+    const { data: user, isLoading: isUserLoading } = useGetUser()
     const { isAuth } = useSelector(state => state.auth)
 
-    return (user?.isLoading ? (
+    console.log(user);
+
+    const getRoutesByRole = (role) => {
+        switch (role) {
+            case 2: return mainMentorRoutes;
+            case 4: return callTecherRoutes;
+            default: return undefined;
+        }
+    }
+    
+
+    return (isUserLoading ? (
         <RouterProvider router={loadingRoute} />
     ) : (
-        <RouterProvider router={isAuth ? privateRoutes : authRoutes} />
+        <RouterProvider router={isAuth ? getRoutesByRole(user?.role) : authRoutes} />
     ))
 }
 

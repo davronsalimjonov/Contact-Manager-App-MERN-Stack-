@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { cn } from '@/utils/lib';
 import usePersistentState from '@/hooks/usePersistentState';
-import { links } from './data';
 import MenuButton from '../../moleculs/MenuButton';
 import SidebarLink from '../../moleculs/SidebarLink';
 import LogoutButton from '../../moleculs/LogoutButton';
@@ -9,7 +8,9 @@ import LanguageButton from '../../moleculs/LanguageButton';
 import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
 import cls from './Sidebar.module.scss';
 
-const Sidebar = () => {
+const Sidebar = ({
+    links = []
+}) => {
     const [isOpen, setIsOpen] = usePersistentState('sidebar-state', true)
 
     return (
