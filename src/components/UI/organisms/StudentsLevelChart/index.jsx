@@ -10,6 +10,7 @@ const options = {
         legend: { display: false },
         tooltip: { enabled: true },
         datalabels: {
+            display: false,
             anchor: 'end',
             align: 'end',
             padding: 4,
