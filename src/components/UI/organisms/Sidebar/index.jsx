@@ -1,16 +1,20 @@
 import { Link } from 'react-router-dom';
 import { cn } from '@/utils/lib';
 import usePersistentState from '@/hooks/usePersistentState';
-import { links } from './data';
 import MenuButton from '../../moleculs/MenuButton';
 import SidebarLink from '../../moleculs/SidebarLink';
 import LogoutButton from '../../moleculs/LogoutButton';
 import LanguageButton from '../../moleculs/LanguageButton';
 import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
 import cls from './Sidebar.module.scss';
+import { useState } from 'react';
 
-const Sidebar = () => {
+
+const Sidebar = ({
+    links = []
+}) => {
     const [isOpen, setIsOpen] = usePersistentState('sidebar-state', true)
+    const [isModal, setIsModal] = useState(false)
 
     return (
         <aside className={cn(cls.sidebar, !isOpen && cls.close)}>
@@ -45,6 +49,9 @@ const Sidebar = () => {
                 />
                 <LogoutButton
                     isOpen={isOpen}
+                    onClick={() => setIsModal(true)}
+                    isModal={isModal}
+                    setIsModal={setIsModal}
                 />
             </div>
         </aside>
