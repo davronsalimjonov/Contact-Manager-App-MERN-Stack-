@@ -1,4 +1,4 @@
-import { HouseIcon, ListIcon, MenuBookIcon, PersonsIcon, TranslateIcon } from "@/components/UI/atoms/icons";
+import { HouseIcon, ListIcon, MenuBookIcon, PersonsIcon, ScheduleIcon, TranslateIcon } from "@/components/UI/atoms/icons";
 
 export const callMentorSidebarLinks = [
     {
@@ -18,6 +18,12 @@ export const callMentorSidebarLinks = [
         link: '/dictionary',
         label: 'Lug’at',
         icon: TranslateIcon()
+    },
+    {
+        id: 3,
+        link: '/lesson-schedule',
+        label: 'Dars jadvali',
+        icon: ScheduleIcon()
     },
     {
         id: 4,
