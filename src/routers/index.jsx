@@ -11,6 +11,8 @@ import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Settings from "@/components/pages/Settings";
 import Chat from "@/components/pages/Chat";
+import Schedule from "@/components/pages/Schedule";
+import SingleSchedule from "@/components/pages/SingleSchedule";
 
 const privateRoutes = createBrowserRouter([
     {
@@ -36,6 +38,14 @@ const privateRoutes = createBrowserRouter([
             {
                 path: '/students/:courseId',
                 element: <SingleStudent />
+            },
+            {
+                path: '/lesson-schedule',
+                element: <Schedule />
+            },
+            {
+                path: '/lesson-schedule/:scheduleId',
+                element: <SingleSchedule />
             },
             {
                 path: '/students/chat/:studentId/:courseId',
