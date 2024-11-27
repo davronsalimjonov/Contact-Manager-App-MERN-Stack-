@@ -1,0 +1,10 @@
+
+.tasks{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    & > button{
+        margin-top: 6px;
+    }
+}

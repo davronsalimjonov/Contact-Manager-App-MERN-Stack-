@@ -9,7 +9,7 @@ const useRenderItemsHandler = ({
     const previousScrollIndex = useRef(null);
 
     const handleRenderItems = useCallback(
-        ({ visibleStartIndex, visibleStopIndex }) => {
+        ({ visibleStartIndex, visibleStopIndex, overscanStopIndex }) => {
             const itemsAbove = visibleStartIndex;
             const itemsBelow = itemCount - visibleStopIndex - 1;
 
@@ -19,7 +19,7 @@ const useRenderItemsHandler = ({
             }
 
             if (itemsBelow <= threshold && previousScrollIndex.current !== "bottom") {
-                onBottomReach?.();
+                onBottomReach?.(overscanStopIndex);
                 previousScrollIndex.current = "bottom";
             }
 
