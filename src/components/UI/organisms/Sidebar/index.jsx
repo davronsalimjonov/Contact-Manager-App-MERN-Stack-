@@ -8,9 +8,12 @@ import LogoutButton from '../../moleculs/LogoutButton';
 import LanguageButton from '../../moleculs/LanguageButton';
 import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
 import cls from './Sidebar.module.scss';
+import { useState } from 'react';
+
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = usePersistentState('sidebar-state', true)
+    const [isModal, setIsModal] = useState(false)
 
     return (
         <aside className={cn(cls.sidebar, !isOpen && cls.close)}>
@@ -45,6 +48,9 @@ const Sidebar = () => {
                 />
                 <LogoutButton
                     isOpen={isOpen}
+                    onClick={() => setIsModal(true)}
+                    isModal={isModal}
+                    setIsModal={setIsModal}
                 />
             </div>
         </aside>
