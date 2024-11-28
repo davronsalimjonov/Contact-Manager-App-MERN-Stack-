@@ -7,11 +7,11 @@ import Loader from '@/components/UI/atoms/Loader';
 import ChatSidebar from '@/components/templates/ChatSidebar';
 
 const Chat = () => {
-    const { studentId, courseId } = useParams()
+    const { chatId } = useParams()
     const {
         info: { data: info, isLoading: isLoadingInfo },
         messages: { data: messages, isLoadingMessages }
-    } = useGetChat({ studentId, courseId })
+    } = useGetChat(chatId)
 
     return (
         <div className={cls.page}>

@@ -34,6 +34,7 @@ const Sidebar = ({
                         icon={link.icon}
                         to={link.link}
                         isOpen={isOpen}
+                        children={link?.children}
                     />
                 ))}
             </div>

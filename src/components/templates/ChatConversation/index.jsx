@@ -1,11 +1,10 @@
+import { useQueryClient } from 'react-query';
+import Loader from '@/components/UI/atoms/Loader';
 import ConversationInput from '@/components/UI/organisms/ConversationInput';
 import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
+import { getChatAboveMessages, getChatBellowMessages } from '@/services/chat';
 import ConversationMessages from '@/components/UI/organisms/ConversationMessages';
 import cls from './ChatConversation.module.scss';
-import Loader from '@/components/UI/atoms/Loader';
-import { getChatBellowMessages } from '@/services/chat';
-import { useQueryClient } from 'react-query';
-import toast from 'react-hot-toast';
 
 const ChatConversation = ({
     chatId = '',
@@ -22,18 +21,20 @@ const ChatConversation = ({
             const newMessages = await getChatBellowMessages(chatId, { index: lastMessage?.index })
             queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([...oldData, ...newMessages]))
         } catch (error) {
-            toast.error('error')
+            console.log(error);
         }
     }
 
     const handleTopReach = async () => {
-        try {   
-            
+        try {
+            const firstMessage = messages[0]
+            const newMessages = await getChatAboveMessages(chatId, { index: firstMessage?.index })
+            queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([...newMessages, ...oldData]))
         } catch (error) {
-            
+            console.log(error);
         }
     }
-    
+
     return (
         <div className={cls.chat}>
             <ConversationHeader
@@ -48,6 +49,7 @@ const ChatConversation = ({
                 <ConversationMessages
                     messages={messages}
                     onBottomReach={handleBottomReach}
+                    onTopReach={handleTopReach}
                 />
             )}
             <ConversationInput />

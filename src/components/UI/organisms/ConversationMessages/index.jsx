@@ -23,46 +23,38 @@ const MeasurableItem = memo(({ message, index, onMeasure }) => {
         }
     }, [index, message, onMeasure]);
 
-    const renderContent = useMemo(() => {
+    const renderContent = () => {
         switch (message?.type) {
-            case 'loader':
-                return (
-                    <div ref={ref} key={index}>
-                        <Loader size={40} />
-                    </div>
-                );
             case 'message':
                 return (
-                    <div ref={ref} key={message?.id} className={cls.chat__row} style={{ paddingTop: index === 0 ? '20px' : '' }}>
-                        <ChatTextMessage
-                            message={message?.message?.text}
-                            fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user) + ' ' + index}
-                        />
-                    </div>
+                    <ChatTextMessage
+                        message={message?.message?.text}
+                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user) + ' ' + index}
+                    />
                 );
             case 'call':
                 return (
-                    <div ref={ref} key={message?.id} className={cls.chat__row} style={{ paddingTop: index === 0 ? '20px' : '' }}>
-                        <ChatCallMessage
-                            recordUrl={message?.call?.audio}
-                            recordDuration={message?.call?.duration}
-                        />
-                    </div>
+                    <ChatCallMessage
+                        recordUrl={message?.call?.audio}
+                        recordDuration={message?.call?.duration}
+                    />
                 );
             case 'comment':
                 return (
-                    <div ref={ref} key={message?.id} className={cls.chat__row} style={{ paddingTop: index === 0 ? '20px' : '' }}>
-                        <ChatCommentMessage
-                            text={message?.comment?.text}
-                            fullName={getUserFullName(message?.comment?.owner)}
-                        />
-                    </div>
+                    <ChatCommentMessage
+                        text={message?.comment?.text}
+                        fullName={getUserFullName(message?.comment?.owner)}
+                    />
                 );
             default: return null;
         }
-    }, [message, index]);
+    }
 
-    return renderContent;
+    return (
+        <div ref={ref} className={cls.chat__row} style={{ paddingTop: index === 0 ? '20px' : '' }}>
+            {renderContent()}
+        </div>
+    );
 }, (prevProps, nextProps) => {
     return (
         prevProps.index === nextProps.index &&
@@ -79,7 +71,7 @@ const ConversationMessages = memo(({
     const listRef = useRef(null);
     const containerRef = useRef(null);
     const [rowHeights, setRowHeights] = useState({});
-
+    const prevScrollHeight = useRef(0)
     const handleRenderItems = useRenderItemsHandler({
         onTopReach,
         onBottomReach,
@@ -107,20 +99,22 @@ const ConversationMessages = memo(({
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
-
-        const wasScrollNearBottom =
-            container.scrollTop + container.clientHeight >= container.scrollHeight - 100;
-
-        const prevScrollHeight = container.scrollHeight;
+        
+        const scrollToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+        const scrollToTop = container.scrollTop;
+        const wasScrollNearBottom = scrollToTop < scrollToBottom;
+        const addedHeight = Array(50).fill('f').reduce((acc, curr, index) => acc + getItemSize(index),0)
 
         requestAnimationFrame(() => {
             const newScrollHeight = container.scrollHeight;
-
+            
             if (wasScrollNearBottom) {
                 container.scrollTop = newScrollHeight;
             } else {
-                container.scrollTop += (newScrollHeight - prevScrollHeight);
+                listRef.current.scrollTo(addedHeight);
             }
+
+            prevScrollHeight.current = container.scrollTop
         });
     }, [messages]);
 
@@ -128,7 +122,7 @@ const ConversationMessages = memo(({
         const message = messages[index];
 
         return (
-            <div style={style}>
+            <div style={style} key={message?.id}>
                 <MeasurableItem
                     index={index}
                     message={message}
@@ -137,13 +131,6 @@ const ConversationMessages = memo(({
             </div>
         );
     }, [messages, setRowHeight]);
-
-    const listProps = useMemo(() => ({
-        itemCount: messages.length,
-        itemSize: getItemSize,
-        onItemsRendered: handleRenderItems,
-        overscanCount: 10
-    }), [messages.length, getItemSize, handleRenderItems]);
 
     return (
         <div className={cls.chat}>
@@ -154,7 +141,10 @@ const ConversationMessages = memo(({
                             ref={listRef}
                             height={height}
                             width={width}
-                            {...listProps}
+                            itemCount={messages.length}
+                            itemSize={getItemSize}
+                            onItemsRendered={handleRenderItems}
+                            overscanCount={10}
                         >
                             {renderRow}
                         </List>

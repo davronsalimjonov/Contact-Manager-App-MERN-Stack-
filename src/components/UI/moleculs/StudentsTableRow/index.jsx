@@ -10,9 +10,8 @@ const StudentsTableRow = ({
     days = '',
     time = '',
     status = '',
-    userId = '',
+    chatId = '',
     userCourseId = '',
-    courseId = '',
     fullName = '',
     phoneNumber = '',
 }) => {
@@ -24,7 +23,7 @@ const StudentsTableRow = ({
     ]
 
     return (
-        <tr className={cls.row} onClick={() => navigate(`/students/chat/${userId}/${courseId}`)}>
+        <tr className={cls.row} onClick={() => navigate(`/students/chat/${chatId}`)}>
             <td>{index}</td>
             <td><span title={fullName}>{fullName}</span></td>
             <td><span title={days}>{days ? days : <EmptyDataText />}</span></td>

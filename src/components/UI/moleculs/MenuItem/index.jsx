@@ -6,6 +6,7 @@ const MenuItem = ({
     icon = <></>,
     label = '',
     isOpen = false,
+    preffix = <></>,
     onClick
 }) => {
     return (
@@ -15,6 +16,7 @@ const MenuItem = ({
         >
             <div className={cls.item__icon}>{icon}</div>
             <span className={cls.item__label}>{label}</span>
+            {preffix}
         </div>
     );
 }
