@@ -1,4 +1,5 @@
 import EmptyDataText from '../../atoms/EmptyDataText';
+import { StarIcon } from '../../atoms/icons';
 import cls from './MentorsTableRow.module.scss';
 import { formatTime } from '@/utils/formatTime';
 
@@ -10,6 +11,7 @@ const MentorsTableRow = ({
     speed = '',
     reyting = 0
 }) => {
+console.log(reyting);
 
     return (
         <tr className={cls.row}>
@@ -18,9 +20,9 @@ const MentorsTableRow = ({
             <td>{activityStudents}</td>
             <td>{salary}</td>
             <td>
-                {formatTime(speed)+' s'}
+                {formatTime(speed) + ' s'}
             </td>
-            <td>{reyting}</td>
+            <td><StarIcon begining={reyting * 20} />{reyting}</td>
         </tr>
     );
 }

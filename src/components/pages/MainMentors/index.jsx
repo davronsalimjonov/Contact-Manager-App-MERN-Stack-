@@ -2,12 +2,13 @@ import MentorsTable from "@/components/templates/MentorsTable";
 import MentorsPageCards from "@/components/UI/moleculs/MentorsPageCards";
 import useGetAcademicMentors from "@/hooks/useGetAcademicMentorStatistic";
 import cls from './MainMentors.module.scss';
+import { useOutletContext } from "react-router-dom";
 
 
 const MainMentors = () => {
-    const startDate = new Date("01.11.2024");
-    const endDate = new Date("30.11.2024");
-    const { data: mentors, isLoading } = useGetAcademicMentors({ startDate, endDate })
+    const [period] = useOutletContext();
+
+    const { data: mentors, isLoading } = useGetAcademicMentors({ startDate:period.startDate, endDate:period.endDate })
     console.log(mentors)
 
     return (

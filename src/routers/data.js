@@ -76,12 +76,12 @@ export const managerSidebarLinks = [
             {
                 id: '1.1',
                 label: 'Asosiy mentor',
-                link: 'main-teachers'
+                link: '/main-teachers'
             },
             {
                 id: '1.2',
                 label: 'Nazoratchi mentor',
-                link: 'call-teachers'
+                link: '/call-teachers'
             },
         ]
     },

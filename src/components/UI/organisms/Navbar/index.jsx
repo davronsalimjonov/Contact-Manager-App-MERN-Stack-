@@ -9,12 +9,12 @@ import cls from './Navbar.module.scss';
 const Navbar = ({ onPerionChange }) => {
     const location = useLocation()
     const { data: user } = useGetUser()
-
+    const timeperiodPickerPath = ['/', '/main-teachers']
     return (
         <nav className={cls.navbar}>
             <span className={cls.navbar__name}>Dashboard</span>
             <div className={cls.navbar__controls}>
-                {location.pathname === '/' && <TimePeriodPicker onChange={onPerionChange} />}
+                {timeperiodPickerPath.includes(location.pathname) && <TimePeriodPicker onChange={onPerionChange} />}
                 <NotificationButton />
                 <Avatar src={user?.url} name={getUserFullName(user)} size={56} round />
             </div>
