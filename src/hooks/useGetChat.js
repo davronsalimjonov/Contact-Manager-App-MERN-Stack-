@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { getChatInfo, getChatMessages } from "@/services/chat";
 
-const useGetChat = ({ studentId, courseId } = {}) => {
-    const info = useQuery(['chat', 'info', studentId, courseId], () => getChatInfo(studentId, courseId))
-    const chatId = info?.data?.id
-    const messages = useQuery(['chat', 'messages', chatId], () => getChatMessages(chatId))
+const useGetChat = (chatId) => {
+    const info = useQuery(['chat', 'info', chatId], () => getChatInfo(chatId))
+    const userChatId = info?.data?.id
+    const messages = useQuery(['chat', 'messages', userChatId], () => getChatMessages(userChatId))
 
     return {
         info,

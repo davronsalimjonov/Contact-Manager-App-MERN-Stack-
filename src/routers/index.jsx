@@ -11,7 +11,7 @@ import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { callMentorSidebarLinks, mainMentorSidebarLinks } from "./data";
+import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks } from "./data";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -39,7 +39,7 @@ const callTecherRoutes = createBrowserRouter([
                 element: <SingleStudent />
             },
             {
-                path: '/students/chat/:studentId/:courseId',
+                path: '/students/chat/:chatId',
                 element: <Chat />
             },
             {
@@ -62,6 +62,19 @@ const mainMentorRoutes = createBrowserRouter([
     {
         path: '/',
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
+        children: [
+            {
+                path: '*',
+                element: <PageNotFound />
+            }
+        ]
+    }
+])
+
+const managerRoutes = createBrowserRouter([
+    {
+        path: '/',
+        element: <MainLayout sidebarLinks={managerSidebarLinks} />,
         children: [
             {
                 path: '*',
@@ -109,6 +122,7 @@ const Routers = () => {
         switch (role) {
             case 2: return mainMentorRoutes;
             case 4: return callTecherRoutes;
+            case 6: return managerRoutes
             default: return emptyRoute;
         }
     }
