@@ -25,14 +25,13 @@ const StudentsTable = ({
                                 <StudentsTableRow
                                     key={student?.id}
                                     index={index + 1}
-                                    fullName={getUserFullName(student?.user)}
-                                    phoneNumber={student?.user?.phone}
+                                    fullName={getUserFullName(student)}
+                                    phoneNumber={student?.phone}
                                     days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
                                     time={student?.connectionTime}
                                     status={student?.status}
-                                    userId={student?.user?.id}
                                     userCourseId={student.id}
-                                    courseId={student?.course?.id}
+                                    chatId={student?.id}
                                 />
                             )}
                         />

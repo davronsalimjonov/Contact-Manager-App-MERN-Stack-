@@ -32,6 +32,10 @@
         transform-origin: left;
         white-space: nowrap;
         transition: all 0.3s;
+
+        &:not(:last-child){
+            margin-right: 8px;
+        }
     }
 }
 
@@ -39,7 +43,13 @@
     .item{
         &__label{
             margin-left: 0;
+            margin-right: 0;
             transform: scaleX(0);
+        }
+
+        &:nth-child(3){
+            transform: scale(0);
+            transition: all 0.3s;
         }
     }
 }
