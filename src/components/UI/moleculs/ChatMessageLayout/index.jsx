@@ -1,20 +1,22 @@
 import Avatar from 'react-avatar';
 import cls from './ChatMessageLayout.module.scss';
+import { memo } from 'react';
 
-const ChatMessageLayout = ({ 
+const ChatMessageLayout = memo(({ 
     children,
     fullName = '',
     avatar = '',
     time = ''
 }) => {
+    
     return (
         <div className={cls.message}>
-            <Avatar 
+            {/* <Avatar 
                 round 
-                src={avatar}    
-                name={fullName}
+                // src={avatar}
+                name={'M T'}
                 size={48}
-            />
+            /> */}
             <div className={cls.message__body}>
                 <div className={cls.message__header}>
                     <span className={cls.message__header__name}>{fullName}</span>
@@ -24,6 +26,6 @@ const ChatMessageLayout = ({
             </div>
         </div>
     );
-}
+})
 
 export default ChatMessageLayout;

@@ -20,14 +20,15 @@ export function cn(...args) {
 }
 
 export const getUserFullName = (user) => {
-    const { firstName, lastName } = user || {}
+    let { firstName, lastName } = user || {}
+    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1)?.toLowerCase();
+    lastName = lastName?.charAt(0).toUpperCase() + lastName?.slice(1)?.toLowerCase();
     return `${firstName || ''} ${lastName || ''}`
 }
 
 export function removeEmptyKeys(obj) {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
 }
-
 
 export function getDayName(dayNumber, format = 'full') {
     if (dayNumber < 0 || dayNumber > 6) {

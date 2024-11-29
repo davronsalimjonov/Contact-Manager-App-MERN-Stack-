@@ -14,7 +14,7 @@ const useRenderItemsHandler = ({
             const itemsBelow = itemCount - visibleStopIndex - 1;
 
             if (itemsAbove <= threshold && previousScrollIndex.current !== "top") {
-                onTopReach?.();
+                onTopReach?.(visibleStartIndex);
                 previousScrollIndex.current = "top";
             }
 
