@@ -11,12 +11,12 @@ const ChatMessageLayout = memo(({
     
     return (
         <div className={cls.message}>
-            {/* <Avatar 
+            <Avatar 
                 round 
-                // src={avatar}
-                name={'M T'}
+                src={avatar}
+                name={fullName}
                 size={48}
-            /> */}
+            />
             <div className={cls.message__body}>
                 <div className={cls.message__header}>
                     <span className={cls.message__header__name}>{fullName}</span>

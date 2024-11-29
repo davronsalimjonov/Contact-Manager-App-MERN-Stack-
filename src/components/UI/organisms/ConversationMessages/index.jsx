@@ -1,8 +1,8 @@
-import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { VariableSizeList as List } from 'react-window';
-import useRenderItemsHandler from '@/hooks/useItemsRenderHandler';
 import { getUserFullName } from '@/utils/lib';
+import useRenderItemsHandler from '@/hooks/useItemsRenderHandler';
 import ChatCallMessage from '../../moleculs/ChatCallMessage';
 import ChatTextMessage from '../../moleculs/ChatTextMessage';
 import ChatCommentMessage from '../../moleculs/ChatCommentMessage';
@@ -11,22 +11,18 @@ import cls from './ConversationMessages.module.scss';
 const MeasurableItem = memo(({ message, index, onMeasure }) => {
     const ref = useRef(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (ref.current) {
-            const measureTimer = requestAnimationFrame(() => {
-                const height = ref.current.getBoundingClientRect().height;
-                onMeasure(index, height);
-            });
-
-            return () => cancelAnimationFrame(measureTimer);
+            const height = ref.current.offsetHeight;
+            onMeasure(index, height);
         }
-    }, [index, message, onMeasure]);
-
+    }, [message, index, onMeasure]);
+    
     const renderContent = useMemo(() => {
         switch (message?.type) {
             case 'message':
                 return (
-                    <div ref={ref} key={message?.id} className={cls.chat__row} style={{ paddingTop: index === 0 ? '20px' : '' }}>
+                    <div ref={ref} className={cls.chat__row}>
                         <ChatTextMessage
                             message={message?.message?.text}
                             fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user) + ' ' + message?.index}
@@ -35,7 +31,7 @@ const MeasurableItem = memo(({ message, index, onMeasure }) => {
                 );
             case 'call':
                 return (
-                    <div ref={ref} key={message?.id} className={cls.chat__row} style={{ paddingTop: index === 0 ? '20px' : '' }}>
+                    <div ref={ref} className={cls.chat__row}>
                         <ChatCallMessage
                             recordUrl={message?.call?.audio}
                             recordDuration={message?.call?.duration}
@@ -44,7 +40,7 @@ const MeasurableItem = memo(({ message, index, onMeasure }) => {
                 );
             case 'comment':
                 return (
-                    <div ref={ref} key={message?.id} className={cls.chat__row} style={{ paddingTop: index === 0 ? '20px' : '' }}>
+                    <div ref={ref} className={cls.chat__row}>
                         <ChatCommentMessage
                             text={message?.comment?.text}
                             fullName={getUserFullName(message?.comment?.owner)}
@@ -62,7 +58,7 @@ const MeasurableItem = memo(({ message, index, onMeasure }) => {
         prevProps.message?.id === nextProps.message?.id &&
         prevProps.message?.type === nextProps.message?.type
     );
-});
+})
 
 const ConversationMessages = memo(({
     messages = [],
@@ -72,23 +68,26 @@ const ConversationMessages = memo(({
     const listRef = useRef(null);
     const containerRef = useRef(null);
     const [rowHeights, setRowHeights] = useState({});
-    const lastIndex = useRef(0)
+    const [wasScrollNearBottom, setWasScrollNearBottom] = useState()
+    // const [offset, setOffset] = useState(0)
+    const prevScrollOffset = useRef(0)
+    const prevMessagesCount = useRef(messages?.length)
+    const prevScrollHeight = useRef()
     const handleRenderItems = useRenderItemsHandler({
-        onTopReach: (index) => {
-            beforeTopReach(index);
-            onTopReach()
+        onTopReach: () => onTopReach(beforeTopReach),
+        onBottomReach: () => {
+            setWasScrollNearBottom
+            onBottomReach();
         },
-        onBottomReach,
         itemCount: messages?.length,
         threshold: 7,
     });
 
-    function beforeTopReach(visibleStartIndex) {
-        const container = listRef.current._outerRef
-        const scrollHeight = container?.scrollHeight
-        console.log(scrollHeight);
-        
-        lastIndex.current = listRef.current?.state?.scrollOffset
+    function beforeTopReach() {
+        setWasScrollNearBottom(false)
+        const container = listRef.current?._outerRef
+        prevScrollHeight.current = container?.scrollHeight
+        prevScrollOffset.current = listRef.current?.state?.scrollOffset
     }
 
     const getItemSize = useCallback((index) => {
@@ -108,25 +107,19 @@ const ConversationMessages = memo(({
         });
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const container = containerRef.current;
         if (!container) return;
 
-        const scrollToBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
-        const scrollToTop = container.scrollTop;
-        const wasScrollNearBottom = scrollToTop < scrollToBottom;
-
-        const newScrollHeight = container.scrollHeight;
-
         if (wasScrollNearBottom) {
-            container.scrollTop = newScrollHeight;
+            // container.scrollTop = newScrollHeight;
         } else {
-            setTimeout(() => {
-                const container = listRef.current._outerRef;
-                const newMessagesSize = Array(10).fill('d').reduce((acc, _, index) => acc + getItemSize(index), 0)
-                container.scrollTop = newMessagesSize + lastIndex.current - 26
-            }, 0)
+            const newMessagesCount = messages?.length - prevMessagesCount?.current
+            const container = listRef.current?._outerRef || {};
+            const newMessagesSize = Array(newMessagesCount).fill(null).reduce((acc, _, index) => acc + getItemSize(index), 0)
+            container.scrollTop = newMessagesSize + prevScrollOffset.current
         }
+        prevMessagesCount.current = messages?.length
     }, [messages]);
 
     const renderRow = useCallback(({ index, style }) => {
@@ -143,13 +136,6 @@ const ConversationMessages = memo(({
         );
     }, [messages, setRowHeight]);
 
-    const listProps = useMemo(() => ({
-        itemCount: messages.length,
-        itemSize: getItemSize,
-        onItemsRendered: handleRenderItems,
-        overscanCount: 10
-    }), [messages.length, getItemSize, handleRenderItems]);
-
     return (
         <div className={cls.chat}>
             <div ref={containerRef} className={cls.chat__window}>
@@ -159,7 +145,10 @@ const ConversationMessages = memo(({
                             ref={listRef}
                             height={height}
                             width={width}
-                            {...listProps}
+                            itemCount={messages?.length}
+                            itemSize={getItemSize}
+                            onItemsRendered={handleRenderItems}
+                            overscanCount={7}
                         >
                             {renderRow}
                         </List>

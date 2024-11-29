@@ -21,7 +21,7 @@ export function cn(...args) {
 
 export const getUserFullName = (user) => {
     let { firstName, lastName } = user || {}
-    firstName = firstName.charAt(0).toUpperCase() + firstName.slice(1)?.toLowerCase();
+    firstName = firstName?.charAt(0).toUpperCase() + firstName?.slice(1)?.toLowerCase();
     lastName = lastName?.charAt(0).toUpperCase() + lastName?.slice(1)?.toLowerCase();
     return `${firstName || ''} ${lastName || ''}`
 }

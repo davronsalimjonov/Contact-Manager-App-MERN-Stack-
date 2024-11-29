@@ -15,7 +15,7 @@ const ChatConversation = ({
 }) => {
     const queryClient = useQueryClient()
 
-    const handleBottomReach = async (lastMessageIndex) => {
+    const handleBottomReach = async () => {
         try {
             const lastMessage = messages?.at(-1)
             const newMessages = await getChatBellowMessages(chatId, { index: lastMessage?.index })
@@ -25,10 +25,11 @@ const ChatConversation = ({
         }
     }
 
-    const handleTopReach = async () => {
+    const handleTopReach = async (beforeTopReach) => {
         try {
             const firstMessage = messages[0]
             const newMessages = await getChatAboveMessages(chatId, { index: firstMessage?.index })
+            beforeTopReach?.()
             queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([...newMessages, ...oldData]))
         } catch (error) {
             console.log(error);
@@ -47,7 +48,6 @@ const ChatConversation = ({
                 </div>
             ) : (
                 <ConversationMessages
-                chatId={chatId}
                     messages={messages}
                     onBottomReach={handleBottomReach}
                     onTopReach={handleTopReach}
