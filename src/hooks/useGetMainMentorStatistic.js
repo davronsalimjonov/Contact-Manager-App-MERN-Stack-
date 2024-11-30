@@ -10,7 +10,7 @@ const useGetMainMentorStatistic = ({
     const studentsCount = useQuery(['statistic', 'call-count', startDate, endDate], () => getAllStudentsCount(mentorId, { startDate, endDate }))
     const studentsCountByCourse = useQuery(['statistic', 'student-count-by-course', startDate, endDate], () => getStudentCountByCourse({ teacher: mentorId, startDate, endDate }))
     const studentsCountByLevel = useQuery(['statistic', 'student-count-by-level', startDate, endDate], () => getStudentCountByLevel({ teacher: mentorId, startDate, endDate }))
-    const studentsActivity = useQuery(['statistic', 'students-activity', startDate, endDate], () => getStudentsActivity(mentorId, { startDate, endDate }))  //TODO
+    const studentsActivity = useQuery(['statistic', 'students-activity', startDate, endDate], () => getStudentsActivity(mentorId, { startDate, endDate }))
     const lessonRate = useQuery(['statistic', 'lesson-rate', startDate, endDate, mentorId], () => getLessonRate(mentorId, { startDate, endDate }))
     const mentor = useQuery(['mentor', mentorId], () => getEmployeeById(mentorId,2))
 

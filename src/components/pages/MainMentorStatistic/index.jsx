@@ -27,8 +27,6 @@ const MainMentorStatistic = () => {
 
     const navigate = useNavigate();
 
-    console.log(studentsActivity);
-
     return (
         <div className={cls.page}>
             {(
@@ -46,7 +44,7 @@ const MainMentorStatistic = () => {
                         <h2 className={cls.page__avatar__name}>{mentor.firstName + " " + mentor.lastName}</h2>
                     </div>}
                     <div className={cls.page__metrics}>
-                        <MetricCard   //TODO
+                        <MetricCard   
                             title="O'quvchilar soni"
                             value={`${studentsCount || 0} nafar`}
                             percentage={studentsCount?.countPercentage || 0}

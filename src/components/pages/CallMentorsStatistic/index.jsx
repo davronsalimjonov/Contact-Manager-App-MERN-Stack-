@@ -39,7 +39,7 @@ const CallMentorStatistic = () => {
                         <h2 className={cls.page__avatar__name}>{mentor.firstName + " " + mentor.lastName}</h2>
                     </div>}
                     <div className={cls.page__metrics}>
-                        <MetricCard   //TODO
+                        <MetricCard  
                             title="Qo’ng’iroqlar soni"
                             value={`${audioCallCount?.count || 0} ta`}
                             percentage={audioCallCount?.countPercentage || 0}

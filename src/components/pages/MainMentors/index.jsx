@@ -18,7 +18,7 @@ const MainMentors = () => {
                     [
 
                         {
-                            title: "Teacherlar soni",
+                            title: "Mentorlar soni",
                             text: mentors?.average?.count,
 
                         },
@@ -34,12 +34,11 @@ const MainMentors = () => {
                         },
                         {
                             title: "Darsning o'rtacha reytinggi",
-                            text: mentors?.average?.lessonRate,
+                            text: mentors?.average?.lessonRate || 0,
 
                         },
-
-
-                    ]} />
+                    ]}
+            />
             <MentorsTable mentors={mentors?.items} isLoading={isLoading} />
         </div>
     )

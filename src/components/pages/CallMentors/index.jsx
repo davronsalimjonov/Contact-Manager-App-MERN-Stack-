@@ -19,7 +19,7 @@ console.log(mentors);
                     [
 
                         {
-                            title: "Teacherlar soni",
+                            title: "Mentorlar soni",
                             text: mentors?.average?.count,
 
                         },
@@ -35,7 +35,7 @@ console.log(mentors);
                         },
                         {
                             title: "O'rtacha call davomiyligi",
-                            text: mentors?.average?.lessonRate,  //TODO
+                            text: mentors?.average?.lessonRate||0,  //TODO
 
                         },
 

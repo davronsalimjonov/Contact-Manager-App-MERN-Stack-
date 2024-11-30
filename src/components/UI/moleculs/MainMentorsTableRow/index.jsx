@@ -1,8 +1,6 @@
 import { formatNumber } from '@/utils/formatNumber';
-import EmptyDataText from '../../atoms/EmptyDataText';
 import { StarIcon } from '../../atoms/icons';
 import cls from './MentorsTableRow.module.scss';
-import { formatTime } from '@/utils/formatTime';
 import { useNavigate } from 'react-router-dom';
 
 const MainMentorsTableRow = ({
