@@ -1,10 +1,12 @@
 import { memo, useCallback, useRef, useState, useEffect } from 'react';
-import { useVirtualizer } from '@tanstack/react-virtual';
+import useDebounce from '@/hooks/useDebounce';
 import { getUserFullName } from '@/utils/lib';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import ChatCallMessage from '../../moleculs/ChatCallMessage';
 import ChatTextMessage from '../../moleculs/ChatTextMessage';
 import ChatCommentMessage from '../../moleculs/ChatCommentMessage';
 import cls from './ConversationMessages.module.scss';
+import Loader from '../../atoms/Loader';
 
 const ConversationMessages = memo(({
     messages = [],
@@ -18,20 +20,7 @@ const ConversationMessages = memo(({
     const [scrollWasNearTop, setScrollWasNearTop] = useState()
     const [isLoadingMore, setIsLoadingMore] = useState({ top: false, bottom: false });
     const [hasMoreItems, setHasMoreItems] = useState({ above: true, bellow: true })
-
-    const virtualizer = useVirtualizer({
-        paddingStart: 20,
-        gap: 0,
-        count: messages.length,
-        getScrollElement: () => containerRef.current,
-        estimateSize: () => 85,
-        measureElement: (el) => el.getBoundingClientRect().height,
-        overscan: 7,
-        isScrollingResetDelay: 500,
-        onChange: handleScroll
-    });
-
-    async function handleScroll(instance) {
+    const handleScroll = useDebounce(async (instance) => {
         if (!instanceRef.current) instanceRef.current = instance
 
         const scrollHeight = instance.getTotalSize()
@@ -42,28 +31,38 @@ const ConversationMessages = memo(({
         const lastVisibleItem = virtualItems[virtualItems.length - 1]
         const remainingItemsCount = messages.length - lastVisibleItem.index
 
-        if (firstVisibleIndex <= 7 && !isLoadingMore.top && hasMoreItems?.above) {
+        if (firstVisibleIndex <= 10 && !isLoadingMore.top && hasMoreItems?.above) {
             setIsLoadingMore(state => ({ ...state, top: true }))
             await onTopReach((messagesLength) => {
                 scrollOffset.current = instance.scrollOffset
                 setScrollWasNearTop(true)
                 if (!messagesLength) setHasMoreItems(state => ({ ...state, above: false }))
             });
-            setTimeout(() => setIsLoadingMore(state => ({ ...state, top: false })), 1000)
+            setIsLoadingMore(state => ({ ...state, top: false }))
         } else if (remainingItemsCount <= 7 && !isLoadingMore.bottom && hasMoreItems?.bellow) {
             setIsLoadingMore(state => ({ ...state, bottom: true }))
             await onBottomReach((messagesLength) => {
                 setScrollWasNearTop(false)
                 if (!messagesLength) setHasMoreItems(state => ({ ...state, bellow: false }))
             })
-            setTimeout(() => setIsLoadingMore(state => ({ ...state, bottom: false })), 1000)
+            setIsLoadingMore(state => ({ ...state, bottom: false }))
         }
-    }
+    }, 300)
+
+    const virtualizer = useVirtualizer({
+        paddingStart: 20,
+        gap: 0,
+        count: messages.length,
+        getScrollElement: () => containerRef.current,
+        estimateSize: () => 85,
+        measureElement: (el) => el.getBoundingClientRect().height,
+        overscan: 7,
+        onChange: handleScroll
+    });
 
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
-
 
         if (scrollWasNearTop) {
             const instance = instanceRef.current
@@ -80,7 +79,7 @@ const ConversationMessages = memo(({
                 return (
                     <ChatTextMessage
                         message={message?.message?.text}
-                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user) + ' ' + message?.index}
                     />
                 );
             case 'call':
@@ -103,15 +102,8 @@ const ConversationMessages = memo(({
 
     return (
         <div className={cls.chat}>
-            <div
-                ref={containerRef}
-                className={cls.chat__window}
-                style={{
-                    height: '100%',
-                    overflow: 'auto',
-                    position: 'relative',
-                }}
-            >
+            <div ref={containerRef} className={cls.chat__window}>
+                {hasMoreItems?.above && <Loader size={40} className={cls.chat__loader} />}
                 <div
                     style={{
                         height: `${virtualizer.getTotalSize()}px`,
