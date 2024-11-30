@@ -16,6 +16,7 @@ import MainMentors from "@/components/pages/MainMentors";
 import MainMentorStatistic from "@/components/pages/MainMentorStatistic";
 import CallMentors from "@/components/pages/CallMentors";
 import CallMentorStatistic from "@/components/pages/CallMentorsStatistic";
+import AllStudents from "@/components/pages/AllStudents";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -100,6 +101,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/call-teachers/:mentorId',
                 element: <CallMentorStatistic />
+            },
+            {
+                path: '/students',
+                element: <AllStudents/>
             },
             {
                 path: '*',

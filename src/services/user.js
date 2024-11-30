@@ -19,3 +19,10 @@ export const getEmployeeById = async (mentorId, role) => {
     const res = await api.get(`/employee/${mentorId}?${paramsToString({role:role})}`);
     return res.data
 }
+
+export const getAllStudents = async (params) => {
+    const filter = `/user/all-students?${paramsToString(params)}`
+    const res = await api.get(filter);
+
+    return res.data
+}
