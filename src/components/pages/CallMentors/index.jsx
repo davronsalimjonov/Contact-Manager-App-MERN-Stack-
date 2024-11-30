@@ -1,16 +1,17 @@
 import MentorsTable from "@/components/templates/MainMentorsTable";
 import MentorsPageCards from "@/components/UI/moleculs/MentorsPageCards";
 import useGetAcademicMentors from "@/hooks/useGetAcademicMentorStatistic";
-import cls from './MainMentors.module.scss';
+import cls from './CallMentors.module.scss';
 import { useOutletContext } from "react-router-dom";
-import { formatNumber } from "@/utils/formatNumber";
+import CallMentorsTable from "@/components/templates/CallMentorsTable";
+import useGetCallMentors from "@/hooks/useGetCallMentorStatistic";
 
 
-const MainMentors = () => {
+const CallMentors = () => {
     const [period] = useOutletContext();
 
-    const { data: mentors, isLoading } = useGetAcademicMentors({ startDate: period.startDate, endDate: period.endDate })
-
+    const { data: mentors, isLoading } = useGetCallMentors({ startDate:period.startDate, endDate:period.endDate })
+console.log(mentors);
     return (
         <div className={cls.page}>
             <MentorsPageCards
@@ -28,21 +29,21 @@ const MainMentors = () => {
 
                         },
                         {
-                            title: "O'rtacha oylik maoshi",
-                            text: formatNumber(mentors?.average?.salary) || 0,
+                            title: "Call tezligi",
+                            text: mentors?.average?.salary || 0,  //TODO
 
                         },
                         {
-                            title: "Darsning o'rtacha reytinggi",
-                            text: mentors?.average?.lessonRate,
+                            title: "O'rtacha call davomiyligi",
+                            text: mentors?.average?.lessonRate,  //TODO
 
                         },
 
 
-                    ]} />
-            <MentorsTable mentors={mentors?.items} isLoading={isLoading} />
+                    ]} /> 
+                      <CallMentorsTable mentors={mentors?.items} isLoading={isLoading} />
         </div>
     )
 }
 
-export default MainMentors;
+export default CallMentors;

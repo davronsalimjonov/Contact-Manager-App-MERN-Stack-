@@ -1,12 +1,13 @@
-import MentorsTableRow from "@/components/UI/moleculs/MentorsTableRow";
 import MentorsTableHeader from "@/components/UI/organisms/MentorsTableHeader";
-import cls from './MentorsTable.module.scss';
+import cls from './MainMentorsTable.module.scss';
 import Mapper from "@/components/UI/atoms/Mapper";
 import Loader from "@/components/UI/atoms/Loader";
 import { formatNumber } from "@/utils/formatNumber";
 import EmptyData from "@/components/UI/organisms/EmptyData";
+import { formatTime } from "@/utils/formatTime";
+import MainMentorsTableRow from "@/components/UI/moleculs/MainMentorsTableRow";
 
-const MentorsTable = ({
+const MainMentorsTable = ({
     mentors = [],
     isLoading = false
 }) => {
@@ -14,21 +15,21 @@ const MentorsTable = ({
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             {mentors?.length > 0 ? (
                 <table className={cls.table}>
-                    <MentorsTableHeader mentorType={"Asosiy"} />
+                    <MentorsTableHeader mentorType={"Asosiy"} headers={["№","Asosiy","O'quvchilarining aktivligi","Oylik maoshi","Task bajarish tezligi",""]} />
                     <tbody>
                         <Mapper
                             data={mentors}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(mentor, index) => (
-                                <MentorsTableRow
-                                    key={mentor?.id}
+                                <MainMentorsTableRow key={mentor?.id}
+                                    mentorId={mentor?.id}
                                     index={index + 1}
                                     mentor={mentor.firstName + ' ' + mentor.lastName}
                                     activityStudents={mentor.active + '%'}
                                     reyting={mentor.lessonRate}
                                     salary={formatNumber(mentor.salary)}
-                                    speed={mentor.taskSpeed}
+                                    speed={formatTime(mentor.taskSpeed) + ' s'}
                                 />
                             )}
                         />
@@ -43,4 +44,4 @@ const MentorsTable = ({
     )
 }
 
-export default MentorsTable;
+export default MainMentorsTable;

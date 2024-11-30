@@ -14,3 +14,8 @@ export const updateEmployee = async (mentorId, data, params) => {
     const res = await api.put(`/employee/${mentorId}?${paramsToString(params)}`, data, { headers: { "Content-Type": 'multipart/form-data' } })
     return res.data
 }
+
+export const getEmployeeById = async (mentorId, role) => {
+    const res = await api.get(`/employee/${mentorId}?${paramsToString({role:role})}`);
+    return res.data
+}

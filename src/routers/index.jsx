@@ -13,6 +13,9 @@ import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks } from "./data";
 import MainMentors from "@/components/pages/MainMentors";
+import MainMentorStatistic from "@/components/pages/MainMentorStatistic";
+import CallMentors from "@/components/pages/CallMentors";
+import CallMentorStatistic from "@/components/pages/CallMentorsStatistic";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -52,8 +55,8 @@ const callTecherRoutes = createBrowserRouter([
                 element: <Settings />
             },
             {
-                path:'mentor',
-                element:<MainMentors/>
+                path: 'mentor',
+                element: <MainMentors />
             },
             {
                 path: '*',
@@ -68,7 +71,7 @@ const mainMentorRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
-            
+
             {
                 path: '*',
                 element: <PageNotFound />
@@ -85,7 +88,19 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/main-teachers',
                 element: <MainMentors />
-            },  
+            },
+            {
+                path: '/main-teachers/:mentorId',
+                element: <MainMentorStatistic />
+            },
+            {
+                path: '/call-teachers',
+                element: <CallMentors />
+            },
+            {
+                path: '/call-teachers/:mentorId',
+                element: <CallMentorStatistic />
+            },
             {
                 path: '*',
                 element: <PageNotFound />
@@ -129,8 +144,6 @@ const Routers = () => {
     const { data: user, isLoading: isUserLoading } = useGetUser()
 
     const getRoutesByRole = (role) => {
-
-        console.log(role);
         switch (role) {
             case 2: return mainMentorRoutes;
             case 4: return callTecherRoutes;

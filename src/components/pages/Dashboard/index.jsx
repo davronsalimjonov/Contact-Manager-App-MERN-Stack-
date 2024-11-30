@@ -61,7 +61,7 @@ const Dashboard = () => {
                     </div>
                     <div className={cls.page__charts}>
                         <CoursesChart
-                            title='O’qidigan kurslari bo’yicha'
+                            title='O’qiydigan kurslari bo’yicha'
                             courses={studentsCountByCourse}
                         />
                         <StudentsLevelChart

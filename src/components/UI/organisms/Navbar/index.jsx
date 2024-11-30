@@ -14,7 +14,7 @@ const Navbar = ({ onPerionChange }) => {
         <nav className={cls.navbar}>
             <span className={cls.navbar__name}>Dashboard</span>
             <div className={cls.navbar__controls}>
-                {timeperiodPickerPath.includes(location.pathname) && <TimePeriodPicker onChange={onPerionChange} />}
+                {timeperiodPickerPath.map(link => link.includes(location.pathname)) && <TimePeriodPicker onChange={onPerionChange} />}
                 <NotificationButton />
                 <Avatar src={user?.url} name={getUserFullName(user)} size={56} round />
             </div>
