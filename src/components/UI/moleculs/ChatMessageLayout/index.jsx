@@ -12,6 +12,7 @@ const ChatMessageLayout = memo(({
     return (
         <div className={cls.message}>
             <Avatar 
+                key={fullName}
                 round 
                 src={avatar}
                 name={fullName}

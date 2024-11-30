@@ -1,159 +1,143 @@
-import { memo, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import AutoSizer from 'react-virtualized-auto-sizer';
-import { VariableSizeList as List } from 'react-window';
+import { memo, useCallback, useRef, useState, useEffect } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { getUserFullName } from '@/utils/lib';
-import useRenderItemsHandler from '@/hooks/useItemsRenderHandler';
 import ChatCallMessage from '../../moleculs/ChatCallMessage';
 import ChatTextMessage from '../../moleculs/ChatTextMessage';
 import ChatCommentMessage from '../../moleculs/ChatCommentMessage';
 import cls from './ConversationMessages.module.scss';
-
-const MeasurableItem = memo(({ message, index, onMeasure }) => {
-    const ref = useRef(null);
-
-    useLayoutEffect(() => {
-        if (ref.current) {
-            const height = ref.current.offsetHeight;
-            onMeasure(index, height);
-        }
-    }, [message, index, onMeasure]);
-    
-    const renderContent = useMemo(() => {
-        switch (message?.type) {
-            case 'message':
-                return (
-                    <div ref={ref} className={cls.chat__row}>
-                        <ChatTextMessage
-                            message={message?.message?.text}
-                            fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user) + ' ' + message?.index}
-                        />
-                    </div>
-                );
-            case 'call':
-                return (
-                    <div ref={ref} className={cls.chat__row}>
-                        <ChatCallMessage
-                            recordUrl={message?.call?.audio}
-                            recordDuration={message?.call?.duration}
-                        />
-                    </div>
-                );
-            case 'comment':
-                return (
-                    <div ref={ref} className={cls.chat__row}>
-                        <ChatCommentMessage
-                            text={message?.comment?.text}
-                            fullName={getUserFullName(message?.comment?.owner)}
-                        />
-                    </div>
-                );
-            default: return null;
-        }
-    }, [message, index]);
-
-    return renderContent;
-}, (prevProps, nextProps) => {
-    return (
-        prevProps.index === nextProps.index &&
-        prevProps.message?.id === nextProps.message?.id &&
-        prevProps.message?.type === nextProps.message?.type
-    );
-})
 
 const ConversationMessages = memo(({
     messages = [],
     onBottomReach,
     onTopReach
 }) => {
-    const listRef = useRef(null);
+    const instanceRef = useRef()
     const containerRef = useRef(null);
-    const [rowHeights, setRowHeights] = useState({});
-    const [wasScrollNearBottom, setWasScrollNearBottom] = useState()
-    // const [offset, setOffset] = useState(0)
-    const prevScrollOffset = useRef(0)
-    const prevMessagesCount = useRef(messages?.length)
-    const prevScrollHeight = useRef()
-    const handleRenderItems = useRenderItemsHandler({
-        onTopReach: () => onTopReach(beforeTopReach),
-        onBottomReach: () => {
-            setWasScrollNearBottom
-            onBottomReach();
-        },
-        itemCount: messages?.length,
-        threshold: 7,
+    const prevScrollHeight = useRef(0);
+    const scrollOffset = useRef(0)
+    const [scrollWasNearTop, setScrollWasNearTop] = useState()
+    const [isLoadingMore, setIsLoadingMore] = useState({ top: false, bottom: false });
+    const [hasMoreItems, setHasMoreItems] = useState({ above: true, bellow: true })
+
+    const virtualizer = useVirtualizer({
+        paddingStart: 20,
+        gap: 0,
+        count: messages.length,
+        getScrollElement: () => containerRef.current,
+        estimateSize: () => 85,
+        measureElement: (el) => el.getBoundingClientRect().height,
+        overscan: 7,
+        isScrollingResetDelay: 500,
+        onChange: handleScroll
     });
 
-    function beforeTopReach() {
-        setWasScrollNearBottom(false)
-        const container = listRef.current?._outerRef
-        prevScrollHeight.current = container?.scrollHeight
-        prevScrollOffset.current = listRef.current?.state?.scrollOffset
+    async function handleScroll(instance) {
+        if (!instanceRef.current) instanceRef.current = instance
+
+        const scrollHeight = instance.getTotalSize()
+        prevScrollHeight.current = scrollHeight
+
+        const virtualItems = instance.getVirtualItems()
+        const firstVisibleIndex = virtualItems[0]?.index
+        const lastVisibleItem = virtualItems[virtualItems.length - 1]
+        const remainingItemsCount = messages.length - lastVisibleItem.index
+
+        if (firstVisibleIndex <= 7 && !isLoadingMore.top && hasMoreItems?.above) {
+            setIsLoadingMore(state => ({ ...state, top: true }))
+            await onTopReach((messagesLength) => {
+                scrollOffset.current = instance.scrollOffset
+                setScrollWasNearTop(true)
+                if (!messagesLength) setHasMoreItems(state => ({ ...state, above: false }))
+            });
+            setTimeout(() => setIsLoadingMore(state => ({ ...state, top: false })), 1000)
+        } else if (remainingItemsCount <= 7 && !isLoadingMore.bottom && hasMoreItems?.bellow) {
+            setIsLoadingMore(state => ({ ...state, bottom: true }))
+            await onBottomReach((messagesLength) => {
+                setScrollWasNearTop(false)
+                if (!messagesLength) setHasMoreItems(state => ({ ...state, bellow: false }))
+            })
+            setTimeout(() => setIsLoadingMore(state => ({ ...state, bottom: false })), 1000)
+        }
     }
 
-    const getItemSize = useCallback((index) => {
-        return rowHeights[index] || 60;
-    }, [rowHeights]);
-
-    const setRowHeight = useCallback((index, height) => {
-        setRowHeights(prev => {
-            if (prev[index] !== height) {
-                const newHeights = { ...prev, [index]: height };
-                requestAnimationFrame(() => {
-                    listRef.current?.resetAfterIndex(index);
-                });
-                return newHeights;
-            }
-            return prev;
-        });
-    }, []);
-
-    useLayoutEffect(() => {
+    useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
 
-        if (wasScrollNearBottom) {
-            // container.scrollTop = newScrollHeight;
-        } else {
-            const newMessagesCount = messages?.length - prevMessagesCount?.current
-            const container = listRef.current?._outerRef || {};
-            const newMessagesSize = Array(newMessagesCount).fill(null).reduce((acc, _, index) => acc + getItemSize(index), 0)
-            container.scrollTop = newMessagesSize + prevScrollOffset.current
+
+        if (scrollWasNearTop) {
+            const instance = instanceRef.current
+            const newScrollHeight = instance.getTotalSize()
+
+            instance.scrollToOffset((newScrollHeight - prevScrollHeight.current) + scrollOffset.current)
         }
-        prevMessagesCount.current = messages?.length
+
     }, [messages]);
 
-    const renderRow = useCallback(({ index, style }) => {
-        const message = messages[index];
-
-        return (
-            <div style={style}>
-                <MeasurableItem
-                    index={index}
-                    message={message}
-                    onMeasure={setRowHeight}
-                />
-            </div>
-        );
-    }, [messages, setRowHeight]);
+    const renderMessage = useCallback((message, index) => {
+        switch (message?.type) {
+            case 'message':
+                return (
+                    <ChatTextMessage
+                        message={message?.message?.text}
+                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                    />
+                );
+            case 'call':
+                return (
+                    <ChatCallMessage
+                        recordUrl={message?.call?.audio}
+                        recordDuration={message?.call?.duration}
+                    />
+                );
+            case 'comment':
+                return (
+                    <ChatCommentMessage
+                        text={message?.comment?.text}
+                        fullName={getUserFullName(message?.comment?.owner)}
+                    />
+                );
+            default: return null;
+        }
+    }, []);
 
     return (
         <div className={cls.chat}>
-            <div ref={containerRef} className={cls.chat__window}>
-                <AutoSizer>
-                    {({ width, height }) => (
-                        <List
-                            ref={listRef}
-                            height={height}
-                            width={width}
-                            itemCount={messages?.length}
-                            itemSize={getItemSize}
-                            onItemsRendered={handleRenderItems}
-                            overscanCount={7}
-                        >
-                            {renderRow}
-                        </List>
-                    )}
-                </AutoSizer>
+            <div
+                ref={containerRef}
+                className={cls.chat__window}
+                style={{
+                    height: '100%',
+                    overflow: 'auto',
+                    position: 'relative',
+                }}
+            >
+                <div
+                    style={{
+                        height: `${virtualizer.getTotalSize()}px`,
+                        width: '100%',
+                        position: 'relative',
+                    }}
+                >
+                    {virtualizer.getVirtualItems().map((virtualRow) => {
+                        const message = messages[virtualRow.index];
+                        return (
+                            <div
+                                key={message?.id}
+                                ref={virtualRow.measureRef}
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%',
+                                    transform: `translateY(${virtualRow.start}px)`,
+                                }}
+                            >
+                                {renderMessage(message, virtualRow.index)}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );
