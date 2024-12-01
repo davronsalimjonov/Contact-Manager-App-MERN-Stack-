@@ -8,7 +8,6 @@ const ChatMessageLayout = memo(({
     avatar = '',
     time = ''
 }) => {
-    
     return (
         <div className={cls.message}>
             <Avatar 

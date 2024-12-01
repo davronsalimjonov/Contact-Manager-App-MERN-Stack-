@@ -1,4 +1,4 @@
-import { useQueryClient } from 'react-query';
+import useGetChat from '@/hooks/useGetChat';
 import Loader from '@/components/UI/atoms/Loader';
 import ConversationInput from '@/components/UI/organisms/ConversationInput';
 import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
@@ -8,19 +8,20 @@ import cls from './ChatConversation.module.scss';
 
 const ChatConversation = ({
     chatId = '',
+    conversationId = '',
     partnerFullName = '',
     partnerPhoneNumber = '',
     messages = [],
     isLoadingMessages = false
 }) => {
-    const queryClient = useQueryClient()
+    const {addPrevMessages, addNextMessages} = useGetChat(chatId)
 
     const handleBottomReach = async (beforeBottomReach) => {
         try {
             const lastMessage = messages?.at(-1)
-            const newMessages = await getChatBellowMessages(chatId, { index: lastMessage?.index })
+            const newMessages = await getChatBellowMessages(conversationId, { index: lastMessage?.index })
             beforeBottomReach?.(newMessages?.length)
-            queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([...oldData, ...newMessages]))
+            addNextMessages(newMessages)
         } catch (error) {
             console.log(error);
         }
@@ -29,9 +30,9 @@ const ChatConversation = ({
     const handleTopReach = async (beforeTopReach) => {
         try {
             const firstMessage = messages[0]
-            const newMessages = await getChatAboveMessages(chatId, { index: firstMessage?.index })
+            const newMessages = await getChatAboveMessages(conversationId, { index: firstMessage?.index })
             beforeTopReach?.(newMessages?.length)
-            queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([...newMessages, ...oldData]))
+            addPrevMessages(newMessages)
         } catch (error) {
             console.log(error);
         }
@@ -54,7 +55,7 @@ const ChatConversation = ({
                     onTopReach={handleTopReach}
                 />
             )}
-            <ConversationInput />
+            <ConversationInput chatId={chatId} />
         </div>
     );
 }

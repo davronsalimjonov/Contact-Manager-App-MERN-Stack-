@@ -18,6 +18,13 @@
         &::-webkit-scrollbar {
             width: 0 !important;
         }
+
+        &__row{
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+        }
     }
 
     &__loader{

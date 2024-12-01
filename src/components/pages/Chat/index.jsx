@@ -17,7 +17,8 @@ const Chat = () => {
         <div className={cls.page}>
             {!isLoadingInfo ? (
                 <ChatConversation
-                    chatId={info?.id}
+                    chatId={chatId}
+                    conversationId={info?.id}
                     partnerFullName={getUserFullName(info?.user)}
                     partnerPhoneNumber={info?.user?.phone}
                     messages={messages}
