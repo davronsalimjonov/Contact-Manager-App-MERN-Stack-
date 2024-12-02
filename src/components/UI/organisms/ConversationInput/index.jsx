@@ -12,13 +12,14 @@ const ConversationInput = ({ chatId }) => {
 
     const handleSendMessage = (data) => {
         const newMessage = {
-            id: "1b0f851b-cc56-4593-b588-6289c6cef9c",
+            id: Date.now().toString(),
             createdAt: "2024-11-29T13:01:46.671Z",
             type: "message",
             isViewed: false,
             index: 160,
             call: null,
             comment: null,
+            shouldScroll: true,
             message: {
                 id: "3f618a18-5957-4ee0-9c7a-ac1d8b70afad",
                 type: "text",

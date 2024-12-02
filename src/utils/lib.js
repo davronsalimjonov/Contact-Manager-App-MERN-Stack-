@@ -78,7 +78,7 @@ export const onImageError = (e, url = '/images/not-found.jpg') => {
 }
 
 export function convertSecondsToTimeFormat(seconds = 0) {
-    if(isNaN(seconds)) {
+    if (isNaN(seconds)) {
         seconds = 0
     }
     const minutes = Math.floor(seconds / 60);
@@ -86,7 +86,7 @@ export function convertSecondsToTimeFormat(seconds = 0) {
     const formattedMinutes = String(minutes).padStart(2, '0');
     const formattedSeconds = String(remainingSeconds).padStart(2, '0');
     return `${formattedMinutes}:${formattedSeconds}`;
-}  
+}
 
 export const adjustHeight = (e, { minHeight = 50, maxHeight = 200 } = {}) => {
     const textarea = e.target;
@@ -108,3 +108,33 @@ export const adjustHeight = (e, { minHeight = 50, maxHeight = 200 } = {}) => {
 
     textarea.style.overflowY = height > maxHeight ? 'auto' : 'hidden';
 };
+
+export function formatMessageDate(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+
+    const isSameDay = (date1, date2) =>
+        date1.getFullYear() === date2.getFullYear() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getDate() === date2.getDate();
+
+    const isYesterday = (date) => {
+        const yesterday = new Date(now);
+        yesterday.setDate(now.getDate() - 1);
+        return isSameDay(date, yesterday);
+    }
+
+    if (isSameDay(date, now)) {
+        return 'Bugun';
+    }
+
+    if (isYesterday(date)) {
+        return 'Kecha';
+    }
+
+    const formatOptions = date.getFullYear() === now.getFullYear()
+        ? { day: 'numeric', month: 'long' } 
+        : { day: 'numeric', month: 'long', year: 'numeric' }
+
+    return new Intl.DateTimeFormat('ru-RU', formatOptions).format(date);
+}

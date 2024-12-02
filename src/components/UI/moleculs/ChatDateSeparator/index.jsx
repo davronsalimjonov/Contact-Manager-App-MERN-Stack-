@@ -1,13 +1,15 @@
-import cls from './ChatDateLine.module.scss';
+import cls from './ChatDateSeparator.module.scss';
 
-const ChatDateLine = () => {
+const ChatDateSeparator = ({
+    date = ''
+}) => {
     return (
         <div className={cls.date}>
             <span className={cls.date__line}></span>
-            <span>17 oktabr, 2024</span>
+            <span>{date}</span>
             <span className={cls.date__line}></span>
         </div>
     );
 }
 
-export default ChatDateLine;
+export default ChatDateSeparator;
