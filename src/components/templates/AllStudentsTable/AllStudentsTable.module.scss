@@ -1,0 +1,17 @@
+.table {
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    grid-template-columns: 
+        minmax(60px, 60px)
+        minmax(238px, 1.6fr)
+        minmax(180px, 1fr)
+        minmax(135px, 135px)
+        minmax(280px, 1fr)
+        minmax(110px, 1fr)
+        minmax(199px, 199px);
+
+    & tbody{
+      display: contents;
+    }
+}

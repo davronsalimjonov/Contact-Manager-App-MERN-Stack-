@@ -105,6 +105,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/students',
                 element: <AllStudents/>
+            }, 
+            {
+                path: '/students/:courseId',
+                element: <SingleStudent/>
             },
             {
                 path: '*',

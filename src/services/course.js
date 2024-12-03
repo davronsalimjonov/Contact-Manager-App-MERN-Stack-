@@ -21,3 +21,13 @@ export const updateUserCourse = async (courseId, data) => {
     const res = await api.put(`/user-course/${courseId}`, data)
     return res.data
 }
+
+export const getCourses = async () => {
+    const res = await api.get(`/course/for-select`);
+    return res.data
+}
+
+export const getStudentCourses=async (studentId) => {
+    const res = await api.get(`/user-course/courses-web/${studentId}`)
+    return res.data;
+}

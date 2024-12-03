@@ -11,6 +11,7 @@ const StudentsTable = ({
     triggerRef,
     isLoading
 }) => {
+
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             {students?.length > 0 ? (
@@ -30,7 +31,7 @@ const StudentsTable = ({
                                     days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
                                     time={student?.connectionTime}
                                     status={student?.status}
-                                    userCourseId={student.id}
+                                    userCourseId={student?.id}
                                     chatId={student?.id}
                                 />
                             )}

@@ -7,11 +7,11 @@ import { useForm } from 'react-hook-form';
 import FormInput from '@/components/UI/moleculs/Form/FormInput';
 import FormSelect from '@/components/UI/moleculs/Form/FormSelect';
 import { SearchIcon } from '@/components/UI/atoms/icons';
-import { DEGREEOPTIONS, UNITS } from '@/constants';
+import { DEGREEOPTIONS, STUDENTS_STATUS_OPTION, UNITS } from '@/constants';
 import Button from '@/components/UI/atoms/Buttons/Button';
-import useGetStudents from '@/hooks/useGetStudents';
 import AllStudentsTable from '@/components/templates/AllStudentsTable';
 import { useGetAllStudents } from '@/hooks/useGetAllStudents';
+import AllStudentsSearchBar from '@/components/UI/organisms/AllStudentsSearchBar';
 
 const defaultValues = {
     word: '',
@@ -21,24 +21,13 @@ const defaultValues = {
 }
 
 const AllStudents = () => {
-    const { register, control, handleSubmit } = useForm({
-        defaultValues,
-        mode: 'onSubmit'
-    });
-
     const [filter, setFilter] = useState({
         page: 1,
         limit: 10,
     }
     );
 
-    const { data: students, isLoading: isLoadingStudents } = useGetAllStudents(filter);  //TODO
-
-console.log(students);
-
-    const handleSearch = async (data) => {
-        setFilter({ ...data, page: 1, limit: 10 });
-    }
+    const { ref, data: students, isLoading: isLoadingStudents } = useGetAllStudents(filter); 
 
     const onShowSizeChange = (current, pageSize) => {
         setFilter((prev) => {
@@ -50,51 +39,31 @@ console.log(students);
         })
     };
 
-
-    if (isLoadingStudents) return (
-        <Loader />
-    )
-
     return (
         <>
-            <form onSubmit={handleSubmit(handleSearch)} className={cls.filter}>
-                <FormInput
-                    className={cls.filter__input}
-                    preffix={<SearchIcon fill='#a2a0b3' />}
-                    placeholder={'Inglizchasi'}
-                    register={{ ...register('word') }}
-                />
-
-                <FormInput
-                    className={cls.filter__input}
-                    preffix={<SearchIcon fill='#a2a0b3' />}
-                    placeholder={'O’zbekcha'}
-                    register={{ ...register('description') }}
-                />
-
-                <FormSelect
-                    className={cls.filter__select}
-                    control={control}
-                    name='unit'
-                    options={UNITS}
-                    isClearable={true}
-                    placeholder='Mavzular'
-                />
-
-                <FormSelect
-                    className={cls.filter__select}
-                    name="lvl"
-                    control={control}
-                    options={DEGREEOPTIONS}
-                    isClearable={true}
-                    placeholder='Darajasi'
-                />
-                <Button type='submit' className={cls.button}>Qidirish <SearchIcon /></Button>
-                {/* <AddNewWord /> */}
-                {/* TODO */}
-
-            </form>
-            <AllStudentsTable students={students} />
+            <AllStudentsSearchBar
+                onChangeStatus={(status) => setFilter(state => ({
+                    ...state, status: status?.value, page: 1,
+                    limit: 10,
+                }))}
+                onChangeName={e => setFilter(state => ({
+                    ...state, firstName: e.target.value?.trim(), page: 1,
+                    limit: 10,
+                }))}
+                onChangeDegree={degree => setFilter(state => ({
+                    ...state, level: degree?.value, page: 1,
+                    limit: 10,
+                }))}
+                onChangeCourse={course => setFilter(state => ({
+                    ...state, course: course?.value, page: 1,
+                    limit: 10,
+                }))}
+            />
+            <AllStudentsTable
+                triggerRef={ref}
+                students={students}
+                isLoading={isLoadingStudents}
+            />
 
             <div className={cls.pagination}>
                 <Pagination

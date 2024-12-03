@@ -16,7 +16,7 @@ const SingleStudent = () => {
     const { courseId } = useParams()
     const queryClient = useQueryClient()
     const { data: course, isLoading: isLoadingStudent } = useGetStudentCourseById(courseId)
-    const student = course?.user
+    const student = course?.user;
 
     const studentFormData = {
         id: student?.id,
