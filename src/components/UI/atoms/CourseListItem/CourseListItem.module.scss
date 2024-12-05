@@ -1,0 +1,29 @@
+.item {
+    display: grid;
+    grid-template-columns: 125px 1fr 32px;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: var(--base-white-color);
+    font-family: "Raleway";
+    line-height: 24px;
+
+    &__title {
+        margin: 0 0 4px 0;
+        font-size: 20px;
+        font-weight: 600;
+        color: #0F172A;
+    }
+
+    &__text {
+        margin: 0;       
+        font-size: 16px;
+        font-weight: 400;
+        color: #475569;
+    }
+
+    &__btn{
+        background-color: transparent;
+    }
+}

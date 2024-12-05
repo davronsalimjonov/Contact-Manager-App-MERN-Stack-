@@ -77,4 +77,14 @@ export const STATUS_COLOR = [
         backgroundColor: "rgba(255, 212, 227, 1)",
         color: "rgba(205, 0, 71, 1)"
     }
+];
+
+
+const paymentLink = import.meta.env.VITE_APP_PAYMENT_LINK;
+
+export const PAYMENT_LINK = [
+    {
+        label: 'Click',
+        value: paymentLink,
+    }
 ]

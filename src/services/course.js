@@ -27,7 +27,22 @@ export const getCourses = async () => {
     return res.data
 }
 
+export const getAllCourses = async () => {
+    const res = await api.get(`/course`);
+    return res.data
+}
+
 export const getStudentCourses=async (studentId) => {
     const res = await api.get(`/user-course/courses-web/${studentId}`)
     return res.data;
+}
+
+export const getCourseById = async (courseId)=> {
+    const res = await api.get(`/course/${courseId}`);
+    return res.data;
+}
+
+export const addCourse = async (data) => {
+    const res = await api.post('/course', data)
+    return res.data
 }

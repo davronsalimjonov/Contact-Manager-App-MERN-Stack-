@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
-import { getCourses, getMentorGroups } from "@/services/course";
+import { getCourses} from "@/services/course";
 
-const useGetCourses = () => {
+ const useGetCourses = () => {
     return useQuery(['courses'], () => getCourses(),{ cacheTime: Infinity, staleTime: Infinity });
 }
 
