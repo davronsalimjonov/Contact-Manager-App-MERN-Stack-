@@ -11,6 +11,7 @@ import StudentInformationForm from '@/components/UI/organisms/StudentInformation
 import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
 import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleStudent.module.scss';
+import SingleStudentCourse from '@/components/UI/organisms/SingleStudentCourse';
 
 const SingleStudent = () => {
     const { courseId } = useParams()
@@ -76,6 +77,7 @@ console.log(course);
                         defaultValues={studentFormData} 
                         courseId={courseId}
                     />
+                    <SingleStudentCourse course={course}/>
                     <div className={cls.page__cards}>
                         <StudentActionHistory />
                         <StudentPersonalInfo
