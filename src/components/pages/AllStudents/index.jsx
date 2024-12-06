@@ -1,14 +1,7 @@
 
 import cls from './AllStudents.module.scss';
-import Loader from '@/components/UI/atoms/Loader';
 import { useState } from 'react';
 import { Pagination } from 'antd';
-import { useForm } from 'react-hook-form';
-import FormInput from '@/components/UI/moleculs/Form/FormInput';
-import FormSelect from '@/components/UI/moleculs/Form/FormSelect';
-import { SearchIcon } from '@/components/UI/atoms/icons';
-import { DEGREEOPTIONS, STUDENTS_STATUS_OPTION, UNITS } from '@/constants';
-import Button from '@/components/UI/atoms/Buttons/Button';
 import AllStudentsTable from '@/components/templates/AllStudentsTable';
 import { useGetAllStudents } from '@/hooks/useGetAllStudents';
 import AllStudentsSearchBar from '@/components/UI/organisms/AllStudentsSearchBar';
@@ -58,6 +51,8 @@ const AllStudents = () => {
                     ...state, course: course?.value, page: 1,
                     limit: 10,
                 }))}
+                onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
+          
             />
             <AllStudentsTable
                 triggerRef={ref}

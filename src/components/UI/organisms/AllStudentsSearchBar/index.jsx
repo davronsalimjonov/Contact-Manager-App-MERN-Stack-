@@ -6,12 +6,14 @@ import cls from './AllStudentsSearchBar.module.scss';
 import useGetCourses from '@/hooks/useGetCourses';
 import Button from '../../atoms/Buttons/Button';
 import { PlusIcon } from '../../atoms/icons';
+import PhoneInput from '../../atoms/Form/PhoneInput';
 
 const AllStudentsSearchBar = ({
     onChangeStatus,
     onChangeName,
     onChangeDegree,
-    onChangeCourse
+    onChangeCourse,
+    onChangePhone
 }) => {
     const { data: courses } = useGetCourses();
 
@@ -31,6 +33,13 @@ const AllStudentsSearchBar = ({
                 isClearable
             />
 
+            <PhoneInput
+                className={cls.bar__form__input}
+                placeholder='Telefon raqam'
+                onChange={debounce(onChangePhone, 200)}
+            />
+
+
             <Select
                 className={cls.bar__form__select}
                 placeholder='Darajasi'
@@ -46,7 +55,7 @@ const AllStudentsSearchBar = ({
                 isClearable
             />
 
-            <Button type='button' pr>O'quvchi qo'shish <PlusIcon/></Button>
+            <Button type='button' pr>O'quvchi qo'shish <PlusIcon /></Button>
         </div>
     );
 }

@@ -34,6 +34,7 @@ const AllStudentsTable = ({
                                     status={student?.status}
                                     teacher={getUserFullName(student?.teacher)}
                                     secondTeacher={getUserFullName(student?.secondTeacher)}
+                                    course={student?.course?.title}
                                     level={student?.level}
                                     studentId={student?.id}
                                     startDate={student?.startDate}

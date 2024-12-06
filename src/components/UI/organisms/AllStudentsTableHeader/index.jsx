@@ -11,6 +11,7 @@ const AllStudentsTableHeader = () => {
                 <th>Status</th>
                 <th>Mentor</th>
                 <th>Darajasi</th>
+                <th>Kursi</th>
                 <th>Ro’yxatdan o’tgan sana</th>
             </tr>
         </thead>

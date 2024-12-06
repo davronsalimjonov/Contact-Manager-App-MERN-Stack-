@@ -17,6 +17,7 @@ const AllStudentsTableRow = ({
     teacher,
     secondTeacher,
     level,
+    course,
     studentId,
     startDate
 }) => {
@@ -38,6 +39,7 @@ const AllStudentsTableRow = ({
                 <p className={cls.row__second__teacher}>{secondTeacher}</p>
             </td>
             <td>{level}</td>
+            <td>{course}</td>
             <td>{formatDate(startDate)}</td>
         </tr>
 

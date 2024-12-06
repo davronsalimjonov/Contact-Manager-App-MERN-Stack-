@@ -3,13 +3,14 @@
     border-collapse: collapse;
     min-width: 100%;
     grid-template-columns: 
-        minmax(60px, 60px)
-        minmax(238px, 1.6fr)
-        minmax(180px, 1fr)
-        minmax(135px, 135px)
-        minmax(280px, 1fr)
-        minmax(110px, 1fr)
-        minmax(199px, 199px);
+        minmax(54px, 54px)
+        minmax(184px, 1fr)
+        minmax(154px, 1fr)
+        minmax(120px, 120px)
+        minmax(199px, 1fr)
+        minmax(90px, 90px)
+        minmax(144px, 1fr)
+        minmax(174px, 1fr);
 
     & tbody{
       display: contents;
