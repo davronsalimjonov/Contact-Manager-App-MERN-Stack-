@@ -18,6 +18,8 @@ const SingleStudent = () => {
     const { data: course, isLoading: isLoadingStudent } = useGetStudentCourseById(courseId)
     const student = course?.user;
 
+console.log(course);
+
     const studentFormData = {
         id: student?.id,
         avatar: student?.url,

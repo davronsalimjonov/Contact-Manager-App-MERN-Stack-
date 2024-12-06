@@ -6,13 +6,6 @@ import AllStudentsTable from '@/components/templates/AllStudentsTable';
 import { useGetAllStudents } from '@/hooks/useGetAllStudents';
 import AllStudentsSearchBar from '@/components/UI/organisms/AllStudentsSearchBar';
 
-const defaultValues = {
-    word: '',
-    description: '',
-    lvl: '',
-    unit: ''
-}
-
 const AllStudents = () => {
     const [filter, setFilter] = useState({
         page: 1,
@@ -20,7 +13,7 @@ const AllStudents = () => {
     }
     );
 
-    const { ref, data: students, isLoading: isLoadingStudents } = useGetAllStudents(filter); 
+    const { ref, data: students, isLoading: isLoadingStudents } = useGetAllStudents(filter);
 
     const onShowSizeChange = (current, pageSize) => {
         setFilter((prev) => {
@@ -52,7 +45,7 @@ const AllStudents = () => {
                     limit: 10,
                 }))}
                 onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
-          
+
             />
             <AllStudentsTable
                 triggerRef={ref}

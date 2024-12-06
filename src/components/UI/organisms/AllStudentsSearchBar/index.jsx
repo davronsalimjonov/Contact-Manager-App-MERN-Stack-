@@ -7,6 +7,7 @@ import useGetCourses from '@/hooks/useGetCourses';
 import Button from '../../atoms/Buttons/Button';
 import { PlusIcon } from '../../atoms/icons';
 import PhoneInput from '../../atoms/Form/PhoneInput';
+import { useNavigate } from 'react-router-dom';
 
 const AllStudentsSearchBar = ({
     onChangeStatus,
@@ -16,6 +17,7 @@ const AllStudentsSearchBar = ({
     onChangePhone
 }) => {
     const { data: courses } = useGetCourses();
+const navigate = useNavigate();
 
     return (
         <div className={cls.bar}>
@@ -55,7 +57,7 @@ const AllStudentsSearchBar = ({
                 isClearable
             />
 
-            <Button type='button' pr>O'quvchi qo'shish <PlusIcon /></Button>
+            <Button type='button' onClick={()=>navigate('/add-student')}>O'quvchi qo'shish <PlusIcon /></Button>
         </div>
     );
 }

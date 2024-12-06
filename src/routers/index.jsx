@@ -19,6 +19,7 @@ import CallMentorStatistic from "@/components/pages/CallMentorsStatistic";
 import AllStudents from "@/components/pages/AllStudents";
 import Courses from "@/components/pages/Courses";
 import AddCourse from "@/components/pages/AddCourse";
+import AddStudent from "@/components/pages/AddStudent";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -73,7 +74,7 @@ const mainMentorRoutes = createBrowserRouter([
     {
         path: '/',
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
-        children: [ 
+        children: [
             {
                 path: '*',
                 element: <PageNotFound />
@@ -105,23 +106,27 @@ const managerRoutes = createBrowserRouter([
             },
             {
                 path: '/students',
-                element: <AllStudents/>
-            }, 
+                element: <AllStudents />
+            },
             {
                 path: '/students/:courseId',
-                element: <SingleStudent/>
+                element: <SingleStudent />
+            },
+            {
+                path: '/add-student',
+                element: <AddStudent />
             },
             {
                 path: '/courses',
-                element: <Courses/>
+                element: <Courses />
             },
             {
-                path:'/add-course',
-                element:<AddCourse/>
+                path: '/add-course',
+                element: <AddCourse />
             },
             {
-                path:'/settings',
-                element:<Settings/>
+                path: '/settings',
+                element: <Settings />
             },
             {
                 path: '*',
