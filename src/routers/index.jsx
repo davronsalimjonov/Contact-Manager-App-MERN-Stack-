@@ -20,6 +20,7 @@ import AllStudents from "@/components/pages/AllStudents";
 import Courses from "@/components/pages/Courses";
 import AddCourse from "@/components/pages/AddCourse";
 import AddStudent from "@/components/pages/AddStudent";
+import UpdateSingleStudentCourse from "@/components/pages/UpdateSingleStudentCourse";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -115,6 +116,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/add-student',
                 element: <AddStudent />
+            },
+            {
+                path: '/update-course',
+                element: <UpdateSingleStudentCourse />
             },
             {
                 path: '/courses',

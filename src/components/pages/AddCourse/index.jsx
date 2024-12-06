@@ -19,8 +19,6 @@ const AddCourse = () => {
         }
     }
 
-
-
     return (
         <>
             <CoursesForm defaultValue={{
