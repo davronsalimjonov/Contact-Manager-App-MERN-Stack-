@@ -15,6 +15,7 @@ export default defineConfig({
         },
       },
     },
+    minify: 'esbuild',
   },
   optimizeDeps: {
     exclude: ['js-big-decimal']

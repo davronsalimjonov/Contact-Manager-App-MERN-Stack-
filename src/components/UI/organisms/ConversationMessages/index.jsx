@@ -25,6 +25,7 @@ const addDateSeparators = (messages) => {
 };
 
 const ConversationMessages = ({
+    initialMessageIndex,
     messages = [],
     onBottomReach,
     onTopReach,
@@ -103,7 +104,7 @@ const ConversationMessages = ({
     });
 
     useLayoutEffect(() => {
-        const firstUnreadIndex = messages?.findIndex(msg => msg.isViewed === false);
+        const firstUnreadIndex = messages?.findIndex(msg => msg.index === initialMessageIndex);
         const scrollIndex = firstUnreadIndex !== -1 ? firstUnreadIndex : messages?.length;
 
         if (!isFirstRender && messages?.length) {

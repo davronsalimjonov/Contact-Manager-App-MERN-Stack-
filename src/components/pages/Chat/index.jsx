@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import useGetChat from '@/hooks/useGetChat';
 import { getUserFullName } from '@/utils/lib';
-import ChatConversation from '@/components/templates/ChatConversation';
-import cls from './Chat.module.scss';
 import Loader from '@/components/UI/atoms/Loader';
 import ChatSidebar from '@/components/templates/ChatSidebar';
+import ChatConversation from '@/components/templates/ChatConversation';
+import cls from './Chat.module.scss';
 
 const Chat = () => {
     const { userCourseId } = useParams()

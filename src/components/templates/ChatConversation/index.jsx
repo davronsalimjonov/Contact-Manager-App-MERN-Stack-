@@ -49,8 +49,9 @@ const ChatConversation = ({
             ) : (
                 <ConversationMessages
                     messages={messages}
-                    onBottomReach={handleBottomReach}
                     onTopReach={handleTopReach}
+                    onBottomReach={handleBottomReach}
+                    initialMessageIndex={data?.[0]?.index}
                     hasAboveMessages={typeof data?.[0]?.above === 'boolean' ? data?.[0]?.above : undefined}
                     hasBelowMessages={typeof data?.[0]?.bellow === 'boolean' ? data?.[0]?.bellow : undefined}
                 />
