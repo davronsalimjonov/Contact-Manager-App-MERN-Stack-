@@ -15,18 +15,18 @@ const CoursesForm = ({
     onSubmit
 }) => {
 
-    const { register, control, watch, handleSubmit, reset,setValue, formState: { errors, isDirty, isSubmitting } } = useForm({
+    const { register, control, watch, handleSubmit, reset, setValue, formState: { errors, isDirty, isSubmitting } } = useForm({
         mode: 'onSubmit',
         defaultValues: defaultValue
     })
-    const avatar = watch('image')||"";
+    const image = watch('image') || "";
 
     return (
         <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={cls.page__form__avatar}>
                 <AvatarUpload
                     className={cls.form__image}
-                    value={avatar}
+                    value={image ? URL.createObjectURL(image) : null}
                     onChange={(image) => setValue('image', image, { shouldDirty: true, shouldValidate: true })}
                     onDelete={() => setValue('image', null, { shouldDirty: true, shouldValidate: true })}
                 />
@@ -36,8 +36,8 @@ const CoursesForm = ({
                     className={cls.form__input}
                     label='Kurs nomi'
                     placeholder='Ismi'
-                    register={{ ...register('courseName') }}
-                    error={errors?.courseName?.message}
+                    register={{ ...register('title') }}
+                    error={errors?.title?.message}
                 />
                 <FormSelect
                     className={cls.form__input}
@@ -48,9 +48,12 @@ const CoursesForm = ({
                     options={PAYMENT_LINK}
                     placeholder="To'lov linkini tanlang"
                     label="To'lov linki"
-                    multiple={true}
+                    isMulti={true}
                     error={errors?.paymentLinks?.message}
                 />
+
+
+
                 <div className={cls.form__link__btn}>
                     <FormInput
                         className={cls.form__input}

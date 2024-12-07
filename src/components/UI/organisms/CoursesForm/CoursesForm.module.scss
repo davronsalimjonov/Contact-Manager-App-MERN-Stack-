@@ -30,11 +30,7 @@
         height: 120px;
         border-radius: 0;
 
-        &>img {
-            border-radius: 0;
-        }
-
-        &>label {
+        & > *, & img {
             border-radius: 0;
         }
     }

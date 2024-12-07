@@ -59,9 +59,13 @@ export function objectToFormData(obj, formData = new FormData()) {
             } else if (value instanceof Date) {
                 formData.append(key, value.toISOString());
             } else if (Array.isArray(value)) {
-                value.forEach((item) => {
-                    formData.append(key, item);
-                });
+                // value.forEach((item) => {
+                //     if(typeof item === 'object' && item !== null) {
+                //         item = JSON.stringify(item)
+                //     }                    
+                //     formData.append(`${key}[]`, item);
+                // });
+                formData.append(key, JSON.stringify(value))
             } else if (typeof value === 'object' && value !== null) {
                 objectToFormData(value, formData);
             } else {

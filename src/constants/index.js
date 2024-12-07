@@ -86,5 +86,13 @@ export const PAYMENT_LINK = [
     {
         label: 'Click',
         value: paymentLink,
+    },
+    {
+        label: 'Click1',
+        value: "dsddsds",
+    },
+    {
+        label: 'Click2',
+        value: "dfdfdfedf",
     }
 ]

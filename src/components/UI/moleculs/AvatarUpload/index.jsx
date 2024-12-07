@@ -31,7 +31,7 @@ const AvatarUpload = ({
     }, [value])
 
     return (
-        <div className={className||cls.wrapper}>
+        <div className={cn(cls.wrapper, className)}>
             {(value || src) ? (
                 <div className={cls.avatar}>
                     <img src={value || src} alt="avatar" onError={onImageError} />
