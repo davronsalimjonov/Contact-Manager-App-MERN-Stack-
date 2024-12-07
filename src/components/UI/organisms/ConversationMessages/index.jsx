@@ -140,7 +140,6 @@ const ConversationMessages = ({
 
             lastMessage.shouldScroll = false
         }
-
     }, [messages.length, virtualizer]);
 
     return (

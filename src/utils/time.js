@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+import { uz } from 'date-fns/locale';
 import { daysOfWeekFull, daysOfWeekShort } from "@/constants";
 
 export function getDayName(dayNumber, format = 'full') {
@@ -37,10 +39,10 @@ export function formatMessageDate(timestamp) {
     const isYesterday = (date) => {
         const yesterday = new Date(now);
         yesterday.setDate(now.getDate() - 1);
-        return isSameDay(date, yesterday);
-    }
+        return date.toDateString() === yesterday.toDateString();
+    };
 
-    if (isSameDay(date, now)) {
+    if (date.toDateString() === now.toDateString()) {
         return 'Bugun';
     }
 
@@ -48,9 +50,6 @@ export function formatMessageDate(timestamp) {
         return 'Kecha';
     }
 
-    const formatOptions = date.getFullYear() === now.getFullYear()
-        ? { day: 'numeric', month: 'long' }
-        : { day: 'numeric', month: 'long', year: 'numeric' }
-
-    return new Intl.DateTimeFormat('uz-Cyrl', formatOptions).format(date);
+    const formatPattern = date.getFullYear() === now.getFullYear() ? 'd MMMM' : 'd MMMM yyyy';
+    return format(date, formatPattern, { locale: uz });
 }

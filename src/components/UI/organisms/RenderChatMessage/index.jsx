@@ -1,6 +1,7 @@
 import { memo } from "react";
-import { MessageTypes } from "@/constants/enum";
 import { getUserFullName } from "@/utils/lib";
+import { MessageTypes } from "@/constants/enum";
+import { useGetUserId } from "@/hooks/useGetUser";
 import ChatCallMessage from "../../moleculs/ChatCallMessage";
 import ChatTextMessage from "../../moleculs/ChatTextMessage";
 import ChatCommentMessage from "../../moleculs/ChatCommentMessage";
@@ -8,13 +9,17 @@ import ChatDateSeparator from "../../moleculs/ChatDateSeparator";
 import ChatSmsMessage from "../../moleculs/ChatSmsMessage";
 
 const RenderMessage = memo(({ message }) => {
+    const userId = useGetUserId()
+
     switch (message?.type) {
         case MessageTypes.TEXT:
             return (
                 <ChatTextMessage
                     time={message?.createdAt}
                     message={message?.message?.text}
-                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user) + message?.index}
+                    avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.avatar : message?.message?.user?.avatar}
+                    isSender={message?.message?.whoSended === 'mentor' && message?.message?.mentor?.id === userId}
+                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
                 />
             );
         case MessageTypes.CALL:
@@ -32,13 +37,14 @@ const RenderMessage = memo(({ message }) => {
                     fullName={getUserFullName(message?.comment?.owner)}
                 />
             );
-        case MessageTypes.SMS: return (
-            <ChatSmsMessage 
-                fullName={getUserFullName(message?.sms?.sender)}
-                text={message?.sms?.text}
-                time={message?.createdAt}
-            />
-        );
+        case MessageTypes.SMS:
+            return (
+                <ChatSmsMessage
+                    fullName={getUserFullName(message?.sms?.sender)}
+                    text={message?.sms?.text}
+                    time={message?.createdAt}
+                />
+            );
         case MessageTypes.DATE_SEPARATOR:
             return (
                 <ChatDateSeparator date={message?.date} />

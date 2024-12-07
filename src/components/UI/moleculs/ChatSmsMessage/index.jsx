@@ -8,7 +8,7 @@ const ChatSmsMessage = ({
     time = ''
 }) => {
     return (
-        <ChatMessageLayout fullName={fullName} time={`SMS ${dayjs(time).format('HH:mm')}`}>
+        <ChatMessageLayout fullName={fullName} date={time} time={`SMS ${dayjs(time).format('HH:mm')}`}>
             <div className={cls.sms}>
                 <span>{text}</span>
             </div>

@@ -8,7 +8,7 @@ const ChatCommentMessage = ({
     time = ''
 }) => {
     return (
-        <ChatMessageLayout fullName={fullName} time={`Commented ${dayjs(time).format('HH:mm')}`}>
+        <ChatMessageLayout fullName={fullName} date={time} time={`Commented ${dayjs(time).format('HH:mm')}`}>
             <div className={cls.comment}>
                 <span>{text}</span>
             </div>

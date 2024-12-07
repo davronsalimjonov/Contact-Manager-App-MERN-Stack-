@@ -5,7 +5,7 @@ import cls from './ChatCallMessage.module.scss';
 
 const ChatCallMessage = ({
     recordUrl = '',
-    recordDuration = 0
+    recordDuration = 0,
 }) => {
 
     return (
