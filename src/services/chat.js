@@ -7,8 +7,8 @@ export const getChatInfo = async (chatId) => {
 
 export const getChatMessages = async (chatId) => {
     if(!chatId) return
-    const res = await api.get(`/chat/chat-connector/${chatId}`)
-    return res.data
+    const res = await api.get(`/chat/chat-connector/${chatId}`)    
+    return [res.data]
 }
 
 export const getChatBellowMessages = async (conversationId, params) => {
@@ -18,5 +18,20 @@ export const getChatBellowMessages = async (conversationId, params) => {
 
 export const getChatAboveMessages = async (conversationId, params) => {
     const res = await api.get(`/chat/chat-connector/above/${conversationId}?${paramsToString(params)}`)
+    return res.data
+}
+
+export const createMessage = async (data) => {
+    const res = await api.post('/message', data)
+    return res.data
+}
+
+export const createComment = async (data) => {
+    const res = await api.post('/user-comment', data)
+    return res.data
+}
+
+export const createSms = async (userId, data) => {
+    const res = await api.post(`/user/send-sms/user/${userId}`, data)
     return res.data
 }

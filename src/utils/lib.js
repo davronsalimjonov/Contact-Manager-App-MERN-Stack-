@@ -1,4 +1,3 @@
-import { daysOfWeekFull, daysOfWeekShort } from "@/constants";
 
 export const formatPrice = num => {
     num = String(num).replace(/\s+/g, '').replace(/[^+\d]/g, '')
@@ -28,14 +27,6 @@ export const getUserFullName = (user) => {
 
 export function removeEmptyKeys(obj) {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
-}
-
-export function getDayName(dayNumber, format = 'full') {
-    if (dayNumber < 0 || dayNumber > 6) {
-        return 'Noto‘g‘ri kun raqami';
-    }
-
-    return format === 'short' ? daysOfWeekShort[dayNumber] : daysOfWeekFull[dayNumber];
 }
 
 export function debounce(func, timeout = 300) {
@@ -77,17 +68,6 @@ export const onImageError = (e, url = '/images/not-found.jpg') => {
     e.target.src = url
 }
 
-export function convertSecondsToTimeFormat(seconds = 0) {
-    if (isNaN(seconds)) {
-        seconds = 0
-    }
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-    return `${formattedMinutes}:${formattedSeconds}`;
-}
-
 export const adjustHeight = (e, { minHeight = 50, maxHeight = 200 } = {}) => {
     const textarea = e.target;
     if (!textarea) return;
@@ -95,46 +75,19 @@ export const adjustHeight = (e, { minHeight = 50, maxHeight = 200 } = {}) => {
     textarea.style.height = 'inherit';
 
     const computed = window.getComputedStyle(textarea);
-    const height = textarea.scrollHeight
-        + parseInt(computed.paddingTop)
-        + parseInt(computed.paddingBottom);
+    const height = textarea.scrollHeight + parseInt(computed.paddingTop) + parseInt(computed.paddingBottom);
 
-    const limitedHeight = Math.max(
-        Math.min(height, maxHeight),
-        minHeight
-    );
+    const limitedHeight = Math.max(Math.min(height, maxHeight), minHeight);
 
     textarea.style.height = `${limitedHeight}px`;
 
     textarea.style.overflowY = height > maxHeight ? 'auto' : 'hidden';
 };
 
-export function formatMessageDate(timestamp) {
-    const date = new Date(timestamp);
-    const now = new Date();
-
-    const isSameDay = (date1, date2) =>
-        date1.getFullYear() === date2.getFullYear() &&
-        date1.getMonth() === date2.getMonth() &&
-        date1.getDate() === date2.getDate();
-
-    const isYesterday = (date) => {
-        const yesterday = new Date(now);
-        yesterday.setDate(now.getDate() - 1);
-        return isSameDay(date, yesterday);
-    }
-
-    if (isSameDay(date, now)) {
-        return 'Bugun';
-    }
-
-    if (isYesterday(date)) {
-        return 'Kecha';
-    }
-
-    const formatOptions = date.getFullYear() === now.getFullYear()
-        ? { day: 'numeric', month: 'long' } 
-        : { day: 'numeric', month: 'long', year: 'numeric' }
-
-    return new Intl.DateTimeFormat('ru-RU', formatOptions).format(date);
+export function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }

@@ -1,45 +1,41 @@
-import { adjustHeight } from '@/utils/lib';
+import toast from 'react-hot-toast';
+import { useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { isSameDay } from '@/utils/time';
+import { createComment, createMessage, createSms } from '@/services/chat';
+import useGetChat, { useMessage } from '@/hooks/useGetChat';
+import { adjustHeight, cn, generateUUID } from '@/utils/lib';
 import { SendIcon } from '../../atoms/icons';
 import cls from './ConversationInput.module.scss';
-import { useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import useGetChat from '@/hooks/useGetChat';
 
-const ConversationInput = ({ chatId }) => {
+const ConversationInput = ({ userCourseId }) => {
     const formRef = useRef()
+    const { generateMessage } = useMessage()
+    const { addNewMessage, updateMessage, info: { data: { id: chatId, user: { id: userId } } }, messages: { messages } } = useGetChat(userCourseId)
     const { register, handleSubmit, reset } = useForm()
-    const { addNextMessages } = useGetChat(chatId)
+    const [messageType, setMessageType] = useState('message')
 
     const handleSendMessage = (data) => {
-        const newMessage = {
-            id: Date.now().toString(),
-            createdAt: "2024-11-29T13:01:46.671Z",
-            type: "message",
-            isViewed: false,
-            index: 160,
-            call: null,
-            comment: null,
-            shouldScroll: true,
-            message: {
-                id: "3f618a18-5957-4ee0-9c7a-ac1d8b70afad",
-                type: "text",
-                text: data.message,
-                caption: null,
-                url: null,
-                whoSended: "mentor",
-                mentor: {
-                    "id": "80def181-e54b-4b29-8dfe-bf99139844c8",
-                    "firstName": "teacherbek",
-                    "lastName": "teacherov",
-                    "url": null
-                },
-                user: null
-            },
-            sms: null,
-            task: null
+        try {
+            const id = generateUUID()
+            const lastMessage = messages?.at(-1)
+            const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
+            const newMessage = generateMessage(data.message, messageType, { id, [isNewMessageInPeriod ? 'dateSeperator' : null]: new Date(Date.now()).toISOString() })
+           
+            addNewMessage(newMessage)
+            reset()
+
+            if (messageType === 'message') {
+                createMessage({ chat: chatId, text: data.message }).then(res => updateMessage(id, res))
+            } else if (messageType === 'comment') {
+                createComment({ chat: chatId, text: data.message }).then(res => updateMessage(id, res))
+            } else if (messageType === 'sms') {
+                createSms(userId, { chat: chatId, text: data.message }).then(res => updateMessage(id, res))
+            }
+        } catch (error) {
+            const errorMessage = error?.response?.data?.message || error?.message || 'Xatolik yuz berdi'
+            toast.error(errorMessage)
         }
-        addNextMessages([newMessage])
-        reset()
     }
 
     const handleKeyDown = (e) => {
@@ -54,18 +50,40 @@ const ConversationInput = ({ chatId }) => {
     return (
         <form className={cls.input} ref={formRef} onSubmit={handleSubmit(handleSendMessage)}>
             <div className={cls.input__tabs}>
-                <button>Chat</button>
-                <button>Vazifa</button>
-                <button>SMS</button>
-                <button>Comment</button>
+                <button
+                    type='button'
+                    className={cn(messageType === 'message' && cls.input__tabs__active)}
+                    onClick={() => setMessageType('message')}
+                >
+                    Chat
+                </button>
+                <button
+                    type='button'
+                    className={cn(messageType === 'task' && cls.input__tabs__active)}
+                    onClick={() => setMessageType('task')}
+                >
+                    Vazifa
+                </button>
+                <button
+                    type='button'
+                    className={cn(messageType === 'sms' && cls.input__tabs__active)}
+                    onClick={() => setMessageType('sms')}
+                >
+                    SMS
+                </button>
+                <button
+                    type='button'
+                    className={cn(messageType === 'comment' && cls.input__tabs__active)}
+                    onClick={() => setMessageType('comment')}
+                >
+                    Comment
+                </button>
             </div>
             <textarea
                 placeholder='O’quvchi bilan muloqot'
                 className={cls.input__textarea}
                 onKeyDown={handleKeyDown}
-                {...register('message', {
-                    onChange: adjustHeight
-                })}
+                {...register('message', { onChange: adjustHeight })}
             >
             </textarea>
             <div className={cls.input__controls}>

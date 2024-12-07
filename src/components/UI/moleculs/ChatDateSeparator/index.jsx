@@ -1,3 +1,4 @@
+import { formatMessageDate } from '@/utils/time';
 import cls from './ChatDateSeparator.module.scss';
 
 const ChatDateSeparator = ({
@@ -6,7 +7,7 @@ const ChatDateSeparator = ({
     return (
         <div className={cls.date}>
             <span className={cls.date__line}></span>
-            <span>{date}</span>
+            <span>{formatMessageDate(date)}</span>
             <span className={cls.date__line}></span>
         </div>
     );

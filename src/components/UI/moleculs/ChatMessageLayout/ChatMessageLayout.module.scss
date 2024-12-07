@@ -3,10 +3,15 @@
     align-items: flex-start;
     gap: 16px;
 
-    &__body{
+    &__body {
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
         gap: 4px;
+
+        & * {
+            white-space: pre-wrap;
+        }
     }
 
     &__header {

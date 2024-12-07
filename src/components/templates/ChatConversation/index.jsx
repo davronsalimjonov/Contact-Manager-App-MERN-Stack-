@@ -7,32 +7,30 @@ import ConversationMessages from '@/components/UI/organisms/ConversationMessages
 import cls from './ChatConversation.module.scss';
 
 const ChatConversation = ({
-    chatId = '',
+    userCourseId = '',
     conversationId = '',
     partnerFullName = '',
     partnerPhoneNumber = '',
-    messages = [],
-    isLoadingMessages = false
 }) => {
-    const {addPrevMessages, addNextMessages} = useGetChat(chatId)
+    const { addPrevMessages, addNextMessages, messages: { data, messages, isLoading: isLoadingMessages } } = useGetChat(userCourseId)
 
-    const handleBottomReach = async (beforeBottomReach) => {
+    const handleTopReach = async (beforeTopReach) => {
         try {
-            const lastMessage = messages?.at(-1)
-            const newMessages = await getChatBellowMessages(conversationId, { index: lastMessage?.index })
-            beforeBottomReach?.(newMessages?.length)
-            addNextMessages(newMessages)
+            const firstMessage = messages?.find(msg => msg?.index)
+            const newMessages = await getChatAboveMessages(conversationId, { index: firstMessage?.index })
+            beforeTopReach?.(newMessages?.above)
+            addPrevMessages(newMessages)
         } catch (error) {
             console.log(error);
         }
     }
 
-    const handleTopReach = async (beforeTopReach) => {
+    const handleBottomReach = async (beforeBottomReach) => {
         try {
-            const firstMessage = messages[0]
-            const newMessages = await getChatAboveMessages(conversationId, { index: firstMessage?.index })
-            beforeTopReach?.(newMessages?.length)
-            addPrevMessages(newMessages)
+            const lastMessage = messages?.at(-1)
+            const newMessages = await getChatBellowMessages(conversationId, { index: lastMessage?.index })
+            beforeBottomReach?.(newMessages?.bellow)
+            addNextMessages(newMessages)
         } catch (error) {
             console.log(error);
         }
@@ -53,9 +51,11 @@ const ChatConversation = ({
                     messages={messages}
                     onBottomReach={handleBottomReach}
                     onTopReach={handleTopReach}
+                    hasAboveMessages={typeof data?.[0]?.above === 'boolean' ? data?.[0]?.above : undefined}
+                    hasBelowMessages={typeof data?.[0]?.bellow === 'boolean' ? data?.[0]?.bellow : undefined}
                 />
             )}
-            <ConversationInput chatId={chatId} />
+            <ConversationInput userCourseId={userCourseId} />
         </div>
     );
 }

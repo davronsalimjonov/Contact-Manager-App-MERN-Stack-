@@ -1,6 +1,7 @@
+import { getDayName } from '@/utils/time';
+import { getUserFullName } from '@/utils/lib';
 import Mapper from '@/components/UI/atoms/Mapper';
 import Loader from '@/components/UI/atoms/Loader';
-import { getDayName, getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import StudentsTableRow from '../../UI/moleculs/StudentsTableRow';
 import StudentsTableHeader from '../../UI/organisms/StudentsTableHeader';

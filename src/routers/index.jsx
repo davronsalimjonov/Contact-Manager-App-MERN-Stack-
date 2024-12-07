@@ -39,7 +39,7 @@ const callTecherRoutes = createBrowserRouter([
                 element: <SingleStudent />
             },
             {
-                path: '/students/chat/:chatId',
+                path: '/students/chat/:userCourseId',
                 element: <Chat />
             },
             {

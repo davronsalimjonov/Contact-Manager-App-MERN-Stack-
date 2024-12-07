@@ -1,7 +1,7 @@
 import { useOutletContext } from 'react-router-dom'
 import Loader from '@/components/UI/atoms/Loader'
 import useGetStatistic from '@/hooks/useGetStatistic'
-import { convertSecondsToTimeFormat } from '@/utils/lib'
+import { convertSecondsToTimeFormat } from '@/utils/time'
 import CoursesChart from '@/components/UI/organisms/CoursesChart'
 import StudentsLevelChart from '@/components/UI/organisms/StudentsLevelChart'
 import NewStudentsCountChart from '@/components/UI/organisms/NewStudentsCountChart'

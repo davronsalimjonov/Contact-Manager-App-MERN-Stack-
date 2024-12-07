@@ -19,6 +19,10 @@
             line-height: 18.78px;
             color: var(--dark-gray-700-color);
         }
+
+        &__active {
+            color: var(--blue-color) !important;
+        }
     }
 
     &__textarea {
