@@ -19,14 +19,13 @@ const CoursesForm = ({
         mode: 'onSubmit',
         defaultValues: defaultValue
     })
-    const image = watch('image') || "";
 
     return (
         <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={cls.page__form__avatar}>
                 <AvatarUpload
                     className={cls.form__image}
-                    value={image ? URL.createObjectURL(image) : null}
+                    value={(typeof watch('image') === 'string') ? watch('image') : watch('image') ? URL.createObjectURL(watch('image')) : null}
                     onChange={(image) => setValue('image', image, { shouldDirty: true, shouldValidate: true })}
                     onDelete={() => setValue('image', null, { shouldDirty: true, shouldValidate: true })}
                 />
@@ -51,9 +50,6 @@ const CoursesForm = ({
                     isMulti={true}
                     error={errors?.paymentLinks?.message}
                 />
-
-
-
                 <div className={cls.form__link__btn}>
                     <FormInput
                         className={cls.form__input}
@@ -62,7 +58,11 @@ const CoursesForm = ({
                         register={{ ...register('link') }}
                         error={errors?.link?.message}
                     />
-                    <Button className={cls.form__btn} type="button">Chegirma qo'shish <PlusIcon fill={"#1256DB"} /></Button>
+                    {
+                        btn === "Qo'shish" ?
+                            <></> :
+                            <Button className={cls.form__btn} type="button">Chegirma qo'shish <PlusIcon fill={"#1256DB"} /></Button>
+                    }
                 </div>
                 <Textarea
                     className={cls.form__input}

@@ -18,9 +18,9 @@ import CallMentors from "@/components/pages/CallMentors";
 import CallMentorStatistic from "@/components/pages/CallMentorsStatistic";
 import AllStudents from "@/components/pages/AllStudents";
 import Courses from "@/components/pages/Courses";
-import AddCourse from "@/components/pages/AddCourse";
 import AddStudent from "@/components/pages/AddStudent";
 import UpdateSingleStudentCourse from "@/components/pages/UpdateSingleStudentCourse";
+import UpdateCourse from "@/components/pages/UpdateCourse";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -126,9 +126,10 @@ const managerRoutes = createBrowserRouter([
                 element: <Courses />
             },
             {
-                path: '/add-course',
-                element: <AddCourse />
-            },
+                path: '/courses/:courseId',
+                element: <UpdateCourse/>
+            }
+            ,
             {
                 path: '/settings',
                 element: <Settings />

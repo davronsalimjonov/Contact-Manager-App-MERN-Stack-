@@ -1,11 +1,18 @@
+import Dialog from "@/components/UI/moleculs/Dialog";
 import CoursesForm from "@/components/UI/organisms/CoursesForm";
 import { PAYMENT_LINK } from "@/constants";
 import { queryClient } from "@/services/api";
-import { addCourse } from "@/services/course";
+import { addCourse, getAllCourses } from "@/services/course";
 import { objectToFormData } from "@/utils/lib";
 import toast from "react-hot-toast";
+import cls from './AddCourse.module.scss';
 
-const AddCourse = () => {
+const AddCourse = ({
+    isOpen,
+    onclose
+}) => {
+
+
     const handleAddCourse = async (data) => {
 
         try {
@@ -18,12 +25,12 @@ const AddCourse = () => {
                 })
             });
             if (!(data?.image instanceof File) && data?.image !== null) delete data.image;
-           
+
             const fd = objectToFormData(data);
-            console.log(fd.get('paymentLinks'),data);
             const addedCourse = await addCourse(fd)
-            queryClient.setQueryData(['add-course'], addedCourse)
-            toast.success("Yangi kurs qo'shildi!")
+            queryClient.setQueryData(['courses'], oldData => [...oldData, addedCourse]);
+            toast.success("Yangi kurs qo'shildi!");
+            onclose();
         } catch (error) {
             const errorMessage = error?.response?.data?.message || error?.message || 'Xatolik yuz berdi'
             toast.error(errorMessage)
@@ -31,17 +38,17 @@ const AddCourse = () => {
     }
 
     return (
-        <>
-            <CoursesForm defaultValue={{
-                title: "",
-                link: "",
-                paymentLink: "",
-                description: "",
-                image: "",
-            }} btn={"Qo'shish"} onSubmit={(data) => { handleAddCourse(data) }} />
-
-
-        </>
+        <Dialog isOpen={isOpen} onClose={onclose}>
+            <div className={cls.content}>
+                <CoursesForm defaultValue={{
+                    title: "",
+                    link: "",
+                    paymentLink: "",
+                    description: "",
+                    image: "",
+                }} btn={"Qo'shish"} onSubmit={(data) => { handleAddCourse(data) }} />
+            </div>
+        </Dialog>
     )
 }
 

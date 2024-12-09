@@ -21,7 +21,7 @@ const CoursesList = ({
                         key={course?.id}
                         title={course?.title}
                         description={course?.description}
-                        src={course?.image?.url}
+                        image={course?.image?.url}
                         onChange={() => { }}
                         onHandleDelete={() => { }}
                         courseId={course?.id}
@@ -32,7 +32,7 @@ const CoursesList = ({
                     />
                 )}
             />
-           
+
         </ul>
     )
 }
