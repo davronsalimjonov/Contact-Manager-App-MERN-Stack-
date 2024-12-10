@@ -26,7 +26,7 @@ const DatePicker = forwardRef(({
             ref={ref}
             showIcon
             selected={date}
-            wrapperClassName={cn(cls.wrapper, error && cls.error)}
+            wrapperClassName={cn(cls.wrapper, error && cls.error,)}
             className={cn(cls.datepicker, className)}
             icon={<CalendarIcon />}
             onChange={handleChange}

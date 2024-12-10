@@ -6,8 +6,8 @@ export const getChatInfo = async (chatId) => {
 }
 
 export const getChatMessages = async (chatId) => {
-    if(!chatId) return
-    const res = await api.get(`/chat/chat-connector/${chatId}`)    
+    if (!chatId) return
+    const res = await api.get(`/chat/chat-connector/${chatId}`)
     return [res.data]
 }
 
@@ -33,5 +33,10 @@ export const createComment = async (data) => {
 
 export const createSms = async (userId, data) => {
     const res = await api.post(`/user/send-sms/user/${userId}`, data)
+    return res.data
+}
+
+export const createLessonTask = async (fd) => {
+    const res = await api.post('/home-task', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
     return res.data
 }

@@ -4,5 +4,7 @@ export const MessageTypes = {
     CALL: 'call',
     COMMENT: 'comment',
     DATE_SEPARATOR: 'date_separator',
-    SMS: 'sms'
+    SMS: 'sms',
+    LESSON_TASK: 'home-task',
+    STUDENT_HOME_WORK: 'student-home-work'
 }

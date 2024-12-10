@@ -15,7 +15,7 @@ const addDateSeparators = (messages) => {
     const processedMessages = [];
 
     messages.forEach((message) => {
-        if (message.dateSeperator) {
+        if (message?.dateSeperator) {
             processedMessages.push({ id: message.dateSeperator, type: MessageTypes.DATE_SEPARATOR, date: message.dateSeperator });
         }
         processedMessages.push(message);
@@ -30,7 +30,7 @@ const ConversationMessages = ({
     onBottomReach,
     onTopReach,
     hasAboveMessages = true,
-    hasBelowMessages = true
+    hasBelowMessages = true,
 }) => {
     messages = addDateSeparators(messages);
     const [isFirstRender, setIsFirstRender] = useState(false);
@@ -153,14 +153,16 @@ const ConversationMessages = ({
 
                         return (
                             <div
-                                key={message?.id}
+                                key={message.id}
                                 className={cls.chat__window__row}
                                 ref={virtualizer.measureElement}
-                                data-message-id={message?.id}
+                                data-message-id={message.id}
                                 data-index={virtualRow.index}
                                 style={{ transform: `translateY(${virtualRow.start}px)`, willChange: 'transform' }}
                             >
-                                <RenderMessage message={message} />
+                                <RenderMessage
+                                    message={message}
+                                />
                             </div>
                         );
                     })}

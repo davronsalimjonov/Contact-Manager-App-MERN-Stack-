@@ -1,0 +1,20 @@
+
+.picker{
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+
+    & > div > div{
+        border: none;
+        box-shadow: none;
+    }
+
+    & > div:nth-child(2){
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+    }
+}

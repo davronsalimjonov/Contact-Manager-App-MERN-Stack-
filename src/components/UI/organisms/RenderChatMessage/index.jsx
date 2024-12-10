@@ -7,6 +7,7 @@ import ChatTextMessage from "../../moleculs/ChatTextMessage";
 import ChatCommentMessage from "../../moleculs/ChatCommentMessage";
 import ChatDateSeparator from "../../moleculs/ChatDateSeparator";
 import ChatSmsMessage from "../../moleculs/ChatSmsMessage";
+import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 
 const RenderMessage = memo(({ message }) => {
     const userId = useGetUserId()
@@ -43,6 +44,12 @@ const RenderMessage = memo(({ message }) => {
                     fullName={getUserFullName(message?.sms?.sender)}
                     text={message?.sms?.text}
                     time={message?.createdAt}
+                />
+            );
+        case MessageTypes.LESSON_TASK:
+            return (
+                <ChatLessonTaskMessage
+                    fullName={getUserFullName(message?.homeTask?.mentor)}
                 />
             );
         case MessageTypes.DATE_SEPARATOR:

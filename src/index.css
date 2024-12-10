@@ -91,6 +91,15 @@ img{
   object-fit: cover;
 }
 
+textarea{
+  font-family: inherit;
+  resize: none;
+}
+
+textarea:focus{
+  outline: none;
+}
+
 /* Container and header styles */
 .react-datepicker-popper > svg{
   display: none;
@@ -218,4 +227,41 @@ img{
 
 #waveform::part(wave):hover {
   height: 4px;
+}
+
+.time-picker-container {
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  gap: 8px;
+}
+
+label {
+  font-size: 16px;
+  color: #333;
+}
+
+.time-picker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.time-input {
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: #007BFF;
+}
+
+.time-picker span {
+  font-size: 18px;
+  color: #333;
 }

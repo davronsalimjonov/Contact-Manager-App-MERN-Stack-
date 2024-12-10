@@ -5,7 +5,7 @@ import useGetUser from "./useGetUser";
 export const useMessage = () => {
     const { data: user } = useGetUser()
 
-    function generateMessage(text, type, options = {}) {
+    function generateMessage(data, type, options = {}) {
         switch (type) {
             case 'message': return ({
                 id: Date.now().toString(),
@@ -13,7 +13,7 @@ export const useMessage = () => {
                 type: "message",
                 isViewed: false,
                 shouldScroll: true,
-                message: { text, whoSended: "mentor", mentor: user },
+                message: { text: data, whoSended: "mentor", mentor: user },
                 ...options
             })
             case 'comment': return ({
@@ -22,7 +22,7 @@ export const useMessage = () => {
                 type: "comment",
                 isViewed: false,
                 shouldScroll: true,
-                comment: { text, owner: user },
+                comment: { text: data, owner: user },
                 ...options
             })
             case 'call': return ({
@@ -40,7 +40,19 @@ export const useMessage = () => {
                 type: "comment",
                 isViewed: false,
                 shouldScroll: true,
-                sms: { text, sender: user },
+                sms: { text: data, sender: user },
+                ...options
+            })
+            case 'home-task': return ({
+                id: Date.now().toString(),
+                createdAt: new Date(Date.now()).toISOString(),
+                isViewed: false,
+                type: 'home-task',
+                homeTask: {
+                    ...data,
+                    status: 'send',
+                    mentor: user,
+                },
                 ...options
             })
             default: return null
@@ -79,7 +91,7 @@ const useGetChat = (userCourseId) => {
     const updateMessage = (id, data) => {
         queryClient.setQueryData(['chat', 'messages', userChatId], (oldData) => {
             console.log(oldData);
-            
+
             return oldData?.map(message => ({
                 ...message,
                 items: message?.items?.map(item => item?.id === id ? { ...item, ...data } : item)
