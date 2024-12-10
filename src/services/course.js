@@ -52,3 +52,8 @@ export const updateCourse = async (courseId, data) => {
     const res = await api.put(`/course/${courseId}`, data)
     return res.data
 }
+
+export const addDiscount = async (data) => {
+    const res = await api.post(`/course-price`,data);
+    return res.data;
+}

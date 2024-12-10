@@ -1,0 +1,19 @@
+.form {
+    position: relative;
+    display: grid;
+    gap: 16px;
+    width: 548px;
+    padding: 24px;
+    background-color: var(--base-white-color);
+ 
+
+    &__time{
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        grid-template-columns: 0.5fr 0.5fr;
+        gap: 16px;
+    }
+
+   
+}

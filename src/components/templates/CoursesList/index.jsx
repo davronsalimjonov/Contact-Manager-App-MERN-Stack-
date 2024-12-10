@@ -26,7 +26,7 @@ const CoursesList = ({
                         onHandleDelete={() => { }}
                         courseId={course?.id}
                         handleOpen={() => {
-                            setCourseId(course.id);
+                            setCourseId(course?.id);
                             setIsOpen(true);
                         }}
                     />

@@ -8,8 +8,11 @@ import FormInput from "../../moleculs/Form/FormInput";
 import FormSelect from "../../moleculs/Form/FormSelect";
 import Button from "../../atoms/Buttons/Button";
 import RedButton from "../../atoms/Buttons/RedButton";
+import { courseSchema } from "@/schemas/student";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const CoursesForm = ({
+    onOpenDiscount,
     defaultValue,
     btn,
     onSubmit
@@ -17,7 +20,8 @@ const CoursesForm = ({
 
     const { register, control, watch, handleSubmit, reset, setValue, formState: { errors, isDirty, isSubmitting } } = useForm({
         mode: 'onSubmit',
-        defaultValues: defaultValue
+        defaultValues: defaultValue,
+        resolver: yupResolver(courseSchema)
     })
 
     return (
@@ -61,7 +65,7 @@ const CoursesForm = ({
                     {
                         btn === "Qo'shish" ?
                             <></> :
-                            <Button className={cls.form__btn} type="button">Chegirma qo'shish <PlusIcon fill={"#1256DB"} /></Button>
+                            <Button className={cls.form__btn} onClick={onOpenDiscount} type="button">Chegirma qo'shish <PlusIcon fill={"#1256DB"} /></Button>
                     }
                 </div>
                 <Textarea

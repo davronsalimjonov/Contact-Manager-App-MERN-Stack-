@@ -1,16 +1,19 @@
 import Loader from "@/components/UI/atoms/Loader";
+import AddDiscount from "@/components/UI/organisms/AddDiscount";
 import CoursesForm from "@/components/UI/organisms/CoursesForm";
 import { PAYMENT_LINK } from "@/constants";
 import useGetCourseById from "@/hooks/useGetCourseById";
 import { queryClient } from "@/services/api";
 import { updateCourse } from "@/services/course";
 import { objectToFormData } from "@/utils/lib";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 
 const UpdateCourse = () => {
     const { courseId } = useParams();
     const { data: course, isLoading: IsLoadingCourse } = useGetCourseById(courseId);
+    const [isOpen, setIsOpen] = useState(false);
 
 
     const handleUpdateCourse = async (data) => {
@@ -35,18 +38,26 @@ const UpdateCourse = () => {
         }
     }
 
-    return !IsLoadingCourse ? (<CoursesForm
-        defaultValue={{
-            title: course?.title,
-            link: course?.link,
-            paymentLink: course?.paymentLink,
-            paymentLinks: (course.paymentLinks || []).map(link => link.link),
-            description: course?.description,
-            image: course?.image?.url,
-        }}
-        btn={"O'zgartirish"}
-        onSubmit={(data) => handleUpdateCourse(data)}
-    />) : (<Loader />)
+    return !IsLoadingCourse ? (
+        <><CoursesForm
+            onOpenDiscount={() => setIsOpen(true)}
+            defaultValue={{
+                title: course?.title,
+                link: course?.link,
+                paymentLink: course?.paymentLink,
+                paymentLinks: (course?.paymentLinks || []).map(link => link.link),
+                description: course?.description,
+                image: course?.image?.url,
+            }}
+            btn={"O'zgartirish"}
+            onSubmit={(data) => handleUpdateCourse(data)}
+        />
+            <AddDiscount 
+            isOpen={isOpen}
+             onclose={() => setIsOpen(false)} 
+             courseId={courseId}
+             />
+        </>) : (<Loader />)
 
 }
 

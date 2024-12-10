@@ -1,0 +1,10 @@
+.form {
+    position: relative;
+
+    &__picker {
+        position: absolute;
+        left: -30px;
+        bottom: -110px;
+    }
+
+}
