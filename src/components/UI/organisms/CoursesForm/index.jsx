@@ -10,12 +10,15 @@ import Button from "../../atoms/Buttons/Button";
 import RedButton from "../../atoms/Buttons/RedButton";
 import { courseSchema } from "@/schemas/student";
 import { yupResolver } from "@hookform/resolvers/yup";
+import AllDiscounts from "../AllDiscounts";
 
 const CoursesForm = ({
     onOpenDiscount,
     defaultValue,
     btn,
-    onSubmit
+    onSubmit,
+    discount,
+    courseId
 }) => {
 
     const { register, control, watch, handleSubmit, reset, setValue, formState: { errors, isDirty, isSubmitting } } = useForm({
@@ -23,7 +26,6 @@ const CoursesForm = ({
         defaultValues: defaultValue,
         resolver: yupResolver(courseSchema)
     })
-
     return (
         <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
             <div className={cls.page__form__avatar}>
@@ -74,6 +76,11 @@ const CoursesForm = ({
                     register={{ ...register('description') }}
                     error={errors?.description?.message}
                 />
+
+                {
+                    discount && <AllDiscounts discounts={discount} courseId={courseId} />
+
+                }
 
                 <div className={cls.form__buttons}>
                     <Button

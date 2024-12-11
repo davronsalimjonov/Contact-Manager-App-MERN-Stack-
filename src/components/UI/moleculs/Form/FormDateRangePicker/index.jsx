@@ -16,32 +16,36 @@ const FormDateRangePicker = ({
     setOpenCalendar,
     onChange
 }) => {
+
     return (
-        <FormElementWrapper className={cls.form} label={label} error={error}>
-            <Input
-                preffix={<CalendarMonthIcon />}
-                className={cls.form__field}
-                register={register}
-                onClick={() => setOpenCalendar(prev => !prev)}
-                value={
-                    startDate && endDate && (`${formatDate(startDate)} - ${formatDate(endDate)}`)
+        <div className={cls.calendar}>
+            <FormElementWrapper label={label} error={error}>
+                <Input
+                    preffix={<CalendarMonthIcon />}
+                    className={cls.form__field}
+                    register={register}
+                    onClick={() => setOpenCalendar(prev => !prev)}
+                    value={
+                        startDate && endDate && (`${formatDate(startDate)} - ${formatDate(endDate)}`)
+                    }
+                />
+                {
+                    openCalendar && <div className={cls.calendar__picker}>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={onChange}
+                            startDate={startDate}
+                            endDate={endDate}
+                            selectsRange
+                            inline
+                        />
+                    </div>
                 }
-            />
-            {
-                openCalendar && <div className={cls.form__date__picker}>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={onChange}
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        inline
-                    />
-                </div>
-            }
 
 
-        </FormElementWrapper>)
+            </FormElementWrapper>
+        </div>
+    )
 }
 
 export default FormDateRangePicker;

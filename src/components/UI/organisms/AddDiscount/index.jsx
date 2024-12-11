@@ -19,8 +19,6 @@ const AddDiscount = ({
     const [endDate, setEndDate] = useState(null);
 
     const handleAddDiscount = async (data) => {
-
-
         try {
             delete data.discountDate;
             data.discountStartDate = startDate;
@@ -29,11 +27,6 @@ const AddDiscount = ({
             data.discount = data.discount.toString();
             data.discountPrice = data.discountPrice.toString();
             data.price = data.price.toString();
-
-            // console.log(data);
-            // const fd = objectToFormData(data);
-
-
             const addedDiscount = await addDiscount(data)
             queryClient.setQueryData(['discount'], addedDiscount);
             toast.success("Yangi Chegirma qo'shildi!");

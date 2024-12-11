@@ -15,7 +15,6 @@ const UpdateCourse = () => {
     const { data: course, isLoading: IsLoadingCourse } = useGetCourseById(courseId);
     const [isOpen, setIsOpen] = useState(false);
 
-
     const handleUpdateCourse = async (data) => {
         try {
             const paymentLinks = data?.paymentLinks;
@@ -48,15 +47,18 @@ const UpdateCourse = () => {
                 paymentLinks: (course?.paymentLinks || []).map(link => link.link),
                 description: course?.description,
                 image: course?.image?.url,
+
             }}
+            discount={course.prices}
+            courseId={course?.id}
             btn={"O'zgartirish"}
             onSubmit={(data) => handleUpdateCourse(data)}
         />
-            <AddDiscount 
-            isOpen={isOpen}
-             onclose={() => setIsOpen(false)} 
-             courseId={courseId}
-             />
+            <AddDiscount
+                isOpen={isOpen}
+                onclose={() => setIsOpen(false)}
+                courseId={courseId}
+            />
         </>) : (<Loader />)
 
 }
