@@ -22,7 +22,7 @@ export const getChatAboveMessages = async (conversationId, params) => {
 }
 
 export const createMessage = async (data) => {
-    const res = await api.post('/message', data)
+    const res = await api.post('/message/text', data)
     return res.data
 }
 
@@ -38,5 +38,10 @@ export const createSms = async (userId, data) => {
 
 export const createLessonTask = async (fd) => {
     const res = await api.post('/home-task', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+    return res.data
+}
+
+export const updateHomeTask = async (taskId, data) => {
+    const res = await api.put(`/home-task/${taskId}`, data, {headers: {'Content-Type': 'multipart/form-data'}})
     return res.data
 }

@@ -1,53 +1,55 @@
 import { useQuery, useQueryClient } from "react-query";
 import { getChatInfo, getChatMessages } from "@/services/chat";
 import useGetUser from "./useGetUser";
+import { MessageTypes } from "@/constants/enum";
 
 export const useMessage = () => {
     const { data: user } = useGetUser()
 
     function generateMessage(data, type, options = {}) {
         switch (type) {
-            case 'message': return ({
+            case MessageTypes.TEXT: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
-                type: "message",
+                type: MessageTypes.TEXT,
                 isViewed: false,
                 shouldScroll: true,
                 message: { text: data, whoSended: "mentor", mentor: user },
                 ...options
             })
-            case 'comment': return ({
+            case MessageTypes.COMMENT: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
-                type: "comment",
+                type: MessageTypes.COMMENT,
                 isViewed: false,
                 shouldScroll: true,
                 comment: { text: data, owner: user },
                 ...options
             })
-            case 'call': return ({
+            case MessageTypes.CALL: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
-                type: "call",
+                type: MessageTypes.CALL,
                 isViewed: false,
                 shouldScroll: true,
                 call: { audio: '', duration: '' },
                 ...options
             })
-            case 'sms': return ({
+            case MessageTypes.COMMENT: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
-                type: "comment",
+                type: MessageTypes.COMMENT,
                 isViewed: false,
                 shouldScroll: true,
                 sms: { text: data, sender: user },
                 ...options
             })
-            case 'home-task': return ({
+            case MessageTypes.LESSON_TASK: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
                 isViewed: false,
-                type: 'home-task',
+                type: MessageTypes.LESSON_TASK,
+                shouldScroll: true,
                 homeTask: {
                     ...data,
                     status: 'send',
@@ -90,11 +92,16 @@ const useGetChat = (userCourseId) => {
 
     const updateMessage = (id, data) => {
         queryClient.setQueryData(['chat', 'messages', userChatId], (oldData) => {
-            console.log(oldData);
-
             return oldData?.map(message => ({
                 ...message,
-                items: message?.items?.map(item => item?.id === id ? { ...item, ...data } : item)
+                items: message?.items?.map(item => {
+                    if(item?.id === id ){
+                        const newData = typeof data === 'function' ? data(item) : data
+                        return { ...item, ...newData }
+                    } 
+
+                    return item
+                })
             }))
         })
     }

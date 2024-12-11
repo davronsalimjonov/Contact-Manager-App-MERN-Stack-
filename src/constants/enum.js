@@ -8,3 +8,9 @@ export const MessageTypes = {
     LESSON_TASK: 'home-task',
     STUDENT_HOME_WORK: 'student-home-work'
 }
+
+export const HomeLessonTaskStatus = {
+    SEND: 'send',
+    DONE: 'done',
+    CHECKED: 'checked'
+}

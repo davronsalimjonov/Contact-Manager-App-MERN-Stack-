@@ -37,6 +37,7 @@
                 grid-template-areas:
                     'title file'
                     'date file';
+                grid-template-columns: 1fr 72px;
                 gap: 4px 12px;
 
                 &__title {
@@ -56,6 +57,13 @@
 
                 &__file {
                     grid-area: file;
+                    width: 72px;
+                    height: 36px;
+                    background-color: rgba(254, 238, 187, 1);
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
             }
 
@@ -90,6 +98,10 @@
         &__edit{
             background-color: var(--base-white-color);
             color: var(--black-color);
+        }
+
+        &__done{
+            background-color: var(--green-color);
         }
     }
 }

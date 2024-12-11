@@ -1,10 +1,11 @@
-import { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import { useRef, useState, useEffect, useLayoutEffect, useContext } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 import { MessageTypes } from '@/constants/enum';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import Loader from '../../atoms/Loader';
 import RenderMessage from '../RenderChatMessage';
 import cls from './ConversationMessages.module.scss';
+import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 
 const OVERSCAN_COUNT = 50;
 const DEBOUNCE_DELAY = 300;
@@ -33,6 +34,7 @@ const ConversationMessages = ({
     hasBelowMessages = true,
 }) => {
     messages = addDateSeparators(messages);
+    const { handleSetMessage } = useContext(ChatMessageEditContext);
     const [isFirstRender, setIsFirstRender] = useState(false);
     const [scrollState, setScrollState] = useState({
         wasMessagesAddedOnTop: false,
@@ -142,6 +144,7 @@ const ConversationMessages = ({
             lastMessage.shouldScroll = false
         }
     }, [messages.length, virtualizer]);
+console.log(messages);
 
     return (
         <div className={cls.chat}>
@@ -153,15 +156,16 @@ const ConversationMessages = ({
 
                         return (
                             <div
-                                key={message.id}
+                                key={message?.id}
                                 className={cls.chat__window__row}
                                 ref={virtualizer.measureElement}
-                                data-message-id={message.id}
+                                data-message-id={message?.id}
                                 data-index={virtualRow.index}
                                 style={{ transform: `translateY(${virtualRow.start}px)`, willChange: 'transform' }}
                             >
                                 <RenderMessage
                                     message={message}
+                                    onEditMessage={() => handleSetMessage(message)}
                                 />
                             </div>
                         );

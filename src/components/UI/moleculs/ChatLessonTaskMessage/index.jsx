@@ -1,10 +1,19 @@
+import dayjs from 'dayjs';
+import { formatMessageDate } from '@/utils/time';
 import Button from '../../atoms/Buttons/Button';
-import { PinBoardUnreaded } from '../../atoms/icons';
+import { DownloadIcon, PinBoardUnreaded } from '../../atoms/icons';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatLessonTaskMessage.module.scss';
+import { HomeLessonTaskStatus } from '@/constants/enum';
 
 const ChatLessonTaskMessage = ({
     fullName = '',
+    date = '',
+    file = '',
+    title = '',
+    description = '',
+    status = HomeLessonTaskStatus.SEND,
+    onEdit
 }) => {
     return (
         <ChatMessageLayout fullName={fullName}>
@@ -15,18 +24,26 @@ const ChatLessonTaskMessage = ({
                     </div>
                     <div className={cls.message__body__details}>
                         <div className={cls.message__body__details__header}>
-                            <h3 className={cls.message__body__details__header__title}>{'Vazifa nomi'}</h3>
-                            <span className={cls.message__body__details__header__time}>Du, 19:00 gacha</span>
-                            <div className={cls.message__body__details__header__file}></div>
+                            <h3 className={cls.message__body__details__header__title}>{title}</h3>
+                            <span className={cls.message__body__details__header__date}>{date && `${formatMessageDate(date)}, ${dayjs(date).format('HH:mm')} gacha`}</span>
+                            {file && (
+                                <a
+                                    href={file}
+                                    download
+                                    target='_blank'
+                                    className={cls.message__body__details__header__file}
+                                >
+                                    <DownloadIcon />
+                                </a>
+                            )}
                         </div>
-                        <div className={cls.message__body__details__description}>
-                            {'Vazifa uchun batafsil tushintirilgan tekst kiritiladi'}
-                        </div>
+                        {description && <div className={cls.message__body__details__description}>{description}</div>}
                     </div>
                 </div>
                 <div className={cls.message__actions}>
-                    <Button rounded className={cls.message__actions__sended}>Yetkazildi</Button>
-                    <Button rounded className={cls.message__actions__edit}>Tahrirlash</Button>
+                    {(status === HomeLessonTaskStatus.SEND || status === HomeLessonTaskStatus.DONE) && <Button rounded className={cls.message__actions__sended}>Yetkazildi</Button>}
+                    {status === HomeLessonTaskStatus.CHECKED && <Button rounded className={cls.message__actions__done}>Bajarildi</Button>}
+                    {status === HomeLessonTaskStatus.SEND && <Button rounded className={cls.message__actions__edit} onClick={onEdit}>Tahrirlash</Button>}
                 </div>
             </div>
         </ChatMessageLayout>

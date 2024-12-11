@@ -7,8 +7,8 @@ const ChatLessonTaskForm = () => {
     const file = watch('file')
 
     const handleChangeFileInput = (e) => {
-        const file = e.target.files[0]
-        setValue('file', file)
+        const selectedFile = e.target.files[0]
+        setValue('file', selectedFile, { shouldDirty: true, shouldValidate: true })
     }
 
     return (

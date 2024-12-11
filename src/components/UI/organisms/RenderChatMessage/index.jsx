@@ -9,7 +9,10 @@ import ChatDateSeparator from "../../moleculs/ChatDateSeparator";
 import ChatSmsMessage from "../../moleculs/ChatSmsMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 
-const RenderMessage = memo(({ message }) => {
+const RenderMessage = memo(({ 
+    message,
+    onEditMessage
+}) => {
     const userId = useGetUserId()
 
     switch (message?.type) {
@@ -50,6 +53,12 @@ const RenderMessage = memo(({ message }) => {
             return (
                 <ChatLessonTaskMessage
                     fullName={getUserFullName(message?.homeTask?.mentor)}
+                    title={message?.homeTask?.title}
+                    file={message?.homeTask?.url}
+                    description={message?.homeTask?.description}
+                    date={message?.homeTask?.date}
+                    status={message?.homeTask?.status}
+                    onEdit={onEditMessage}
                 />
             );
         case MessageTypes.DATE_SEPARATOR:

@@ -1,3 +1,4 @@
+import axios from "axios";
 
 export const formatPrice = num => {
     num = String(num).replace(/\s+/g, '').replace(/[^+\d]/g, '')
@@ -90,4 +91,10 @@ export function generateUUID() {
         const v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
+}
+
+export const getFileFromUrl = (url, fileName) => {
+    return axios.get(url, { responseType: 'blob' }).then((res) => {
+        return new File([res.data], fileName, { type: res.data?.type })
+    })
 }

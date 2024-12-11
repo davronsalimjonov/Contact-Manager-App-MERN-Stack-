@@ -12,13 +12,14 @@ const DatePicker = forwardRef(({
     disabled,
     readOnly,
     error,
+    defaultValue,
     ...otherProps
 }, ref) => {
-    const [date, setDate] = useState()
+    const [date, setDate] = useState(defaultValue)
 
     const handleChange = (date) => { 
         setDate(date)
-        typeof onChange === 'function' && onChange(new Date(date  - (date.getTimezoneOffset() * 60000)).toISOString())
+        typeof onChange === 'function' && onChange(date)
     }
 
     return (

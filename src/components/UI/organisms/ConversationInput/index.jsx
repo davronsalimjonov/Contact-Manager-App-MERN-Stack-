@@ -1,16 +1,18 @@
 import toast from 'react-hot-toast';
-import { useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { isSameDay } from '@/utils/time';
 import { useGetUserId } from '@/hooks/useGetUser';
 import useClickOutside from '@/hooks/useClickOutside';
 import useGetChat, { useMessage } from '@/hooks/useGetChat';
+import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import { adjustHeight, cn, generateUUID, objectToFormData } from '@/utils/lib';
-import { createComment, createLessonTask, createMessage, createSms } from '@/services/chat';
+import { createComment, createLessonTask, createMessage, createSms, updateHomeTask } from '@/services/chat';
 import { SendIcon } from '../../atoms/icons';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
 import cls from './ConversationInput.module.scss';
+import { MessageTypes } from '@/constants/enum';
 
 const getTextAreaPlaceholder = (messageType) => {
     switch (messageType) {
@@ -29,17 +31,26 @@ const getTextAreaPlaceholder = (messageType) => {
 
 const ConversationInput = ({ userCourseId }) => {
     const formRef = useRef()
+    const methods = useForm()
     const userId = useGetUserId()
     const { generateMessage } = useMessage()
+    const { editMessage, onEditComplete } = useContext(ChatMessageEditContext)
     const { addNewMessage, updateMessage, info: { data: { id: chatId, user: { id: studentId } } }, messages: { messages } } = useGetChat(userCourseId)
-    const { register, handleSubmit, reset, watch, formState: { isDirty, isValid }, ...methods } = useForm()
-    const [messageType, setMessageType] = useState('message')
+    const { register, handleSubmit, reset, getValues, watch, formState: { isDirty, isValid } } = methods
+    const [messageType, setMessageType] = useState(MessageTypes.TEXT)
     const [isOpenDatepicker, setIsOpenDatepicker] = useState(false)
     const taskDatepickerRef = useClickOutside({ onClickOutside: () => setIsOpenDatepicker(false) })
 
+    useEffect(() => {
+        if (editMessage) {
+            setMessageType(editMessage.type)
+            reset(editMessage.message)
+        }
+    }, [editMessage])
+
     const handleSendMessage = (data) => {
         try {
-            if (messageType !== 'task') {
+            if (messageType !== MessageTypes.LESSON_TASK) {
                 const id = generateUUID()
                 const lastMessage = messages?.at(-1)
                 const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
@@ -48,11 +59,11 @@ const ConversationInput = ({ userCourseId }) => {
                 addNewMessage(newMessage)
                 reset()
 
-                if (messageType === 'message') {
+                if (messageType === MessageTypes.TEXT) {
                     createMessage({ chat: chatId, text: data.message }).then(res => updateMessage(id, res))
-                } else if (messageType === 'comment') {
+                } else if (messageType === MessageTypes.COMMENT) {
                     createComment({ chat: chatId, text: data.message }).then(res => updateMessage(id, res))
-                } else if (messageType === 'sms') {
+                } else if (messageType === MessageTypes.SMS) {
                     createSms(studentId, { chat: chatId, text: data.message }).then(res => updateMessage(id, res))
                 }
             } else {
@@ -70,18 +81,40 @@ const ConversationInput = ({ userCourseId }) => {
             data.date = date
             delete data.message
 
-            const id = generateUUID()
-            const lastMessage = messages?.at(-1)
-            const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
-            const newMessage = generateMessage(data, messageType, { id, [isNewMessageInPeriod ? 'dateSeperator' : null]: new Date(Date.now()).toISOString() })
+            if (!editMessage) {
+                const id = generateUUID()
+                const lastMessage = messages?.at(-1)
+                const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
+                const newMessage = generateMessage(data, messageType, { id, [isNewMessageInPeriod ? 'dateSeperator' : null]: new Date(Date.now()).toISOString() })
 
-            addNewMessage(newMessage)
-            reset()
+                addNewMessage(newMessage)
+                reset()
 
-            const fd = objectToFormData({ chat: chatId, student: studentId, mentor: userId, ...data })
-            createLessonTask(fd).then(res => updateMessage(id, res))
+                const fd = objectToFormData({ chat: chatId, student: studentId, mentor: userId, ...data })
+                createLessonTask(fd).then(res => updateMessage(id, res))
 
-            setIsOpenDatepicker(false)
+                setIsOpenDatepicker(false)
+            } else {
+                const id = data?.id
+                const taskId = data?.taskId
+                delete data.id
+                delete data.taskId
+
+                if (data?.file?.name == editMessage?.message?.file?.name) delete data.file
+
+                updateMessage(id, (oldData) => ({
+                    ...oldData,
+                    homeTask: {
+                        ...oldData.homeTask,
+                        [data?.file ? 'url' : '']: data?.file ? URL.createObjectURL(data?.file) : '',
+                        ...data,
+                    }
+                }))
+                updateHomeTask(taskId, objectToFormData(data))
+                onEditComplete()
+                reset({ date: null, title: null, description: null, file: null })
+                setIsOpenDatepicker(false)
+            }
         } catch (error) {
             const errorMessage = error?.response?.data?.message || error?.message || 'Xatolik yuz berdi'
             toast.error(errorMessage)
@@ -102,35 +135,35 @@ const ConversationInput = ({ userCourseId }) => {
             <div className={cls.input__tabs}>
                 <button
                     type='button'
-                    className={cn(messageType === 'message' && cls.input__tabs__active)}
-                    onClick={() => setMessageType('message')}
+                    className={cn(messageType === MessageTypes.TEXT && cls.input__tabs__active)}
+                    onClick={() => setMessageType(MessageTypes.TEXT)}
                 >
                     Chat
                 </button>
                 <button
                     type='button'
-                    className={cn(messageType === 'task' && cls.input__tabs__active)}
-                    onClick={() => setMessageType('task')}
+                    className={cn(messageType === MessageTypes.LESSON_TASK && cls.input__tabs__active)}
+                    onClick={() => setMessageType(MessageTypes.LESSON_TASK)}
                 >
                     Vazifa
                 </button>
                 <button
                     type='button'
-                    className={cn(messageType === 'sms' && cls.input__tabs__active)}
-                    onClick={() => setMessageType('sms')}
+                    className={cn(messageType === MessageTypes.SMS && cls.input__tabs__active)}
+                    onClick={() => setMessageType(MessageTypes.SMS)}
                 >
                     SMS
                 </button>
                 <button
                     type='button'
-                    className={cn(messageType === 'comment' && cls.input__tabs__active)}
-                    onClick={() => setMessageType('comment')}
+                    className={cn(messageType === MessageTypes.COMMENT && cls.input__tabs__active)}
+                    onClick={() => setMessageType(MessageTypes.COMMENT)}
                 >
                     Comment
                 </button>
             </div>
-            {messageType === 'task' ? (
-                <FormProvider {...methods} register={register} handleSubmit={handleSubmit} reset={reset} watch={watch}>
+            {messageType === MessageTypes.LESSON_TASK ? (
+                <FormProvider {...methods}>
                     <ChatLessonTaskForm />
                 </FormProvider>
             ) : (
@@ -151,7 +184,10 @@ const ConversationInput = ({ userCourseId }) => {
                         className={cls.input__controls__task__datepicker}
                         ref={taskDatepickerRef}
                     >
-                        <LessonTaskDatepicker onSave={handleCreateTask} />
+                        <LessonTaskDatepicker
+                            defaultValue={getValues('date')}
+                            onSave={handleCreateTask}
+                        />
                     </div>
                 )}
                 <button
