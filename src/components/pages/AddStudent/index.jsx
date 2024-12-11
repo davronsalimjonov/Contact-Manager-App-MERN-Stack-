@@ -16,6 +16,7 @@ import { customToast } from '@/utils/toast';
 import { objectToFormData } from '@/utils/lib';
 import { addStudent } from '@/services/user';
 import { useNavigate } from 'react-router-dom';
+import { queryClient } from '@/services/api';
 
 const AddStudent = ({ }) => {
 
@@ -27,7 +28,7 @@ const AddStudent = ({ }) => {
         birthday: "",
     }
 
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const { register, control, reset, watch, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
         defaultValues,
@@ -43,12 +44,12 @@ const AddStudent = ({ }) => {
             data.phone = data.phone
             data.gender = Number(data.gender)
 
-            if (!(data?.avatar instanceof File) && data?.avatar !== null) delete data.avatar
-
-            const fd = objectToFormData(data)
-
+            // if (!(data?.avatar instanceof File) && data?.avatar !== null) delete data.avatar
+            delete data.avatar;
+            // const fd = objectToFormData(data)
 
             const addedUser = await addStudent(data);
+            queryClient.setQueryData(['student'], addedUser);
             reset(defaultValues);
 
             toast.success("Malumotlar o'zgartirildi")
