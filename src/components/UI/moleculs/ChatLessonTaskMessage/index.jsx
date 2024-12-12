@@ -8,7 +8,7 @@ import { HomeLessonTaskStatus } from '@/constants/enum';
 
 const ChatLessonTaskMessage = ({
     fullName = '',
-    date = '',
+    time = '',
     file = '',
     title = '',
     description = '',
@@ -25,7 +25,7 @@ const ChatLessonTaskMessage = ({
                     <div className={cls.message__body__details}>
                         <div className={cls.message__body__details__header}>
                             <h3 className={cls.message__body__details__header__title}>{title}</h3>
-                            <span className={cls.message__body__details__header__date}>{date && `${formatMessageDate(date)}, ${dayjs(date).format('HH:mm')} gacha`}</span>
+                            <span className={cls.message__body__details__header__date}>{time && `${formatMessageDate(time)}, ${dayjs(time).format('HH:mm')} gacha`}</span>
                             {file && (
                                 <a
                                     href={file}

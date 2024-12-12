@@ -8,6 +8,7 @@ import ChatCommentMessage from "../../moleculs/ChatCommentMessage";
 import ChatDateSeparator from "../../moleculs/ChatDateSeparator";
 import ChatSmsMessage from "../../moleculs/ChatSmsMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
+import ChatVoiseMessage from "../../moleculs/ChatVoiseMessage";
 
 const RenderMessage = memo(({ 
     message,
@@ -15,7 +16,9 @@ const RenderMessage = memo(({
 }) => {
     const userId = useGetUserId()
 
-    switch (message?.type) {
+    const messageType = message?.type === MessageTypes.MESSAGE ? message?.message?.type : message?.type
+
+    switch (messageType) {
         case MessageTypes.TEXT:
             return (
                 <ChatTextMessage
@@ -24,6 +27,14 @@ const RenderMessage = memo(({
                     avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.avatar : message?.message?.user?.avatar}
                     isSender={message?.message?.whoSended === 'mentor' && message?.message?.mentor?.id === userId}
                     fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                />
+            );
+        case MessageTypes.VOISE:
+            return (
+                <ChatVoiseMessage 
+                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                    time={message?.createdAt}
+                    audioUrl={message?.message?.url}
                 />
             );
         case MessageTypes.CALL:
@@ -56,7 +67,7 @@ const RenderMessage = memo(({
                     title={message?.homeTask?.title}
                     file={message?.homeTask?.url}
                     description={message?.homeTask?.description}
-                    date={message?.homeTask?.date}
+                    time={message?.homeTask?.date}
                     status={message?.homeTask?.status}
                     onEdit={onEditMessage}
                 />
@@ -65,7 +76,7 @@ const RenderMessage = memo(({
             return (
                 <ChatDateSeparator date={message?.date} />
             );
-        default: return null;
+        default: return <></>;
     }
 });
 

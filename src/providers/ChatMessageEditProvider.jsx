@@ -5,7 +5,6 @@ export const ChatMessageEditContext = createContext()
 
 const ChatMessageEditProvider = ({ children }) => {
     const [editMessage, setEditMessage] = useState()
-    console.log(editMessage);
 
     const handleSetMessage = async (message) => {
         if (message?.type === MessageTypes.LESSON_TASK) {

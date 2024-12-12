@@ -2,17 +2,18 @@ import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { isSameDay } from '@/utils/time';
+import { socket } from '@/services/socket';
+import { MessageTypes } from '@/constants/enum';
 import { useGetUserId } from '@/hooks/useGetUser';
 import useClickOutside from '@/hooks/useClickOutside';
 import useGetChat, { useMessage } from '@/hooks/useGetChat';
 import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import { adjustHeight, cn, generateUUID, objectToFormData } from '@/utils/lib';
-import { createComment, createLessonTask, createMessage, createSms, updateHomeTask } from '@/services/chat';
-import { SendIcon } from '../../atoms/icons';
+import { createComment, createLessonTask, createTextMessage, createSms, updateHomeTask } from '@/services/chat';
+import { CloseIcon, SendIcon } from '../../atoms/icons';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
 import cls from './ConversationInput.module.scss';
-import { MessageTypes } from '@/constants/enum';
 
 const getTextAreaPlaceholder = (messageType) => {
     switch (messageType) {
@@ -60,7 +61,10 @@ const ConversationInput = ({ userCourseId }) => {
                 reset()
 
                 if (messageType === MessageTypes.TEXT) {
-                    createMessage({ chat: chatId, text: data.message }).then(res => updateMessage(id, res))
+                    createTextMessage({ chat: chatId, text: data.message }).then(res => {
+                        socket.emit('room-message', { ...res, room: chatId, studentId })
+                        updateMessage(id, res)
+                    })
                 } else if (messageType === MessageTypes.COMMENT) {
                     createComment({ chat: chatId, text: data.message }).then(res => updateMessage(id, res))
                 } else if (messageType === MessageTypes.SMS) {
@@ -130,6 +134,17 @@ const ConversationInput = ({ userCourseId }) => {
         };
     }
 
+    const handleCleatEditedMessage = () => {
+        onEditComplete()
+        reset(formValues => {
+            let result = {}
+            Object.keys(formValues).forEach(key => {
+                result[key] = null
+            })
+            return result
+        })
+    }
+
     return (
         <form className={cls.input} ref={formRef} onSubmit={handleSubmit(handleSendMessage)}>
             <div className={cls.input__tabs}>
@@ -161,6 +176,11 @@ const ConversationInput = ({ userCourseId }) => {
                 >
                     Comment
                 </button>
+                {editMessage && (
+                    <button style={{ marginLeft: 'auto' }} onClick={handleCleatEditedMessage}>
+                        <CloseIcon />
+                    </button>
+                )}
             </div>
             {messageType === MessageTypes.LESSON_TASK ? (
                 <FormProvider {...methods}>

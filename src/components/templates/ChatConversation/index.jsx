@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
+import { socket } from '@/services/socket';
 import useGetChat from '@/hooks/useGetChat';
 import Loader from '@/components/UI/atoms/Loader';
+import ChatMessageEditProvider from '@/providers/ChatMessageEditProvider';
 import ConversationInput from '@/components/UI/organisms/ConversationInput';
 import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
 import { getChatAboveMessages, getChatBellowMessages } from '@/services/chat';
 import ConversationMessages from '@/components/UI/organisms/ConversationMessages';
 import cls from './ChatConversation.module.scss';
-import ChatMessageEditProvider from '@/providers/ChatMessageEditProvider';
 
 const ChatConversation = ({
     userCourseId = '',
@@ -13,7 +15,13 @@ const ChatConversation = ({
     partnerFullName = '',
     partnerPhoneNumber = '',
 }) => {
-    const { addPrevMessages, addNextMessages, messages: { data, messages, isLoading: isLoadingMessages } } = useGetChat(userCourseId)
+    const { 
+        userChatId,
+        addPrevMessages, 
+        addNextMessages, 
+        addNewMessage, 
+        messages: { data, messages, isLoading: isLoadingMessages } 
+    } = useGetChat(userCourseId)
 
     const handleTopReach = async (beforeTopReach) => {
         try {
@@ -36,6 +44,18 @@ const ChatConversation = ({
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        if(socket && userChatId){
+            socket.emit('join-room', userChatId)
+            socket.on('receive-room-message', addNewMessage)
+
+            return () => {
+                socket.emit('leave-room', userChatId)
+                socket.removeAllListeners('receive-room-message', addNewMessage)
+            }
+        }
+    }, [socket, userChatId])
 
     return (
         <ChatMessageEditProvider>

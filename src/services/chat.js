@@ -21,7 +21,7 @@ export const getChatAboveMessages = async (conversationId, params) => {
     return res.data
 }
 
-export const createMessage = async (data) => {
+export const createTextMessage = async (data) => {
     const res = await api.post('/message/text', data)
     return res.data
 }

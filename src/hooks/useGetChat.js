@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "react-query";
+import { MessageTypes } from "@/constants/enum";
 import { getChatInfo, getChatMessages } from "@/services/chat";
 import useGetUser from "./useGetUser";
-import { MessageTypes } from "@/constants/enum";
 
 export const useMessage = () => {
     const { data: user } = useGetUser()
@@ -11,10 +11,10 @@ export const useMessage = () => {
             case MessageTypes.TEXT: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
-                type: MessageTypes.TEXT,
+                type: MessageTypes.MESSAGE,
                 isViewed: false,
                 shouldScroll: true,
-                message: { text: data, whoSended: "mentor", mentor: user },
+                message: { text: data, type: MessageTypes.TEXT, whoSended: "mentor", mentor: user },
                 ...options
             })
             case MessageTypes.COMMENT: return ({
@@ -95,10 +95,10 @@ const useGetChat = (userCourseId) => {
             return oldData?.map(message => ({
                 ...message,
                 items: message?.items?.map(item => {
-                    if(item?.id === id ){
+                    if (item?.id === id) {
                         const newData = typeof data === 'function' ? data(item) : data
                         return { ...item, ...newData }
-                    } 
+                    }
 
                     return item
                 })
@@ -115,7 +115,8 @@ const useGetChat = (userCourseId) => {
         addPrevMessages,
         addNextMessages,
         updateMessage,
-        addNewMessage
+        addNewMessage,
+        userChatId
     }
 }
 

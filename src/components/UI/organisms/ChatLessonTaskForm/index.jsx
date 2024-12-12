@@ -4,7 +4,8 @@ import cls from './ChatLessonTaskForm.module.scss';
 
 const ChatLessonTaskForm = () => {
     const { register, setValue, watch } = useFormContext()
-    const file = watch('file')
+    const watchedFiles = watch()
+    const file = watchedFiles?.file
 
     const handleChangeFileInput = (e) => {
         const selectedFile = e.target.files[0]
@@ -31,7 +32,7 @@ const ChatLessonTaskForm = () => {
             </label>
             <label>
                 <span>Description:</span>
-                <textarea {...register('description')}></textarea>
+                <textarea value={watchedFiles?.description || ''} {...register('description')}></textarea>
             </label>
         </div>
     );

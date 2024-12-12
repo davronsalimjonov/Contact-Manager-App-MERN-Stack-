@@ -6,12 +6,22 @@ import useGetStudents from "./hooks/useGetStudents"
 import useGetGroups from "./hooks/useGetGroups"
 import { persistor, store } from "./store"
 import Routers from "./routers"
+import { useEffect } from "react"
+import useGetUser from "./hooks/useGetUser"
+import { connectSocket } from "./services/socket"
 
 Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement);
 
 function App() {
+  const {data: user} = useGetUser()
   useGetStudents()
   useGetGroups()
+
+  useEffect(() => {
+    if(user){
+      connectSocket({ userId: user?.id, role: user?.role })
+    }
+  }, [user])
   
   return (
     <Provider store={store}>

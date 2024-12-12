@@ -50,7 +50,6 @@ const StudentInformationForm = ({
             reset(defaultValues)
         }
     }, [isSubmitSuccessful])
-console.log(avatar instanceof File ? URL.createObjectURL(avatar) : avatar);
 
     const handleUpdateConnectionTimes = async (data) => {
         try {

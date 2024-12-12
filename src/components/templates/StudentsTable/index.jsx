@@ -26,6 +26,8 @@ const StudentsTable = ({
                                 <StudentsTableRow
                                     key={student?.id}
                                     index={index + 1}
+                                    unreadedMessagesCount={student?.messageCount}
+                                    avatar={student?.url}
                                     fullName={getUserFullName(student)}
                                     phoneNumber={student?.phone}
                                     days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}

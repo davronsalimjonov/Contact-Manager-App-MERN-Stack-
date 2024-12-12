@@ -1,10 +1,13 @@
 
 export const MessageTypes = {
-    TEXT: 'message',
+    MESSAGE: 'message',
+    SMS: 'sms',
     CALL: 'call',
+    IMAGE: 'image',
+    VOISE: 'voice',
+    TEXT: 'text',
     COMMENT: 'comment',
     DATE_SEPARATOR: 'date_separator',
-    SMS: 'sms',
     LESSON_TASK: 'home-task',
     STUDENT_HOME_WORK: 'student-home-work'
 }

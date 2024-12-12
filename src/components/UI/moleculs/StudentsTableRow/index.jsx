@@ -4,16 +4,19 @@ import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import TableActionButton from '../TableActionButton';
 import cls from './StudentsTableRow.module.scss';
+import Avatar from 'react-avatar';
 
 const StudentsTableRow = ({
     index = 0,
+    avatar = '',
     days = '',
     time = '',
     status = '',
     chatId = '',
-    userCourseId = '',
     fullName = '',
     phoneNumber = '',
+    userCourseId = '',
+    unreadedMessagesCount = 0
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -25,7 +28,18 @@ const StudentsTableRow = ({
     return (
         <tr className={cls.row} onClick={() => navigate(`/students/chat/${chatId}`)}>
             <td>{index}</td>
-            <td><span title={fullName}>{fullName}</span></td>
+            <td className={cls.row__name}>
+                <div className={cls.row__notification}>
+                    <Avatar
+                        round
+                        size={32}
+                        src={avatar}
+                        name={fullName}
+                    />
+                    {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount}</span>}
+                </div>
+                <span title={fullName}>{fullName}</span>
+            </td>
             <td><span title={days}>{days ? days : <EmptyDataText />}</span></td>
             <td><span title={time}>{time ? time : <EmptyDataText />}</span></td>
             <td>

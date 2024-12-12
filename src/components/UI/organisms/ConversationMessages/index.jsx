@@ -2,10 +2,10 @@ import { useRef, useState, useEffect, useLayoutEffect, useContext } from 'react'
 import useDebounce from '@/hooks/useDebounce';
 import { MessageTypes } from '@/constants/enum';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import Loader from '../../atoms/Loader';
 import RenderMessage from '../RenderChatMessage';
 import cls from './ConversationMessages.module.scss';
-import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 
 const OVERSCAN_COUNT = 50;
 const DEBOUNCE_DELAY = 300;
@@ -144,7 +144,6 @@ const ConversationMessages = ({
             lastMessage.shouldScroll = false
         }
     }, [messages.length, virtualizer]);
-console.log(messages);
 
     return (
         <div className={cls.chat}>
