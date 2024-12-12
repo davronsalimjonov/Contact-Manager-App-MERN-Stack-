@@ -1,0 +1,28 @@
+    .head {
+        background-color: var(--dark-gray-400-color);
+        border-spacing: 0 12px;
+
+        & th {
+            border: none;
+            padding: 10px 16px;
+            text-align: left;
+
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 20px;
+            color: var(--dark-gray-900-color);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            &:first-child {
+                border-top-left-radius: 6px;
+                border-bottom-left-radius: 6px;
+            }
+
+            &:last-child {
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+            }
+        }
+    }

@@ -1,0 +1,21 @@
+.row {
+    cursor: pointer;
+    
+
+    &>td {
+        align-items: center;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        text-align: left;
+
+        background-color: var(--base-white-color);
+    
+    }
+
+    &__rate{
+        display: flex;
+        gap: 4px;
+        align-items: center;
+    }
+}

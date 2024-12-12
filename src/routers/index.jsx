@@ -21,6 +21,9 @@ import Courses from "@/components/pages/Courses";
 import AddStudent from "@/components/pages/AddStudent";
 import UpdateSingleStudentCourse from "@/components/pages/UpdateSingleStudentCourse";
 import UpdateCourse from "@/components/pages/UpdateCourse";
+import ServisStatistic from "@/components/pages/ServisStatistic";
+import StudentsRateForCallMentor from "@/components/pages/StudentsRateForCallMentor";
+import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -127,12 +130,24 @@ const managerRoutes = createBrowserRouter([
             },
             {
                 path: '/courses/:courseId',
-                element: <UpdateCourse/>
+                element: <UpdateCourse />
             }
             ,
             {
                 path: '/settings',
                 element: <Settings />
+            },
+            {
+                path: '/service-statistics',
+                element: <ServisStatistic />
+            },
+            {
+                path: '/service-statistics/lesson-rate/:teacherId/:groupId',
+                element: <StudentsRateForTeacher />
+            },
+            {
+                path: '/service-statistics/call-rate/:teacherId',
+                element: <StudentsRateForCallMentor />
             },
             {
                 path: '*',
