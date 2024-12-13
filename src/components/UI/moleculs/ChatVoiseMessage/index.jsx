@@ -11,7 +11,7 @@ const ChatVoiseMessage = ({
     return (
         <ChatMessageLayout fullName={fullName} time={dayjs(time).format('HH:mm')}>
             <div style={{position: 'relative', height: '50px', display: 'flex'}}>
-                <CallRecordPlayer className={cls.player} url={audioUrl} />
+                {/* <CallRecordPlayer className={cls.player} url={audioUrl} /> */}
             </div>
         </ChatMessageLayout>
     );  

@@ -9,8 +9,9 @@ import ChatDateSeparator from "../../moleculs/ChatDateSeparator";
 import ChatSmsMessage from "../../moleculs/ChatSmsMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 import ChatVoiseMessage from "../../moleculs/ChatVoiseMessage";
+import ChatHomeWorkMessage from "../../moleculs/ChatHomeWorkMessage";
 
-const RenderMessage = memo(({ 
+const RenderMessage = memo(({
     message,
     onEditMessage
 }) => {
@@ -31,10 +32,24 @@ const RenderMessage = memo(({
             );
         case MessageTypes.VOISE:
             return (
-                <ChatVoiseMessage 
+                <ChatVoiseMessage
                     fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
                     time={message?.createdAt}
                     audioUrl={message?.message?.url}
+                />
+            );
+        case MessageTypes.STUDENT_HOME_WORK:
+            return (
+                <ChatHomeWorkMessage
+                    onTime={new Date(message?.createdAt).getTime() <= new Date(message?.studentHomeWork?.homeTask?.date).getTime()}
+                    time={message?.createdAt}
+                    workId={message?.studentHomeWork?.id}
+                    rate={message?.studentHomeWork?.rate}
+                    taskId={message?.studentHomeWork?.homeTask?.id}
+                    fileName={message?.studentHomeWork?.file?.fileName}
+                    fileSize={message?.studentHomeWork?.file?.size}
+                    fileUrl={message?.studentHomeWork?.file?.url}
+                    fullName={getUserFullName(message?.studentHomeWork?.student)}
                 />
             );
         case MessageTypes.CALL:

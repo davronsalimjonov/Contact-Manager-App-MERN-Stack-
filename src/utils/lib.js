@@ -98,3 +98,17 @@ export const getFileFromUrl = (url, fileName) => {
         return new File([res.data], fileName, { type: res.data?.type })
     })
 }
+
+export function formatFileSize(sizeInKilobytes = 0) {
+    if(isNaN(sizeInKilobytes) && sizeInKilobytes == null) return '0 KB';
+    const units = ["KB", "MB", "GB", "TB", "PB"];
+    let index = 0;
+
+    let size = sizeInKilobytes;
+    while (size >= 1024 && index < units.length - 1) {
+        size /= 1024;
+        index++;
+    }
+
+    return `${size?.toFixed(2)} ${units[index]}`;
+}
