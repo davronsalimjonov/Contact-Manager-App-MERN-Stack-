@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.9.1",
     "@reduxjs/toolkit": "^2.3.0",
     "@wavesurfer/react": "^1.0.7",
+    "antd": "^5.22.4",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
     "dayjs": "^1.11.13",

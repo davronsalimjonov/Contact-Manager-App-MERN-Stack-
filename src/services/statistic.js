@@ -56,14 +56,14 @@ export const getCallRateStatistic = async (params) => {
     return res.data;
 }
 
-// TODO Call Mentor
-export const getStudentsRateForCallMentor = async (teacherId, params) => {
-    const res = await api.get(`/call-rate/teachers/statistic/${teacherId}?${paramsToString(params)}`);
+
+export const getStudentsRateForCallMentor = async ( params) => {
+    const res = await api.get(`/call-rate?${paramsToString(params)}`);
     return res.data;
 }
 
 export const getStudentsRateForTeacher = async (teacherId, groupId, params) => {
-    const res = await api.get(`/lesson-rate/teachers/statistic/${teacherId}/${groupId}?${paramsToString(params)}`);
+    const res = await api.get(`/lesson-rate/teacher/${teacherId}/${groupId}?${paramsToString(params)}`);
     return res.data;
 }
 

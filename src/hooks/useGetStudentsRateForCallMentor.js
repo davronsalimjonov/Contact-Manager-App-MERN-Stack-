@@ -3,8 +3,8 @@ import { useQuery } from "react-query";
 
 
 // TODO might change 
-const useGetStudentsRateForCallMentor = (teacherId, params) => {
-    return useQuery(['call-rate-statistic', teacherId, params], () => getStudentsRateForCallMentor(teacherId, params));
+const useGetStudentsRateForCallMentor = (params) => {
+    return useQuery(['call-rate-statistic', params], () => getStudentsRateForCallMentor( params));
 
 }
 
