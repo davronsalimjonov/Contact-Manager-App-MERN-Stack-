@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
 import { memo } from 'react';
+import { getTimeFromDate } from '@/utils/time';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatTextMessage.module.scss';
 
@@ -13,7 +13,7 @@ const ChatTextMessage = memo(({
     return (
         <ChatMessageLayout 
             fullName={fullName} 
-            time={dayjs(time).format('HH:mm')}
+            time={getTimeFromDate(time)}
             isSender={isSender}
             date={time}
             avatar={avatar}

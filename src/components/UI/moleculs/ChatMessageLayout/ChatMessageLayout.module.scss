@@ -10,7 +10,7 @@
         flex-grow: 1;
         gap: 8px;
 
-        & * {
+        & > * {
             white-space: pre-wrap;
         }
     }

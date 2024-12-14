@@ -1,22 +1,25 @@
-import dayjs from 'dayjs';
-import { formatMessageDate } from '@/utils/time';
+import { HomeLessonTaskStatus } from '@/constants/enum';
+import { formatMessageDate, getTimeFromDate } from '@/utils/time';
 import Button from '../../atoms/Buttons/Button';
 import { DownloadIcon, PinBoardUnreaded } from '../../atoms/icons';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatLessonTaskMessage.module.scss';
-import { HomeLessonTaskStatus } from '@/constants/enum';
 
 const ChatLessonTaskMessage = ({
     fullName = '',
-    time = '',
+    date = '',
     file = '',
     title = '',
     description = '',
+    time = '',
     status = HomeLessonTaskStatus.SEND,
     onEdit
 }) => {
     return (
-        <ChatMessageLayout fullName={fullName}>
+        <ChatMessageLayout 
+            fullName={fullName}
+            time={getTimeFromDate(time)}
+        >
             <div className={cls.message}>
                 <div className={cls.message__body}>
                     <div className={cls.message__body__icon}>
@@ -25,7 +28,7 @@ const ChatLessonTaskMessage = ({
                     <div className={cls.message__body__details}>
                         <div className={cls.message__body__details__header}>
                             <h3 className={cls.message__body__details__header__title}>{title}</h3>
-                            <span className={cls.message__body__details__header__date}>{time && `${formatMessageDate(time)}, ${dayjs(time).format('HH:mm')} gacha`}</span>
+                            <span className={cls.message__body__details__header__date}>{date && `${formatMessageDate(date)}, ${getTimeFromDate(date)} gacha`}</span>
                             {file && (
                                 <a
                                     href={file}

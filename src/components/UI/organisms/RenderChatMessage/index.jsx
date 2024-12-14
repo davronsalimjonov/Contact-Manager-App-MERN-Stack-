@@ -10,6 +10,7 @@ import ChatSmsMessage from "../../moleculs/ChatSmsMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 import ChatVoiseMessage from "../../moleculs/ChatVoiseMessage";
 import ChatHomeWorkMessage from "../../moleculs/ChatHomeWorkMessage";
+import ChatImageMessage from "../../moleculs/ChatImageMessage";
 
 const RenderMessage = memo(({
     message,
@@ -28,6 +29,12 @@ const RenderMessage = memo(({
                     avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.avatar : message?.message?.user?.avatar}
                     isSender={message?.message?.whoSended === 'mentor' && message?.message?.mentor?.id === userId}
                     fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                />
+            );
+        case MessageTypes.IMAGE: 
+            return (
+                <ChatImageMessage 
+                    imageUrl={message?.message?.url}
                 />
             );
         case MessageTypes.VOISE:
@@ -50,6 +57,9 @@ const RenderMessage = memo(({
                     fileSize={message?.studentHomeWork?.file?.size}
                     fileUrl={message?.studentHomeWork?.file?.url}
                     fullName={getUserFullName(message?.studentHomeWork?.student)}
+                    taskTitle={message?.studentHomeWork?.homeTask?.title}
+                    taskDescription={message?.studentHomeWork?.homeTask?.description}
+                    taskDate={message?.studentHomeWork?.homeTask?.date}
                 />
             );
         case MessageTypes.CALL:
@@ -82,7 +92,8 @@ const RenderMessage = memo(({
                     title={message?.homeTask?.title}
                     file={message?.homeTask?.url}
                     description={message?.homeTask?.description}
-                    time={message?.homeTask?.date}
+                    time={message?.createdAt}
+                    date={message?.homeTask?.date}
                     status={message?.homeTask?.status}
                     onEdit={onEditMessage}
                 />

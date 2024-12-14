@@ -1,6 +1,6 @@
-import dayjs from 'dayjs';
-import ChatMessageLayout from '../ChatMessageLayout';
+import { getTimeFromDate } from '@/utils/time';
 import CallRecordPlayer from '../CallRecordPlayer';
+import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatVoiseMessage.module.scss';
 
 const ChatVoiseMessage = ({
@@ -9,12 +9,12 @@ const ChatVoiseMessage = ({
     audioUrl = ''
 }) => {
     return (
-        <ChatMessageLayout fullName={fullName} time={dayjs(time).format('HH:mm')}>
-            <div style={{position: 'relative', height: '50px', display: 'flex'}}>
-                {/* <CallRecordPlayer className={cls.player} url={audioUrl} /> */}
+        <ChatMessageLayout fullName={fullName} time={getTimeFromDate(time)}>
+            <div style={{ height: '50px', display: 'flex', alignItems: 'center', whiteSpace: 'normal !important' }}>
+                <CallRecordPlayer className={cls.player} url={audioUrl} />
             </div>
         </ChatMessageLayout>
-    );  
+    );
 }
 
 export default ChatVoiseMessage;

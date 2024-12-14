@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import { getTimeFromDate } from '@/utils/time';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatCommentMessage.module.scss';
 
@@ -8,7 +8,7 @@ const ChatCommentMessage = ({
     time = ''
 }) => {
     return (
-        <ChatMessageLayout fullName={fullName} date={time} time={`Commented ${dayjs(time).format('HH:mm')}`}>
+        <ChatMessageLayout fullName={fullName} date={time} time={`Commented ${getTimeFromDate(time)}`}>
             <div className={cls.comment}>
                 <span>{text}</span>
             </div>

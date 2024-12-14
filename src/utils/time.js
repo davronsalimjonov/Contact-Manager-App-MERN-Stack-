@@ -2,6 +2,10 @@ import { format } from 'date-fns';
 import { uz } from 'date-fns/locale';
 import { daysOfWeekFull, daysOfWeekShort } from "@/constants";
 
+export const getTimeFromDate = (date) => {
+    return format(date, 'HH:mm');
+}
+
 export function getDayName(dayNumber, format = 'full') {
     if (dayNumber < 0 || dayNumber > 6) {
         return 'Noto‘g‘ri kun raqami';

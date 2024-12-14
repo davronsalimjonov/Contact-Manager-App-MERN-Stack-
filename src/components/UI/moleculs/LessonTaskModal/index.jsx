@@ -1,3 +1,4 @@
+import { formatMessageDate, getTimeFromDate } from '@/utils/time';
 import { PinBoardUnreaded } from '../../atoms/icons';
 import Dialog from '../Dialog';
 import cls from './LessonTaskModal.module.scss';
@@ -15,11 +16,9 @@ const LessonTaskModal = ({
                 <div className={cls.modal__icon}>
                     <PinBoardUnreaded />
                 </div>
-                <h2 className={cls.modal__title}>Vazifa nomi</h2>
-                <span className={cls.modal__date}>Du, 19:00 gacha</span>
-                <div className={cls.modal__description}>
-                    Vazifa uchun batafsil tushintirilgan tekst kiritiladi, masalan Perfectly Spoken darsidan A2 darajadagi testlardan har kuni 2 tadan bajarib yubor.
-                </div>
+                <h2 className={cls.modal__title}>{title}</h2>
+                <span className={cls.modal__date}>{formatMessageDate(date)}, {getTimeFromDate(date)} gacha</span>
+                {description && <div className={cls.modal__description}>{description}</div>}
             </div>
         </Dialog>
     );

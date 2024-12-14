@@ -1,7 +1,7 @@
-import dayjs from 'dayjs';
 import { memo, useState } from 'react';
 import PreviewModal from 'react-media-previewer';
 import { formatFileSize } from '@/utils/lib';
+import { getTimeFromDate } from '@/utils/time';
 import { updateHomeWork } from '@/services/chat';
 import Rater from '../../atoms/Rater';
 import { FileIcon } from '../../atoms/icons';
@@ -17,14 +17,19 @@ const ChatHomeWorkMessage = memo(({
     time = '',
     fileName = 'File name is not defined',
     fileSize = 0,
-    fileUrl = ''
+    fileUrl = '',
+    taskTitle = '',
+    taskDescription = '',
+    taskDate = ''
 }) => {
+    const [evaluated, setEvaluated] = useState(rate > 0);
     const [visible, setVisible] = useState(false);
     const [isOpenTaskModal, setIsOpenTaskModal] = useState(false);
 
     const handleChangeRate = (rate) => {
         try {
             updateHomeWork(workId, { rate })
+            setEvaluated(true)
         } catch (error) {
             console.log(error);
         }
@@ -33,7 +38,7 @@ const ChatHomeWorkMessage = memo(({
     return (
         <ChatMessageLayout
             fullName={fullName}
-            time={dayjs(time).format('HH:mm')}
+            time={getTimeFromDate(time)}
             timeStyle={{ color: onTime ? 'var(--green-color)' : 'var(--red-color)' }}
             fullNamePreffix={
                 <> <button onClick={() => setIsOpenTaskModal(true)} className={cls.work__text}>vazifa</button>ni yubordi</>
@@ -48,6 +53,9 @@ const ChatHomeWorkMessage = memo(({
             <LessonTaskModal
                 isOpen={isOpenTaskModal}
                 onClose={() => setIsOpenTaskModal(false)}
+                title={taskTitle}
+                description={taskDescription}
+                date={taskDate}
             />
             <div className={cls.work}>
                 <div className={cls.work__file} onClick={() => setVisible(true)}>
@@ -60,6 +68,7 @@ const ChatHomeWorkMessage = memo(({
                 <div className={cls.work__ball}>
                     <span>Vazifani baholang:</span>
                     <Rater
+                        isDisabled={evaluated}
                         defaultValue={rate}
                         onRate={handleChangeRate}
                     />
