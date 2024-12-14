@@ -1,0 +1,21 @@
+.dictionary__head {
+    border: 1px solid rgba(40, 40, 40, 0.04);
+    text-align: left;
+
+    &__th {
+        padding-top: 20px;
+        padding-bottom: 20px;
+
+        &:first-child {
+            width: 48px;
+            text-align: center;
+        }
+
+        &:last-child {
+            width: 40px;
+            padding-right: 8px;
+            text-align: center;
+        }
+
+    }
+}

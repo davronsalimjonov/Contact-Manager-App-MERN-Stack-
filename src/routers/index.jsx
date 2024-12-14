@@ -24,6 +24,7 @@ import UpdateCourse from "@/components/pages/UpdateCourse";
 import ServisStatistic from "@/components/pages/ServisStatistic";
 import StudentsRateForCallMentor from "@/components/pages/StudentsRateForCallMentor";
 import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
+import Dictionary from "@/components/pages/Dictionary";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -148,6 +149,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/service-statistics/call-rate/:teacherId',
                 element: <StudentsRateForCallMentor />
+            },
+            {
+                path: '/dictionary',
+                element: <Dictionary />
             },
             {
                 path: '*',

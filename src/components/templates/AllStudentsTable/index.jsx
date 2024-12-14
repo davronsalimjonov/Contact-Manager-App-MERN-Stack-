@@ -45,7 +45,7 @@ const AllStudentsTable = ({
                     </tbody>
                 </table>
             ) : (
-                !isLoading && <EmptyData />
+                !isLoading && <EmptyData text="Sizda hozirda bunday o'quvchi mavjud emas." />
             )}
             {isLoading && <Loader size={80} />}
         </div>

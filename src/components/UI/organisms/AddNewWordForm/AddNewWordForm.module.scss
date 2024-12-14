@@ -1,0 +1,30 @@
+.add__word__content {
+    width: 412px;
+    background-color: #fff;
+    padding: 16px;
+    display: grid;
+    grid-template-rows: 1fr;
+    border-radius: 8px;
+    gap: 16px;
+}
+
+.field {
+    width: 100%;
+    border: none;
+
+    &>div {
+        background-color: #F6F9FD;
+    }
+}
+
+.add__button {
+    width: 100%;
+    margin-top: 16px;
+    font-family: 'Raleway';
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    background-color: #1256db;
+    color: #fff;
+
+}

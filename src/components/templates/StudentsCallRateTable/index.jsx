@@ -38,7 +38,7 @@ const StudentsCallRateTable = ({
                     </tbody>
                 </table>
             ) : (
-                !isLoading && <EmptyData />
+                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas."/>
             )}
             {isLoading && <Loader size={80} />}
         </div>

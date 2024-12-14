@@ -1,0 +1,30 @@
+.pagination {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 202px 202px;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+
+    &__select {
+        &>div:nth-child(3) {
+            background-color: var(--base-white-color);
+        }
+    }
+
+    &__input {
+        background-color: var(--base-white-color);
+    }
+}
+
+.button {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 16px;
+}
