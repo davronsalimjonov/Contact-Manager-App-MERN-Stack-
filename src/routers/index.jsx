@@ -44,6 +44,10 @@ const callTecherRoutes = createBrowserRouter([
                 element: <Workspace />
             },
             {
+                path: '/dictionary',
+                element: <Dictionary />
+            },
+            {
                 path: '/students',
                 element: <MyStudents />
             },
@@ -80,6 +84,10 @@ const mainMentorRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
+            {
+                path: '/dictionary',
+                element: <Dictionary />
+            },
             {
                 path: '*',
                 element: <PageNotFound />

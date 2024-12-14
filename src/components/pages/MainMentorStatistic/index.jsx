@@ -22,6 +22,7 @@ const MainMentorStatistic = () => {
         lessonRate: { data: lessonRate, isLoading: isLoadingLessonRate },
         studentsCountByCourse: { data: studentsCountByCourse, isLoading: isLoadingStudentsCountByCourse },
         studentsCountByLevel: { data: studentsCountByLevel, isLoading: isLoadingStudentsCountByLevel },
+        mentorSalary: { data: mentorSalary, isLoading: isLoadingMentorSalary },
         mentor: { data: mentor, isLoadingMentor }
     } = useGetMainMentorStatistic({ mentorId: mentorId, startDate: period.startDate, endDate: period.endDate })
 
@@ -35,6 +36,7 @@ const MainMentorStatistic = () => {
                 !isLoadingStudentsCountByCourse &&
                 !isLoadingStudentsCountByLevel &&
                 !isLoadingLessonRate &&
+                !isLoadingMentorSalary &&
                 !isLoadingMentor
             ) ? (
                 <>
@@ -44,7 +46,7 @@ const MainMentorStatistic = () => {
                         <h2 className={cls.page__avatar__name}>{mentor.firstName + " " + mentor.lastName}</h2>
                     </div>}
                     <div className={cls.page__metrics}>
-                        <MetricCard   
+                        <MetricCard
                             title="O'quvchilar soni"
                             value={`${studentsCount || 0} nafar`}
                             percentage={studentsCount?.countPercentage || 0}
@@ -60,16 +62,16 @@ const MainMentorStatistic = () => {
                             iconBg='rgba(160, 188, 241, 0.3)'
                         />
                         <MetricCard
-                            title='O’rtacha oylik maoshi'   //TODO
-                            value={formatNumber('2500000')}
-                            percentage={studentsCount?.durationPercentage || 0}
+                            title='O’rtacha oylik maoshi'
+                            value={formatNumber(mentorSalary?.salaryAmount)}
+                            percentage={mentorSalary?.salaryPercentage || 0}
                             icon={<MetricCashIcon />}
                             iconBg='rgba(254, 197, 61, 0.2)'
                         />
                         <MetricCard
                             title='O’rtacha reytinggi'
-                            value={<><StarIcon begining={lessonRate.rate * 20} />{lessonRate.rate}</>}
-                            percentage={lessonRate.ratePercentage}
+                            value={<><StarIcon begining={lessonRate?.rate * 20} />{lessonRate?.rate}</>}
+                            percentage={lessonRate?.ratePercentage}
                             icon={<MetricStarsIcon />}
                             iconBg='rgba(255, 0, 0, 0.21)'
                         />

@@ -18,9 +18,9 @@
     & tr {
         border-radius: 6px;
 
-        & td:nth-child(2),
-        & td:nth-child(3) {
-            text-align: center;
+        & td:nth-child(3),
+        & td:nth-child(4) {
+            padding-left: 20px;
         }
 
         & td:nth-child(6) {

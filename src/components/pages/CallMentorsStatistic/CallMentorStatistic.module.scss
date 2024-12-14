@@ -4,6 +4,11 @@
     flex-direction: column;
     gap: 18px;
 
+    &__back__button {
+        background-color: transparent;
+        padding: 0;
+    }
+
     &__metrics {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;

@@ -12,6 +12,7 @@ import AddNewWord from '@/components/UI/organisms/AddNewWord';
 import { SearchIcon } from '@/components/UI/atoms/icons';
 import { DEGREEOPTIONS, UNITS } from '@/constants';
 import Button from '@/components/UI/atoms/Buttons/Button';
+import EmptyData from '@/components/UI/organisms/EmptyData';
 
 const defaultValues = {
     word: '',
@@ -92,9 +93,11 @@ const Dictionary = () => {
                 <AddNewWord />
 
             </form>
-            <DictionaryTable words={words} />
+            {
+                (words.meta.totalItems > 0) ? <DictionaryTable words={words} /> : <EmptyData text="Lug'atda bunday so'z mavjud emas." />
+            }
 
-            <div className={cls.pagination}>
+            {(words.meta.totalItems > 0) && <div className={cls.pagination}>
                 <Pagination
                     showSizeChanger
                     onShowSizeChange={onShowSizeChange}
@@ -111,7 +114,7 @@ const Dictionary = () => {
                     }}
                     total={words.meta.totalItems}
                 />
-            </div>
+            </div>}
         </>
     )
 }

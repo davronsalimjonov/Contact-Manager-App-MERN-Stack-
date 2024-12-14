@@ -1,17 +1,17 @@
-import MentorsTable from "@/components/templates/MainMentorsTable";
 import MentorsPageCards from "@/components/UI/moleculs/MentorsPageCards";
-import useGetAcademicMentors from "@/hooks/useGetAcademicMentorStatistic";
 import cls from './CallMentors.module.scss';
 import { useOutletContext } from "react-router-dom";
 import CallMentorsTable from "@/components/templates/CallMentorsTable";
 import useGetCallMentors from "@/hooks/useGetCallMentorStatistic";
+import { StarIcon } from "@/components/UI/atoms/icons";
+import { formatTime } from "@/utils/formatTime";
 
 
 const CallMentors = () => {
     const [period] = useOutletContext();
 
-    const { data: mentors, isLoading } = useGetCallMentors({ startDate:period.startDate, endDate:period.endDate })
-console.log(mentors);
+    const { data: mentors, isLoading } = useGetCallMentors({ startDate: period.startDate, endDate: period.endDate })
+  
     return (
         <div className={cls.page}>
             <MentorsPageCards
@@ -29,19 +29,19 @@ console.log(mentors);
 
                         },
                         {
-                            title: "Call tezligi",
-                            text: mentors?.average?.salary || 0,  //TODO
+                            title: "Call reytinggi",
+                            text: <span className={cls.page__icon}><StarIcon color={"#fff"} /> {mentors?.average?.callRate || 0}</span>, 
 
                         },
                         {
                             title: "O'rtacha call davomiyligi",
-                            text: mentors?.average?.lessonRate||0,  //TODO
+                            text: formatTime(mentors?.average?.Duration || 0) + " s", 
 
                         },
 
 
-                    ]} /> 
-                      <CallMentorsTable mentors={mentors?.items} isLoading={isLoading} />
+                    ]} />
+            <CallMentorsTable mentors={mentors?.items} isLoading={isLoading} />
         </div>
     )
 }

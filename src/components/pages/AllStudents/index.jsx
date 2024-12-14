@@ -53,24 +53,26 @@ const AllStudents = () => {
                 isLoading={isLoadingStudents}
             />
 
-            <div className={cls.pagination}>
-                <Pagination
-                    showSizeChanger
-                    onShowSizeChange={onShowSizeChange}
-                    defaultCurrent={filter.page}
-                    defaultPageSize={filter.limit}
-                    showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} students`}
-                    onChange={(page) => {
-                        setFilter((prev) => {
-                            return {
-                                ...prev,
-                                page: page,
-                            }
-                        })
-                    }}
-                    total={students?.meta?.totalItems}
-                />
-            </div>
+            {
+                (students?.meta?.totalItems > 0) && <div className={cls.pagination}>
+                    <Pagination
+                        showSizeChanger
+                        onShowSizeChange={onShowSizeChange}
+                        defaultCurrent={filter.page}
+                        defaultPageSize={filter.limit}
+                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} students`}
+                        onChange={(page) => {
+                            setFilter((prev) => {
+                                return {
+                                    ...prev,
+                                    page: page,
+                                }
+                            })
+                        }}
+                        total={students?.meta?.totalItems}
+                    />
+                </div>
+            }
         </>
     )
 }

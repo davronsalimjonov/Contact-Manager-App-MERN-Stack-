@@ -51,24 +51,25 @@ const StudentsRateForTeacher = () => {
                 </div>
                 <StudentsRateTable pagination={pagination} data={statistics?.items} isLoading={isLoadingStatistics} headers={["№", "Sana", "Umumiy o'quvchilar soni", "Baholagan o'quvchilar soni", "O’quvchilar baholari"]} />
             </div>
-            <div className={cls.pagination}>
-                <Pagination
-                    showSizeChanger
-                    onShowSizeChange={onShowSizeChange}
-                    defaultCurrent={pagination.page}
-                    defaultPageSize={pagination.limit}
-                    showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} students`}
-                    onChange={(page) => {
-                        setPagination((prev) => {
-                            return {
-                                ...prev,
-                                page: page,
-                            }
-                        })
-                    }}
-                    total={statistics?.meta?.totalItems}
-                />
-            </div>
+            {
+                (statistics?.meta?.totalItems > 0) && <div className={cls.pagination}>
+                    <Pagination
+                        showSizeChanger
+                        onShowSizeChange={onShowSizeChange}
+                        defaultCurrent={pagination.page}
+                        defaultPageSize={pagination.limit}
+                        onChange={(page) => {
+                            setPagination((prev) => {
+                                return {
+                                    ...prev,
+                                    page: page,
+                                }
+                            })
+                        }}
+                        total={statistics?.meta?.totalItems}
+                    />
+                </div>
+            }
         </>
     )
 }

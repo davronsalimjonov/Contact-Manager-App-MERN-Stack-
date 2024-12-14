@@ -19,8 +19,6 @@ const StudentsRateForCallMentor = () => {
 
     const { data: statistics, isLoading: isLoadingStatistics } = useGetStudentsRateForCallMentor({ teacher: teacherId, startDate: period.startDate, endDate: period.endDate, page: pagination.page, limit: pagination.limit });
 
-    console.log(statistics);
-
     const onShowSizeChange = (current, pageSize) => {
         setPagination((prev) => {
             return {
@@ -55,7 +53,6 @@ const StudentsRateForCallMentor = () => {
                     onShowSizeChange={onShowSizeChange}
                     defaultCurrent={pagination.page}
                     defaultPageSize={pagination.limit}
-                    showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} students`}
                     onChange={(page) => {
                         setPagination((prev) => {
                             return {

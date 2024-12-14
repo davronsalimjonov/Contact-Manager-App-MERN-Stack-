@@ -57,7 +57,7 @@ export const getCallRateStatistic = async (params) => {
 }
 
 
-export const getStudentsRateForCallMentor = async ( params) => {
+export const getStudentsRateForCallMentor = async (params) => {
     const res = await api.get(`/call-rate?${paramsToString(params)}`);
     return res.data;
 }
@@ -67,3 +67,7 @@ export const getStudentsRateForTeacher = async (teacherId, groupId, params) => {
     return res.data;
 }
 
+export const getAcademicMentorSalary = async (mentorId, params) => {
+    const res = await api.get(`/statistic/mentors/academy-mentor-salary/${mentorId}?${paramsToString(params)}`);
+    return res.data
+}
