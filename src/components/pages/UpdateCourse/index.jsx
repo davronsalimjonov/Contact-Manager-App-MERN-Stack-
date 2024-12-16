@@ -16,6 +16,7 @@ const UpdateCourse = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleUpdateCourse = async (data) => {
+        console.log(data);
         try {
             const paymentLinks = data?.paymentLinks;
             data.paymentLinks = paymentLinks.map(paymentLink => {

@@ -11,7 +11,6 @@ const CoursesListItem = ({
     description = "",
     courseId,
     handleOpen
-
 }) => {
     
 
@@ -23,6 +22,7 @@ const CoursesListItem = ({
                 <p className={cls.item__title}>{title}</p>
                 <p className={cls.item__text} dangerouslySetInnerHTML={{__html: description}}></p>
             </div>
+            <Button type='button' onClick={()=>navigate(`/moderation/${courseId}`)}>Moderatsiya</Button>
             <Button className={cls.item__btn} type='button' onClick={()=>navigate(`/courses/${courseId}`)}> <EditIcon/></Button>
         </li>
     )

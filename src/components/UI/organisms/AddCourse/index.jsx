@@ -11,8 +11,6 @@ const AddCourse = ({
     isOpen,
     onclose
 }) => {
-
-
     const handleAddCourse = async (data) => {
 
         try {

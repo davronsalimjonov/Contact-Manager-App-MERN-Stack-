@@ -78,7 +78,7 @@ const CoursesForm = ({
                 />
 
                 {
-                    discount && <AllDiscounts discounts={discount} courseId={courseId} />
+                    discount && <AllDiscounts errors={errors} register={register} discounts={discount} courseId={courseId} control={control}/>
 
                 }
 

@@ -25,6 +25,7 @@ import ServisStatistic from "@/components/pages/ServisStatistic";
 import StudentsRateForCallMentor from "@/components/pages/StudentsRateForCallMentor";
 import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
 import Dictionary from "@/components/pages/Dictionary";
+import Moderation from "@/components/pages/Moderation";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -161,6 +162,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/dictionary',
                 element: <Dictionary />
+            },
+            {
+                path: '/moderation/:courseId',
+                element: <Moderation />
             },
             {
                 path: '*',

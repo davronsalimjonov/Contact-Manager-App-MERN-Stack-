@@ -1,5 +1,3 @@
-import CoursesListItem from "@/components/UI/atoms/CourseListItem"
-import Mapper from "@/components/UI/atoms/Mapper";
 import useGetAllCourses from "@/hooks/useGetAllCourses";
 import cls from './Courses.module.scss';
 import Button from "@/components/UI/atoms/Buttons/Button";

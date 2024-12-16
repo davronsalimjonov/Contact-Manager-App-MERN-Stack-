@@ -41,7 +41,6 @@ const DiscountForm = ({
     endDate,
     setStartDate,
     setEndDate,
-    btnShow = true
 }) => {
     const [openCalendar, setOpenCalendar] = useState(false);
 
@@ -60,152 +59,78 @@ const DiscountForm = ({
 
     return (
         <>
-            {
-                btnShow ? <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
-                    <FormSelect
-                        className={cls.form__input}
-                        name="month"
-                        key={1}
-                        isClearable={true}
+            <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+                <FormSelect
+                    className={cls.form__input}
+                    name="month"
+                    key={1}
+                    isClearable={true}
+                    control={control}
+                    options={MONTH_OPTIONS}
+                    placeholder="Tanlang"
+                    label="Oylik obuna"
+                    error={errors?.month?.message}
+                />
+                <FormInput
+                    type="number"
+                    className={cls.form__input}
+                    label='Chegirma  miqdori'
+                    placeholder='Kiriting...'
+                    register={{ ...register('discount') }}
+                    error={errors?.discount?.message}
+                />
+                <FormInput
+                    type="number"
+                    className={cls.form__input}
+                    label='Kurs narxi'
+                    placeholder='Narxi'
+                    register={{ ...register('price') }}
+                    error={errors?.price?.message}
+                />
+                <FormInput
+                    name="discountPrice"
+                    type="number"
+                    className={cls.form__input}
+                    label='Chegirmadagi kurs narxi'
+                    // preffix={"so'm"}
+                    // onChange={handleChange}
+                    placeholder='Ismi'
+                    register={{ ...register('discountPrice') }}
+                    error={errors?.discountPrice?.message}
+                />
+
+                <div className={cls.form__time}>
+                    <FormDateRangePicker
+                        label={"Chegirma muddati(kun)"}
+                        error={errors?.discountDate?.message}
+                        startDate={startDate}
+                        endDate={endDate}
                         control={control}
-                        options={MONTH_OPTIONS}
-                        placeholder="Tanlang"
-                        label="Oylik obuna"
-                        error={errors?.month?.message}
+                        name={'discountDate'}
+                        register={{ ...register('discountDate') }}
+                        openCalendar={openCalendar}
+                        setOpenCalendar={setOpenCalendar}
+                        onChange={onChange}
                     />
-                    <FormInput
-                        type="number"
-                        className={cls.form__input}
-                        label='Chegirma  miqdori'
-                        placeholder='Kiriting...'
-                        register={{ ...register('discount') }}
-                        error={errors?.discount?.message}
+                    <FormTimeInput
+                        control={control}
+                        label="Time"
+                        name="discountTime"
+                        register={{ ...register('discountTime') }}
+                        preffix={<ClockIcon />}
+                        error={errors?.discountTime?.message}
                     />
-                    <FormInput
-                        type="number"
-                        className={cls.form__input}
-                        label='Kurs narxi'
-                        placeholder='Narxi'
-                        register={{ ...register('price') }}
-                        error={errors?.price?.message}
-                    />
-                    <FormInput
-                        name="discountPrice"
-                        type="number"
-                        className={cls.form__input}
-                        label='Chegirmadagi kurs narxi'
-                        // preffix={"so'm"}
-                        // onChange={handleChange}
-                        placeholder='Ismi'
-                        register={{ ...register('discountPrice') }}
-                        error={errors?.discountPrice?.message}
-                    />
+                </div>
+                <Textarea
+                    className={cls.form__input}
+                    label="Description"
+                    register={{ ...register('description') }}
+                    error={errors?.description?.message}
+                />
 
-                    <div className={cls.form__time}>
-                        <FormDateRangePicker
-                            label={"Chegirma muddati(kun)"}
-                            error={errors?.discountDate?.message}
-                            startDate={startDate}
-                            endDate={endDate}
-                            control={control}
-                            name={'discountDate'}
-                            register={{ ...register('discountDate') }}
-                            openCalendar={openCalendar}
-                            setOpenCalendar={setOpenCalendar}
-                            onChange={onChange}
-                        />
-                        <FormTimeInput
-                            control={control}
-                            label="Time"
-                            name="discountTime"
-                            register={{ ...register('discountTime') }}
-                            preffix={<ClockIcon />}
-                            error={errors?.discountTime?.message}
-                        />
-                    </div>
-                    <Textarea
-                        className={cls.form__input}
-                        label="Description"
-                        register={{ ...register('description') }}
-                        error={errors?.description?.message}
-                    />
+                <Button type='submit'>Qo'shish</Button>
 
-                    <Button type='submit'>Qo'shish</Button>
-
-                </form> :
-                    <div className={className}>
-                        <FormSelect
-                            className={cls.form__input}
-                            name="month"
-                            key={1}
-                            isClearable={true}
-                            control={control}
-                            options={MONTH_OPTIONS}
-                            placeholder="Tanlang"
-                            label="Oylik obuna"
-                            error={errors?.month?.message}
-                        />
-                        <FormInput
-                            type="number"
-                            className={cls.form__input}
-                            label='Chegirma  miqdori'
-                            placeholder='Kiriting...'
-                            register={{ ...register('discount') }}
-                            error={errors?.discount?.message}
-                        />
-                        <FormInput
-                            type="number"
-                            className={cls.form__input}
-                            label='Kurs narxi'
-                            placeholder='Narxi'
-                            register={{ ...register('price') }}
-                            error={errors?.price?.message}
-                        />
-                        <FormInput
-                            name="discountPrice"
-                            type="number"
-                            className={cls.form__input}
-                            label='Chegirmadagi kurs narxi'
-                            // preffix={"so'm"}
-                            // onChange={handleChange}
-                            placeholder='Ismi'
-                            register={{ ...register('discountPrice') }}
-                            error={errors?.discountPrice?.message}
-                        />
-
-                        <div className={cls.form__time}>
-                            <FormDateRangePicker
-                                label={"Chegirma muddati(kun)"}
-                                error={errors?.discountDate?.message}
-                                startDate={startDate}
-                                endDate={endDate}
-                                control={control}
-                                name={'discountDate'}
-                                register={{ ...register('discountDate') }}
-                                openCalendar={openCalendar}
-                                setOpenCalendar={setOpenCalendar}
-                                onChange={onChange}
-                            />
-                            <FormTimeInput
-                                control={control}
-                                label="Time"
-                                name="discountTime"
-                                register={{ ...register('discountTime') }}
-                                preffix={<ClockIcon />}
-                                error={errors?.discountTime?.message}
-                            />
-                        </div>
-                        <Textarea
-                            className={cls.form__input}
-                            label="Description"
-                            register={{ ...register('description') }}
-                            error={errors?.description?.message}
-                        />
-
-                    </div>
-            }
-
-
+            </form>
         </>
 
     )

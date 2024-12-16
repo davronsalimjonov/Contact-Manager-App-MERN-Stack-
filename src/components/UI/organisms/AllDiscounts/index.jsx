@@ -4,20 +4,23 @@ import UpdateDiscount from "../UpdateDiscount";
 
 const AllDiscounts = (
     {
+        errors,
+        register,
         discounts,
-        courseId
+        courseId,
+        control,
     }
-) =>{
+) => {
 
-    console.log("Discounts:",discounts);
+    console.log("Discounts:", discounts);
     return (
         <>
-               <Mapper
-                            data={discounts}
-                            isInfinityQuery
-                            renderItem={(discount,index) => (
-                                <UpdateDiscount key={index} discount={discount} courseId={courseId} />
-                            )}/>
+            <Mapper
+                data={discounts}
+                isInfinityQuery
+                renderItem={(discount, index) => (
+                    <UpdateDiscount key={index} errors={errors} register={register} discount={discount} courseId={courseId} control={control} />
+                )} />
         </>
     )
 }

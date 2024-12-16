@@ -54,6 +54,17 @@ export const updateCourse = async (courseId, data) => {
 }
 
 export const addDiscount = async (data) => {
-    const res = await api.post(`/course-price`,data);
+    const res = await api.post(`/course-price`, data);
     return res.data;
+}
+
+
+export const getCourseRate = async (courseId,params) => {
+    const res = await api.get(`/course-rate/for-web/${courseId}?${paramsToString(params)}`)
+    return res.data
+}
+
+export const getCourseAcceptedRate = async (courseId,params) => {
+    const res = await api.get(`/course-rate/is-rated/${courseId}}`)
+    return res.data
 }
