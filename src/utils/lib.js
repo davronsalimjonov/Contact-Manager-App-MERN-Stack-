@@ -112,3 +112,30 @@ export function formatFileSize(sizeInKilobytes = 0) {
 
     return `${size?.toFixed(2)} ${units[index]}`;
 }
+
+export function getProportionalDimensions({
+    maxWidth = 0, 
+    maxHeight = 0, 
+    minWidth = 0, 
+    minHeight = 0, 
+    originalWidth = 0, 
+    originalHeight = 0
+}) {
+    if (originalWidth <= maxWidth && originalHeight <= maxHeight) {
+        const width = Math.max(originalWidth, minWidth);
+        const height = Math.max(originalHeight, minHeight);
+        return { width, height };
+    }
+
+    const widthRatio = maxWidth / originalWidth;
+    const heightRatio = maxHeight / originalHeight;
+    const scale = Math.min(widthRatio, heightRatio);
+
+    let newWidth = Math.round(originalWidth * scale);
+    let newHeight = Math.round(originalHeight * scale);
+
+    newWidth = Math.max(newWidth, minWidth);
+    newHeight = Math.max(newHeight, minHeight);
+
+    return { width: newWidth, height: newHeight };
+}

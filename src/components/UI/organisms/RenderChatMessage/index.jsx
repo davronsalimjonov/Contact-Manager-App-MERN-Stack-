@@ -34,15 +34,19 @@ const RenderMessage = memo(({
         case MessageTypes.IMAGE: 
             return (
                 <ChatImageMessage 
-                    imageUrl={message?.message?.url}
+                    imageUrl={message?.message?.file?.url}
+                    width={message?.message?.file?.width}
+                    height={message?.message?.file?.height}
+                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                    time={message?.createdAt}
                 />
             );
         case MessageTypes.VOISE:
             return (
                 <ChatVoiseMessage
-                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
                     time={message?.createdAt}
-                    audioUrl={message?.message?.url}
+                    audioUrl={message?.message?.file?.url}
+                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
                 />
             );
         case MessageTypes.STUDENT_HOME_WORK:

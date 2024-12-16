@@ -1,4 +1,4 @@
-import { api, paramsToString } from "./api"
+import { api } from "./api"
 
 export const getCallMentorStudents = async (mentorId) => {
     if(!mentorId) return null

@@ -1,10 +1,10 @@
 import { memo, useState } from 'react';
-import PreviewModal from 'react-media-previewer';
 import { formatFileSize } from '@/utils/lib';
 import { getTimeFromDate } from '@/utils/time';
 import { updateHomeWork } from '@/services/chat';
 import Rater from '../../atoms/Rater';
 import { FileIcon } from '../../atoms/icons';
+import MediaPreviewer from '../MediaPreviewer';
 import LessonTaskModal from '../LessonTaskModal';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatHomeWorkMessage.module.scss';
@@ -44,8 +44,7 @@ const ChatHomeWorkMessage = memo(({
                 <> <button onClick={() => setIsOpenTaskModal(true)} className={cls.work__text}>vazifa</button>ni yubordi</>
             }
         >
-            <PreviewModal
-                className={cls.modal}
+            <MediaPreviewer
                 visible={visible}
                 setVisible={setVisible}
                 urls={[fileUrl]}
