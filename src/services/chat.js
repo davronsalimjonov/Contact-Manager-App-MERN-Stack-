@@ -50,3 +50,8 @@ export const updateHomeWork = async (taskId, data) => {
     const res = await api.put(`/student-home-work/${taskId}`, data)
     return res.data
 }
+
+export const sendViewedMessages = async (chatId, data) => {
+    const res = await api.put(`/chat/is-viewed/${chatId}`, data)
+    return res.data
+}

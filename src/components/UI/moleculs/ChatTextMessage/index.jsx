@@ -12,10 +12,10 @@ const ChatTextMessage = memo(({
 }) => {
     return (
         <ChatMessageLayout 
+            date={time}
             fullName={fullName} 
             time={getTimeFromDate(time)}
             isSender={isSender}
-            date={time}
             avatar={avatar}
         >
             <div className={cls.message}>{message}</div>

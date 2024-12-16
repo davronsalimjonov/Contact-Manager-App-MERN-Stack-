@@ -10,6 +10,7 @@ import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatHomeWorkMessage.module.scss';
 
 const ChatHomeWorkMessage = memo(({
+    avatar = '',
     onTime = false,
     rate = 0,
     workId = '',
@@ -37,6 +38,7 @@ const ChatHomeWorkMessage = memo(({
 
     return (
         <ChatMessageLayout
+            avatar={avatar}
             fullName={fullName}
             time={getTimeFromDate(time)}
             timeStyle={{ color: onTime ? 'var(--green-color)' : 'var(--red-color)' }}

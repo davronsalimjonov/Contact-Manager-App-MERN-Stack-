@@ -12,7 +12,6 @@ const MediaPreviewer = ({
             let modalRef = null
 
             const handleClickModal = (e) => {
-                e.stopPropagation()
                 if (e.target === modalRef) {
                     setVisible?.(false);
                 }

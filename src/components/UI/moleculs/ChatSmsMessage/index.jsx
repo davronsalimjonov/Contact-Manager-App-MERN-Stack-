@@ -5,10 +5,16 @@ import cls from './ChatSmsMessage.module.scss';
 const ChatSmsMessage = ({
     text = '',
     fullName = '',
+    avatar = '',
     time = ''
 }) => {
     return (
-        <ChatMessageLayout fullName={fullName} date={time} time={`SMS ${getTimeFromDate(time)}`}>
+        <ChatMessageLayout 
+            date={time}
+            avatar={avatar} 
+            fullName={fullName} 
+            time={`SMS ${getTimeFromDate(time)}`}
+        >
             <div className={cls.sms}>
                 <span>{text}</span>
             </div>

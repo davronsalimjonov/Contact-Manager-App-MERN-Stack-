@@ -30,6 +30,7 @@ const ConversationMessages = ({
     messages = [],
     onBottomReach,
     onTopReach,
+    onMessageVisible,
     hasAboveMessages = true,
     hasBelowMessages = true,
 }) => {
@@ -165,6 +166,7 @@ const ConversationMessages = ({
                                 <RenderMessage
                                     message={message}
                                     onEditMessage={() => handleSetMessage(message)}
+                                    onMessageVisible={onMessageVisible}
                                 />
                             </div>
                         );

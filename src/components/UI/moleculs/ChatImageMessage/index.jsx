@@ -10,6 +10,7 @@ const ChatImageMessage = memo(({
     width = 300,
     height = 300,
     fullName = '',
+    avatar = '',
     time = ''
 }) => {
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -23,12 +24,18 @@ const ChatImageMessage = memo(({
     });
 
     return (
-        <ChatMessageLayout fullName={fullName} time={getTimeFromDate(time)}>
-            <MediaPreviewer
-                visible={isOpenModal}
-                setVisible={setIsOpenModal}
-                urls={[imageUrl]}
-            />
+        <ChatMessageLayout 
+            avatar={avatar}
+            fullName={fullName} 
+            time={getTimeFromDate(time)}
+        >
+            {imageUrl && (
+                <MediaPreviewer
+                    visible={isOpenModal}
+                    setVisible={setIsOpenModal}
+                    urls={[imageUrl]}
+                />
+            )}
             <img
                 src={imageUrl}
                 className={cls.image}

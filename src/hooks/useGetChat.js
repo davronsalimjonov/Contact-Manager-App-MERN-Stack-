@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "react-query";
 import { MessageTypes } from "@/constants/enum";
 import { getChatInfo, getChatMessages } from "@/services/chat";
-import useGetUser from "./useGetUser";
+import useGetUser, { useGetUserId } from "./useGetUser";
 
 export const useMessage = () => {
     const { data: user } = useGetUser()
@@ -67,6 +67,7 @@ export const useMessage = () => {
 }
 
 const useGetChat = (userCourseId) => {
+    const userId = useGetUserId()
     const queryClient = useQueryClient()
     const info = useQuery(['chat', 'info', userCourseId], () => getChatInfo(userCourseId), { staleTime: Infinity, cacheTime: Infinity })
     const userChatId = info?.data?.id
@@ -87,6 +88,24 @@ const useGetChat = (userCourseId) => {
             const lastItems = oldData?.at(-1)?.items || []
             oldData.at(-1).items = [...lastItems, newMessage]
             return oldData
+        })
+    }
+
+    const removeUnreadedMessagesCount = (count) => {
+        queryClient.setQueriesData(['students', userId], (students) => {
+            const studentIndex = students?.findIndex(student => student.id === userCourseId);
+
+            if (studentIndex === -1) {
+                return students;
+            }
+
+            const updatedStudents = [...students];
+            const [student] = updatedStudents.splice(studentIndex, 1);
+
+            student.messageCount = Math.max((student.messageCount || 0) - count, 0);
+            updatedStudents.unshift(student);
+
+            return updatedStudents;
         })
     }
 
@@ -116,7 +135,8 @@ const useGetChat = (userCourseId) => {
         addNextMessages,
         updateMessage,
         addNewMessage,
-        userChatId
+        removeUnreadedMessagesCount,
+        userChatId,
     }
 }
 

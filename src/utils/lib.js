@@ -135,5 +135,12 @@ export function getProportionalDimensions({
         newHeight = Math.round(originalHeight * minScale);
     }
 
+    // Убедимся, что новые размеры не превышают максимальные ограничения
+    if (newWidth > maxWidth || newHeight > maxHeight) {
+        const maxScale = Math.min(maxWidth / originalWidth, maxHeight / originalHeight);
+        newWidth = Math.round(originalWidth * maxScale);
+        newHeight = Math.round(originalHeight * maxScale);
+    }
+
     return { width: newWidth, height: newHeight };
 }

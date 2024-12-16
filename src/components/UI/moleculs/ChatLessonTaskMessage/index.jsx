@@ -6,6 +6,7 @@ import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatLessonTaskMessage.module.scss';
 
 const ChatLessonTaskMessage = ({
+    avatar = '',
     fullName = '',
     date = '',
     file = '',
@@ -17,6 +18,7 @@ const ChatLessonTaskMessage = ({
 }) => {
     return (
         <ChatMessageLayout 
+            avatar={avatar}
             fullName={fullName}
             time={getTimeFromDate(time)}
         >
