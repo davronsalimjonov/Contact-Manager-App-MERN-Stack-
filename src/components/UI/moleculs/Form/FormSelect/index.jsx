@@ -14,6 +14,7 @@ const FormSelect = ({
     control,
     isMulti,
     onChange,
+    className
 }) => {
     return (
         <FormElementWrapper label={label} error={error}>
@@ -32,6 +33,7 @@ const FormSelect = ({
                             isClearable={isClearable}
                             isMulti={isMulti}
                             error={error}
+                            className={className}
                         />
                     )}
                 />
