@@ -271,8 +271,13 @@ label {
 .rc-dialog-mask,
 .rc-dialog-wrap{
   background-color: rgba(15, 23, 42, 0.25) !important;
+  cursor: pointer;
 }
 
 .rc-dialog-body a:hover > svg{
   color: white !important;
+}
+
+.rc-dialog-content{
+  cursor: initial;
 }

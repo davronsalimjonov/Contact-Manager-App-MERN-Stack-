@@ -6,7 +6,6 @@ import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import Loader from '../../atoms/Loader';
 import RenderMessage from '../RenderChatMessage';
 import cls from './ConversationMessages.module.scss';
-import LessonTaskModal from '../../moleculs/LessonTaskModal';
 
 const OVERSCAN_COUNT = 50;
 const DEBOUNCE_DELAY = 300;

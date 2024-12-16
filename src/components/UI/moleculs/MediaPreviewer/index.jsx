@@ -9,22 +9,23 @@ const MediaPreviewer = ({
 
     useEffect(() => {
         if (visible) {
+            let modalRef = null
+
+            const handleClickModal = (e) => {
+                e.stopPropagation()
+                if (e.target === modalRef) {
+                    setVisible?.(false);
+                }
+            }
+
             setTimeout(() => {
-                const modalRef = document.getElementsByClassName('rc-dialog-wrap')?.[0]
-
-                const handleClickModal = (e) => {
-                    e.stopPropagation()
-                    if (e.target === modalRef) {
-                        setVisible?.(false);
-                    }
-                }
-
+                modalRef = document.getElementsByClassName('rc-dialog-wrap')?.[0]
                 modalRef?.addEventListener('click', handleClickModal)
-
-                return () => {
-                    modalRef?.removeEventListener('click', handleClickModal)
-                }
             })
+
+            return () => {
+                modalRef?.removeEventListener('click', handleClickModal)
+            }
         }
     }, [visible])
 

@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { getTimeFromDate } from '@/utils/time';
 import { getProportionalDimensions, onImageError } from '@/utils/lib';
 import MediaPreviewer from '../MediaPreviewer';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatImageMessage.module.scss';
 
-const ChatImageMessage = ({
+const ChatImageMessage = memo(({
     imageUrl,
     width = 300,
     height = 300,
@@ -39,6 +39,6 @@ const ChatImageMessage = ({
             />
         </ChatMessageLayout>
     );
-}
+})
 
 export default ChatImageMessage;

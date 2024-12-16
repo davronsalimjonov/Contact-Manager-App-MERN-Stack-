@@ -120,13 +120,7 @@ export function getProportionalDimensions({
     minHeight = 0, 
     originalWidth = 0, 
     originalHeight = 0
-}) {
-    if (originalWidth <= maxWidth && originalHeight <= maxHeight) {
-        const width = Math.max(originalWidth, minWidth);
-        const height = Math.max(originalHeight, minHeight);
-        return { width, height };
-    }
-
+} = {}) {
     const widthRatio = maxWidth / originalWidth;
     const heightRatio = maxHeight / originalHeight;
     const scale = Math.min(widthRatio, heightRatio);
@@ -134,8 +128,12 @@ export function getProportionalDimensions({
     let newWidth = Math.round(originalWidth * scale);
     let newHeight = Math.round(originalHeight * scale);
 
-    newWidth = Math.max(newWidth, minWidth);
-    newHeight = Math.max(newHeight, minHeight);
+    // Применяем минимальные размеры после масштабирования
+    if (newWidth < minWidth || newHeight < minHeight) {
+        const minScale = Math.max(minWidth / originalWidth, minHeight / originalHeight);
+        newWidth = Math.round(originalWidth * minScale);
+        newHeight = Math.round(originalHeight * minScale);
+    }
 
     return { width: newWidth, height: newHeight };
 }
