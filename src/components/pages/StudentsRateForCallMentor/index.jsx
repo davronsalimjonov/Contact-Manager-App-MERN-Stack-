@@ -47,7 +47,8 @@ const StudentsRateForCallMentor = () => {
                 </div>
                 <StudentsCallRateTable pagination={pagination} data={statistics?.items} isLoading={isLoadingStatistics} headers={["№", "O'quvchi", "Baholangan vaqt", "Call davomiyligi", "Sabab", "O'quvchi baholari"]} />
             </div>
-            <div className={cls.pagination}>
+            {
+            statistics?.meta?.totalItems > pagination.limit && <div className={cls.pagination}>
                 <Pagination
                     showSizeChanger
                     onShowSizeChange={onShowSizeChange}
@@ -63,7 +64,7 @@ const StudentsRateForCallMentor = () => {
                     }}
                     total={statistics?.meta?.totalItems}
                 />
-            </div>
+            </div>}
         </>
     )
 }

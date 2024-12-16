@@ -11,7 +11,7 @@ const ModerationAllCourseRate = ({ courseId }) => {
     }
     );
 
-     const { data: comments, isLoading: isLoadingComments } = useGetCourseRate(courseId, { page: filter.page, limit: filter.limit });
+    const { data: comments, isLoading: isLoadingComments } = useGetCourseRate(courseId, { page: filter.page, limit: filter.limit });
     console.log(comments);
 
     const onShowSizeChange = (current, pageSize) => {
@@ -29,7 +29,7 @@ const ModerationAllCourseRate = ({ courseId }) => {
 
             <ModerationTable isLoading={isLoadingComments} comments={comments} />
             {
-                (comments?.meta?.totalItems > 0) && <div className={cls.pagination}>
+                (comments?.meta?.totalItems > filter.limit) && <div className={cls.pagination}>
                     <Pagination
                         showSizeChanger
                         onShowSizeChange={onShowSizeChange}

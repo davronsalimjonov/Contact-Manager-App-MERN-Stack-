@@ -97,7 +97,7 @@ const Dictionary = () => {
                 (words.meta.totalItems > 0) ? <DictionaryTable words={words} /> : <EmptyData text="Lug'atda bunday so'z mavjud emas." />
             }
 
-            {(words.meta.totalItems > 0) && <div className={cls.pagination}>
+            {(words.meta.totalItems > filter.limit) && <div className={cls.pagination}>
                 <Pagination
                     showSizeChanger
                     onShowSizeChange={onShowSizeChange}

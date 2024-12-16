@@ -52,7 +52,7 @@ const StudentsRateForTeacher = () => {
                 <StudentsRateTable pagination={pagination} data={statistics?.items} isLoading={isLoadingStatistics} headers={["№", "Sana", "Umumiy o'quvchilar soni", "Baholagan o'quvchilar soni", "O’quvchilar baholari"]} />
             </div>
             {
-                (statistics?.meta?.totalItems > 0) && <div className={cls.pagination}>
+                (statistics?.meta?.totalItems > pagination.limit) && <div className={cls.pagination}>
                     <Pagination
                         showSizeChanger
                         onShowSizeChange={onShowSizeChange}

@@ -54,7 +54,7 @@ const AllStudents = () => {
             />
 
             {
-                (students?.meta?.totalItems > 0) && <div className={cls.pagination}>
+                (students?.meta?.totalItems > filter.limit) && <div className={cls.pagination}>
                     <Pagination
                         showSizeChanger
                         onShowSizeChange={onShowSizeChange}
