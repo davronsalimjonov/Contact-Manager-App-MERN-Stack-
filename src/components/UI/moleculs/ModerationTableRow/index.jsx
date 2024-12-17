@@ -13,12 +13,15 @@ const isActive_OPTIONS = [
 ]
 
 const ModerationTableRow = ({
+    commnetId,
     index,
     fullName,
     phoneNumber,
-    comment,  //TODO
+    comment,
     avarageRate,
-    isActive
+    isActive,
+    url,
+    onOpen
 }) => {
     const { register, watch, handleSubmit } = useForm({
         mode: 'onSubmit',
@@ -41,7 +44,13 @@ const ModerationTableRow = ({
 
 
     return (
-        <tr className={cls.row}>
+        <tr className={cls.row} onClick={() => onOpen({
+            name: fullName,
+            phone: phoneNumber,
+            comment: comment,
+            commnetId: commnetId,
+            url: url,
+        })}>
             <td>{index}.</td>
             <td className={cls.row__name}>
                 <span className={cls.row__fullname}>{fullName}</span>

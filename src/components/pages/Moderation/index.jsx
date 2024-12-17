@@ -4,6 +4,8 @@ import { useState } from "react";
 import ModerationAllCourseRate from "@/components/UI/organisms/ModerationAllCourseRate";
 import { useParams } from "react-router-dom";
 import ModerationAcceptedRate from "@/components/UI/organisms/ModerationAcceptedRate";
+import ModerationDialog from "@/components/UI/organisms/ModerationDialog";
+import Button from "@/components/UI/atoms/Buttons/Button";
 
 const options = [
     { value: 0, label: "Hamma fikrlar" },
@@ -12,8 +14,8 @@ const options = [
 ]
 
 const Moderation = () => {
-    const {courseId} = useParams('courseId');
-   
+    const { courseId } = useParams('courseId');
+
     const [activeTab, setActiveTab] = useState(options?.[0]?.value);
     return (
         <div className={cls.content}>
@@ -27,7 +29,7 @@ const Moderation = () => {
             />
 
             {
-                activeTab === 0 ? <ModerationAllCourseRate courseId={courseId} /> : activeTab === 1 ? <ModerationAcceptedRate courseId={courseId}/> : <>Salom2</>
+                activeTab === 0 ? <ModerationAllCourseRate courseId={courseId} /> : activeTab === 1 ? <ModerationAcceptedRate courseId={courseId} /> : <>Salom2</>
             }
         </div>
     )
