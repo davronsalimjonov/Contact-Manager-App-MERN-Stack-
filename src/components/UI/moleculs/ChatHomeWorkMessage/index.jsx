@@ -43,7 +43,7 @@ const ChatHomeWorkMessage = memo(({
             time={getTimeFromDate(time)}
             timeStyle={{ color: onTime ? 'var(--green-color)' : 'var(--red-color)' }}
             fullNamePreffix={
-                <> <button onClick={() => setIsOpenTaskModal(true)} className={cls.work__text}>vazifa</button>ni yubordi</>
+                <><button onClick={() => setIsOpenTaskModal(true)} className={cls.work__text}>vazifa</button>ni yubordi</>
             }
         >
             <MediaPreviewer

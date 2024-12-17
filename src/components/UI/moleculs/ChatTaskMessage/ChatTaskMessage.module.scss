@@ -1,0 +1,88 @@
+.task {
+    max-width: 375px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(231, 232, 235, 1);
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+
+    &__details {
+        padding: 16px;
+        padding-bottom: 8px;
+        display: grid;
+        grid-template-areas: 
+            'icon title title'
+            'icon deadline user';
+        gap: 6px 16px;
+        grid-template-columns: 40px auto 1fr ;
+
+        &__icon {
+            grid-area: icon;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--blue-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+
+            &__status{
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                background: rgba(255, 196, 3, 1);
+                border: 1px solid var(--White-White, rgba(255, 255, 255, 1))
+            }
+
+            &__check{
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        &__title {
+            grid-area: title;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 18.78px;
+        }
+
+        &__deadline {
+            grid-area: deadline;
+            color: var(--dark-gray-800-color);
+        }
+
+        & > span, & > div > span{
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16.44px;
+        }
+
+        &__user {
+            grid-area: user;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            &__name {
+                color: var(--dark-gray-700-color);
+            }
+        }
+    }
+
+    &__actions {
+        padding: 16px;
+        background-color: var(--dark-gray-200-color);
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -12,6 +12,7 @@ import ChatDateSeparator from "../../moleculs/ChatDateSeparator";
 import ChatCommentMessage from "../../moleculs/ChatCommentMessage";
 import ChatHomeWorkMessage from "../../moleculs/ChatHomeWorkMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
+import ChatTaskMessage from "../../moleculs/ChatTaskMessage";
 
 const RenderMessage = memo(({
     message,
@@ -90,6 +91,17 @@ const RenderMessage = memo(({
                     />
                 </div>
             );
+        case MessageTypes.TASK: 
+            return (
+                <ChatTaskMessage 
+                    title={message?.task?.title}
+                    deadline={message?.task?.date}
+                    isCompleted={message?.task?.isCompleted}
+                    avatar={message?.task?.mentor?.url}
+                    fullName={getUserFullName(message?.task?.mentor)}
+                    time={message?.createdAt}
+                />
+            )
         case MessageTypes.CALL:
             return (
                 <ChatCallMessage

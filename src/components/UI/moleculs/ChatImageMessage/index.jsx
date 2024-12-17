@@ -5,10 +5,13 @@ import MediaPreviewer from '../MediaPreviewer';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatImageMessage.module.scss';
 
+const DEFAULT_IMAGE_WIDTH = 300;
+const DEFAULT_IMAGE_HEIGHT = 300;
+
 const ChatImageMessage = memo(({
     imageUrl,
-    width = 300,
-    height = 300,
+    width = DEFAULT_IMAGE_WIDTH,
+    height = DEFAULT_IMAGE_HEIGHT,
     fullName = '',
     avatar = '',
     time = ''
@@ -19,8 +22,8 @@ const ChatImageMessage = memo(({
         minHeight: 200,
         maxWidth: 450,
         maxHeight: 300,
-        originalWidth: width,
-        originalHeight: height
+        originalWidth: width || DEFAULT_IMAGE_WIDTH,
+        originalHeight: height || DEFAULT_IMAGE_HEIGHT
     });
 
     return (
