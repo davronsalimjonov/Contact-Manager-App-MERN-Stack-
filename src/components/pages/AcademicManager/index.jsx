@@ -25,9 +25,6 @@ const AcademicManager = () => {
         statusUser: {data: statusUser, isLoading: isLoadingStatusUser}
     } = useGetStatistic({ startDate: period.startDate, endDate: period.endDate })
 
-    console.log(statusUser)
-    
-
     return (
         <div className={cls.page}>
             {(

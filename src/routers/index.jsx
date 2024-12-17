@@ -11,9 +11,10 @@ import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { callMentorSidebarLinks, mainMentorSidebarLinks } from "./data";
+import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks } from "./data";
 import MainMentor from "@/components/pages/MainMentorDashboard";
 import MainMentorStudents from "@/components/pages/MainMentorStudents";
+import Users from "@/components/pages/Users";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -80,11 +81,15 @@ const mainMentorRoutes = createBrowserRouter([
 const managerRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
+        element: <MainLayout sidebarLinks={managerSidebarLinks} />,
         children: [
             {
                 path: '*',
                 element: <PageNotFound />
+            },
+            {
+                path: '/users',
+                element: <Users />
             }
         ]
     }

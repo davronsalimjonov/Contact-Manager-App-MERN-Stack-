@@ -5,6 +5,11 @@ export const getUserById = async (userId) => {
     return res.data
 }
 
+export const getAllUsers = async (mentorId, params) => {
+    const res = await api.get(`/user/all-students?teacher=${mentorId}&${paramsToString(params)}`)
+    return res.data
+}
+
 export const updateUser = async (userId, data) => {
     const res = await api.put(`/user/${userId}`, data, { headers: { "Content-Type": 'multipart/form-data' } })
     return res.data

@@ -2,7 +2,6 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    align-items: center;
     gap: 24px;
 
     &>* {
@@ -30,9 +29,18 @@
         &__btn{
             justify-content: space-between;
         }
-    }
-}
 
-.bar__form__button:nth-child(2) {
-    column-span: 2;
+        &__datePicker {
+            background-color: #fff;
+            & > ._wrapper_kjvn3_1 {
+                & > div {
+                    background-color: #fff !important;
+                }
+            }
+        }
+        
+        .arrowIconClr > * {
+            color: #fff;
+        }
+    }
 }
