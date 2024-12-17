@@ -4,14 +4,16 @@ import useGetUser from "@/hooks/useGetUser";
 import Login from "@/components/pages/Login";
 import Loader from "@/components/UI/atoms/Loader";
 import Settings from "@/components/pages/Settings";
-import Dashboard from "@/components/pages/Dashboard";
+import Dashboard from "@/components/pages/SupervisorDashboard";
 import Workspace from "@/components/pages/Workspace";
 import MyStudents from "@/components/pages/MyStudents";
 import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks } from "./data";
+import { callMentorSidebarLinks, mainMentorSidebarLinks } from "./data";
+import MainMentor from "@/components/pages/MainMentorDashboard";
+import MainMentorStudents from "@/components/pages/MainMentorStudents";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -64,6 +66,10 @@ const mainMentorRoutes = createBrowserRouter([
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
             {
+                path: '/students',
+                element: <MainMentorStudents />
+            },
+            {
                 path: '*',
                 element: <PageNotFound />
             }
@@ -74,7 +80,7 @@ const mainMentorRoutes = createBrowserRouter([
 const managerRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout sidebarLinks={managerSidebarLinks} />,
+        element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
             {
                 path: '*',

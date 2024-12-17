@@ -1,4 +1,4 @@
-import { AutoStoriesIcon, CircleNotificationIcon, HouseIcon, LanIcon, ListIcon, ManageAccountsIcon, MenuBookIcon, MicrophoneIcon, PersonsIcon, SchoolIcon, TranslateIcon } from "@/components/UI/atoms/icons";
+import { AutoStoriesIcon, CircleNotificationIcon, HouseIcon, LanIcon, ListIcon, ManageAccountsIcon, MenuBookIcon, MicrophoneIcon, Person, PersonsIcon, SchoolIcon, TranslateIcon } from "@/components/UI/atoms/icons";
 
 export const callMentorSidebarLinks = [
     {
@@ -58,6 +58,12 @@ export const mainMentorSidebarLinks = [
         label: 'Workspace',
         icon: MenuBookIcon()
     },
+    {
+        id: 5,
+        link: '/users',
+        label: 'Foydalanuvchilar',
+        icon: Person()
+    }
 ]
 
 export const managerSidebarLinks = [

@@ -3,20 +3,18 @@ import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import TableActionButton from '../TableActionButton';
-import cls from './StudentsTableRow.module.scss';
+import cls from './MainMentorStudentsTableRow.module.scss';
 import Avatar from 'react-avatar';
 
-const StudentsTableRow = ({
+const MainMentorStudentsTableRow = ({
     index = 0,
     avatar = '',
-    days = '',
-    time = '',
     status = '',
     chatId = '',
     fullName = '',
     phoneNumber = '',
     userCourseId = '',
-    hidden = false,
+    group = '',
     unreadedMessagesCount = 0
 }) => {
     const navigate = useNavigate()
@@ -41,10 +39,11 @@ const StudentsTableRow = ({
                 </div>
                 <span title={fullName}>{fullName}</span>
             </td>
-            <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={days}>{days ? days : <EmptyDataText />}</span></td>
-            <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={time}>{time ? time : <EmptyDataText />}</span></td>
             <td>
                 <span title={formatedPhoneNumber}>{formatedPhoneNumber ? formatedPhoneNumber : <EmptyDataText />}</span>
+            </td>
+            <td>
+                <span title={group}>{group}</span>
             </td>
             <td><StudentStatus status={status} /></td>
             <td onClick={(e) => (e.stopPropagation())}>
@@ -54,4 +53,4 @@ const StudentsTableRow = ({
     );
 }
 
-export default StudentsTableRow;
+export default MainMentorStudentsTableRow;

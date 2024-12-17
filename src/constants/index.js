@@ -7,4 +7,6 @@ export const STUDENT_STATUS_ENUMS = ['Yangi', 'Adaptatsiya', "O'qiyapti", 'Pauza
 
 export const WORKSPACE_ENUMS = ['not-connected', 'call-back', 'not-answered', 'connected', 'filled-form', 'level-determined', 'attached-to-the-teacher']
 
+export const GROUPS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+
 export const CALL_RECORD_DEFAULT_PEAKS = Array(300).fill(0)

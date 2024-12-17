@@ -1,0 +1,60 @@
+.MainMentorStudentsGroupTab {
+    &__tabs {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 20px;
+
+        &__whiteBtn {
+            height: 40px;
+            border-radius: 4px;
+        }
+    }
+
+    &__dialog {
+        width: 500px;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+
+        & > div:nth-child(1) {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+
+            & > div {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+        & > div:nth-child(2) {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+    }
+}
+
+.activeButton {
+    background-color: #1256db;
+    color: white;
+    border: none;
+  }
+  
+  .inactiveButton {
+    background-color: white;
+    color: #1256db;
+    border: 1px solid #1256db;
+  }
+  
+  .MainMentorStudentsGroupTab__tabs button {
+    padding: 0 20px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 40px;
+  }
+  

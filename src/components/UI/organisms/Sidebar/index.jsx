@@ -15,6 +15,7 @@ const Sidebar = ({
 }) => {
     const [isOpen, setIsOpen] = usePersistentState('sidebar-state', true)
     const [isModal, setIsModal] = useState(false)
+    const [isUser, setIsUser] = useState(false)
 
     return (
         <aside className={cn(cls.sidebar, !isOpen && cls.close)}>
@@ -28,14 +29,40 @@ const Sidebar = ({
             />
             <div className={cls.sidebar__links}>
                 {links.length > 0 && links.map(link => (
-                    <SidebarLink
-                        key={link.id}
-                        label={link.label}
-                        icon={link.icon}
-                        to={link.link}
-                        isOpen={isOpen}
-                        children={link?.children}
-                    />
+                    <>
+                        <SidebarLink
+                            key={link.id}
+                            label={link.label}
+                            icon={link.icon}
+                            to={link.link}
+                            isOpen={isOpen}
+                            children={link?.children}
+                            onClick={() => {
+                                link.label === "Foydalanuvchilar" && setIsUser(!isUser)
+                            }}
+                        />
+                        {link.label === "Foydalanuvchilar" && isUser && (
+                            <div className={cls.sidebar__usersList}>
+                                <ul>
+                                    <li>
+                                        <Link to={'/users'}>
+                                        Foydalanuvchi
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/students'}>
+                                        O'quvchilarim
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to={'/mentors'}>
+                                        Mentor
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        )}
+                    </>
                 ))}
             </div>
             <div className={cls.sidebar__bottomList}>
