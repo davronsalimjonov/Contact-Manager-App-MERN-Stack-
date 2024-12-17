@@ -3,14 +3,11 @@ import cls from './Moderation.module.scss';
 import { useState } from "react";
 import ModerationAllCourseRate from "@/components/UI/organisms/ModerationAllCourseRate";
 import { useParams } from "react-router-dom";
-import ModerationAcceptedRate from "@/components/UI/organisms/ModerationAcceptedRate";
-import ModerationDialog from "@/components/UI/organisms/ModerationDialog";
-import Button from "@/components/UI/atoms/Buttons/Button";
 
 const options = [
-    { value: 0, label: "Hamma fikrlar" },
-    { value: 1, label: "Qabul qilingan fikrlar" },
-    { value: 2, label: "Rad etilgan fikrlar" }
+    { value: "null", label: "Hamma fikrlar" },
+    { value: true, label: "Qabul qilingan fikrlar" },
+    { value: false, label: "Rad etilgan fikrlar" }
 ]
 
 const Moderation = () => {
@@ -28,9 +25,8 @@ const Moderation = () => {
                 onChange={setActiveTab}
             />
 
-            {
-                activeTab === 0 ? <ModerationAllCourseRate courseId={courseId} /> : activeTab === 1 ? <ModerationAcceptedRate courseId={courseId} /> : <>Salom2</>
-            }
+            <ModerationAllCourseRate activeTab={activeTab} courseId={courseId} />
+
         </div>
     )
 }

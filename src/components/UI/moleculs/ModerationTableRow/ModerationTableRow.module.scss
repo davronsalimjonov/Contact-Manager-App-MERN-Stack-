@@ -1,12 +1,16 @@
 .row {
     display: contents;
-    cursor: pointer;
     max-height: 58px;
+
+    &__td{
+        cursor: pointer;
+    }
 
 
     &__name {
         display: flex;
         flex-direction: column;
+        cursor: pointer;
     }
 
     &__fullname {
@@ -45,6 +49,7 @@
             height: 40px;
             border-radius: 8px;
             background-color: red;
+            cursor: pointer;
 
             &:first-child {
                 background-color: var(--green-color);

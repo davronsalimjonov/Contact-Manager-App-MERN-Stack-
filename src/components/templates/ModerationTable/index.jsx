@@ -6,30 +6,17 @@ import cls from './ModerationTable.module.scss';
 import ModerationTableHeader from '@/components/UI/organisms/ModerationTableHeader';
 import ModerationTableRow from '@/components/UI/moleculs/ModerationTableRow';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
-import { useState } from 'react';
-import ModerationDialog from '@/components/UI/organisms/ModerationDialog';
 
 const ModerationTable = ({
     comments = [],
     triggerRef,
-    isLoading
+    isLoading,
+    courseId,
+    onOpen,
+    params
 }) => {
     const currenPage = comments?.meta?.currentPage;
     const limit = comments?.meta?.itemsPerPage;
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    const [comment, setComment] = useState({})
-
-    const onClose = () => {
-        setIsOpen(false);
-    }
-
-    const onOpen = (data) => {
-        setComment(data);
-        setIsOpen(true);
-    }
-
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -52,6 +39,9 @@ const ModerationTable = ({
                                     avarageRate={student?.rate}
                                     url={student?.user?.url}
                                     onOpen={onOpen}
+                                    isActive={student?.isActive}
+                                    courseId={courseId}
+                                    params={params}
                                 />
                             )}
                         />
@@ -63,8 +53,6 @@ const ModerationTable = ({
                 !isLoading && <EmptyData text="Sizda hozirda hech qanday foydalanuvchilar fikri mavjud emas." />
             )}
             {isLoading && <Loader size={80} />}
-
-            <ModerationDialog comment={comment} isOpen={isOpen} onClose={onClose} />
 
         </div>
     );

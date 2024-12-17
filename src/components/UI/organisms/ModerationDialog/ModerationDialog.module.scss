@@ -47,6 +47,10 @@
         font-weight: 600;
         line-height: 21px;
 
+        &__radio{
+            display: none;
+        }
+
 
         &__question {
             font-size: 16px;
@@ -62,9 +66,30 @@
 
         &__btn {
             width: 144px;
+            height: 44px;
+            border-radius: 8px;
+            
+
+            &:first-child {
+                background-color: var(--blue-color);
+
+            }
 
             &:last-child {
                 background-color: var(--red-color);
+
+            }
+
+            &:first-child,
+            &:last-child {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: "Raleway";
+                font-size: 16px;
+                font-weight: 500;
+                line-height: 24px;
+                color: var(--base-white-color);
             }
         }
     }

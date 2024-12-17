@@ -3,16 +3,35 @@ import cls from './ModerationAllCourseRate.module.scss';
 import useGetCourseRate from "@/hooks/useGetCourseRate";
 import { Pagination } from "antd";
 import { useState } from "react";
+import ModerationDialog from "../ModerationDialog";
 
-const ModerationAllCourseRate = ({ courseId }) => {
+const ModerationAllCourseRate = ({ courseId, activeTab }) => {
+
     const [filter, setFilter] = useState({
         page: 1,
         limit: 10,
     }
     );
 
-    const { data: comments, isLoading: isLoadingComments } = useGetCourseRate(courseId, { page: filter.page, limit: filter.limit });
-    console.log(comments);
+    const { data: comments, isLoading: isLoadingComments } = useGetCourseRate(courseId, {
+        page: filter.page,
+        limit: filter.limit,
+        isActive: activeTab
+    });
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const [comment, setComment] = useState({});
+
+    const onClose = () => {
+        setIsOpen(false);
+    }
+
+    const onOpen = (data) => {
+        setComment(data);
+        setIsOpen(true);
+    }
+
 
     const onShowSizeChange = (current, pageSize) => {
         setFilter((prev) => {
@@ -26,8 +45,16 @@ const ModerationAllCourseRate = ({ courseId }) => {
 
     return (
         <>
-
-            <ModerationTable isLoading={isLoadingComments} comments={comments} />
+            <ModerationTable
+                isLoading={isLoadingComments}
+                comments={comments}
+                onOpen={onOpen}
+                courseId={courseId}
+                params={{
+                    page: filter.page,
+                    limit: filter.limit,
+                    isActive: activeTab,
+                }} />
             {
                 (comments?.meta?.totalItems > filter.limit) && <div className={cls.pagination}>
                     <Pagination
@@ -48,7 +75,11 @@ const ModerationAllCourseRate = ({ courseId }) => {
                     />
                 </div>
             }
-
+            <ModerationDialog comment={comment} isOpen={isOpen} onClose={onClose} courseId={courseId} params={{
+                page: filter.page,
+                limit: filter.limit,
+                isActive: activeTab
+            }} />
         </>
     )
 }

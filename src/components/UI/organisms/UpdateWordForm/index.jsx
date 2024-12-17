@@ -18,8 +18,6 @@ const UpdateWordForm = ({ word, wordId, closeModal}) => {
         unit: word?.unit
     };
 
-    console.log(defaultValues);
-
     const handleUpdateWord = async (data) => {
         try {
             if (typeof data.lvl === 'object') data.lvl = data.lvl.value;
