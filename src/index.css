@@ -154,10 +154,14 @@ textarea:focus{
   margin: 0;
 }
 
-.react-datepicker__day--selected,
+.react-datepicker__day--selected[aria-selected="true"],
 .react-datepicker__month-text--selected{
   background-color: #1256DB !important;
   border-radius: 10px !important;
+}
+
+.react-datepicker__day--keyboard-selected{
+  background-color: transparent;
 }
 
 .react-datepicker__day--selected,

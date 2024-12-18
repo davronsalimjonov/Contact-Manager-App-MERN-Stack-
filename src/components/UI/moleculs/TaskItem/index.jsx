@@ -4,7 +4,7 @@ import cls from './TaskItem.module.scss';
 
 const TaskItem = ({
     isCompleted = false,
-    expired = true
+    expired = false
 }) => {
     return (
         <div className={cn(cls.item, expired && cls.expired, isCompleted && cls.lineThrough)}>

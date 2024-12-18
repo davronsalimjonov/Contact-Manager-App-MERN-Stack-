@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { cn } from '@/utils/lib';
 import { LeftArrowIcon } from '../../atoms/icons';
 import cls from './ChatSidebarAccordion.module.scss';
-import { cn } from '@/utils/lib';
 
 const ChatSidebarAccordion = ({ 
     children,

@@ -22,7 +22,7 @@ const Chat = () => {
             ) : (
                 <Loader />
             )}
-            <ChatSidebar />
+            <ChatSidebar conversationId={info?.id} />
         </div>
     );
 }

@@ -37,6 +37,7 @@ const DatePicker = forwardRef(({
             disabled={disabled}
             readOnly={readOnly}
             calendarStartDay={1}
+            disabledKeyboardNavigation
             {...otherProps}
         />
     );

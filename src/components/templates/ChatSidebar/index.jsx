@@ -3,11 +3,13 @@ import ChatPartnerDetails from '@/components/UI/organisms/ChatPartnerDetails';
 import ChatPartnerContacts from '@/components/UI/organisms/ChatPartnerContacts';
 import cls from './ChatSidebar.module.scss';
 
-const ChatSidebar = () => {
+const ChatSidebar = ({
+    conversationId
+}) => {
     return (
         <div className={cls.sidebar}>
             <ChatPartnerDetails />
-            <ChatTasksList />
+            <ChatTasksList chatId={conversationId} />
             <ChatPartnerContacts />
         </div>
     );
