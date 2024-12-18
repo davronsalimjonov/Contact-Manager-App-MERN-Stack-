@@ -5,6 +5,7 @@ import EmptyDataText from '../../atoms/EmptyDataText';
 import TableActionButton from '../TableActionButton';
 import cls from './UsersTableRow.module.scss';
 import Avatar from 'react-avatar';
+import dayjs from 'dayjs';
 
 const UsersTableRow = ({
     index = 0,
@@ -12,7 +13,7 @@ const UsersTableRow = ({
     days = '',
     time = '',
     status = '',
-    chatId = '',
+    student = '',
     fullName = '',
     phoneNumber = '',
     userCourseId = '',
@@ -25,11 +26,11 @@ const UsersTableRow = ({
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const dropdownMenuItems = [
-        { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(userCourseId) },
+        { label: 'Foydalanuvchi ma’lumotlari', onClick: () => navigate(`/users/user/${student}`) },
     ]
 
     return (
-        <tr className={cls.row} onClick={() => navigate(`/students/chat/${chatId}`)}>
+        <tr className={cls.row} onClick={() => navigate(`/users/user/${student}`)}>
             <td>{index}</td>
             <td className={cls.row__name}>
                 <div className={cls.row__notification}>
@@ -48,7 +49,7 @@ const UsersTableRow = ({
             </td>
             <td><StudentStatus status={status} /></td>
             <td><StudentStatus status={uniqueId} /></td>
-            <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={createdAt}>{createdAt ? createdAt : <EmptyDataText />}</span></td>
+            <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={createdAt}>{createdAt ? dayjs(createdAt).format('DD.MM.YYYY HH:mm') : <EmptyDataText />}</span></td>
             <td onClick={(e) => (e.stopPropagation())}>
                 <TableActionButton menuItems={dropdownMenuItems} />
             </td>

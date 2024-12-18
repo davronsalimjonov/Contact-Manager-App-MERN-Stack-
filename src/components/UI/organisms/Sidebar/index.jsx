@@ -41,27 +41,6 @@ const Sidebar = ({
                                 link.label === "Foydalanuvchilar" && setIsUser(!isUser)
                             }}
                         />
-                        {link.label === "Foydalanuvchilar" && isUser && (
-                            <div className={cls.sidebar__usersList}>
-                                <ul>
-                                    <li>
-                                        <Link to={'/users'}>
-                                        Foydalanuvchi
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to={'/students'}>
-                                        O'quvchilarim
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link to={'/mentors'}>
-                                        Mentor
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        )}
                     </>
                 ))}
             </div>

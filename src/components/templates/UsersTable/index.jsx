@@ -35,9 +35,9 @@ const UsersTable = ({
                                     phoneNumber={student?.phone}
                                     days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
                                     time={student?.connectionTime}
-                                    status={student?.status}
+                                    status={student?.status === "Free" ? "Free" : "Pro"}
                                     userCourseId={student.id}
-                                    chatId={student?.id}
+                                    student={student?.id}
                                     uniqueId={student?.uniqueId}
                                     createdAt={student?.createdAt}
                                 />
