@@ -32,3 +32,4 @@ export const discountSchema = Yup.object().shape({
     "discountTime": Yup.string().required('Chegirma tugash soatini kiritish majburiy'),
     "description": Yup.string().required('Description kiritish majburiy'),
 })
+

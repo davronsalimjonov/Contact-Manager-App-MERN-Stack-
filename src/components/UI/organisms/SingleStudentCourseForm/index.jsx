@@ -10,9 +10,11 @@ import { getUserFullName } from "@/utils/lib";
 import FormDatepicker from "../../moleculs/Form/FormDatepicker";
 import FormPasswordInput from "../../moleculs/Form/FormPasswordInput";
 import Loader from "../../atoms/Loader";
+import {  singleStudentCourseSchema } from "@/schemas/course";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const SingleStudentCourseForm = ({
-    defaultValue,
+    defaultValues,
     onSubmit
 }) => {
 
@@ -25,7 +27,8 @@ const SingleStudentCourseForm = ({
 
     const { register, control, handleSubmit, reset, formState: { errors, isDirty, isSubmitting } } = useForm({
         mode: 'onSubmit',
-        defaultValues: defaultValue
+        defaultValues: defaultValues,
+         resolver: yupResolver(singleStudentCourseSchema)
     })
 
     return (
@@ -37,7 +40,7 @@ const SingleStudentCourseForm = ({
             <div className={cls.form__elements}>
                 <FormSelect
                     className={cls.form__input}
-                    name="title"
+                    name="course"
                     isClearable={true}
                     control={control}
                     options={courses?.map(course => ({ value: course.id, label: course.title }))}
@@ -124,7 +127,7 @@ const SingleStudentCourseForm = ({
                     <Button
                         type='submit'
                         isLoading={isSubmitting}
-                    >Saqlash</Button>
+                    >O'zgartirish</Button>
                     <RedButton
                         disabled={!isDirty}
                         onClick={() => reset()}

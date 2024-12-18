@@ -15,11 +15,10 @@ import SingleStudentCourse from '@/components/UI/organisms/SingleStudentCourse';
 
 const SingleStudent = () => {
     const { courseId } = useParams()
+    
     const queryClient = useQueryClient()
     const { data: course, isLoading: isLoadingStudent } = useGetStudentCourseById(courseId)
     const student = course?.user;
-
-console.log(course);
 
     const studentFormData = {
         id: student?.id,
@@ -77,7 +76,7 @@ console.log(course);
                         defaultValues={studentFormData} 
                         courseId={courseId}
                     />
-                    <SingleStudentCourse course={course}/>
+                    <SingleStudentCourse course={course} />
                     <div className={cls.page__cards}>
                         <StudentActionHistory />
                         <StudentPersonalInfo

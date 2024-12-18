@@ -52,7 +52,7 @@ const AddStudent = ({ }) => {
             queryClient.setQueryData(['student'], addedUser);
             reset(defaultValues);
 
-            toast.success("Malumotlar o'zgartirildi")
+            toast.success("Yangi o'quvchi qo'shildi")
         } catch (error) {
             const res = error?.response?.data
             customToast.error(res?.message || error?.message || 'Xatolik yuz berdi')

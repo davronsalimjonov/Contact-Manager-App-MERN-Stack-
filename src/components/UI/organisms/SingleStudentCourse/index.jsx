@@ -11,7 +11,6 @@ const SingleStudentCourse = (
         course
     }
 ) => {
-
     const navigate = useNavigate();
     return (
         <div className={cls.course}>
@@ -44,7 +43,7 @@ const SingleStudentCourse = (
                         <dd>{course?.level}</dd>
                     </div>
                 </dl>
-                <Button className={cls.course__btn} onClick={()=>navigate('/update-course')} type="button"><EditIcon /></Button>
+                <Button className={cls.course__btn} onClick={()=>navigate(`/update-course/${course?.id}`)} type="button"><EditIcon /></Button>
             </div>
         </div>
     )

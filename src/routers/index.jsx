@@ -132,7 +132,7 @@ const managerRoutes = createBrowserRouter([
                 element: <AddStudent />
             },
             {
-                path: '/update-course',
+                path: '/update-course/:courseId',
                 element: <UpdateSingleStudentCourse />
             },
             {
