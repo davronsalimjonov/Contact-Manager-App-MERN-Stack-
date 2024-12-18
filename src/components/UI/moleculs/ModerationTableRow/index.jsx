@@ -43,7 +43,6 @@ const ModerationTableRow = ({
                     <ModerationFormButtons
                         classNameForm={cls.row__form}
                         classNameLabel={cls.row__form__label}
-                        classNameRadio={cls.row__form__radio}
                         commentId={commentId}
                         courseId={courseId}
                         params={params}

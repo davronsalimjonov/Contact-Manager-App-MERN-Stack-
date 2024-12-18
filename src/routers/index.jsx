@@ -26,6 +26,7 @@ import StudentsRateForCallMentor from "@/components/pages/StudentsRateForCallMen
 import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
 import Dictionary from "@/components/pages/Dictionary";
 import Moderation from "@/components/pages/Moderation";
+import MentorsStatistic from "@/components/pages/MentorsStatistic";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -166,6 +167,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/moderation/:courseId',
                 element: <Moderation />
+            },
+            {
+                path: '/mentor-statistics',
+                element: <MentorsStatistic />
             },
             {
                 path: '*',

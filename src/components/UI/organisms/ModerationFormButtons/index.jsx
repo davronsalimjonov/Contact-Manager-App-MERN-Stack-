@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { queryClient } from "@/services/api";
 import toast from "react-hot-toast";
 import { changeIsActiveCourseRate } from "@/services/course";
+import Button from "../../atoms/Buttons/Button";
 
 const ModerationFormButtons = ({
     preffix1,
@@ -12,19 +13,13 @@ const ModerationFormButtons = ({
     label2,
     classNameForm,
     classNameLabel,
-    classNameRadio,
     commentId,
     courseId,
     params,
     onClose
 }) => {
-    const { register, watch, handleSubmit } = useForm({
-        mode: 'onSubmit',
-    });
 
-    const selectedOption = watch('isActive', '');
-
-    const onSubmit = async ({ isActive }) => {
+    const onSubmit = async (isActive) => {
         try {
             const updatedCourse = await changeIsActiveCourseRate(commentId, isActive);
 
@@ -43,7 +38,7 @@ const ModerationFormButtons = ({
                     items: [...oldData?.items, updatedCourse]
                 }
             });
-
+            onClose&&onClose();
 
         } catch (error) {
             const errorMessage = error?.response?.data?.message || error?.message || 'Xatolik yuz berdi'
@@ -51,34 +46,19 @@ const ModerationFormButtons = ({
         }
     }
 
-
-    useEffect(() => {
-        if (selectedOption) {
-            handleSubmit(onSubmit)();
-            onClose && onClose();
-        }
-    }, [selectedOption, handleSubmit, onSubmit]);
-
     return (
-        <form className={classNameForm}>
-            <RadioButton
-                label={label1}
+        <div className={classNameForm}>
+            <Button
                 className={classNameLabel}
-                radioClassName={classNameRadio}
-                register={{ ...register('isActive') }}
-                value={true}
-                preffix={preffix1}
-            />
-
-            <RadioButton
-                label={label2}
+                onClick={() => onSubmit(true)}
+            >{label1}{preffix1}</Button>
+            <Button
+                onClick={() => onSubmit(false)}
                 className={classNameLabel}
-                radioClassName={classNameRadio}
-                register={{ ...register('isActive') }}
-                value={false}
-                preffix={preffix2}
-            />
-        </form>)
+            >{label2}{preffix2}
+            </Button>
+        </div>
+    )
 }
 
 export default ModerationFormButtons;
