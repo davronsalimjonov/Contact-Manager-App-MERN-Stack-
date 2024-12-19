@@ -13,7 +13,7 @@ import { createComment, createLessonTask, createTextMessage, createSms, updateHo
 import { CloseIcon, SendIcon } from '../../atoms/icons';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
-import cls from './ConversationInput.module.scss';
+import cls from './ConversationInput.module.scss'; 
 
 const getTextAreaPlaceholder = (messageType) => {
     switch (messageType) {
@@ -94,7 +94,7 @@ const ConversationInput = ({ userCourseId }) => {
                 addNewMessage(newMessage)
                 reset()
 
-                const fd = objectToFormData({ chat: chatId, student: studentId, mentor: userId, ...data })
+                const fd = objectToFormData({ chat: chatId, userCourse: userCourseId, student: studentId, mentor: userId, ...data })
                 createLessonTask(fd).then(res => updateMessage(id, res))
 
                 setIsOpenDatepicker(false)

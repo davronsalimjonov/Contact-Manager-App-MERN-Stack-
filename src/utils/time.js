@@ -25,18 +25,21 @@ export function convertSecondsToTimeFormat(seconds = 0) {
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-export const isSameDay = (date1, date2) => {    
+export const isSameDay = (date1, date2) => {
     if (!date1 || !date2) return false;
-    
+
     if (!(date1 instanceof Date)) date1 = new Date(date1);
     if (!(date2 instanceof Date)) date2 = new Date(date2);
-    
+
     return date1.getFullYear() === date2.getFullYear() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getDate() === date2.getDate();
+        date1.getMonth() === date2.getMonth() &&
+        date1.getDate() === date2.getDate();
 }
 
-export function formatMessageDate(timestamp) {
+export function formatMessageDate(timestamp, { month = 'long' } = {}) {
+    if(!timestamp) return
+    
+    const monthFormat = month === 'long' ? 'd MMMM' : 'd.MM'
     const date = new Date(timestamp);
     const now = new Date();
 
@@ -54,6 +57,6 @@ export function formatMessageDate(timestamp) {
         return 'Kecha';
     }
 
-    const formatPattern = date.getFullYear() === now.getFullYear() ? 'd MMMM' : 'd MMMM yyyy';
+    const formatPattern = date.getFullYear() === now.getFullYear() ? monthFormat : `${monthFormat} yyyy`;
     return format(date, formatPattern, { locale: uz });
 }

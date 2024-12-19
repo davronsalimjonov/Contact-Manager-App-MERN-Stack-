@@ -7,7 +7,12 @@
     background-color: var(--base-white-color);
     border: 1px solid rgba(231, 232, 235, 1);
 
+    &__input{
+        min-width: 0;
+    }
+
     &__checkbox {
+        cursor: pointer;
         -moz-appearance: none;
         -webkit-appearance: none;
         -o-appearance: none;
@@ -38,7 +43,8 @@
         flex-shrink: 0;
     }
 
-    &__title {
+    &__title, &__input {
+        flex-grow: 1;
         overflow: hidden;
         text-wrap: nowrap;
         text-overflow: ellipsis;
@@ -55,7 +61,10 @@
         text-align: left;
     }
 
-    &__edit {
+    &__edit, &__close {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
         padding: 3px;
         display: flex;
         align-items: center;

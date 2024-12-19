@@ -13,16 +13,18 @@ const Chat = () => {
     return (
         <div className={cls.page}>
             {!isLoadingInfo ? (
-                <ChatConversation
-                    userCourseId={userCourseId}
-                    conversationId={info?.id}
-                    partnerFullName={getUserFullName(info?.user)}
-                    partnerPhoneNumber={info?.user?.phone}
-                />
+                <>
+                    <ChatConversation
+                        userCourseId={userCourseId}
+                        conversationId={info?.id}
+                        partnerFullName={getUserFullName(info?.user)}
+                        partnerPhoneNumber={info?.user?.phone}
+                    />
+                    <ChatSidebar conversationId={info?.id} />
+                </>
             ) : (
                 <Loader />
             )}
-            <ChatSidebar conversationId={info?.id} />
         </div>
     );
 }
