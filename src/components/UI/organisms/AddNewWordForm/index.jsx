@@ -49,7 +49,6 @@ const AddNewWordForm = ({
                 }}
                 error={errors?.word?.message}
             />
-
             <FormInput
                 className={cls.field}
                 label='O’zbekcha'
@@ -98,7 +97,7 @@ const AddNewWordForm = ({
                 error={errors?.lvl?.message}
             />
             <Button className={cls.add__button} type="submit" disabled={
-                !(watch('word') !== '' && watch('description') !== '' && watch('lvl')&&watch('unit'))
+                !(watch('word') !== '' && watch('description') !== '' && watch('lvl') && watch('unit'))
             }>Qo'shish</Button>
 
         </form>

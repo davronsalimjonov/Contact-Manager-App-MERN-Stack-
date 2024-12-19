@@ -27,6 +27,7 @@ import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
 import Dictionary from "@/components/pages/Dictionary";
 import Moderation from "@/components/pages/Moderation";
 import MentorsStatistic from "@/components/pages/MentorsStatistic";
+import Notification from "@/components/pages/Notification";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -142,8 +143,11 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/courses/:courseId',
                 element: <UpdateCourse />
-            }
-            ,
+            },
+            {
+                path:'/notifications',
+                element: <Notification/>
+            },
             {
                 path: '/settings',
                 element: <Settings />
