@@ -12,8 +12,6 @@ const UsersTable = ({
     triggerRef,
     isLoading
 }) => {
-    console.log(students?.length);
-    
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>

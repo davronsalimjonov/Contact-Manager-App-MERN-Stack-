@@ -12,6 +12,12 @@ export const getMentorGroups = async (mentorId) => {
     return res.data
 }
 
+export const getMentorStudents = async (mentorId, params) => {
+    if(!mentorId) return null
+    const res = await api.get(`/user-course/academy-mentor-panel/${mentorId}?${paramsToString(params)}`)
+    return res.data
+}
+
 export const getUserCourseById = async (courseId) => {
     const res = await api.get(`/user-course/single-course-for-web/${courseId}`)
     return res.data

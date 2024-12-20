@@ -10,13 +10,10 @@ import dayjs from 'dayjs';
 const UsersTableRow = ({
     index = 0,
     avatar = '',
-    days = '',
-    time = '',
     status = '',
     student = '',
     fullName = '',
     phoneNumber = '',
-    userCourseId = '',
     uniqueId = '',
     createdAt = '',
     hidden = false,
@@ -37,7 +34,7 @@ const UsersTableRow = ({
                     <Avatar
                         round
                         size={32}
-                        src={avatar}
+                        src={`${avatar}`}
                         name={fullName}
                     />
                     {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount}</span>}

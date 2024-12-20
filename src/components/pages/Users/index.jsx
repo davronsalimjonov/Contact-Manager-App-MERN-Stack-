@@ -20,8 +20,6 @@ const Users = () => {
         tabOptions.push({ value: group.id, label: group.title })
     })
 
-    console.log(filter, 'ahhahahahah');
-    
     return (
             <div className={cls.page}>
                 <UsersSearchBar
