@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/utils/lib';
 import usePersistentState from '@/hooks/usePersistentState';
@@ -7,8 +8,6 @@ import LogoutButton from '../../moleculs/LogoutButton';
 import LanguageButton from '../../moleculs/LanguageButton';
 import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
 import cls from './Sidebar.module.scss';
-import { useState } from 'react';
-
 
 const Sidebar = ({
     links = []

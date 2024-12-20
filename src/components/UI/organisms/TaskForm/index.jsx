@@ -1,16 +1,13 @@
 import { usePopper } from 'react-popper';
+import { createPortal } from 'react-dom';
 import { useRef, useState } from 'react';
 import { getTimeFromDate } from '@/utils/time';
-import { useTaskMutations } from '@/hooks/useTask';
 import useClickOutside from '@/hooks/useClickOutside';
 import { NotificationIcon } from '../../atoms/icons';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
 import cls from './TaskForm.module.scss';
-import { createPortal } from 'react-dom';
 
-const TaskForm = ({
-    chatId = ''
-}) => {
+const TaskForm = ({ onSubmit }) => {
     const inputRef = useRef()
     const [popper, setPopper] = useState(null)
     const [reference, setReference] = useState(null)
@@ -27,16 +24,15 @@ const TaskForm = ({
             },
         ],
     })
-    const { createTaskMutation } = useTaskMutations(chatId)
 
-    const handleInputKeyUp = (e) => {        
+    const handleInputKeyUp = (e) => {
         const value = e.target.value?.trim()
         if (e.key === 'Enter' && value) setIsOpenDatepicker(true)
     }
 
     const handleCreateTask = (date) => {
         const taskTitle = inputRef?.current?.value?.trim()
-        createTaskMutation.mutate({ chat: chatId, title: taskTitle, date })
+        onSubmit?.({ date, title: taskTitle })
         setIsOpenDatepicker(false)
         inputRef.current.value = ''
     }
@@ -61,7 +57,7 @@ const TaskForm = ({
                     <div ref={ref}>
                         <LessonTaskDatepicker onSave={handleCreateTask} />
                     </div>
-                </div>, 
+                </div>,
                 document.body
             )}
         </div>

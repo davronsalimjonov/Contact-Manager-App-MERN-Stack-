@@ -17,7 +17,8 @@ import ChatTaskMessage from "../../moleculs/ChatTaskMessage";
 const RenderMessage = memo(({
     message,
     onEditMessage,
-    onMessageVisible
+    onMessageVisible,
+    onTaskComplete
 }) => {
     const userId = useGetUserId()
     const { ref } = useInView({
@@ -91,7 +92,7 @@ const RenderMessage = memo(({
                     />
                 </div>
             );
-        case MessageTypes.TASK: 
+        case MessageTypes.TASK:
             return (
                 <ChatTaskMessage 
                     title={message?.task?.title}
@@ -100,6 +101,7 @@ const RenderMessage = memo(({
                     avatar={message?.task?.mentor?.url}
                     fullName={getUserFullName(message?.task?.mentor)}
                     time={message?.createdAt}
+                    onComplete={!message?.task?.isCompleted && (() => onTaskComplete?.(message?.task?.id))}
                 />
             )
         case MessageTypes.CALL:

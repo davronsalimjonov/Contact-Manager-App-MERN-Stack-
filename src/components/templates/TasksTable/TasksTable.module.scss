@@ -1,0 +1,40 @@
+.table {
+    max-height: 100%;
+    overflow-y: auto;
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    grid-template-columns:
+        minmax(48px, 48px) minmax(150px, 1.44fr) minmax(150px, 1.03fr) minmax(150px, 0.88fr) minmax(150px, 0.91fr) minmax(150px, 0.9fr) minmax(50px, 0.82fr);
+
+    & tr,
+    &__header,
+    &__body {
+        display: contents;
+    }
+
+    &__header th {
+        background: rgba(247, 247, 247);
+        position: sticky;
+        top: 0;
+        padding: 8px 16px;
+        margin-bottom: 10px;
+        text-align: left;
+        z-index: 10;
+        color: var(--dark-gray-700-color);
+    }
+
+    & th,
+    & td {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 19.1px;
+    }
+
+    &__body td {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        padding: 16px;
+    }
+}

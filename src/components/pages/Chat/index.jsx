@@ -8,7 +8,7 @@ import cls from './Chat.module.scss';
 
 const Chat = () => {
     const { userCourseId } = useParams()
-    const { info: { data: info, isLoading: isLoadingInfo } } = useGetChat(userCourseId)
+    const { data: info, isLoading: isLoadingInfo, conversationId } = useGetChat(userCourseId)
 
     return (
         <div className={cls.page}>
@@ -16,11 +16,14 @@ const Chat = () => {
                 <>
                     <ChatConversation
                         userCourseId={userCourseId}
-                        conversationId={info?.id}
+                        conversationId={conversationId}
                         partnerFullName={getUserFullName(info?.user)}
                         partnerPhoneNumber={info?.user?.phone}
                     />
-                    <ChatSidebar conversationId={info?.id} />
+                    <ChatSidebar
+                        conversationId={conversationId}
+                        userCourseId={userCourseId} 
+                    />
                 </>
             ) : (
                 <Loader />

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { debounce } from '@/utils/lib';
 import { socket } from '@/services/socket';
-import useGetChat from '@/hooks/useGetChat';
 import { MessageTypes } from '@/constants/enum';
 import { useGetUserId } from '@/hooks/useGetUser';
 import Loader from '@/components/UI/atoms/Loader';
+import useGetChat, { useGetChatMessages } from '@/hooks/useGetChat';
 import ChatMessageEditProvider from '@/providers/ChatMessageEditProvider';
 import ConversationInput from '@/components/UI/organisms/ConversationInput';
 import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
@@ -22,14 +22,8 @@ const ChatConversation = ({
 }) => {
     const userId = useGetUserId()
     const unreadedMessages = useRef({ ids: [], index: null })
-    const {
-        userChatId,
-        addPrevMessages,
-        addNextMessages,
-        addNewMessage,
-        removeUnreadedMessagesCount,
-        messages: { data, messages, isLoading: isLoadingMessages }
-    } = useGetChat(userCourseId)
+    const { removeUnreadedMessagesCount } = useGetChat(userCourseId)
+    const { data, messages, isLoading: isLoadingMessages, addPrevMessages, addNextMessages, addNewMessage } = useGetChatMessages(conversationId)
 
     const handleTopReach = async (beforeTopReach) => {
         try {
@@ -55,7 +49,7 @@ const ChatConversation = ({
 
     const debouncedFunc = debounce((data) => {
         if (data?.ids?.length) {
-            sendViewedMessages(userChatId, data)
+            sendViewedMessages(conversationId, data)
             removeUnreadedMessagesCount(data?.ids?.length)
         }
     }, 300)
@@ -78,7 +72,7 @@ const ChatConversation = ({
     }
 
     useEffect(() => {
-        if (socket && userChatId) {
+        if (socket && conversationId) {
             const handleReceiveNewMessage = (newMessage) => {
                 addNewMessage(newMessage);
 
@@ -92,15 +86,15 @@ const ChatConversation = ({
                 // }
             }
 
-            socket.emit('join-room', userChatId)
+            socket.emit('join-room', conversationId)
             socket.on('receive-room-message', handleReceiveNewMessage)
 
             return () => {
-                socket.emit('leave-room', userChatId)
+                socket.emit('leave-room', conversationId)
                 socket.removeAllListeners('receive-room-message', handleReceiveNewMessage)
             }
         }
-    }, [socket, userChatId])
+    }, [socket, conversationId])
 
     return (
         <ChatMessageEditProvider>
@@ -115,6 +109,7 @@ const ChatConversation = ({
                     </div>
                 ) : (
                     <ConversationMessages
+                        userCourseId={userCourseId}
                         messages={messages}
                         onTopReach={handleTopReach}
                         onBottomReach={handleBottomReach}

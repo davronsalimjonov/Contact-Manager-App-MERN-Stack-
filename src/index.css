@@ -90,6 +90,10 @@ input:focus {
   outline: none;
 }
 
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 img{
   object-fit: cover;
 }

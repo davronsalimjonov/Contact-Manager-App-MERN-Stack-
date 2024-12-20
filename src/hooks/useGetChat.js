@@ -8,6 +8,15 @@ export const useMessage = () => {
 
     function generateMessage(data, type, options = {}) {
         switch (type) {
+            case MessageTypes.TASK: return ({
+                id: Date.now().toString(),
+                createdAt: new Date(Date.now()).toISOString(),
+                type: MessageTypes.TASK,
+                isViewed: false,
+                shouldScroll: true,
+                task: { mentor: user, isCompleted: false, ...data },
+                ...options
+            })
             case MessageTypes.TEXT: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
@@ -35,10 +44,10 @@ export const useMessage = () => {
                 call: { audio: '', duration: '' },
                 ...options
             })
-            case MessageTypes.COMMENT: return ({
+            case MessageTypes.SMS: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
-                type: MessageTypes.COMMENT,
+                type: MessageTypes.SMS,
                 isViewed: false,
                 shouldScroll: true,
                 sms: { text: data, sender: user },
@@ -66,30 +75,59 @@ export const useMessage = () => {
     }
 }
 
-const useGetChat = (userCourseId) => {
-    const userId = useGetUserId()
+export const useGetChatMessages = (chatId) => {
     const queryClient = useQueryClient()
-    const info = useQuery(['chat', 'info', userCourseId], () => getChatInfo(userCourseId), { staleTime: Infinity, cacheTime: Infinity })
-    const userChatId = info?.data?.id
-    const messages = useQuery(['chat', 'messages', userChatId], () => getChatMessages(userChatId), { staleTime: 0, cacheTime: 0 })
+    const messages = useQuery(['chat', 'messages', chatId], () => getChatMessages(chatId), { staleTime: 0, cacheTime: 0 })
 
     const addPrevMessages = (newMessages = {}) => {
         if (Array.isArray(newMessages) && !newMessages?.length) return
-        queryClient.setQueryData(['chat', 'messages', userChatId], (oldData) => ([newMessages, ...oldData]))
+        queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([newMessages, ...oldData]))
     }
 
     const addNextMessages = (newMessages = {}) => {
         if (Array.isArray(newMessages) && !newMessages?.length) return
-        queryClient.setQueryData(['chat', 'messages', userChatId], (oldData) => ([...oldData, newMessages]))
+        queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([...oldData, newMessages]))
     }
 
     const addNewMessage = (newMessage) => {
-        queryClient.setQueryData(['chat', 'messages', userChatId], (oldData) => {
+        queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => {
             const lastItems = oldData?.at(-1)?.items || []
             oldData.at(-1).items = [...lastItems, newMessage]
             return oldData
         })
     }
+
+    const updateMessage = (id, data, condition) => {
+        queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => {
+            return oldData?.map(message => ({
+                ...message,
+                items: message?.items?.map(item => {
+                    if (item?.id === id || (condition && condition(item))) {
+                        const newData = typeof data === 'function' ? data(item) : data
+                        return { ...item, ...newData }
+                    }
+
+                    return item
+                })
+            }))
+        })
+    }
+
+    return {
+        ...messages,
+        messages: messages?.data?.reduce((acc, curr) => ([...acc, ...(curr?.items || [])]), []),
+        updateMessage, 
+        addPrevMessages,
+        addNextMessages,
+        addNewMessage
+    }
+}
+
+const useGetChat = (userCourseId) => {
+    const userId = useGetUserId()
+    const queryClient = useQueryClient()
+    const info = useQuery(['chat', 'info', userCourseId], () => getChatInfo(userCourseId), { staleTime: Infinity, cacheTime: Infinity })
+    const conversationId = info?.data?.id
 
     const removeUnreadedMessagesCount = (count) => {
         queryClient.setQueriesData(['students', userId], (students) => {
@@ -109,34 +147,10 @@ const useGetChat = (userCourseId) => {
         })
     }
 
-    const updateMessage = (id, data) => {
-        queryClient.setQueryData(['chat', 'messages', userChatId], (oldData) => {
-            return oldData?.map(message => ({
-                ...message,
-                items: message?.items?.map(item => {
-                    if (item?.id === id) {
-                        const newData = typeof data === 'function' ? data(item) : data
-                        return { ...item, ...newData }
-                    }
-
-                    return item
-                })
-            }))
-        })
-    }
-
     return {
-        info,
-        messages: {
-            messages: messages?.data?.reduce((acc, curr) => ([...acc, ...(curr?.items || [])]), []),
-            ...messages,
-        },
-        addPrevMessages,
-        addNextMessages,
-        updateMessage,
-        addNewMessage,
+        ...info,
         removeUnreadedMessagesCount,
-        userChatId,
+        conversationId,
     }
 }
 

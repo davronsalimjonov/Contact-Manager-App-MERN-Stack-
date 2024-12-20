@@ -13,16 +13,16 @@ import { connectSocket } from "./services/socket"
 Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement);
 
 function App() {
-  const {data: user} = useGetUser()
+  const { data: user } = useGetUser()
   useGetStudents()
   useGetGroups()
 
   useEffect(() => {
-    if(user){
+    if (user) {
       connectSocket({ userId: user?.id, role: user?.role })
     }
   }, [user])
-  
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

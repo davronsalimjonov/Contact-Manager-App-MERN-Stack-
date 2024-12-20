@@ -5,7 +5,12 @@ export const createTask = async (data) => {
     return res.data
 }
 
-export const getUncompletedTasks = async (chatId) => {
+export const getUncompletedMentorTasks = async () => {
+    const res = await api.get(`/task/uncompleted/mentor`)
+    return res.data
+}
+
+export const getUncompletedChatTasks = async (chatId) => {
     const res = await api.get(`/task/uncompleted/mentor/${chatId}`)
     return res.data
 }

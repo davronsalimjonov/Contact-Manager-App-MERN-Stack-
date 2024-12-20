@@ -1,7 +1,8 @@
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef, useState, useEffect, useLayoutEffect, useContext } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 import { MessageTypes } from '@/constants/enum';
-import { useVirtualizer } from '@tanstack/react-virtual';
+import { useTaskMutations } from '@/hooks/useTask';
 import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import Loader from '../../atoms/Loader';
 import RenderMessage from '../RenderChatMessage';
@@ -26,6 +27,7 @@ const addDateSeparators = (messages) => {
 };
 
 const ConversationMessages = ({
+    userCourseId = '',
     initialMessageIndex,
     messages = [],
     onBottomReach,
@@ -35,6 +37,7 @@ const ConversationMessages = ({
     hasBelowMessages = true,
 }) => {
     messages = addDateSeparators(messages);
+    const { statusChangeMutation } = useTaskMutations(userCourseId)
     const { handleSetMessage } = useContext(ChatMessageEditContext);
     const [isFirstRender, setIsFirstRender] = useState(false);
     const [scrollState, setScrollState] = useState({
@@ -49,8 +52,42 @@ const ConversationMessages = ({
         firstRender: false,
         prevScrollHeight: 0,
         scrollOffset: 0,
-        sizeCache: {}
+        sizeCache: {},
+        resizeObserver: null,
+        observedMessages: new Set()
     });
+
+    useEffect(() => {
+        refs.current.resizeObserver = new ResizeObserver((entries) => {
+            let needsUpdate = false;
+
+            for (const entry of entries) {
+                const messageId = entry.target.getAttribute('data-message-id');
+                if (messageId) {
+                    const newHeight = entry.contentRect.height;
+                    if (newHeight !== refs.current.sizeCache[messageId]) {
+                        refs.current.sizeCache[messageId] = newHeight;
+                        needsUpdate = true;
+                    }
+                }
+            }
+
+            if (needsUpdate) {
+                virtualizer.measure();
+            }
+        });
+
+        return () => {
+            if (refs.current.resizeObserver) {
+                refs.current.resizeObserver.disconnect();
+                refs.current.observedMessages.clear();
+            }
+        };
+    }, []);
+
+    const shouldObserveMessage = (message) => {
+        return message.type === MessageTypes.TASK
+    };
 
     const handleScroll = useDebounce(async (instance) => {
         const scrollHeight = instance.getTotalSize();
@@ -92,9 +129,14 @@ const ConversationMessages = ({
         },
         measureElement: (el) => {
             const messageId = el.getAttribute('data-message-id');
-
-            if (refs.current.sizeCache[messageId]) {
-                return refs.current.sizeCache[messageId];
+            const message = messages.find(m => m.id === messageId);
+            
+            if (messageId && message && shouldObserveMessage(message)) {
+                // Начинаем наблюдение только если еще не наблюдаем
+                if (!refs.current.observedMessages.has(messageId)) {
+                    refs.current.resizeObserver?.observe(el);
+                    refs.current.observedMessages.add(messageId);
+                }
             }
 
             const height = el.getBoundingClientRect().height || DEFAULT_ESTIMATE_SIZE;
@@ -146,6 +188,24 @@ const ConversationMessages = ({
         }
     }, [messages.length, virtualizer]);
 
+    const cleanupMessageObserver = (messageId) => {
+        if (refs.current.observedMessages.has(messageId)) {
+            const elements = document.querySelectorAll(`[data-message-id="${messageId}"]`);
+            elements.forEach(el => refs.current.resizeObserver?.unobserve(el));
+            refs.current.observedMessages.delete(messageId);
+        }
+    };
+
+    // Очистка при удалении сообщений
+    useEffect(() => {
+        const currentMessageIds = new Set(messages.map(m => m.id));
+        [...refs.current.observedMessages].forEach(messageId => {
+            if (!currentMessageIds.has(messageId)) {
+                cleanupMessageObserver(messageId);
+            }
+        });
+    }, [messages]);
+
     return (
         <div className={cls.chat}>
             <div ref={(el) => refs.current.container = el} className={cls.chat__window} style={{ opacity: isFirstRender ? 1 : 0, transition: 'opacity 0.2s ease', willChange: 'transform' }}>
@@ -167,6 +227,7 @@ const ConversationMessages = ({
                                     message={message}
                                     onEditMessage={() => handleSetMessage(message)}
                                     onMessageVisible={onMessageVisible}
+                                    onTaskComplete={statusChangeMutation.mutate}
                                 />
                             </div>
                         );

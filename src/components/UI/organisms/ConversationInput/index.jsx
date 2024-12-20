@@ -6,14 +6,14 @@ import { socket } from '@/services/socket';
 import { MessageTypes } from '@/constants/enum';
 import { useGetUserId } from '@/hooks/useGetUser';
 import useClickOutside from '@/hooks/useClickOutside';
-import useGetChat, { useMessage } from '@/hooks/useGetChat';
+import useGetChat, { useGetChatMessages, useMessage } from '@/hooks/useGetChat';
 import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import { adjustHeight, cn, generateUUID, objectToFormData } from '@/utils/lib';
 import { createComment, createLessonTask, createTextMessage, createSms, updateHomeTask } from '@/services/chat';
 import { CloseIcon, SendIcon } from '../../atoms/icons';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
-import cls from './ConversationInput.module.scss'; 
+import cls from './ConversationInput.module.scss';
 
 const getTextAreaPlaceholder = (messageType) => {
     switch (messageType) {
@@ -36,7 +36,8 @@ const ConversationInput = ({ userCourseId }) => {
     const userId = useGetUserId()
     const { generateMessage } = useMessage()
     const { editMessage, onEditComplete } = useContext(ChatMessageEditContext)
-    const { addNewMessage, updateMessage, info: { data: { id: chatId, user: { id: studentId } } }, messages: { messages } } = useGetChat(userCourseId)
+    const { conversationId, data: { user: { id: studentId } } } = useGetChat(userCourseId)
+    const { addNewMessage, updateMessage, data: messages } = useGetChatMessages(conversationId)
     const { register, handleSubmit, reset, getValues, watch, formState: { isDirty, isValid } } = methods
     const [messageType, setMessageType] = useState(MessageTypes.TEXT)
     const [isOpenDatepicker, setIsOpenDatepicker] = useState(false)
@@ -61,14 +62,14 @@ const ConversationInput = ({ userCourseId }) => {
                 reset()
 
                 if (messageType === MessageTypes.TEXT) {
-                    createTextMessage({ chat: chatId, text: data.message }).then(res => {
-                        socket.emit('room-message', { ...res, room: chatId, studentId })
+                    createTextMessage({ chat: conversationId, text: data.message }).then(res => {
+                        socket.emit('room-message', { ...res, room: conversationId, studentId })
                         updateMessage(id, res)
                     })
                 } else if (messageType === MessageTypes.COMMENT) {
-                    createComment({ chat: chatId, text: data.message }).then(res => updateMessage(id, res))
+                    createComment({ chat: conversationId, text: data.message }).then(res => updateMessage(id, res))
                 } else if (messageType === MessageTypes.SMS) {
-                    createSms(studentId, { chat: chatId, text: data.message }).then(res => updateMessage(id, res))
+                    createSms(studentId, { chat: conversationId, text: data.message }).then(res => updateMessage(id, res))
                 }
             } else {
                 setIsOpenDatepicker(true)
@@ -94,7 +95,7 @@ const ConversationInput = ({ userCourseId }) => {
                 addNewMessage(newMessage)
                 reset()
 
-                const fd = objectToFormData({ chat: chatId, userCourse: userCourseId, student: studentId, mentor: userId, ...data })
+                const fd = objectToFormData({ chat: conversationId, userCourse: userCourseId, student: studentId, mentor: userId, ...data })
                 createLessonTask(fd).then(res => updateMessage(id, res))
 
                 setIsOpenDatepicker(false)

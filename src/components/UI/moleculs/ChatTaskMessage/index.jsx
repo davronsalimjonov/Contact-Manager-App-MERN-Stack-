@@ -11,7 +11,8 @@ const ChatTaskMessage = ({
     isCompleted = false,
     avatar = '',
     fullName = '',
-    time = ''
+    time = '',
+    onComplete
 }) => {
     return (
         <ChatMessageLayout
@@ -39,7 +40,7 @@ const ChatTaskMessage = ({
                 </div>
                 {!isCompleted && (
                     <div className={cls.task__actions}>
-                        <Button rounded >Bajarildi</Button>
+                        <Button rounded onClick={onComplete}>Bajarildi</Button>
                     </div>
                 )}
             </div>
