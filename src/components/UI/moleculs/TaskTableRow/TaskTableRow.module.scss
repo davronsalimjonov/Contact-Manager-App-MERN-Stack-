@@ -1,0 +1,24 @@
+
+.row{
+    & > td{
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 19.1px;
+        display: flex;
+        align-items: center;
+        background-color: white;
+        padding: 16px;
+    }
+}
+
+.expired{
+    & > td:not(:last-child){
+        color: var(--red-color);
+    }
+}
+
+.completed{
+    & > td:not(:last-child){
+        text-decoration: line-through;
+    }
+}

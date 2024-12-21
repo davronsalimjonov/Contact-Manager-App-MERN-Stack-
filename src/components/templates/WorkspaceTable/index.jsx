@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { getStatusColor, groupByStatus } from '@/utils/workspace';
 import { updateWorkspaceStatus } from '@/services/workspace';
@@ -8,7 +9,12 @@ import cls from './WorkspaceTable.module.scss';
 const WorkspaceTable = ({
     workspace = []
 }) => {
+    const navigate = useNavigate()
     const [statuses, setStatuses] = useState(groupByStatus(workspace));
+
+    const handleClickCard = (item) => {
+        navigate('/students/chat/' + item?.courseId)
+    }
 
     const onDragEnd = (result) => {
         const { source, destination, draggableId } = result;
@@ -60,24 +66,28 @@ const WorkspaceTable = ({
                     color={getStatusColor('not-connected')}
                     items={statuses?.['not-connected']}
                     status='not-connected'
+                    onClickCall={handleClickCard}
                 />
                 <WorkspaceColumn
                     title='Qayta qo’ng’iroqlar'
                     color={getStatusColor('call-back')}
                     items={statuses?.['call-back']}
                     status='call-back'
+                    onClickCall={handleClickCard}
                 />
                 <WorkspaceColumn
                     title='Telefonga javob bermaganlar'
                     color={getStatusColor('not-answered')}
                     items={statuses?.['not-answered']}
                     status='not-answered'
+                    onClickCall={handleClickCard}
                 />
                 <WorkspaceColumn
                     title='Bog’langan qo’ng’iroqlar'
                     color={getStatusColor('connected')}
                     items={statuses?.['connected']}
                     status='connected'
+                    onClickCall={handleClickCard}
                 />
             </div>
         </DragDropContext>

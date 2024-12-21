@@ -25,17 +25,17 @@ const StudentsSearchBar = ({
             <Input 
                 placeholder='Ism'
                 className={cls.bar__form__input}
-                onChange={debounce(onChangeFirstName, 200)}
+                onChange={debounce(onChangeFirstName)}
             />
             <Input 
                 placeholder='Familiya'
                 className={cls.bar__form__input}
-                onChange={debounce(onChangeLastName, 200)}
+                onChange={debounce(onChangeLastName)}
             />
             <PhoneInput 
                 className={cls.bar__form__input}
                 placeholder='Telefon raqam' 
-                onChange={debounce(onChangePhone, 200)}
+                onChange={debounce(onChangePhone)}
             />
             {/* <form className={cls.bar__form}>
                 <Input

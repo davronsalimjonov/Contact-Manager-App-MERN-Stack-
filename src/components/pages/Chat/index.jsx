@@ -23,6 +23,10 @@ const Chat = () => {
                     <ChatSidebar
                         conversationId={conversationId}
                         userCourseId={userCourseId} 
+                        firstPhoneNumber={info?.user?.phone}
+                        secondPhoneNumber={info?.user?.secondPhone}
+                        thirdPhoneNumber={info?.user?.thirdPhone}
+                        email={info?.user?.email}
                     />
                 </>
             ) : (

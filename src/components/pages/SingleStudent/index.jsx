@@ -44,18 +44,15 @@ const SingleStudent = () => {
 
             const updatedUser = await updateUser(studentId, fd)
             queryClient.setQueryData(['user-course', courseId], (oldData) => ({ ...oldData, user: updatedUser }))
-            queryClient.setQueriesData(['students'], oldData => ({
-                ...oldData,
-                pages: oldData?.pages?.map(page => ({
-                    ...page,
-                    items: page?.items?.map(item => {
-                        if (item?.user?.id === courseId) {
-                            item.user = updatedUser
-                        }
-                        return item
-                    })
-                }))
-            }))
+            queryClient.setQueriesData(['students'], oldData => {
+                return oldData?.map(item => {
+                    if (item?.id === courseId) {
+                        delete updatedUser.id
+                        item = { ...item, ...updatedUser }
+                    }
+                    return item
+                })
+            })
             toast.success("Malumotlar o'zgartirildi")
         } catch (error) {
             const res = error?.response?.data
@@ -67,11 +64,11 @@ const SingleStudent = () => {
         <div className={cls.page}>
             {!isLoadingStudent ? (
                 <>
-                    <StudentInformationForm 
+                    <StudentInformationForm
                         connectionDays={course?.days}
                         connectionTime={course?.connectionTime}
-                        onSubmit={handleUpdateUser} 
-                        defaultValues={studentFormData} 
+                        onSubmit={handleUpdateUser}
+                        defaultValues={studentFormData}
                         courseId={courseId}
                     />
                     <div className={cls.page__cards}>

@@ -11,7 +11,7 @@ const MentorTasks = () => {
             {isLoading ? (
                 <Loader  />
             ) : (
-                <TasksTable />
+                <TasksTable tasks={tasks} />
             )}
         </div>
     );

@@ -47,6 +47,7 @@ export const useTaskMutations = (userCourseId) => {
             if (oldData?.length > 0) return [newTask, ...oldData]
             else return [newTask]
         })
+        queryClient.invalidateQueries({ queryKey: ['tasks', 'uncompleted'], exact: true })
 
         return { tempId }
     }
@@ -57,7 +58,7 @@ export const useTaskMutations = (userCourseId) => {
             (oldData) => ({ ...oldData, task: { ...oldData.task, ...data } }),
             (msg) => msg?.task?.id === id
         )
-        queryClient.setQueryData(['tasks', 'uncompleted', userCourseId], (oldData) => {
+        queryClient.setQueriesData(['tasks', 'uncompleted'], (oldData) => {
             if (!oldData) return [data];
             return oldData.map(task => task?.id === id ? { ...task, ...data } : task);
         });

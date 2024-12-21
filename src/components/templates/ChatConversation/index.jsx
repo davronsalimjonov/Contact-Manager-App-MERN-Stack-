@@ -59,6 +59,8 @@ const ChatConversation = ({
 
         if (message?.type === MessageTypes.MESSAGE) {
             messageSenderId = message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.id : message?.message?.user?.id
+        } else if(message?.type === MessageTypes.STUDENT_HOME_WORK) {
+            
         }
 
         if (messageSenderId && messageSenderId !== userId) {

@@ -1,8 +1,8 @@
-import { api } from "./api"
+import { api, paramsToString } from "./api"
 
-export const getCallMentorStudents = async (mentorId) => {
+export const getCallMentorStudents = async (mentorId, params) => {
     if(!mentorId) return null
-    const res = await api.get(`/user-course/call-mentor-panel/${mentorId}`)
+    const res = await api.get(`/user-course/call-mentor-panel/${mentorId}?${paramsToString(params)}`)
     return res.data
 }
 

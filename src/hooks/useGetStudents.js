@@ -37,7 +37,7 @@ const useGetStudents = (params = {}) => {
 
     return useQuery(
         ['students', userId, ...Object.values(removeEmptyKeys(params))],
-        () => getCallMentorStudents(userId),
+        () => getCallMentorStudents(userId, params),
         { cacheTime: 5 * 60 * 1000, staleTime: 5 * 60 * 1000 }
     )
 }

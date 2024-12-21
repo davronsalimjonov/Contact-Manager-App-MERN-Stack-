@@ -77,7 +77,7 @@ export const useMessage = () => {
 
 export const useGetChatMessages = (chatId) => {
     const queryClient = useQueryClient()
-    const messages = useQuery(['chat', 'messages', chatId], () => getChatMessages(chatId), { staleTime: 0, cacheTime: 0 })
+    const messages = useQuery(['chat', 'messages', chatId], () => getChatMessages(chatId), { staleTime: 60, cacheTime: 60 })
 
     const addPrevMessages = (newMessages = {}) => {
         if (Array.isArray(newMessages) && !newMessages?.length) return

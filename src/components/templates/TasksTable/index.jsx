@@ -1,4 +1,5 @@
-import StudentStatus from '@/components/UI/atoms/StudentStatus';
+import { getUserFullName } from '@/utils/lib';
+import TaskTableRow from '@/components/UI/moleculs/TaskTableRow';
 import cls from './TasksTable.module.scss';
 
 const TasksTable = ({
@@ -9,24 +10,30 @@ const TasksTable = ({
             <thead className={cls.table__header}>
                 <tr>
                     <th></th>
-                    <th>Task: 1</th>
+                    <th>Task</th>
                     <th>O’quvchi</th>
-                    <th>Dedline</th>
+                    <th>Deadline</th>
                     <th>Guruhi</th>
                     <th>Darajasi</th>
                     <th>Statusi</th>
                 </tr>
             </thead>
             <tbody className={cls.table__body}>
-                <tr>
-                    <td><input type="checkbox" /></td>
-                    <td>Task nomi</td>
-                    <td>Diyora Shomamatova</td>
-                    <td>16 oktabr, 2024, 19:13</td>
-                    <td>A1(1)</td>
-                    <td>A1</td>
-                    <td><StudentStatus status='Adaptatsiya' /></td>
-                </tr>
+                {tasks?.length > 0 && tasks.map(task => (
+                    <TaskTableRow 
+                        key={task?.id}
+                        title={task?.title}
+                        studentFullName={getUserFullName(task?.userCourse?.user)}
+                        deadline={task?.date}
+                        group={task?.userCourse?.group?.title}
+                        level={task?.userCourse?.level}
+                        status={task?.userCourse?.status}
+                        userCourseId={task?.userCourse?.id}
+                        isCompleted={task?.isCompleted}
+                        expired={!task?.isCompleted && (new Date(task?.date) < new Date())}
+                        taskId={task?.id}
+                    />
+                ))}
             </tbody>
         </table>
     );
