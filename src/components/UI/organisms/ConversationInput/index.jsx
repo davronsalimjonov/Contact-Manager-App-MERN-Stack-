@@ -37,7 +37,7 @@ const ConversationInput = ({ userCourseId }) => {
     const { generateMessage } = useMessage()
     const { editMessage, onEditComplete } = useContext(ChatMessageEditContext)
     const { conversationId, data: { user: { id: studentId } } } = useGetChat(userCourseId)
-    const { addNewMessage, updateMessage, data: messages } = useGetChatMessages(conversationId)
+    const { addNewMessage, updateMessage, messages } = useGetChatMessages(conversationId)
     const { register, handleSubmit, reset, getValues, watch, formState: { isDirty, isValid } } = methods
     const [messageType, setMessageType] = useState(MessageTypes.TEXT)
     const [isOpenDatepicker, setIsOpenDatepicker] = useState(false)
