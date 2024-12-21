@@ -16,6 +16,7 @@ const MainMentorStudents = () => {
     const [groupId, setGroupId] = useState('')
     const [groupName, setGroupName] = useState('')
     const [selectedMentor, setSelectedMentor] = useState(null)
+    const [isFetched, setIsFetched] = useState(false)
     const { ref, data: students, isLoading: isLoadingStudents } = useGetStudents(filter)
     const { 
         callMentors: { data: callMentors, isLoading: isLoadingCallMentors},
@@ -24,7 +25,7 @@ const MainMentorStudents = () => {
     const {
         groups: {data: groups, isLoading: isGroupsLoading},
         groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading }
-    } = useGetGroups({ group: groupId })
+    } = useGetGroups({ group: groupId }, groupId)
 
     const callMentorOptions = callMentors?.callMentors?.map((item) => (
         {
@@ -88,8 +89,10 @@ const MainMentorStudents = () => {
                             handleCreateGroup={handleCreateGroup}
                             callMentorOptions={callMentorOptions}
                             groupName={groupName}
+                            setGroupName={setGroupName}
                             selectedMentor={selectedMentor}
                             setGroupId={setGroupId}
+                            setIsFetched={setIsFetched}
                         />
                         <MainMentorStudentsSearchBar
                             onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
@@ -101,6 +104,9 @@ const MainMentorStudents = () => {
                             triggerRef={ref}
                             students={students}
                             isLoading={isLoadingStudents}
+                            groupName={groupName}
+                            groupId={groupId}
+                            isFetched={isFetched}
                         />
                     </>
                 ) : (<Loader />)

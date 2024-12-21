@@ -5,3 +5,7 @@ export const createGroups = async (data) => {
     return res.data
 }
 
+export const getSelectGroupStudents = async (teacherId, groupId) => {
+    const res = await api.get(`/user-course/teacher/student-list-for-group/${teacherId}/${groupId}`)
+    return res.data
+}

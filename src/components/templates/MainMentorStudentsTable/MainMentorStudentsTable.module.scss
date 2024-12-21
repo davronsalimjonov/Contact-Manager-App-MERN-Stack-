@@ -14,3 +14,42 @@
       display: contents;
     }
 }
+
+.mainMentorNoData {
+  background: #fff;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mainMentorNoData p {
+  font-weight: 400;
+  font-size: 24px;
+  color: #000;
+  text-align: center;
+}
+
+.MainMentorStudentsGroupTab__dialog {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  width: 400px;
+  gap: 10px;
+
+  &__select {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  &__buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+}

@@ -1,15 +1,18 @@
 import { useQuery } from "react-query";
 import { getMentorGroups, getMentorStudents } from "@/services/course";
 import { useGetUserId } from "./useGetUser";
+import { getSelectGroupStudents } from "@/services/groups";
 
-const useGetGroups = (groupData = {}) => {
+const useGetGroups = (groupData = {}, groupId) => {
     const mentorId = useGetUserId()
     const groups = useQuery(['groups', mentorId], () => getMentorGroups(mentorId), { cacheTime: Infinity, staleTime: Infinity })
     const groupStudents = useQuery(['groupStudents', mentorId, {...groupData}], () => getMentorStudents(mentorId, {...groupData}, { cacheTime: Infinity, staleTime: Infinity }))
+    const groupSelectStudents = useQuery(['groupSelectStundets', mentorId, groupId], () => getSelectGroupStudents(mentorId, groupId), { cacheTime: Infinity, staleTime: Infinity })
     
     return {
         groups,
-        groupStudents
+        groupStudents,
+        groupSelectStudents
     }
 }
 

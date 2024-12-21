@@ -51,7 +51,7 @@ const MainMentorStudentsSearchBar = ({
                 <span>+</span>
             </Button>
             <Button className={cls.bar__form__button}>
-                Foydalanuvchi Qo'shish
+                O'quvchi Qo'shish
                 <span>+</span>
             </Button>
         </div>

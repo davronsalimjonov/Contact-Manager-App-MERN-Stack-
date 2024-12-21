@@ -14,8 +14,10 @@ const MainMentorStudentsGroupTab = ({
     handleCreateGroup,
     callMentorOptions,
     groupName='',
+    setGroupName,
     selectedMentor=null, 
-    setGroupId
+    setGroupId,
+    setIsFetched
   }) => {
   const [isModal, setIsModal] = useState(false)
   const [activeGroup, setActiveGroup] = useState('Barchasi') 
@@ -37,6 +39,8 @@ const MainMentorStudentsGroupTab = ({
             className={activeGroup === `${tab?.label}` ? cls.activeButton : cls.inactiveButton}
             onClick={() => {
               setActiveGroup(`${tab?.label}`)
+              setIsFetched(true)
+              tab?.label === "Barchasi" ? setGroupName('') : setGroupName(tab?.label)
               tab?.label === "Barchasi" ? setGroupId('') : setGroupId(tab?.value)
             }} 
             value={tab?.value}
