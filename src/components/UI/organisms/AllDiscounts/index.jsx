@@ -1,26 +1,27 @@
 import Mapper from "../../atoms/Mapper";
 import DiscountForm from "../DiscountForm";
 import UpdateDiscount from "../UpdateDiscount";
+import cls from './AllDiscounts.module.scss';
+
 
 const AllDiscounts = (
     {
-        errors,
-        register,
         discounts,
-        courseId,
-        control,
+        courseId
     }
 ) => {
 
-    console.log("Discounts:", discounts);
     return (
         <>
             <Mapper
                 data={discounts}
                 isInfinityQuery
-                renderItem={(discount, index) => (
-                    <UpdateDiscount key={index} errors={errors} register={register} discount={discount} courseId={courseId} control={control} />
-                )} />
+                renderItem={(discount) => {
+                    return (
+                        <UpdateDiscount key={discount?.id} discount={discount} discountId={discount?.id} courseId={courseId} />
+                    )
+                }}
+            />
         </>
     )
 }

@@ -20,14 +20,15 @@ const FormTimeInput = ({
                 name={name}
                 control={control}
                 rules={rules}
-                render={({ field: { ref } }) => (
+                render={({ field }) => (
                     <Input
+                        type="time"
                         className={cls.time__input}
                         preffix={preffix}
                         placeholder={placeholder}
                         register={register}
-                        type="time"
-                        ref={ref}
+                        {...field}
+                        {...otherProps}
                     />
                 )
                 } />

@@ -27,8 +27,8 @@ export const discountSchema = Yup.object().shape({
     "price": Yup.string().required('Kurs narxini kiritish majburiy'),
     "month": Yup.number().required('Kurs oyini kiritish majburiy'),
     "discount": Yup.string().required('Kurs chegirmasini kiritish majburiy'),
-    "discountDate": Yup.string().required('Chegirma sanasini kiritish majburiy'),
-    "discountPrice": Yup.string().required('Kurs chegirmadagi narxi kiritish majburiy'),
+    "discountDate": Yup.array().of(Yup.string()).required('Chegirma sanasini kiritish majburiy'),
+    // "discountPrice": Yup.string().required('Kurs chegirmadagi narxi kiritish majburiy'),
     "discountTime": Yup.string().required('Chegirma tugash soatini kiritish majburiy'),
     "description": Yup.string().required('Description kiritish majburiy'),
 })

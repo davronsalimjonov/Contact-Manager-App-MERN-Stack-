@@ -1,14 +1,17 @@
 import Loader from "@/components/UI/atoms/Loader";
 import AddDiscount from "@/components/UI/organisms/AddDiscount";
+import useGetCourseById from "@/hooks/useGetCourseById";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import cls from './UpdateCourse.module.scss';
+import AllDiscounts from "@/components/UI/organisms/AllDiscounts";
 import CoursesForm from "@/components/UI/organisms/CoursesForm";
 import { PAYMENT_LINK } from "@/constants";
-import useGetCourseById from "@/hooks/useGetCourseById";
-import { queryClient } from "@/services/api";
-import { updateCourse } from "@/services/course";
-import { objectToFormData } from "@/utils/lib";
-import { useState } from "react";
+import {  updateCourse } from "@/services/course";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { queryClient } from "@/services/api";
+import { objectToFormData } from "@/utils/lib";
+
 
 const UpdateCourse = () => {
     const { courseId } = useParams();
@@ -26,34 +29,44 @@ const UpdateCourse = () => {
                 })
             });
             if (!(data?.image instanceof File) && data?.image !== null) delete data.image;
-
+console.log(data);  
             const fd = objectToFormData(data);
-            const updatedCourse = await updateCourse(courseId, fd)
-            queryClient.setQueryData(['courses'], oldData => oldData.map(obj => obj.id === courseId ? updatedCourse : obj));
-            toast.success("Ma'lumotlar o'zgartirildi!");
+            const updatedCourse = await updateCourse(courseId, fd);
+            queryClient.setQueryData(['course',courseId],oldData=>({...oldData, updatedCourse}));
+            toast.success("Kurs ma'lumotlari o'zgartirildi!");
+
         } catch (error) {
             const errorMessage = error?.response?.data?.message || error?.message || 'Xatolik yuz berdi'
             toast.error(errorMessage)
         }
     }
 
-    return !IsLoadingCourse ? (
-        <><CoursesForm
-            onOpenDiscount={() => setIsOpen(true)}
-            defaultValue={{
-                title: course?.title,
-                link: course?.link,
-                paymentLink: course?.paymentLink,
-                paymentLinks: (course?.paymentLinks || []).map(link => link.link),
-                description: course?.description,
-                image: course?.image?.url,
 
-            }}
-            discount={course.prices}
-            courseId={course?.id}
-            btn={"O'zgartirish"}
-            onSubmit={(data) => handleUpdateCourse(data)}
-        />
+    return !IsLoadingCourse ? (
+        <>
+            <div className={cls.content}>
+                <CoursesForm
+                    className={cls.content__form}
+                    onOpenDiscount={() => setIsOpen(true)}
+                    defaultValue={{
+                        title: course?.title,
+                        link: course?.link,
+                        paymentLink: course?.paymentLink,
+                        paymentLinks: (course?.paymentLinks || []).map(link => link.link),
+                        description: course?.description,
+                        image: course?.image?.url,
+
+                    }}
+                    btn={"O'zgartirish"}
+                    onSubmit={handleUpdateCourse}
+                />
+
+                {
+                    course.prices && <AllDiscounts discounts={course.prices} courseId={courseId} />
+
+                }
+            </div>
+
             <AddDiscount
                 isOpen={isOpen}
                 onclose={() => setIsOpen(false)}
@@ -64,3 +77,6 @@ const UpdateCourse = () => {
 }
 
 export default UpdateCourse;
+
+
+

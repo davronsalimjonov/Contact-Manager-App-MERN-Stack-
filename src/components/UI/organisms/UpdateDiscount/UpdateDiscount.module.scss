@@ -1,7 +1,17 @@
-.form{
-    padding: 12px;
-    width: 100%;
-    border-radius: 12px;
+.discount {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     box-shadow: 2px 2px 4px 0px #0000000A, -2px -2px 4px 0px #0000000A;
+    border-radius: 16px;
+    width: 100%;
 
+    &>button {
+        width: 100px;
+    }
+
+
+    &__element {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
 }

@@ -10,15 +10,14 @@ import Button from "../../atoms/Buttons/Button";
 import RedButton from "../../atoms/Buttons/RedButton";
 import { courseSchema } from "@/schemas/student";
 import { yupResolver } from "@hookform/resolvers/yup";
-import AllDiscounts from "../AllDiscounts";
+import { cn } from "@/utils/lib";
 
 const CoursesForm = ({
     onOpenDiscount,
     defaultValue,
     btn,
+    className,
     onSubmit,
-    discount,
-    courseId
 }) => {
 
     const { register, control, watch, handleSubmit, reset, setValue, formState: { errors, isDirty, isSubmitting } } = useForm({
@@ -26,8 +25,14 @@ const CoursesForm = ({
         defaultValues: defaultValue,
         resolver: yupResolver(courseSchema)
     })
+
+
+    const ccc=(data)=>{
+        console.log(data);
+    }
+    console.log(watch('image'));
     return (
-        <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={cn(className || cls.form)} onSubmit={handleSubmit(onSubmit)}>
             <div className={cls.page__form__avatar}>
                 <AvatarUpload
                     className={cls.form__image}
@@ -78,26 +83,23 @@ const CoursesForm = ({
                 />
 
                 {
-                    discount && <AllDiscounts errors={errors} register={register} discounts={discount} courseId={courseId} control={control}/>
-
+                    btn && <div className={cls.form__buttons}>
+                        <Button
+                            type='submit'
+                            isLoading={isSubmitting}
+                        >
+                            {
+                                btn
+                            }
+                        </Button>
+                        <RedButton
+                            disabled={!isDirty}
+                            onClick={() => reset()}
+                        >
+                            Bekor qilish
+                        </RedButton>
+                    </div>
                 }
-
-                <div className={cls.form__buttons}>
-                    <Button
-                        type='submit'
-                        isLoading={isSubmitting}
-                    >
-                        {
-                            btn
-                        }
-                    </Button>
-                    <RedButton
-                        disabled={!isDirty}
-                        onClick={() => reset()}
-                    >
-                        Bekor qilish
-                    </RedButton>
-                </div>
             </div>
         </form>
     )

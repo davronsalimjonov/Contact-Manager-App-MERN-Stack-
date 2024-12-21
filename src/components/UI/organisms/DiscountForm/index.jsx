@@ -1,15 +1,18 @@
 import { discountSchema } from "@/schemas/student";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import FormSelect from "../../moleculs/Form/FormSelect";
 import FormInput from "../../moleculs/Form/FormInput";
 import cls from './DiscountForm.module.scss';
 import Textarea from "../../atoms/Form/Textarea";
 import Button from "../../atoms/Buttons/Button";
-import { useState } from "react";
-import { ClockIcon } from "../../atoms/icons";
+import { CalendarMonthIcon, ClockIcon } from "../../atoms/icons";
 import FormTimeInput from "../../moleculs/Form/FormTimeInput";
-import FormDateRangePicker from "../../moleculs/Form/FormDateRangePicker";
+import FormElementWrapper from "../../moleculs/Form/FormElementWrapper";
+import DatePicker from "react-datepicker";
+import { formatPrice } from "@/utils/lib";
+import { cn } from '@/utils/lib';
+import { useEffect } from "react";
 
 const MONTH_OPTIONS = [
     {
@@ -35,31 +38,29 @@ const MONTH_OPTIONS = [
 
 const DiscountForm = ({
     className,
+    classNameElement,
     defaultValues,
     onSubmit,
-    startDate,
-    endDate,
-    setStartDate,
-    setEndDate,
+    btnText = ""
 }) => {
-    const [openCalendar, setOpenCalendar] = useState(false);
-
-    const onChange = (dates) => {
-        const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
-    };
-
-
-    const { register, control, handleSubmit, watch, setValue, formState: { errors, isDirty, isSubmitting } } = useForm({
+    const { register, control, watch, handleSubmit, setValue, formState: { errors, isDirty, isSubmitting } } = useForm({
         mode: 'onSubmit',
         defaultValues,
         resolver: yupResolver(discountSchema)
     });
 
+    const dateRange = watch('discountDate');
+    const price = watch('price');
+    const discount = watch('discount');
+
+    useEffect(() => {
+        setValue('discountPrice', formatPrice(Math.ceil(Number(watch('price').replace(/\s+/g, '')) * (100 - watch('discount')) / 100)))
+    }, [price, discount])
+
+
     return (
         <>
-            <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+            <form className={cn(className, cls.form)} onSubmit={handleSubmit(onSubmit)}>
                 <FormSelect
                     className={cls.form__input}
                     name="month"
@@ -75,43 +76,68 @@ const DiscountForm = ({
                     type="number"
                     className={cls.form__input}
                     label='Chegirma  miqdori'
+                    preffix={"%"}
+                    min={"0"}
+                    max={"100"}
                     placeholder='Kiriting...'
                     register={{ ...register('discount') }}
                     error={errors?.discount?.message}
                 />
                 <FormInput
-                    type="number"
+                    type="text"
                     className={cls.form__input}
                     label='Kurs narxi'
                     placeholder='Narxi'
-                    register={{ ...register('price') }}
+                    defaultValue={formatPrice(watch('price'))}
+                    register={{
+                        ...register('price', {
+                            onChange: e => {
+                                const value = e.target.value
+                                e.target.value = formatPrice(value)
+                            }
+                        })
+                    }}
+                    preffix={"so'm"}
                     error={errors?.price?.message}
                 />
+
                 <FormInput
                     name="discountPrice"
-                    type="number"
+                    type="text"
                     className={cls.form__input}
-                    label='Chegirmadagi kurs narxi'
-                    // preffix={"so'm"}
-                    // onChange={handleChange}
-                    placeholder='Ismi'
-                    register={{ ...register('discountPrice') }}
+                    label="Chegirmadagi kurs narxi"
+                    placeholder="Narxi"
+                    register={{
+                        ...register('discountPrice')
+                    }}
+                    preffix={"so'm"}
                     error={errors?.discountPrice?.message}
                 />
+                <div className={cn(classNameElement, cls.form__time)}>
+                    <FormElementWrapper label={"Chegirma muddati(kun)"} error={errors?.discountDate?.message}>
+                        <div className={cls.form__calendar}>
+                            <Controller
+                                name={'discountDate'}
+                                control={control}
+                                render={({ field }) => (
+                                    <DatePicker
+                                        className={cls.form__calendar__input}
+                                        {...field}
+                                        selected={dateRange[0]}
+                                        onChange={(dates) => {
+                                            field.onChange(dates);
+                                        }}
+                                        dateFormat={'dd.MM.YYYY'}
+                                        startDate={dateRange[0]}
+                                        endDate={dateRange[1]}
+                                        selectsRange
+                                    />)
+                                } />
 
-                <div className={cls.form__time}>
-                    <FormDateRangePicker
-                        label={"Chegirma muddati(kun)"}
-                        error={errors?.discountDate?.message}
-                        startDate={startDate}
-                        endDate={endDate}
-                        control={control}
-                        name={'discountDate'}
-                        register={{ ...register('discountDate') }}
-                        openCalendar={openCalendar}
-                        setOpenCalendar={setOpenCalendar}
-                        onChange={onChange}
-                    />
+                            <CalendarMonthIcon />
+                        </div>
+                    </FormElementWrapper>
+
                     <FormTimeInput
                         control={control}
                         label="Time"
@@ -122,13 +148,13 @@ const DiscountForm = ({
                     />
                 </div>
                 <Textarea
-                    className={cls.form__input}
+                    className={cn(classNameElement, cls.form__input)}
                     label="Description"
                     register={{ ...register('description') }}
                     error={errors?.description?.message}
                 />
 
-                <Button type='submit'>Qo'shish</Button>
+                <Button type='submit'>{btnText}</Button>
 
             </form>
         </>

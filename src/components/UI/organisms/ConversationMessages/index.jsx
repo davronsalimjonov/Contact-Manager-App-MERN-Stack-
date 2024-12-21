@@ -86,7 +86,6 @@ const ConversationMessages = memo(({
     function beforeTopReach(visibleStartIndex) {
         const container = listRef.current._outerRef
         const scrollHeight = container?.scrollHeight
-        console.log(scrollHeight);
         
         lastIndex.current = listRef.current?.state?.scrollOffset
     }

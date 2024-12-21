@@ -1,13 +1,10 @@
 import Dialog from "@/components/UI/moleculs/Dialog";
-import CoursesForm from "@/components/UI/organisms/CoursesForm";
 import { queryClient } from "@/services/api";
-
-import { objectToFormData } from "@/utils/lib";
 import toast from "react-hot-toast";
 import cls from './AddDiscount.module.scss';
 import DiscountForm from "../DiscountForm";
 import { addDiscount } from "@/services/course";
-import { useState } from "react";
+
 
 const AddDiscount = ({
     isOpen,
@@ -15,20 +12,21 @@ const AddDiscount = ({
     courseId
 }) => {
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(null);
-
     const handleAddDiscount = async (data) => {
         try {
-            delete data.discountDate;
-            data.discountStartDate = startDate;
-            data.discountEndDate = endDate;
+
+            data.discountStartDate = data?.discountDate[0];
+            data.discountEndDate = data?.discountDate[1];
+            delete data?.discountDate;
             data.course = courseId;
             data.discount = data.discount.toString();
-            data.discountPrice = data.discountPrice.toString();
-            data.price = data.price.toString();
-            const addedDiscount = await addDiscount(data)
-            queryClient.setQueryData(['discount'], addedDiscount);
+            data.discountPrice = data.discountPrice.replace(/\s+/g, '');
+            data.price = data.price.replace(/\s+/g, '');
+            const addedDiscount = await addDiscount(data);
+            queryClient.setQueryData(['course', courseId], oldData => {
+                oldData.prices = [...oldData.prices, addedDiscount];
+                return oldData;
+            });
             toast.success("Yangi Chegirma qo'shildi!");
             onclose();
         } catch (error) {
@@ -50,11 +48,8 @@ const AddDiscount = ({
                         discountTime: "",
                         description: "",
                     }}
+                    btnText={"Qo'shish"}
                     onSubmit={(data) => { handleAddDiscount(data) }}
-                    startDate={startDate}
-                    endDate={endDate}
-                    setStartDate={setStartDate}
-                    setEndDate={setEndDate}
                 />
             </div>
         </Dialog>
