@@ -9,6 +9,7 @@ import Routers from "./routers"
 import { useEffect } from "react"
 import useGetUser from "./hooks/useGetUser"
 import { connectSocket } from "./services/socket"
+import NotificationProvider from "./providers/NotificationProvider"
 
 Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement);
 
@@ -26,8 +27,10 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+        <NotificationProvider>
         <Routers />
         <Toaster />
+        </NotificationProvider>
       </PersistGate>
     </Provider>
   )
