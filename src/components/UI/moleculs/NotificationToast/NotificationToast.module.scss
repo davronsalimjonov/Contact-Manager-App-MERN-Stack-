@@ -1,0 +1,23 @@
+.toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    border-left: 3px solid var(--blue-color);
+    background-color: var(--blue-300-color);
+
+    &__icon {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__title {
+        flex-grow: 1;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+    }
+}

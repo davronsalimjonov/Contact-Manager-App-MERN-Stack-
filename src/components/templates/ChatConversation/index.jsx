@@ -51,6 +51,7 @@ const ChatConversation = ({
         if (data?.ids?.length) {
             sendViewedMessages(conversationId, data)
             removeUnreadedMessagesCount(data?.ids?.length)
+            unreadedMessages.current = { ids: [], index: null }
         }
     }, 300)
 
@@ -60,7 +61,7 @@ const ChatConversation = ({
         if (message?.type === MessageTypes.MESSAGE) {
             messageSenderId = message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.id : message?.message?.user?.id
         } else if(message?.type === MessageTypes.STUDENT_HOME_WORK) {
-            
+            messageSenderId = message?.studentHomeWork?.student?.id
         }
 
         if (messageSenderId && messageSenderId !== userId) {

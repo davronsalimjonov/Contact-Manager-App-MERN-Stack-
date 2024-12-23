@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import useGetUser from '@/hooks/useGetUser';
 import { getUserFullName } from '@/utils/lib';
 import TimePeriodPicker from '../TimePeriodPicker';
-import NotificationButton from '../../moleculs/NotificationButton';
+import NotificationButton from '../NotificationButton';
 import cls from './Navbar.module.scss';
 
 const Navbar = ({ onPerionChange }) => {

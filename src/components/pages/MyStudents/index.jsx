@@ -10,8 +10,6 @@ const MyStudents = () => {
     const [filter, setFilter] = useState({})
     const { data: groups } = useGetGroups()
     const { ref, data: students, isLoading: isLoadingStudents } = useGetStudents(filter)
-console.log(filter);
-console.log(students);
 
     const tabOptions = [
         { value: '', label: 'Barchasi' },
