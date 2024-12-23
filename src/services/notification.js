@@ -4,7 +4,6 @@ export const getNotification = async (type, params) => {
     const res = await api.get(`/notification/admin/${type}?${paramsToString(params)}`)
     return res.data
 }
-import { api } from "./api"
 
 export const getNotifications = async (userId) => {
     const res = await api.get(`/teacher-notification/teacher/${userId}`)
