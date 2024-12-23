@@ -25,12 +25,7 @@ const CoursesForm = ({
         defaultValues: defaultValue,
         resolver: yupResolver(courseSchema)
     })
-
-
-    const ccc=(data)=>{
-        console.log(data);
-    }
-    console.log(watch('image'));
+    
     return (
         <form className={cn(className || cls.form)} onSubmit={handleSubmit(onSubmit)}>
             <div className={cls.page__form__avatar}>

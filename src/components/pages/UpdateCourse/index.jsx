@@ -7,7 +7,7 @@ import cls from './UpdateCourse.module.scss';
 import AllDiscounts from "@/components/UI/organisms/AllDiscounts";
 import CoursesForm from "@/components/UI/organisms/CoursesForm";
 import { PAYMENT_LINK } from "@/constants";
-import {  updateCourse } from "@/services/course";
+import { updateCourse } from "@/services/course";
 import toast from "react-hot-toast";
 import { queryClient } from "@/services/api";
 import { objectToFormData } from "@/utils/lib";
@@ -21,6 +21,7 @@ const UpdateCourse = () => {
     const handleUpdateCourse = async (data) => {
         try {
             const paymentLinks = data?.paymentLinks;
+
             data.paymentLinks = paymentLinks.map(paymentLink => {
                 const value = PAYMENT_LINK.find(link => link?.value === paymentLink);
                 return ({
@@ -28,11 +29,12 @@ const UpdateCourse = () => {
                     link: value?.value,
                 })
             });
+
             if (!(data?.image instanceof File) && data?.image !== null) delete data.image;
-console.log(data);  
             const fd = objectToFormData(data);
+
             const updatedCourse = await updateCourse(courseId, fd);
-            queryClient.setQueryData(['course',courseId],oldData=>({...oldData, updatedCourse}));
+            queryClient.setQueryData(['course', courseId], oldData => ({ ...oldData, updatedCourse }));
             toast.success("Kurs ma'lumotlari o'zgartirildi!");
 
         } catch (error) {
@@ -40,7 +42,6 @@ console.log(data);
             toast.error(errorMessage)
         }
     }
-
 
     return !IsLoadingCourse ? (
         <>

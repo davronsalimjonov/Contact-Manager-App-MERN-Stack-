@@ -20,7 +20,6 @@ export const courseSchema = Yup.object().shape({
     paymentLink: Yup.string(),
     paymentLinks: Yup.array().min(1, 'To\'lov linkini tanlash majburiy').required('required'),
     description: Yup.string().required('Description kiritish majburiy'),
-    image: Yup.string(),
 })
 
 export const discountSchema = Yup.object().shape({
