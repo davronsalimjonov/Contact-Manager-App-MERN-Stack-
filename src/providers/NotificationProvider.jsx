@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { socket } from "@/services/socket";
-import { useGetNotificationCount } from "@/hooks/useNotification";
 import NotificationToast from "@/components/UI/moleculs/NotificationToast";
 import cls from './NotificationProvider.module.scss';
 
@@ -9,7 +8,6 @@ const NOTIFICATION_HIDE_TIME = 300
 
 const NotificationProvider = ({ children }) => {
     const [notifications, setNotifications] = useState([]);
-    const { addNewNotificationCount } = useGetNotificationCount()
 
     const removeNotification = (id) => {
         setNotifications((prev) =>
@@ -22,8 +20,6 @@ const NotificationProvider = ({ children }) => {
     };
 
     const addNotification = (notification) => {
-        console.log(notification);
-        // addNewNotificationCount(1)
         setNotifications((prev) => [notification, ...prev]);
         const audio = new Audio('/audio/new-notification-sound.mp3')
         audio.play()
