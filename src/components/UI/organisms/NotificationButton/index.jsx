@@ -57,7 +57,7 @@ const NotificationButton = () => {
         <div ref={ref} style={{ position: 'relative', zIndex: 1000 }}>
             <button className={cls.btn} ref={setReferenceEl} onClick={togglePopup}>
                 <NotificationIcon />
-                <span className={cls.btn__badge}>{notificationCount}</span>
+                {notificationCount > 0 && <span className={cls.btn__badge}>{notificationCount}</span>}
             </button>
             {isVisible &&
                 <div className={cn(cls.popup, isOpenPopup && cls.open)} ref={setPopperEl} style={styles.popper} {...attributes.popper}>
