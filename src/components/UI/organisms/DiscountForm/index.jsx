@@ -49,6 +49,8 @@ const DiscountForm = ({
         resolver: yupResolver(discountSchema)
     });
 
+    console.log(defaultValues);
+
     const dateRange = watch('discountDate');
     const price = watch('price');
     const discount = watch('discount');
@@ -77,8 +79,8 @@ const DiscountForm = ({
                     className={cls.form__input}
                     label='Chegirma  miqdori'
                     preffix={"%"}
-                    min={"0"}
-                    max={"100"}
+                    min={0}
+                    max={100}
                     placeholder='Kiriting...'
                     register={{ ...register('discount') }}
                     error={errors?.discount?.message}
@@ -123,13 +125,13 @@ const DiscountForm = ({
                                     <DatePicker
                                         className={cls.form__calendar__input}
                                         {...field}
-                                        selected={dateRange[0]}
+                                        selected={dateRange && dateRange[0]}
                                         onChange={(dates) => {
                                             field.onChange(dates);
                                         }}
                                         dateFormat={'dd.MM.YYYY'}
-                                        startDate={dateRange[0]}
-                                        endDate={dateRange[1]}
+                                        startDate={dateRange && dateRange[0]}
+                                        endDate={dateRange && dateRange[1]}
                                         selectsRange
                                     />)
                                 } />
