@@ -153,10 +153,8 @@ const ConversationMessages = ({
         const scrollIndex = firstUnreadIndex !== -1 ? firstUnreadIndex : messages?.length;
 
         if (!isFirstRender && messages?.length) {
-            setTimeout(() => {
-                virtualizer.scrollToIndex(scrollIndex, { align: 'start', behavior: 'auto' })
-                setIsFirstRender(true)
-            }, 0);
+            setTimeout(() => virtualizer.scrollToIndex(scrollIndex, { align: 'start', behavior: 'auto' }))
+            setTimeout(() => setIsFirstRender(true), 10);
         }
     }, [messages?.length, virtualizer]);
 
