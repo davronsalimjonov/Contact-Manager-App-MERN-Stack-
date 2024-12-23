@@ -23,7 +23,7 @@ const NotificationProvider = ({ children }) => {
 
     const addNotification = (notification) => {
         console.log(notification);
-        addNewNotificationCount(1)
+        // addNewNotificationCount(1)
         setNotifications((prev) => [notification, ...prev]);
         const audio = new Audio('/audio/new-notification-sound.mp3')
         audio.play()
