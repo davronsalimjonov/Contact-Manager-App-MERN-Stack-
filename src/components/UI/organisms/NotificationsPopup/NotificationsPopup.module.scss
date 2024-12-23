@@ -1,0 +1,40 @@
+.popup {
+    width: 720px;
+    max-height: min(90vh, 820px);
+    padding: 24px 8px;  
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 16px;
+    background-color: var(--base-white-color);
+    box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+
+    & > div{
+        overflow-y: auto;
+        padding: 8px 24px;
+
+        // &::-webkit-scrollbar {
+        //     width: 8px;
+        //     background-color: var(--blue-300-color);
+        // }
+
+        // &::-webkit-scrollbar-thumb{
+        //     border-radius: 4px;
+        //     background-color: var(--blue-color);
+        // }
+    }
+
+    &__title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 32px;
+    }
+
+    &__items{
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}

@@ -1,0 +1,107 @@
+.message {
+    max-width: 390px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(231, 232, 235, 1);
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+    background-color: rgba(253, 245, 218, 1);
+    overflow: hidden;
+
+    &__body {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px;
+
+        &__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(236, 182, 4, 1);
+        }
+
+        &__details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-grow: 1;
+
+            &__header {
+                display: grid;
+                grid-template-areas:
+                    'title file'
+                    'date file';
+                grid-template-columns: 1fr 72px;
+                gap: 4px 12px;
+
+                &__title {
+                    grid-area: title;
+                    font-size: 16px;
+                    font-weight: 600;
+                    line-height: 18.78px;
+                }
+
+                &__date {
+                    grid-area: date;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 16.44px;
+                    color: var(--dark-gray-800-color);
+                }
+
+                &__file {
+                    grid-area: file;
+                    width: 72px;
+                    height: 36px;
+                    background-color: rgba(254, 238, 187, 1);
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+            &__description {
+                padding: 8px;
+                border-radius: 8px;
+                background-color: var(--base-white-color);
+
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 14.09px;
+            }
+        }
+    }
+
+    &__actions{
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        padding-left: 71px;
+        background-color: rgba(255, 218, 95, 0.25);
+
+        & > button{
+            font-size: 16px;
+        }
+
+        &__sended{
+            background-color: rgba(236, 182, 4, 1);
+        }
+
+        &__edit{
+            background-color: var(--base-white-color);
+            color: var(--black-color);
+        }
+
+        &__done{
+            background-color: var(--green-color);
+        }
+    }
+}

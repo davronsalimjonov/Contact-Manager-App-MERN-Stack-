@@ -13,6 +13,7 @@
         max-height: 100%;
         width: clamp(50px, 20%, 120px);
         aspect-ratio: 1;
+        height: auto;
         border-radius: 50%;
         background:
             radial-gradient(farthest-side, var(--blue-color) 94%, #0000) top/8px 8px no-repeat,

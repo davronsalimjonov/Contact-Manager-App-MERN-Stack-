@@ -1,0 +1,28 @@
+.form {
+    // position: relative;
+    padding: 16px 20px;
+    background: var(--base-white-color);
+    border: 1px solid var(--dark-gray-400-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &__input {
+        flex-grow: 1;
+        padding: 9px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 14.09px;
+        background-color: transparent;
+        border: 1px solid var(--dark-gray-300-color);
+    }
+
+    &__date {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 16.44px;
+        color: var(--dark-gray-700-color);
+    }
+}

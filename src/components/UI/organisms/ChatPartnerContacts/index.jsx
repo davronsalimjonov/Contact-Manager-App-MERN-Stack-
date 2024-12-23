@@ -5,16 +5,24 @@ import WhiteButton from '../../atoms/Buttons/WhiteButton';
 import ChatSidebarAccordion from '../../moleculs/ChatSidebarAccordion';
 import cls from './ChatPartnerContacts.module.scss';
 
-const ChatPartnerContacts = () => {
+const ChatPartnerContacts = ({
+    phoneNumbers = [],
+    email
+}) => {
     return (
         <ChatSidebarAccordion name='Kontaktlar'>
             <div className={cls.contacts}>
-                <PhoneInput
-                    placeholder='Telefon raqam'
-                    className={cls.contacts__input}
-                />
+                {phoneNumbers?.length > 0 && phoneNumbers.map((phone, index) => (
+                    <PhoneInput
+                        key={index}
+                        placeholder='Telefon raqam'
+                        value={phone}
+                        className={cls.contacts__input}
+                    />
+                ))}
                 <Input
                     placeholder='E-mail'
+                    value={email}
                     suffix={<EmailIcon />}
                     className={cls.contacts__input}
                 />

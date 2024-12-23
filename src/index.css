@@ -5,10 +5,12 @@
   --main-color: #F5F8FE;
 
   --light-green-color: rgba(214, 244, 222, 1);
+  --green-color: rgba(24, 193, 57, 1);
   
   --blue-color: #1256DB;
-  --blue-300-color: #F3F7FD;
   --blue-200-color: #F6F9FD;
+  --blue-300-color: #F3F7FD;
+  --blue-400-color: rgba(231, 238, 251, 1);
   
   --blue-gray-color: #0F172A;
   --blue-gray-400-color: #94A3B8;
@@ -24,8 +26,11 @@
 
   --black-color:#000;
   --green-color:#27CD02;
+  --dark-gray-900-color: rgba(12, 28, 58, 1);
   
   --red-color: #FF0000;
+  --violete-color: rgba(240, 230, 250, 1);
+  --yellow-color: rgba(236, 182, 4, 1);
 }
 
 * {
@@ -90,8 +95,21 @@ input:focus {
   outline: none;
 }
 
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 img{
   object-fit: cover;
+}
+
+textarea{
+  font-family: inherit;
+  resize: none;
+}
+
+textarea:focus{
+  outline: none;
 }
 
 /* Container and header styles */
@@ -145,10 +163,14 @@ img{
   margin: 0;
 }
 
-.react-datepicker__day--selected,
+.react-datepicker__day--selected[aria-selected="true"],
 .react-datepicker__month-text--selected{
   background-color: #1256DB !important;
   border-radius: 10px !important;
+}
+
+.react-datepicker__day--keyboard-selected{
+  background-color: transparent;
 }
 
 .react-datepicker__day--selected,
@@ -221,4 +243,55 @@ img{
 
 #waveform::part(wave):hover {
   height: 4px;
+}
+
+.time-picker-container {
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  gap: 8px;
+}
+
+label {
+  font-size: 16px;
+  color: #333;
+}
+
+.time-picker {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.time-input {
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.time-input:focus {
+  outline: none;
+  border-color: #007BFF;
+}
+
+.time-picker span {
+  font-size: 18px;
+  color: #333;
+}
+
+.rc-dialog-mask,
+.rc-dialog-wrap{
+  background-color: rgba(15, 23, 42, 0.25) !important;
+  cursor: pointer;
+}
+
+.rc-dialog-body a:hover > svg{
+  color: white !important;
+}
+
+.rc-dialog-content{
+  cursor: initial;
 }

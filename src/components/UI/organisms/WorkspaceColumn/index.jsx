@@ -8,6 +8,7 @@ const WorkspaceColumn = ({
     color = '',
     items = [],
     status = '',
+    onClickCall
 }) => {
     return (
         <div className={cls.column}>
@@ -38,6 +39,7 @@ const WorkspaceColumn = ({
                                             time={item?.time}
                                             status={status}
                                             group={item?.group}
+                                            onClickCall={() => onClickCall(item)}
                                         />
                                     </div>
                                 )}

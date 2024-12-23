@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { cn, getDayName } from '@/utils/lib';
+import { cn } from '@/utils/lib';
+import { getDayName } from '@/utils/time';
 import { useGetUserId } from '@/hooks/useGetUser';
 import { GENDER_OPTIONS } from '@/constants/form';
 import { updateUserCourse } from '@/services/course';
@@ -50,25 +51,19 @@ const StudentInformationForm = ({
         }
     }, [isSubmitSuccessful])
 
-
     const handleUpdateConnectionTimes = async (data) => {
         try {
             data.days = data?.days?.sort((a, b) => a - b)
-            await updateUserCourse(courseId, data)
+            const updatedUser = await updateUserCourse(courseId, data)
             queryClient.setQueryData(['user-course', courseId], oldData => ({ ...oldData, ...data }))
-            queryClient.setQueryData(['students', userId], oldData => ({
-                ...oldData,
-                pages: oldData?.pages?.map(page => ({
-                    ...page,
-                    items: page.items?.map(item => {
-                        if(item.id === courseId){
-                            item.days = data.days
-                            item.connectionTime = data.connectionTime 
-                        }
-                        return item
-                    })
-                }))
-            }))
+            queryClient.setQueriesData(['students', userId], oldData => {
+                return oldData?.map(item => {
+                    if (item?.id === courseId) {
+                        item = { ...item, days: updatedUser?.days, connectionTime: updatedUser?.connectionTime }
+                    }
+                    return item
+                })
+            })
             toast.success("Bog'lanish vaqti o'zgartirildi!")
             setIsOpenDialog(false)
         } catch (error) {

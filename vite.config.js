@@ -7,6 +7,10 @@ import compression from 'vite-plugin-compression';
 export default defineConfig({
   plugins: [react(), compression()],
   server: { host: true },
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+  },
   build: {
     rollupOptions: {
       output: {
@@ -15,6 +19,7 @@ export default defineConfig({
         },
       },
     },
+    minify: 'esbuild',
   },
   optimizeDeps: {
     exclude: ['js-big-decimal']
@@ -23,14 +28,18 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: resolve(__dirname, 'src')
-      }
+        replacement: resolve(__dirname, 'src'),
+      },
+      { 
+        find: 'path', 
+        replacement: 'path-browserify' 
+      },
     ]
   },
   css: {
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler' 
+        api: 'modern-compiler'
       }
     }
   }

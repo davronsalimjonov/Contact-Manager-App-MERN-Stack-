@@ -1,0 +1,35 @@
+
+.btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    position: relative;
+
+    &__badge{
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(20%, -20%);
+        border-radius: 50%;
+        background-color: var(--red-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: white;
+    }
+}
+
+.popup{
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+
+.open{
+    opacity: 1;
+    pointer-events: auto;
+}

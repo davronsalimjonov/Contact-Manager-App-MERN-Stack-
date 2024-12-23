@@ -1,11 +1,11 @@
-import { convertSecondsToTimeFormat } from '@/utils/lib';
+import { convertSecondsToTimeFormat } from '@/utils/time';
 import CallRecordPlayer from '../CallRecordPlayer';
 import { PhoneForwardedIcon } from '../../atoms/icons';
 import cls from './ChatCallMessage.module.scss';
 
 const ChatCallMessage = ({
     recordUrl = '',
-    recordDuration = 0
+    recordDuration = 0,
 }) => {
 
     return (
