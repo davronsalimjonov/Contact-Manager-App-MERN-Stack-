@@ -1,0 +1,25 @@
+import { getTimeFromDate } from '@/utils/time';
+import CallRecordPlayer from '../CallRecordPlayer';
+import ChatMessageLayout from '../ChatMessageLayout';
+import cls from './ChatVoiseMessage.module.scss';
+
+const ChatVoiseMessage = ({
+    time = '',
+    avatar = '',
+    fullName = '',
+    audioUrl = ''
+}) => {
+    return (
+        <ChatMessageLayout 
+            avatar={avatar}
+            fullName={fullName} 
+            time={getTimeFromDate(time)}
+        >
+            <div style={{ height: '50px', display: 'flex', alignItems: 'center', whiteSpace: 'normal !important' }}>
+                <CallRecordPlayer className={cls.player} url={audioUrl} />
+            </div>
+        </ChatMessageLayout>
+    );
+}
+
+export default ChatVoiseMessage;

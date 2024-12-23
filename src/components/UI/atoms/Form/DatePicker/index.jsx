@@ -12,13 +12,14 @@ const DatePicker = forwardRef(({
     disabled,
     readOnly,
     error,
+    defaultValue,
     ...otherProps
 }, ref) => {
-    const [date, setDate] = useState()
+    const [date, setDate] = useState(defaultValue)
 
     const handleChange = (date) => { 
         setDate(date)
-        typeof onChange === 'function' && onChange(new Date(date  - (date.getTimezoneOffset() * 60000)).toISOString())
+        typeof onChange === 'function' && onChange(date)
     }
 
     return (
@@ -26,7 +27,7 @@ const DatePicker = forwardRef(({
             ref={ref}
             showIcon
             selected={date}
-            wrapperClassName={cn(cls.wrapper, error && cls.error)}
+            wrapperClassName={cn(cls.wrapper, error && cls.error,)}
             className={cn(cls.datepicker, className)}
             icon={<CalendarIcon />}
             onChange={handleChange}
@@ -36,6 +37,7 @@ const DatePicker = forwardRef(({
             disabled={disabled}
             readOnly={readOnly}
             calendarStartDay={1}
+            disabledKeyboardNavigation
             {...otherProps}
         />
     );

@@ -4,17 +4,18 @@ import ButtonLoader from '../../ButtonLoader';
 
 const Button = ({ 
     children,
-    className = '',
     onClick,
     disabled,
-    type = 'button',
     isLoading,
+    className = '',
+    type = 'button',
+    rounded = false,
     ...otherProps
 }) => {
     return (
         <button 
             type={type}
-            className={cn(cls.btn, className)}
+            className={cn(cls.btn, rounded && cls.rounded, className)}
             onClick={isLoading ? e => e.preventDefault() : onClick}
             disabled={disabled}
             {...otherProps}

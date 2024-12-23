@@ -1,0 +1,50 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    &>label {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+
+        &>span {
+            font-size: 14px;
+            line-height: 16.44px;
+            color: var(--dark-gray-700-color);
+        }
+
+        &>input,
+        &>textarea {
+            flex-grow: 1;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16.44px;
+            border: none;
+        }
+
+        &>input[type="file"] {
+            display: none;
+            flex-grow: 0;
+        }
+    }
+
+    &__file {
+        height: 20px;
+        cursor: pointer;
+        align-items: center !important;
+
+        &__name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16.44px;
+            color: var(--black-color) !important;
+        }
+
+        & > div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

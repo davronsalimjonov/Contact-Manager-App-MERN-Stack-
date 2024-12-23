@@ -1,4 +1,4 @@
-import { daysOfWeekFull, daysOfWeekShort } from "@/constants";
+import axios from "axios";
 
 export const formatPrice = num => {
     num = String(num).replace(/\s+/g, '').replace(/[^+\d]/g, '')
@@ -28,14 +28,6 @@ export const getUserFullName = (user) => {
 
 export function removeEmptyKeys(obj) {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
-}
-
-export function getDayName(dayNumber, format = 'full') {
-    if (dayNumber < 0 || dayNumber > 6) {
-        return 'Noto‘g‘ri kun raqami';
-    }
-
-    return format === 'short' ? daysOfWeekShort[dayNumber] : daysOfWeekFull[dayNumber];
 }
 
 export function debounce(func, timeout = 300) {
@@ -81,17 +73,6 @@ export const onImageError = (e, url = '/images/not-found.jpg') => {
     e.target.src = url
 }
 
-export function convertSecondsToTimeFormat(seconds = 0) {
-    if(isNaN(seconds)) {
-        seconds = 0
-    }
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-    return `${formattedMinutes}:${formattedSeconds}`;
-}  
-
 export const adjustHeight = (e, { minHeight = 50, maxHeight = 200 } = {}) => {
     const textarea = e.target;
     if (!textarea) return;
@@ -99,16 +80,71 @@ export const adjustHeight = (e, { minHeight = 50, maxHeight = 200 } = {}) => {
     textarea.style.height = 'inherit';
 
     const computed = window.getComputedStyle(textarea);
-    const height = textarea.scrollHeight
-        + parseInt(computed.paddingTop)
-        + parseInt(computed.paddingBottom);
+    const height = textarea.scrollHeight + parseInt(computed.paddingTop) + parseInt(computed.paddingBottom);
 
-    const limitedHeight = Math.max(
-        Math.min(height, maxHeight),
-        minHeight
-    );
+    const limitedHeight = Math.max(Math.min(height, maxHeight), minHeight);
 
     textarea.style.height = `${limitedHeight}px`;
 
     textarea.style.overflowY = height > maxHeight ? 'auto' : 'hidden';
 };
+
+export function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+export const getFileFromUrl = (url, fileName) => {
+    return axios.get(url, { responseType: 'blob' }).then((res) => {
+        return new File([res.data], fileName, { type: res.data?.type })
+    })
+}
+
+export function formatFileSize(sizeInKilobytes = 0) {
+    if(isNaN(sizeInKilobytes) && sizeInKilobytes == null) return '0 KB';
+    const units = ["KB", "MB", "GB", "TB", "PB"];
+    let index = 0;
+
+    let size = sizeInKilobytes;
+    while (size >= 1024 && index < units.length - 1) {
+        size /= 1024;
+        index++;
+    }
+
+    return `${size?.toFixed(2)} ${units[index]}`;
+}
+
+export function getProportionalDimensions({
+    maxWidth = 0, 
+    maxHeight = 0, 
+    minWidth = 0, 
+    minHeight = 0, 
+    originalWidth = 0, 
+    originalHeight = 0
+} = {}) {
+    const widthRatio = maxWidth / originalWidth;
+    const heightRatio = maxHeight / originalHeight;
+    const scale = Math.min(widthRatio, heightRatio);
+
+    let newWidth = Math.round(originalWidth * scale);
+    let newHeight = Math.round(originalHeight * scale);
+
+    // Применяем минимальные размеры после масштабирования
+    if (newWidth < minWidth || newHeight < minHeight) {
+        const minScale = Math.max(minWidth / originalWidth, minHeight / originalHeight);
+        newWidth = Math.round(originalWidth * minScale);
+        newHeight = Math.round(originalHeight * minScale);
+    }
+
+    // Убедимся, что новые размеры не превышают максимальные ограничения
+    if (newWidth > maxWidth || newHeight > maxHeight) {
+        const maxScale = Math.min(maxWidth / originalWidth, maxHeight / originalHeight);
+        newWidth = Math.round(originalWidth * maxScale);
+        newHeight = Math.round(originalHeight * maxScale);
+    }
+
+    return { width: newWidth, height: newHeight };
+}

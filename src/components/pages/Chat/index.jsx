@@ -1,32 +1,37 @@
 import { useParams } from 'react-router-dom';
 import useGetChat from '@/hooks/useGetChat';
 import { getUserFullName } from '@/utils/lib';
-import ChatConversation from '@/components/templates/ChatConversation';
-import cls from './Chat.module.scss';
 import Loader from '@/components/UI/atoms/Loader';
 import ChatSidebar from '@/components/templates/ChatSidebar';
+import ChatConversation from '@/components/templates/ChatConversation';
+import cls from './Chat.module.scss';
 
 const Chat = () => {
-    const { chatId } = useParams()
-    const {
-        info: { data: info, isLoading: isLoadingInfo },
-        messages: { data: messages, isLoadingMessages }
-    } = useGetChat(chatId)
+    const { userCourseId } = useParams()
+    const { data: info, isLoading: isLoadingInfo, conversationId } = useGetChat(userCourseId)
 
     return (
         <div className={cls.page}>
             {!isLoadingInfo ? (
-                <ChatConversation
-                    chatId={info?.id}
-                    partnerFullName={getUserFullName(info?.user)}
-                    partnerPhoneNumber={info?.user?.phone}
-                    messages={messages}
-                    isLoadingMessages={isLoadingMessages}
-                />
+                <>
+                    <ChatConversation
+                        userCourseId={userCourseId}
+                        conversationId={conversationId}
+                        partnerFullName={getUserFullName(info?.user)}
+                        partnerPhoneNumber={info?.user?.phone}
+                    />
+                    <ChatSidebar
+                        conversationId={conversationId}
+                        userCourseId={userCourseId} 
+                        firstPhoneNumber={info?.user?.phone}
+                        secondPhoneNumber={info?.user?.secondPhone}
+                        thirdPhoneNumber={info?.user?.thirdPhone}
+                        email={info?.user?.email}
+                    />
+                </>
             ) : (
                 <Loader />
             )}
-            <ChatSidebar />
         </div>
     );
 }

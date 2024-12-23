@@ -1,6 +1,7 @@
+import { getDayName } from '@/utils/time';
+import { getUserFullName } from '@/utils/lib';
 import Mapper from '@/components/UI/atoms/Mapper';
 import Loader from '@/components/UI/atoms/Loader';
-import { getDayName, getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import StudentsTableRow from '../../UI/moleculs/StudentsTableRow';
 import StudentsTableHeader from '../../UI/organisms/StudentsTableHeader';
@@ -26,6 +27,8 @@ const StudentsTable = ({
                                 <StudentsTableRow
                                     key={student?.id}
                                     index={index + 1}
+                                    unreadedMessagesCount={student?.messageCount}
+                                    avatar={student?.url}
                                     fullName={getUserFullName(student)}
                                     phoneNumber={student?.phone}
                                     days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}

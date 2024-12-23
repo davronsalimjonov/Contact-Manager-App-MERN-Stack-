@@ -1,13 +1,20 @@
+import { getTimeFromDate } from '@/utils/time';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatCommentMessage.module.scss';
 
 const ChatCommentMessage = ({
     text = '',
     fullName = '',
+    avatar = '',
     time = ''
 }) => {
     return (
-        <ChatMessageLayout fullName={fullName} time='Commented 19:01'>
+        <ChatMessageLayout 
+            date={time}
+            avatar={avatar} 
+            fullName={fullName} 
+            time={`Commented ${getTimeFromDate(time)}`}
+        >
             <div className={cls.comment}>
                 <span>{text}</span>
             </div>

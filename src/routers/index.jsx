@@ -7,6 +7,7 @@ import Settings from "@/components/pages/Settings";
 import Dashboard from "@/components/pages/Dashboard";
 import Workspace from "@/components/pages/Workspace";
 import MyStudents from "@/components/pages/MyStudents";
+import MentorTasks from "@/components/pages/MentorTasks";
 import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
@@ -59,7 +60,7 @@ const callTecherRoutes = createBrowserRouter([
                 element: <SingleStudent />
             },
             {
-                path: '/students/chat/:chatId',
+                path: '/students/chat/:userCourseId',
                 element: <Chat />
             },
             {
@@ -69,6 +70,10 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '/settings',
                 element: <Settings />
+            },
+            {
+                path: '/tasks',
+                element: <MentorTasks />
             },
             {
                 path: 'mentor',
