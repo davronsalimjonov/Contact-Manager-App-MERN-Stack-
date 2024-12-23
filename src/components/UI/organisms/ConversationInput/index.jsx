@@ -11,6 +11,7 @@ import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import { adjustHeight, cn, generateUUID, objectToFormData } from '@/utils/lib';
 import { createComment, createLessonTask, createTextMessage, createSms, updateHomeTask } from '@/services/chat';
 import { CloseIcon, SendIcon } from '../../atoms/icons';
+import SmsTemplateButton from '../SmsTemplateButton';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
 import cls from './ConversationInput.module.scss';
@@ -38,7 +39,7 @@ const ConversationInput = ({ userCourseId }) => {
     const { editMessage, onEditComplete } = useContext(ChatMessageEditContext)
     const { conversationId, data: { user: { id: studentId } } } = useGetChat(userCourseId)
     const { addNewMessage, updateMessage, messages } = useGetChatMessages(conversationId)
-    const { register, handleSubmit, reset, getValues, watch, formState: { isDirty, isValid } } = methods
+    const { register, handleSubmit, reset, getValues, setValue, watch, formState: { isDirty, isValid } } = methods
     const [messageType, setMessageType] = useState(MessageTypes.TEXT)
     const [isOpenDatepicker, setIsOpenDatepicker] = useState(false)
     const taskDatepickerRef = useClickOutside({ onClickOutside: () => setIsOpenDatepicker(false) })
@@ -200,6 +201,21 @@ const ConversationInput = ({ userCourseId }) => {
                 ></textarea>
             )}
             <div className={cls.input__controls}>
+                <div>
+                    {messageType === MessageTypes.SMS && (
+                        <SmsTemplateButton 
+                            onSelect={(message) => setValue('message', message, { shouldDirty: true, shouldValidate: true })} 
+                        />
+                    )}
+                </div>
+                <div>
+                    <button
+                        className={cls.input__controls__send}
+                        disabled={!isDirty || !isValid}
+                    >
+                        <SendIcon />
+                    </button>
+                </div>
                 {isOpenDatepicker && (
                     <div
                         className={cls.input__controls__task__datepicker}
@@ -211,12 +227,6 @@ const ConversationInput = ({ userCourseId }) => {
                         />
                     </div>
                 )}
-                <button
-                    className={cls.input__controls__send}
-                    disabled={!isDirty || !isValid}
-                >
-                    <SendIcon />
-                </button>
             </div>
         </form>
     );

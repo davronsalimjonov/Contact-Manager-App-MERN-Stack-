@@ -46,8 +46,14 @@
     &__controls {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: space-between;
         position: relative;
+
+        & > div{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
         &__send {
             width: 40px;

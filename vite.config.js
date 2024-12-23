@@ -7,10 +7,6 @@ import compression from 'vite-plugin-compression';
 export default defineConfig({
   plugins: [react(), compression()],
   server: { host: true },
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-  },
   build: {
     rollupOptions: {
       output: {
@@ -20,8 +16,25 @@ export default defineConfig({
       },
     },
     minify: 'esbuild',
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true,
+    },
   },
   optimizeDeps: {
+    esbuildOptions: {
+      plugins: [
+        {
+          name: 'load-js-files-as-jsx',
+          setup(build) {
+            build.onLoad({ filter: /node_modules\/react-avatar\/.*\.js$/ }, async (args) => ({
+              loader: 'jsx',
+            }))
+          },
+        },
+      ],
+    },
+    include: ['react-avatar'],
     exclude: ['js-big-decimal']
   },
   resolve: {
@@ -34,6 +47,10 @@ export default defineConfig({
         find: 'path', 
         replacement: 'path-browserify' 
       },
+      {
+        find: /^core-js-pure\/stable\/(.*)/,
+        replacement: 'core-js-pure/es/$1'
+      }
     ]
   },
   css: {

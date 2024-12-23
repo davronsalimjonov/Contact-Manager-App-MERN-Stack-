@@ -28,8 +28,8 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NotificationProvider>
-        <Routers />
-        <Toaster />
+          <Routers />
+          <Toaster />
         </NotificationProvider>
       </PersistGate>
     </Provider>
