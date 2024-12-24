@@ -4,38 +4,110 @@ import { getDayName } from '@/utils/time';
 import { getUserFullName } from '@/utils/lib';
 import Mapper from '@/components/UI/atoms/Mapper';
 import Loader from '@/components/UI/atoms/Loader';
-import EmptyData from '@/components/UI/organisms/EmptyData';
-import StudentsTableRow from '../../UI/moleculs/StudentsTableRow';
-import StudentsTableHeader from '../../UI/organisms/StudentsTableHeader';
 import cls from './MainMentorStudentsTable.module.scss';
 import MainMentorStudentsTableRow from '@/components/UI/moleculs/MainMentorStudentsTableRow';
 import MainMentorStudentsTableHeader from '@/components/UI/organisms/MainMentorsStudentsTableHeader';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import Dialog from '@/components/UI/moleculs/Dialog';
-import { useState } from 'react';
 import RedButton from '@/components/UI/atoms/Buttons/RedButton';
 import Select from '@/components/UI/atoms/Form/Select';
-import useGetGroups from '@/hooks/useGetGroups';
+import { customToast } from '@/utils/toast';
+import { CloseIcon } from '@/components/UI/atoms/icons';
+import { useState } from 'react';
 
 const MainMentorStudentsTable = ({
     students = [],
-    triggerRef,
     isLoading,
-    groupName='',
-    groupId='',
-    isFetched=false
+    selectedStudents=[],
+    groupSelectStudents,
+    setSelectedStudents,
+    handleAddStudentToGroup,
+    isLoadingGroupSelectStudents,
+    activeGroup=''
 }) => {
+    const selectStudentOptions = []
     const [isModal, setIsModal] = useState(false)
-    
+    const handleStudentChange = (selectedOptions) => {
+        const selectedValues = selectedOptions?.map((option) => option.value) || []
 
-    const { 
-        groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents } 
-    } = isFetched? useGetGroups({ group: groupId }, groupId) : { groupSelectStudents: { data: null, isLoading: false } };
+        const duplicateSelections = selectedValues.filter(value =>
+            selectedStudents.includes(value)
+        );
+    
+        if (duplicateSelections.length > 0) {
+            customToast.error("Bu o'quvchini Tanladingiz");
+        } else {
+            setSelectedStudents((prevSelectedStudents) => {
+                const newSelectedStudents = [...prevSelectedStudents, ...selectedValues];
+                return [...new Set(newSelectedStudents)]; 
+            });
+        }
+    }
+
+    groupSelectStudents?.forEach(groupStudent => {
+        selectStudentOptions.push({value: groupStudent?.id, label: `${groupStudent?.user?.firstName} ${groupStudent?.user?.lastName}`, level: `${groupStudent?.level}`})
+    })
+
+    const handleClick = (studentToRemove) => {
+        setSelectedStudents((prevSelectedStudents) => {
+            return prevSelectedStudents.filter((student) => student!== studentToRemove);
+        });
+    }
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {students?.length > 0 ? (
-                <table className={cls.table}>
+            {students?.length === 0 ? (
+                    <div className={cls.mainMentorNoData}>
+                        <p><span>"{activeGroup}"</span> guruh shakllantirildi. <br />
+                        Guruhingizga o’quvchi biriktirsangiz bo’ladi.</p>
+                        <div>
+                            <Button className={cls.bar__form__button} onClick={
+                                () => {
+                                    setIsModal(true)
+                                }
+                            }>
+                                O'quvchi Qo'shish
+                                <span>+</span>
+                            </Button>
+                        </div>
+                        <Dialog isOpen={isModal} onClose={() => {
+                            setIsModal(false)
+                            setSelectedStudents([])
+                        }}>
+                            <form className={cls.MainMentorStudentsGroupTab__dialog}>
+                                <div className={cls.MainMentorStudentsGroupTab__dialog__select}>
+                                    {!isLoadingGroupSelectStudents ?
+                                        <>
+                                            <label htmlFor="select">O'quvchi Qo'shish</label>
+                                            <Select
+                                                placeholder="O'quvchi Tanlang"
+                                                options={selectStudentOptions}
+                                                onChange={handleStudentChange}
+                                                value={[]}
+                                                isMulti
+                                                isClearable
+                                                isSearchable={true}
+                                            />
+                                        </> : <Loader />
+                                    }
+                                </div>
+                                {selectedStudents?.map((selectedId) => (
+                                    <div key={`selectedStudendts-${selectedId}`} className={cls.selectedStudentOption}>
+                                        <p>{selectStudentOptions.find(option => option.value === selectedId)?.label || ""}</p>
+                                        <button onClick={() => handleClick(selectedId)}><CloseIcon /></button>
+                                    </div>
+                                ))}
+                                <div className={cls.MainMentorStudentsGroupTab__dialog__buttons}>
+                                    <RedButton onClick={() => {
+                                        setIsModal(false)
+                                        setSelectedStudents([])
+                                    }}>Bekor Qilish</RedButton>
+                                    <Button onClick={handleAddStudentToGroup}>Qo'shish</Button>
+                                </div>
+                            </form>
+                        </Dialog>
+                    </div>
+            ) : <table className={cls.table}>
                     <MainMentorStudentsTableHeader />
                     <tbody>
                         <Mapper
@@ -56,50 +128,12 @@ const MainMentorStudentsTable = ({
                                     userCourseId={student.id}
                                     hidden={true}
                                     chatId={student?.id}
+                                    group={student?.level}
                                 />
                             )}
                         />
-                        <tr ref={triggerRef}></tr>
                     </tbody>
-                </table>
-            ) : (
-                !isLoading &&
-                groupName && (
-                    <div className={cls.mainMentorNoData}>
-                        <p><span>"{groupName}"</span> guruh shakllantirildi. <br />
-                        Guruhingizga o’quvchi biriktirsangiz bo’ladi.</p>
-                        <div>
-                            <Button className={cls.bar__form__button} onClick={
-                                () => {
-                                    setIsModal(true)
-                                }
-                            }>
-                                O'quvchi Qo'shish
-                                <span>+</span>
-                            </Button>
-                        </div>
-                        <Dialog isOpen={isModal} onClose={() => setIsModal(false)}>
-                            <form className={cls.MainMentorStudentsGroupTab__dialog}>
-                                <div className={cls.MainMentorStudentsGroupTab__dialog__select}>
-                                    <label htmlFor="select">O'quvchi Qo'shish</label>
-                                    <Select
-                                        placeholder="O'quvchi Tanlang"
-                                        // options={callMentorOptions}
-                                        // value={selectedMentor}
-                                        // onChange={handleMentorChange}
-                                        isClearable
-                                        isSearchable={true}
-                                    />
-                                </div>
-                                <div className={cls.MainMentorStudentsGroupTab__dialog__buttons}>
-                                    <RedButton onClick={() => setIsModal(false)}>Bekor Qilish</RedButton>
-                                    <Button>Qo'shish</Button>
-                                </div>
-                            </form>
-                        </Dialog>
-                    </div>
-                )
-            )}
+                </table>}
             {isLoading && <Loader size={80} />}
         </div>
     );

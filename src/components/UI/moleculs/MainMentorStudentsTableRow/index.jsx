@@ -10,7 +10,6 @@ const MainMentorStudentsTableRow = ({
     index = 0,
     avatar = '',
     status = '',
-    chatId = '',
     fullName = '',
     phoneNumber = '',
     userCourseId = '',
@@ -22,10 +21,11 @@ const MainMentorStudentsTableRow = ({
 
     const dropdownMenuItems = [
         { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(userCourseId) },
+        { label: 'Transfer Student'},
     ]
 
     return (
-        <tr className={cls.row} onClick={() => navigate(`/students/chat/${chatId}`)}>
+        <tr className={cls.row}>
             <td>{index}</td>
             <td className={cls.row__name}>
                 <div className={cls.row__notification}>

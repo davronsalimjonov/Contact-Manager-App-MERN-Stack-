@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import useGetGroups from '@/hooks/useGetGroups';
-import useGetStudents from '@/hooks/useGetStudents';
 import cls from './MainMentorStudents.module.scss';
 import MainMentorStudentsTable from '@/components/templates/MainMentorStudentsTable';
 import MainMentorStudentsSearchBar from '@/components/UI/organisms/MainMentorStudentsSearchBar/indsx';
@@ -8,7 +7,8 @@ import MainMentorStudentsGroupTab from '@/components/UI/organisms/MainMentorStud
 import { useGetMentors } from '@/hooks/useGetMentors';
 import { useGetUserId } from '@/hooks/useGetUser';
 import Loader from '@/components/UI/atoms/Loader';
-
+import { customToast } from '@/utils/toast';
+import { addStudentsToGroup, createGroups } from '@/services/groups';
 
 const MainMentorStudents = () => {
     const academyMentor = useGetUserId()
@@ -16,18 +16,21 @@ const MainMentorStudents = () => {
     const [groupId, setGroupId] = useState('')
     const [groupName, setGroupName] = useState('')
     const [selectedMentor, setSelectedMentor] = useState(null)
-    const [isFetched, setIsFetched] = useState(false)
-    const { ref, data: students, isLoading: isLoadingStudents } = useGetStudents(filter)
+    const [isModal, setIsModal] = useState(false)
+    const [selectedStudents, setSelectedStudents] = useState([])
+    const [activeGroup, setActiveGroup] = useState('Barchasi') 
+    
     const { 
         callMentors: { data: callMentors, isLoading: isLoadingCallMentors},
     } = useGetMentors()
 
     const {
         groups: {data: groups, isLoading: isGroupsLoading},
-        groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading }
-    } = useGetGroups({ group: groupId }, groupId)
+        groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading },
+        groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents } 
+    } = useGetGroups({ group: groupId, ...filter }, groupId)
 
-    const callMentorOptions = callMentors?.callMentors?.map((item) => (
+    const callMentorOptions = callMentors?.map((item) => (
         {
             value: `${item?.id}`,
             label: `${item?.firstName} ${item?.lastName}`
@@ -42,76 +45,131 @@ const MainMentorStudents = () => {
         setSelectedMentor(option)
     }
 
-    const handleCreateGroup = () => {
+    const tabOptions = [
+        { value: '', label: 'Barchasi' },
+      ]
+    
+    groups?.forEach(group => {
+        tabOptions.push({ value: group.id, label: group.title })
+    })
+
+    const handleCreateGroup = async () => {
         try {
             if (!groupName) {
-            customToast.error("Guruh nomi bo'sh bo'lishi mumkin emas")
-            return
+                customToast.error("Guruh nomi bo'sh bo'lishi mumkin emas");
+                return;
             }
-        
+    
             if (!selectedMentor) {
-            customToast.error("Nazoratchi mentor tanlanmagan")
-            return
+                customToast.error("Nazoratchi mentor tanlanmagan");
+                return;
             }
-        
+    
             const existingGroup = tabOptions.find((tab) => tab.label === groupName);
-            if (existingGroup) {
-            customToast.error("Bunday Guruh Mavjud. Guruhga Boshqa Nom Bering!");
-            return;
-            } else {
-            createGroups({
-                title: groupName,
-                academyMentor,
-                callMentor: selectedMentor.value,
-            });
-            setIsModal(false);
-            setGroupName('');
-            setSelectedMentor(null);
-            customToast.success("Gurux yaratildi!");
+            if (!existingGroup) {
+                const response = await createGroups({
+                    title: groupName,
+                    academyMentor,
+                    callMentor: selectedMentor.value,
+                });
+    
+                console.log("Full Response Object:", response);
+    
+                if (response?.status === 201) {
+                    setIsModal(false);
+                    setGroupName("");
+                    setSelectedMentor(null);
+                    customToast.success("Gurux yaratildi!");
+                } else {
+                    customToast.error("Yaratishda xatolik yuz berdi.");
+                }
             }
         } catch (error) {
-            customToast.error("Xatolik Yuz Berdi")
+            console.error("Error Details:", error);
+            if (error.response) {
+                console.error("Error Response:", error.response);
+                customToast.error(
+                    `Xatolik Yuz Berdi: ${error.response.status} - ${error.response.data.message || "Unknown Error"}`
+                );
+            } else {
+                customToast.error("Xatolik Yuz Berdi");
+            }
         }
-    }
+    };
+    
+
+    const handleAddStudentToGroup = async () => {
+        try {
+            if (!selectedStudents || selectedStudents.length === 0) {
+                customToast?.error("O'quvchilar Qo'shing");
+                return;
+            }
+    
+            const response = await addStudentsToGroup({
+                group: groupId,
+                studentIds: selectedStudents,
+            });
+    
+            console.log(response)
+    
+            if (response?.status === 201) {
+                setSelectedStudents([]); 
+                customToast?.success("O'quvchilar Guruxga Qo'shildi");
+            } else {
+                customToast?.error(`Xatolik: ${response?.statusText || "Unknown Error"}`);
+            }
+        } catch (error) {
+            customToast?.error("Xatolik Yuz Berdi");
+        }
+    };
+
+    console.log(tabOptions);
+    
 
     return (
         <div className={cls.page}>
             {
-                (
-                    !isGroupStudentsLoading &&
-                    !isGroupsLoading
-                ) ? (
-                    <>
-                        <MainMentorStudentsGroupTab 
-                            groups={groups} 
-                            handleMentorChange={handleMentorChange} 
-                            handleGroupNameChange={handleGroupNameChange}
-                            handleCreateGroup={handleCreateGroup}
-                            callMentorOptions={callMentorOptions}
-                            groupName={groupName}
-                            setGroupName={setGroupName}
-                            selectedMentor={selectedMentor}
-                            setGroupId={setGroupId}
-                            setIsFetched={setIsFetched}
+                <>
+                    <MainMentorStudentsGroupTab 
+                        handleMentorChange={handleMentorChange} 
+                        handleGroupNameChange={handleGroupNameChange}
+                        handleCreateGroup={handleCreateGroup}
+                        callMentorOptions={callMentorOptions}
+                        groupName={groupName}
+                        setGroupName={setGroupName}
+                        selectedMentor={selectedMentor}
+                        setGroupId={setGroupId}
+                        tabOptions={tabOptions}
+                        isModal={isModal}
+                        setIsModal={setIsModal}
+                        activeGroup={activeGroup}
+                        setActiveGroup={setActiveGroup}
+                    />
+                    <MainMentorStudentsSearchBar
+                        onChangeFirstName={e => setFilter(state => ({...state, firstName: e.target.value?.trim() }))}
+                        onChangeLastName={e => setFilter(state => ({...state, lastName: e.target.value?.trim() }))}
+                        onChangePhone={phone => setFilter(state => ({...state, phone }))}
+                        onChangeGroup={level => setFilter(state => ({...state, level: level?.label}))}
+                        onChangeStatus={(status) => setFilter(state => ({...state, status: status?.value }))}
+                    />
+                    {!isGroupStudentsLoading ? (
+                        <MainMentorStudentsTable  
+                            students={groupStudents?.items}
+                            isLoading={isGroupStudentsLoading}
+                            selectedStudents={selectedStudents}
+                            groupSelectStudents={groupSelectStudents}
+                            setSelectedStudents={setSelectedStudents}
+                            handleAddStudentToGroup={handleAddStudentToGroup}
+                            isLoadingGroupSelectStudents={isLoadingGroupSelectStudents}
+                            isModal={isModal}
+                            setIsModal={setIsModal}
+                            activeGroup={activeGroup}
                         />
-                        <MainMentorStudentsSearchBar
-                            onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
-                            onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
-                            onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
-                            onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
-                        />
-                        <MainMentorStudentsTable    
-                            triggerRef={ref}
-                            students={students}
-                            isLoading={isLoadingStudents}
-                            groupName={groupName}
-                            groupId={groupId}
-                            isFetched={isFetched}
-                        />
-                    </>
-                ) : (<Loader />)
+                    ) : (
+                        <Loader />
+                    )}
+                </>
             }
-            
         </div>
     );
 }

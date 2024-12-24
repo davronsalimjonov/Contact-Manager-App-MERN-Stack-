@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import WhiteButton from '../../atoms/Buttons/WhiteButton'
 import Button from '../../atoms/Buttons/Button'
 import Dialog from '../../moleculs/Dialog'
@@ -8,7 +8,6 @@ import cls from './MainMentorStudentsGroupTab.module.scss'
 import FormInput from '../../moleculs/Form/FormInput'
 
 const MainMentorStudentsGroupTab = ({
-    groups,
     handleGroupNameChange,
     handleMentorChange,
     handleCreateGroup,
@@ -17,18 +16,12 @@ const MainMentorStudentsGroupTab = ({
     setGroupName,
     selectedMentor=null, 
     setGroupId,
-    setIsFetched
-  }) => {
-  const [isModal, setIsModal] = useState(false)
-  const [activeGroup, setActiveGroup] = useState('Barchasi') 
-
-  const tabOptions = [
-    { value: '', label: 'Barchasi' },
-  ]
-
-  groups?.forEach(group => {
-      tabOptions.push({ value: group.id, label: group.title })
-  })
+    tabOptions,
+    isModal=false,
+    setIsModal,
+    activeGroup='Barchasi',
+    setActiveGroup
+  }) => { 
 
   return (
     <div className={cls.MainMentorStudentsGroupTab}>
@@ -39,7 +32,6 @@ const MainMentorStudentsGroupTab = ({
             className={activeGroup === `${tab?.label}` ? cls.activeButton : cls.inactiveButton}
             onClick={() => {
               setActiveGroup(`${tab?.label}`)
-              setIsFetched(true)
               tab?.label === "Barchasi" ? setGroupName('') : setGroupName(tab?.label)
               tab?.label === "Barchasi" ? setGroupId('') : setGroupId(tab?.value)
             }} 
@@ -48,10 +40,12 @@ const MainMentorStudentsGroupTab = ({
             {tab?.label}
           </Button>
         ))}
-        <WhiteButton onClick={() => setIsModal(true)} className={cls.MainMentorStudentsGroupTab__tabs__whiteBtn}>
-          Guruh Qo'shish
-          <span>+</span>
-        </WhiteButton>
+        {tabOptions.length < 7 ? (
+          <WhiteButton onClick={() => setIsModal(true)} className={cls.MainMentorStudentsGroupTab__tabs__whiteBtn}>
+            Guruh Qo'shish
+            <span>+</span>
+          </WhiteButton>
+        ) : <></>}
       </div>
       <Dialog isOpen={isModal} onClose={() => setIsModal(false)}>
         <form className={cls.MainMentorStudentsGroupTab__dialog}>
@@ -73,6 +67,7 @@ const MainMentorStudentsGroupTab = ({
                 value={selectedMentor}
                 onChange={handleMentorChange}
                 isClearable
+                isSearchable
               />
             </div>
           </div>

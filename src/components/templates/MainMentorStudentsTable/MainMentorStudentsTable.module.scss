@@ -53,3 +53,18 @@
     gap: 10px;
   }
 }
+
+.selectedStudentOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F8FBFF;
+  padding: 12px 15px;
+  border-radius: 4px;
+
+  & button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

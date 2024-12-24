@@ -11,6 +11,7 @@ const MainMentorStudentsSearchBar = ({
     onChangeFirstName,
     onChangeLastName,
     onChangePhone,
+    onChangeGroup
 }) => {
     const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
     const studentGroups = GROUPS.map((status) => ({ value: status, label: status }))
@@ -36,7 +37,7 @@ const MainMentorStudentsSearchBar = ({
                 className={cls.bar__form__select}
                 placeholder='Group user'
                 options={studentGroups}
-                onChange={onChangeStatus}
+                onChange={onChangeGroup}
                 isClearable
             />
             <Select
