@@ -6,7 +6,6 @@
             border: none;
             padding: 10px 16px;
             text-align: left;
-
             font-size: 16px;
             font-weight: 500;
             line-height: 20px;
@@ -16,6 +15,8 @@
             white-space: nowrap;
 
             &:first-child {
+                padding-right: 0;
+                width: 20px;
                 border-top-left-radius: 6px;
                 border-bottom-left-radius: 6px;
             }

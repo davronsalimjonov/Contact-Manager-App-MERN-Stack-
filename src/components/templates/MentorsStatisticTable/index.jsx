@@ -7,31 +7,27 @@ import ServisStatisticTableHeader from '@/components/UI/organisms/ServisStatisti
 import { getUserFullName } from '@/utils/lib';
 
 const MentorsStatisticTable = ({
-    headers,
     data = [],
     isLoading = false,
-    activeTab
 }) => {
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             {data?.length > 0 ? (
                 <table className={cls.table}>
-                    <ServisStatisticTableHeader headers={headers} />
+                    <ServisStatisticTableHeader headers={["№", "Asosiy o’qituvchi", "Aktivlik", "Reytingi"]} />
                     <tbody>
                         <Mapper
                             data={data}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(mentor, index) => (
-                                <MentorsStatisticTableRow key={mentor?.id}
+                                <MentorsStatisticTableRow key={`mentors+${mentor?.id}`}
                                     index={index + 1}
                                     mentor={getUserFullName(mentor)}
                                     avatar={mentor?.url}
                                     avarageRate={mentor?.rate}
-                                    countStudents={mentor?.countStudents}
+                                    // countStudents={mentor?.countStudents}
                                     activity={mentor?.activity}
-                                // monthlyCall,
-                                // dailyCall,
                                 />
                             )}
                         />

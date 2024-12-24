@@ -1,39 +1,39 @@
-import cls from './MentorsStatisticLeaderboard.module.scss';
+import cls from './CallMentorsStatisticTable.module.scss';
 import Mapper from "@/components/UI/atoms/Mapper";
 import Loader from "@/components/UI/atoms/Loader";
 import EmptyData from "@/components/UI/organisms/EmptyData";
+import ServisStatisticTableHeader from '@/components/UI/organisms/ServisStatisticTableHeader';
 import { getUserFullName } from '@/utils/lib';
-import MentorsStatisticLeaderboardTableRow from '@/components/UI/moleculs/MentorsStatisticLeaderboardTableRow';
+import CallMentorsStatisticTableRow from '@/components/UI/moleculs/CallMentorsStatisticTableRow';
 
-
-// TODO
-const MentorsStatisticLeaderboard = ({
-    data,
-    isLoading
+const CallMentorsStatisticTable = ({
+    data = [],
+    isLoading = false,
 }) => {
     return (
-        <div className={cls.leaderboard}>
+        <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             {data?.length > 0 ? (
-                <>
-                <h2 className={cls.leaderboard__header}>Leaderboard</h2>
-                <table className={cls.leaderboard__table}>
+                <table className={cls.table}>
+                    <ServisStatisticTableHeader headers={["№", "Nazoratchi o’qituvchi", "Oylik call", "Kunlik call", "Reytingi"]} />
                     <tbody>
                         <Mapper
                             data={data}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(mentor, index) => (
-                                <MentorsStatisticLeaderboardTableRow key={mentor?.id}
+                                <CallMentorsStatisticTableRow key={mentor?.id}
                                     index={index + 1}
                                     mentor={getUserFullName(mentor)}
                                     avatar={mentor?.url}
                                     avarageRate={mentor?.rate}
+                                    // countStudents={mentor?.countStudents}
+                                    monthCall={mentor?.callCount}
+                                    dailyCall={mentor?.averageCallPerDay}
                                 />
                             )}
                         />
                     </tbody>
                 </table>
-                </>
             ) : (
                 !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas." />
             )}
@@ -42,4 +42,4 @@ const MentorsStatisticLeaderboard = ({
     )
 }
 
-export default MentorsStatisticLeaderboard;
+export default CallMentorsStatisticTable;

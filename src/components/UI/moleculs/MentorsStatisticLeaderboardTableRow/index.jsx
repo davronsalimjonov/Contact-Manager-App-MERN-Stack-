@@ -1,13 +1,11 @@
 import Avatar from 'react-avatar';
-import cls from './MentorsStatisticTableRow.module.scss';
-import {FirstPlaceIcon, SecondPlaceIcon, StarIcon, ThirdPlaceIcon } from '../../atoms/icons';
+import cls from './MentorStatisticLeaderboardTableRow.module.scss';
+import { FirstPlaceIcon, SecondPlaceIcon, ThirdPlaceIcon } from '../../atoms/icons';
 
-const MentorsStatisticTableRow = ({
+const MentorsStatisticLeaderboardTableRow = ({
     index,
     avatar,
     mentor,
-    // countStudents,
-    activity,
     avarageRate,
 }) => {
     return (
@@ -21,16 +19,12 @@ const MentorsStatisticTableRow = ({
                 </span>
             </td>
             <td>
-
-
                 <Avatar round={true} size='40' name={mentor} src={avatar} />
                 {mentor}
             </td>
-            {/* <td>{countStudents}</td> */}
-            <td>{activity}</td>
-            <td><span className={cls.row__rate}><StarIcon begining={avarageRate * 20} />{avarageRate}</span></td>
+            <td className={cls.row__td}><span className={cls.row__rate}>{avarageRate}</span></td>
         </tr>
     )
 }
 
-export default MentorsStatisticTableRow;
+export default MentorsStatisticLeaderboardTableRow;
