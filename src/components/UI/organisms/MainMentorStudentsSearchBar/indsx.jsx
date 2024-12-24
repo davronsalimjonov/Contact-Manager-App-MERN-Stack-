@@ -1,5 +1,5 @@
 import { debounce } from '@/utils/lib';
-import { GROUPS, STUDENT_STATUS_ENUMS } from '@/constants';
+import { GROUPS } from '@/constants';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import PhoneInput from '../../atoms/Form/PhoneInput';
@@ -11,9 +11,10 @@ const MainMentorStudentsSearchBar = ({
     onChangeFirstName,
     onChangeLastName,
     onChangePhone,
-    onChangeGroup
+    onChangeGroup,
+    statusOptions=[]
 }) => {
-    const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
+    
     const studentGroups = GROUPS.map((status) => ({ value: status, label: status }))
 
     return (

@@ -68,3 +68,14 @@
     justify-content: center;
   }
 }
+
+.transferSelects {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transferSelects__select {
+  margin-top: 5px;
+}
+

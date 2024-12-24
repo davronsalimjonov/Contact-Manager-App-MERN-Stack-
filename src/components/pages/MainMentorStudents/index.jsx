@@ -9,6 +9,9 @@ import { useGetUserId } from '@/hooks/useGetUser';
 import Loader from '@/components/UI/atoms/Loader';
 import { customToast } from '@/utils/toast';
 import { addStudentsToGroup, createGroups } from '@/services/groups';
+import { STUDENT_STATUS_ENUMS } from '@/constants';
+import StudentStatus from '@/components/UI/atoms/StudentStatus';
+import { useGetCourse } from '@/hooks/useGetCourse';
 
 const MainMentorStudents = () => {
     const academyMentor = useGetUserId()
@@ -25,6 +28,10 @@ const MainMentorStudents = () => {
     } = useGetMentors()
 
     const {
+        courseForSelect: { data: courseForSelect, isLoading: isCourseForSelectLoading},
+    } = useGetCourse()
+
+    const {
         groups: {data: groups, isLoading: isGroupsLoading},
         groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading },
         groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents } 
@@ -36,6 +43,9 @@ const MainMentorStudents = () => {
             label: `${item?.firstName} ${item?.lastName}`
         }
     )) 
+
+    console.log(courseForSelect);
+    
 
     const handleGroupNameChange = (event) => {
         setGroupName(event.target.value)
@@ -73,8 +83,6 @@ const MainMentorStudents = () => {
                     callMentor: selectedMentor.value,
                 });
     
-                console.log("Full Response Object:", response);
-    
                 if (response?.status === 201) {
                     setIsModal(false);
                     setGroupName("");
@@ -96,7 +104,6 @@ const MainMentorStudents = () => {
             }
         }
     };
-    
 
     const handleAddStudentToGroup = async () => {
         try {
@@ -123,8 +130,8 @@ const MainMentorStudents = () => {
         }
     };
 
-    console.log(tabOptions);
-    
+    const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
+    const statusOptionsSelect = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: <StudentStatus status={status} /> }))
 
     return (
         <div className={cls.page}>
@@ -151,6 +158,7 @@ const MainMentorStudents = () => {
                         onChangePhone={phone => setFilter(state => ({...state, phone }))}
                         onChangeGroup={level => setFilter(state => ({...state, level: level?.label}))}
                         onChangeStatus={(status) => setFilter(state => ({...state, status: status?.value }))}
+                        statusOptions={statusOptions}
                     />
                     {!isGroupStudentsLoading ? (
                         <MainMentorStudentsTable  
@@ -164,6 +172,8 @@ const MainMentorStudents = () => {
                             isModal={isModal}
                             setIsModal={setIsModal}
                             activeGroup={activeGroup}
+                            callMentorOptions={callMentorOptions}
+                            statusOptions={statusOptionsSelect}
                         />
                     ) : (
                         <Loader />

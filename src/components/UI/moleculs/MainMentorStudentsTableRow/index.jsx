@@ -14,14 +14,19 @@ const MainMentorStudentsTableRow = ({
     phoneNumber = '',
     userCourseId = '',
     group = '',
-    unreadedMessagesCount = 0
+    unreadedMessagesCount = 0,
+    setIsTransfer,
+    setIsModal
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const dropdownMenuItems = [
         { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(userCourseId) },
-        { label: 'Transfer Student'},
+        { label: 'Transfer Student', onClick: () => {
+            setIsTransfer(true)
+            setIsModal(true)
+        }},
     ]
 
     return (

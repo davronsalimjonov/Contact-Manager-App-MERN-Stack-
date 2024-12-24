@@ -23,10 +23,13 @@ const MainMentorStudentsTable = ({
     setSelectedStudents,
     handleAddStudentToGroup,
     isLoadingGroupSelectStudents,
-    activeGroup=''
+    activeGroup='',
+    callMentorOptions=[],
+    statusOptions=[]
 }) => {
     const selectStudentOptions = []
     const [isModal, setIsModal] = useState(false)
+    const [isTransfer, setIsTransfer] = useState(false)
     const handleStudentChange = (selectedOptions) => {
         const selectedValues = selectedOptions?.map((option) => option.value) || []
 
@@ -56,7 +59,102 @@ const MainMentorStudentsTable = ({
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {students?.length === 0 ? (
+            <Dialog isOpen={isModal} onClose={() => {
+                    setIsModal(false)
+                    setIsTransfer(false)
+                    setSelectedStudents([])
+                }}>
+                    <form className={cls.MainMentorStudentsGroupTab__dialog}>
+                        {isTransfer ? <>
+                                <div className={cls.transferSelects}>
+                                    <div>
+                                        <label>Kurs</label>
+                                        <Select
+                                            placeholder="Kursni Tanlang"
+                                            options={callMentorOptions}
+                                            onChange={handleStudentChange}
+                                            value={[]}
+                                            isMulti
+                                            isClearable
+                                            isSearchable={true}
+                                            className={cls.transferSelects__select}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="select">Asosiy Mentor</label>
+                                        <Select
+                                            placeholder="Asosiy Mentorni Tanlang"
+                                            options={selectStudentOptions}
+                                            onChange={handleStudentChange}
+                                            value={[]}
+                                            isMulti
+                                            isClearable
+                                            isSearchable={true}
+                                            className={cls.transferSelects__select}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="select">Nazoratchi Mentor</label>
+                                        <Select
+                                            placeholder="Nazoratchi Mentorni Tanlang"
+                                            options={callMentorOptions}
+                                            onChange={handleStudentChange}
+                                            value={[]}
+                                            isMulti
+                                            isClearable
+                                            isSearchable={true}
+                                            className={cls.transferSelects__select}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label htmlFor="select">O'quvchi Statusi</label>
+                                        <Select
+                                            placeholder="Statusni Tanlang"
+                                            options={statusOptions}
+                                            onChange={handleStudentChange}
+                                            value={[]}
+                                            isMulti
+                                            isClearable
+                                            isSearchable={true}
+                                            className={cls.transferSelects__select}
+                                        />
+                                    </div>
+                                </div>
+                            </> : <>
+                            <div className={cls.MainMentorStudentsGroupTab__dialog__select}>
+                                {!isLoadingGroupSelectStudents ?
+                                    <>
+                                        <label htmlFor="select">O'quvchi Qo'shish</label>
+                                        <Select
+                                            placeholder="O'quvchi Tanlang"
+                                            options={selectStudentOptions}
+                                            onChange={handleStudentChange}
+                                            value={[]}
+                                            isMulti
+                                            isClearable
+                                            isSearchable={true}
+                                        />
+                                    </> : <Loader />
+                                }
+                            </div>
+                            {selectedStudents?.map((selectedId) => (
+                                <div key={`selectedStudendts-${selectedId}`} className={cls.selectedStudentOption}>
+                                    <p>{selectStudentOptions.find(option => option.value === selectedId)?.label || ""}</p>
+                                    <button onClick={() => handleClick(selectedId)}><CloseIcon /></button>
+                                </div>
+                            ))}
+                        </>}
+                        <div className={cls.MainMentorStudentsGroupTab__dialog__buttons}>
+                            <RedButton onClick={() => {
+                                setIsModal(false)
+                                setIsTransfer(false)
+                                setSelectedStudents([])
+                            }}>Bekor Qilish</RedButton>
+                            <Button onClick={handleAddStudentToGroup}>Qo'shish</Button>
+                        </div>
+                    </form>
+                </Dialog>
+                {students?.length === 0 ? (
                     <div className={cls.mainMentorNoData}>
                         <p><span>"{activeGroup}"</span> guruh shakllantirildi. <br />
                         Guruhingizga o’quvchi biriktirsangiz bo’ladi.</p>
@@ -70,70 +168,39 @@ const MainMentorStudentsTable = ({
                                 <span>+</span>
                             </Button>
                         </div>
-                        <Dialog isOpen={isModal} onClose={() => {
-                            setIsModal(false)
-                            setSelectedStudents([])
-                        }}>
-                            <form className={cls.MainMentorStudentsGroupTab__dialog}>
-                                <div className={cls.MainMentorStudentsGroupTab__dialog__select}>
-                                    {!isLoadingGroupSelectStudents ?
-                                        <>
-                                            <label htmlFor="select">O'quvchi Qo'shish</label>
-                                            <Select
-                                                placeholder="O'quvchi Tanlang"
-                                                options={selectStudentOptions}
-                                                onChange={handleStudentChange}
-                                                value={[]}
-                                                isMulti
-                                                isClearable
-                                                isSearchable={true}
-                                            />
-                                        </> : <Loader />
-                                    }
-                                </div>
-                                {selectedStudents?.map((selectedId) => (
-                                    <div key={`selectedStudendts-${selectedId}`} className={cls.selectedStudentOption}>
-                                        <p>{selectStudentOptions.find(option => option.value === selectedId)?.label || ""}</p>
-                                        <button onClick={() => handleClick(selectedId)}><CloseIcon /></button>
-                                    </div>
-                                ))}
-                                <div className={cls.MainMentorStudentsGroupTab__dialog__buttons}>
-                                    <RedButton onClick={() => {
-                                        setIsModal(false)
-                                        setSelectedStudents([])
-                                    }}>Bekor Qilish</RedButton>
-                                    <Button onClick={handleAddStudentToGroup}>Qo'shish</Button>
-                                </div>
-                            </form>
-                        </Dialog>
                     </div>
-            ) : <table className={cls.table}>
-                    <MainMentorStudentsTableHeader />
-                    <tbody>
-                        <Mapper
-                            data={students}
-                            isInfinityQuery
-                            isLoading={isLoading}
-                            renderItem={(student, index) => (
-                                <MainMentorStudentsTableRow
-                                    key={student?.id}
-                                    index={index + 1}
-                                    unreadedMessagesCount={student?.messageCount}
-                                    avatar={student?.url}
-                                    fullName={getUserFullName(student)}
-                                    phoneNumber={student?.phone}
-                                    days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
-                                    time={student?.connectionTime}
-                                    status={student?.status}
-                                    userCourseId={student.id}
-                                    hidden={true}
-                                    chatId={student?.id}
-                                    group={student?.level}
+                    ) : (
+                        <table className={cls.table}>
+                            <MainMentorStudentsTableHeader />
+                            <tbody>
+                                <Mapper
+                                    data={students}
+                                    isInfinityQuery
+                                    isLoading={isLoading}
+                                    renderItem={(student, index) => (
+                                        <MainMentorStudentsTableRow
+                                            key={student?.id}
+                                            index={index + 1}
+                                            unreadedMessagesCount={student?.messageCount}
+                                            avatar={student?.url}
+                                            fullName={getUserFullName(student)}
+                                            phoneNumber={student?.phone}
+                                            days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
+                                            time={student?.connectionTime}
+                                            status={student?.status}
+                                            userCourseId={student.id}
+                                            hidden={true}
+                                            chatId={student?.id}
+                                            group={student?.level}
+                                            setIsTransfer={setIsTransfer}
+                                            setIsModal={setIsModal}
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
-                    </tbody>
-                </table>}
+                            </tbody>
+                        </table>
+                    )
+                }
             {isLoading && <Loader size={80} />}
         </div>
     );
