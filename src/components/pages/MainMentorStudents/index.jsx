@@ -21,32 +21,41 @@ const MainMentorStudents = () => {
     const [selectedMentor, setSelectedMentor] = useState(null)
     const [isModal, setIsModal] = useState(false)
     const [selectedStudents, setSelectedStudents] = useState([])
+    const [selectMainMentors, setSelectMainMentors] = useState([])
+    const [selectedCourse, setSelectedCourse] = useState([])
+    const [selectCallMentors, setSelectCallMentors] = useState([])
+    const [selectStatus, setSelectStatus] = useState([])
     const [activeGroup, setActiveGroup] = useState('Barchasi') 
     
     const { 
         callMentors: { data: callMentors, isLoading: isLoadingCallMentors},
+        mainMentors: { data: mainMentors, isLoading: isLoadingMainMentors}
     } = useGetMentors()
 
     const {
         courseForSelect: { data: courseForSelect, isLoading: isCourseForSelectLoading},
     } = useGetCourse()
-
+    
     const {
         groups: {data: groups, isLoading: isGroupsLoading},
         groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading },
         groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents } 
     } = useGetGroups({ group: groupId, ...filter }, groupId)
-
+    
     const callMentorOptions = callMentors?.map((item) => (
         {
             value: `${item?.id}`,
             label: `${item?.firstName} ${item?.lastName}`
         }
     )) 
-
-    console.log(courseForSelect);
     
-
+    const mainMentorOptions = mainMentors?.map((item) => (
+        {
+            value: `${item?.id}`,
+            label: `${item?.firstName} ${item?.lastName}`
+        }
+    ))
+    
     const handleGroupNameChange = (event) => {
         setGroupName(event.target.value)
     }
@@ -54,27 +63,27 @@ const MainMentorStudents = () => {
     const handleMentorChange = (option) => {
         setSelectedMentor(option)
     }
-
+    
     const tabOptions = [
         { value: '', label: 'Barchasi' },
-      ]
+    ]
     
     groups?.forEach(group => {
         tabOptions.push({ value: group.id, label: group.title })
     })
-
+    
     const handleCreateGroup = async () => {
         try {
             if (!groupName) {
                 customToast.error("Guruh nomi bo'sh bo'lishi mumkin emas");
                 return;
             }
-    
+            
             if (!selectedMentor) {
                 customToast.error("Nazoratchi mentor tanlanmagan");
                 return;
             }
-    
+            
             const existingGroup = tabOptions.find((tab) => tab.label === groupName);
             if (!existingGroup) {
                 const response = await createGroups({
@@ -82,7 +91,7 @@ const MainMentorStudents = () => {
                     academyMentor,
                     callMentor: selectedMentor.value,
                 });
-    
+                
                 if (response?.status === 201) {
                     setIsModal(false);
                     setGroupName("");
@@ -104,21 +113,21 @@ const MainMentorStudents = () => {
             }
         }
     };
-
+    
     const handleAddStudentToGroup = async () => {
         try {
             if (!selectedStudents || selectedStudents.length === 0) {
                 customToast?.error("O'quvchilar Qo'shing");
                 return;
             }
-    
+            
             const response = await addStudentsToGroup({
                 group: groupId,
                 studentIds: selectedStudents,
             });
-    
+            
             console.log(response)
-    
+            
             if (response?.status === 201) {
                 setSelectedStudents([]); 
                 customToast?.success("O'quvchilar Guruxga Qo'shildi");
@@ -132,7 +141,7 @@ const MainMentorStudents = () => {
 
     const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
     const statusOptionsSelect = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: <StudentStatus status={status} /> }))
-
+    
     return (
         <div className={cls.page}>
             {
@@ -173,7 +182,17 @@ const MainMentorStudents = () => {
                             setIsModal={setIsModal}
                             activeGroup={activeGroup}
                             callMentorOptions={callMentorOptions}
+                            mainMentorOptions={mainMentorOptions}
                             statusOptions={statusOptionsSelect}
+                            courseForSelect={courseForSelect}
+                            selectedCourse={selectedCourse}
+                            setSelectedCourse={setSelectedCourse}
+                            selectMainMentors={selectMainMentors}
+                            setSelectMainMentors={setSelectMainMentors}
+                            selectCallMentors={selectCallMentors}
+                            setSelectCallMentors={setSelectCallMentors}
+                            selectStatus={selectStatus}
+                            setSelectStatus={setSelectStatus}
                         />
                     ) : (
                         <Loader />

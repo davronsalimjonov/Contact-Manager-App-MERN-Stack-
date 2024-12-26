@@ -25,11 +25,23 @@ const MainMentorStudentsTable = ({
     isLoadingGroupSelectStudents,
     activeGroup='',
     callMentorOptions=[],
-    statusOptions=[]
+    mainMentorOptions=[],
+    statusOptions=[],
+    courseForSelect=[],
+    selectedCourse=[],
+    setSelectedCourse,
+    selectMainMentors=[],
+    setSelectMainMentors,
+    selectCallMentors=[],
+    setSelectCallMentors,
+    selectStatus=[],
+    setSelectStatus
 }) => {
     const selectStudentOptions = []
+    const courseForSelectOptions = []
     const [isModal, setIsModal] = useState(false)
     const [isTransfer, setIsTransfer] = useState(false)
+
     const handleStudentChange = (selectedOptions) => {
         const selectedValues = selectedOptions?.map((option) => option.value) || []
 
@@ -47,8 +59,29 @@ const MainMentorStudentsTable = ({
         }
     }
 
+    const handleCourseOptionChange = (selectedOptions) => {
+        setSelectedCourse(selectedOptions)
+    };
+
+    const handleMainMentorOptionChange = (selectedOptions) => {
+        setSelectMainMentors(selectedOptions)
+    }
+
+    const handleCallMentorOptionChange = (selectedOptions) => {
+        setSelectCallMentors(selectedOptions)
+    }
+
+    const handleStatusOptionsChange = (selectedOptions) => {
+        setSelectStatus(selectedOptions)
+    }
+    
+
     groupSelectStudents?.forEach(groupStudent => {
         selectStudentOptions.push({value: groupStudent?.id, label: `${groupStudent?.user?.firstName} ${groupStudent?.user?.lastName}`, level: `${groupStudent?.level}`})
+    })
+
+    courseForSelect?.forEach(courseSelect => {
+        courseForSelectOptions.push({value: courseSelect?.id, label: courseSelect?.title})
     })
 
     const handleClick = (studentToRemove) => {
@@ -67,53 +100,49 @@ const MainMentorStudentsTable = ({
                     <form className={cls.MainMentorStudentsGroupTab__dialog}>
                         {isTransfer ? <>
                                 <div className={cls.transferSelects}>
-                                    <div>
+                                    <div onClick={(e) => e.stopPropagation()}>
                                         <label>Kurs</label>
                                         <Select
                                             placeholder="Kursni Tanlang"
-                                            options={callMentorOptions}
-                                            onChange={handleStudentChange}
-                                            value={[]}
-                                            isMulti
+                                            options={courseForSelectOptions}
+                                            onChange={handleCourseOptionChange}
+                                            value={selectedCourse}
                                             isClearable
                                             isSearchable={true}
                                             className={cls.transferSelects__select}
                                         />
                                     </div>
-                                    <div>
+                                    <div onClick={(e) => e.stopPropagation()}>
                                         <label htmlFor="select">Asosiy Mentor</label>
                                         <Select
                                             placeholder="Asosiy Mentorni Tanlang"
-                                            options={selectStudentOptions}
-                                            onChange={handleStudentChange}
-                                            value={[]}
-                                            isMulti
+                                            options={mainMentorOptions}
+                                            onChange={handleMainMentorOptionChange}
+                                            value={selectMainMentors}
                                             isClearable
                                             isSearchable={true}
                                             className={cls.transferSelects__select}
                                         />
                                     </div>
-                                    <div>
+                                    <div onClick={(e) => e.stopPropagation()}>
                                         <label htmlFor="select">Nazoratchi Mentor</label>
                                         <Select
                                             placeholder="Nazoratchi Mentorni Tanlang"
                                             options={callMentorOptions}
-                                            onChange={handleStudentChange}
-                                            value={[]}
-                                            isMulti
+                                            onChange={handleCallMentorOptionChange}
+                                            value={selectCallMentors}
                                             isClearable
                                             isSearchable={true}
                                             className={cls.transferSelects__select}
                                         />
                                     </div>
-                                    <div>
+                                    <div onClick={(e) => e.stopPropagation()}>
                                         <label htmlFor="select">O'quvchi Statusi</label>
                                         <Select
                                             placeholder="Statusni Tanlang"
                                             options={statusOptions}
-                                            onChange={handleStudentChange}
-                                            value={[]}
-                                            isMulti
+                                            onChange={handleStatusOptionsChange}
+                                            value={selectStatus}
                                             isClearable
                                             isSearchable={true}
                                             className={cls.transferSelects__select}

@@ -4,7 +4,7 @@ import { useQuery } from "react-query"
 export const useGetCourse = () => {
     const courseForSelect = useQuery(['course-forSelect'], () => getCourseForSelect())
 
-    return (
+    return {
         courseForSelect
-    )
+    }
 }
