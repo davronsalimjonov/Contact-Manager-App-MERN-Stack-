@@ -20,7 +20,7 @@ const ModerationTable = ({
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {comments.items?.length > 0 ? (
+            {comments?.items?.length > 0 ? (
                 <table className={cls.table}>
                     <ModerationTableHeader />
                     <tbody>

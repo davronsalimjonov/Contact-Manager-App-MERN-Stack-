@@ -11,17 +11,18 @@ const AllStudentsTable = ({
     triggerRef,
     isLoading
 }) => {
+
     const currenPage = students?.meta?.currentPage;
     const limit = students?.meta?.itemsPerPage;
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {students.items?.length > 0 ? (
+            {students?.items?.length > 0 ? (
                 <table className={cls.table}>
                     <AllStudentsTableHeader />
                     <tbody>
                         <Mapper
-                            data={students.items}
+                            data={students?.items}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(student, index) => (

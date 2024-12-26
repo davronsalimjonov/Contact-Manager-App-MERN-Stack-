@@ -8,22 +8,24 @@ import StudentsCallRateTableRow from '@/components/UI/moleculs/StudentsCallRateT
 const StudentsCallRateTable = ({
     headers,
     data = [],
-    pagination,
     isLoading = false,
 }) => {
+    const currenPage = data?.meta?.currentPage;
+    const limit = data?.meta?.itemsPerPage;
+
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {data?.length > 0 ? (
+            {data?.items?.length > 0 ? (
                 <table className={cls.table}>
                     <ServisStatisticTableHeader headers={headers} />
                     <tbody>
                         <Mapper
-                            data={data}
+                            data={data?.items}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(rate, index) => (
                                 <StudentsCallRateTableRow
-                                    index={(pagination.page - 1)*10 + index + 1}
+                                    index={(currenPage - 1) * limit + index + 1}
                                     avatar={rate?.student?.url}
                                     teacher={rate?.student}
                                     date={new Date(rate?.date)}
@@ -38,7 +40,7 @@ const StudentsCallRateTable = ({
                     </tbody>
                 </table>
             ) : (
-                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas."/>
+                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas." />
             )}
             {isLoading && <Loader size={80} />}
         </div>

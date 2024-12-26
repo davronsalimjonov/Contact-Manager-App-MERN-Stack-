@@ -11,21 +11,24 @@ const ServisStatisticTable = ({
     isLoading = false,
     activeTab
 }) => {
+    const currenPage = data?.meta?.currentPage || 1;
+    const limit = data?.meta?.itemsPerPage || 10;
+
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {data?.length > 0 ? (
+            {data?.items?.length > 0 ? (
                 <table className={cls.table}>
                     <ServisStatisticTableHeader headers={headers} />
                     <tbody>
                         <Mapper
-                            data={data}
+                            data={data?.items}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(mentor, index) => (
                                 <ServisStatisticTableRow key={mentor?.id}
                                     activeTab={activeTab}
                                     teacherId={mentor?.id}
-                                    index={index + 1}
+                                    index={(currenPage - 1) * limit + index + 1}
                                     mentor={mentor?.firstName + ' ' + mentor?.lastName}
                                     avarageRate={mentor?.rate}
                                     avatar={mentor?.url}
@@ -37,7 +40,7 @@ const ServisStatisticTable = ({
                     </tbody>
                 </table>
             ) : (
-                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas."/>
+                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas." />
             )}
             {isLoading && <Loader size={80} />}
         </div>

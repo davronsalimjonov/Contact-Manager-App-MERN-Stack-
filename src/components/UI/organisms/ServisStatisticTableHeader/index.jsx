@@ -7,7 +7,7 @@ const ServisStatisticTableHeader = ({
         <thead className={cls.head}>
             <tr className={cls.head__row}>
                 {
-                    headers?.map((header) => <th>{header}</th>)
+                    headers?.map((header, index) => <th key={index}>{header}</th>)
                 }
             </tr>
         </thead>

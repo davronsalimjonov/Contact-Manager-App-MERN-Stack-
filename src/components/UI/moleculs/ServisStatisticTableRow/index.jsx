@@ -16,14 +16,15 @@ const ServisStatisticTableRow = ({
     const navigate = useNavigate();
 
     return (
-        <tr className={cls.row} onClick={() => navigate(activeTab==='lesson'?`/service-statistics/lesson-rate/${teacherId}/${groupId}`:`/service-statistics/call-rate/${teacherId}`)}>
-            <td className={cls.row__avatar}>
-                {index}.
-                <Avatar round={true} size='40' name={mentor} src={avatar} />
-                {mentor}
-
+        <tr className={cls.row} onClick={() => navigate(activeTab === 'lesson' ? `/service-statistics/lesson-rate/${teacherId}/${groupId}` : `/service-statistics/call-rate/${teacherId}`)}>
+            <td> {index}.</td>
+            <td>
+                <span className={cls.row__avatar}>
+                    <Avatar round={true} size='40' name={mentor} src={avatar} />
+                    {mentor}
+                </span>
             </td>
-            {group && <td>{group}</td>}
+            {activeTab === 'lesson' && <td>{group}</td>}
             <td><span className={cls.row__rate}><StarIcon begining={avarageRate * 20} />{avarageRate}</span></td>
 
         </tr>

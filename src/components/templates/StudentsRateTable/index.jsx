@@ -8,23 +8,26 @@ import StudentsRateTableRow from '@/components/UI/moleculs/StudentsRateTableRow'
 const StudentsRateTable = ({
     headers,
     data = [],
-    pagination,
     isLoading = false,
 }) => {
+    const currenPage = data?.meta?.currentPage;
+    const limit = data?.meta?.itemsPerPage;
+
+
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {data?.length > 0 ? (
+            {data?.items?.length > 0 ? (
                 <table className={cls.table}>
                     <ServisStatisticTableHeader headers={headers} />
                     <tbody>
                         <Mapper
-                            data={data}
+                            data={data?.items}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(rate, index) => (
                                 <StudentsRateTableRow
                                     date={rate.date}
-                                    index={(pagination.page - 1)*10 + index + 1}
+                                    index={(currenPage - 1) * limit + index + 1}
                                     rate={rate.rate}
                                     ratedStudentCount={rate.ratedStudentCount}
                                     totalStudentCount={rate.totalStudentCount}
@@ -36,7 +39,7 @@ const StudentsRateTable = ({
                     </tbody>
                 </table>
             ) : (
-                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas."/>
+                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas." />
             )}
             {isLoading && <Loader size={80} />}
         </div>

@@ -18,6 +18,9 @@ const StudentsRateForTeacher = () => {
 
     const { data: statistics, isLoading: isLoadingStatistics } = useGetStudentsRateForTeacher(teacherId, groupId, { start: period.startDate, end: period.endDate, page: pagination.page, limit: pagination.limit });
 
+
+
+    // TODO change all pagination
     const onShowSizeChange = (current, pageSize) => {
         setPagination((prev) => {
             return {
@@ -49,7 +52,7 @@ const StudentsRateForTeacher = () => {
 
                     </div>
                 </div>
-                <StudentsRateTable pagination={pagination} data={statistics?.items} isLoading={isLoadingStatistics} headers={["№", "Sana", "Umumiy o'quvchilar soni", "Baholagan o'quvchilar soni", "O’quvchilar baholari"]} />
+                <StudentsRateTable data={statistics} isLoading={isLoadingStatistics} headers={["№", "Sana", "Umumiy o'quvchilar soni", "Baholagan o'quvchilar soni", "O’quvchilar baholari"]} />
             </div>
             {
                 (statistics?.meta?.totalItems > pagination.limit) && <div className={cls.pagination}>

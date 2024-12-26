@@ -42,14 +42,14 @@ const MentorsStatistic = () => {
                         defaultValue={options?.[0]?.value}
                         onChange={setActiveTab}
                     />
-
+{/* TODO add pagination */}
                     {
-                        activeTab === 'lesson' ? <MentorsStatisticTable data={statistics?.lessons} isLoading={isLoadingStatistics} /> : <CallMentorsStatisticTable data={statistics?.calls} isLoading={isLoadingStatistics} />
+                        activeTab === 'lesson' ? <MentorsStatisticTable data={statistics} isLoading={isLoadingStatistics} /> : <CallMentorsStatisticTable data={statistics?.calls} isLoading={isLoadingStatistics} />
                     }
                 </div>
                 <MentorsStatisticLeaderboard data={statistics?.leaderboard} isLoading={isLoadingStatistics} />
             </div>
-            
+
             {
                 (statistics?.meta?.totalItems > 20) && <div className={cls.pagination}>
                     <Pagination
@@ -57,7 +57,7 @@ const MentorsStatistic = () => {
                         onShowSizeChange={onShowSizeChange}
                         defaultCurrent={filter.page}
                         defaultPageSize={filter.limit}
-                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} students`}
+                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total}`}
                         onChange={(page) => {
                             setFilter((prev) => {
                                 return {
@@ -66,7 +66,7 @@ const MentorsStatistic = () => {
                                 }
                             })
                         }}
-                        total={students?.meta?.totalItems}
+                        total={statistics?.meta?.totalItems}
                     />
                 </div>
             }

@@ -10,19 +10,22 @@ const CallMentorsStatisticTable = ({
     data = [],
     isLoading = false,
 }) => {
+    const currenPage = data?.meta?.currentPage || 1;
+    const limit = data?.meta?.itemsPerPage || 10;
+
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {data?.length > 0 ? (
+            {data?.items?.length > 0 ? (
                 <table className={cls.table}>
                     <ServisStatisticTableHeader headers={["№", "Nazoratchi o’qituvchi", "Oylik call", "Kunlik call", "Reytingi"]} />
                     <tbody>
                         <Mapper
-                            data={data}
+                            data={data?.items}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(mentor, index) => (
                                 <CallMentorsStatisticTableRow key={mentor?.id}
-                                    index={index + 1}
+                                    index={(currenPage - 1) * limit + index + 1}
                                     mentor={getUserFullName(mentor)}
                                     avatar={mentor?.url}
                                     avarageRate={mentor?.rate}

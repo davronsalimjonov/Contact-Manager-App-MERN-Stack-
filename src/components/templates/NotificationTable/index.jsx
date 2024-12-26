@@ -15,12 +15,12 @@ const NotificationTable = ({
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {notifications.items?.length > 0 ? (
+            {notifications?.items?.length > 0 ? (
                 <table className={cls.table}>
                     <NotificationTableHeader />
                     <tbody>
                         <Mapper
-                            data={notifications.items}
+                            data={notifications?.items}
                             isInfinityQuery
                             isLoading={isLoading}
                             renderItem={(notification, index) => (

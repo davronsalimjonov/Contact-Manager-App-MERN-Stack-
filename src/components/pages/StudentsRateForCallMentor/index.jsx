@@ -3,7 +3,6 @@ import useGetStudentsRateForCallMentor from "@/hooks/useGetStudentsRateForCallMe
 import { Pagination } from "antd";
 import { useState } from "react";
 import { Link, useOutletContext, useParams } from "react-router-dom";
-import StudentsRateTable from "@/components/templates/StudentsRateTable";
 import { LeftArrowIcon, MentorIcon, StudentsIcon } from "@/components/UI/atoms/icons";
 import { getUserFullName } from '@/utils/lib';
 import StudentsCallRateTable from '@/components/templates/StudentsCallRateTable';
@@ -45,7 +44,7 @@ const StudentsRateForCallMentor = () => {
                     </div>
 
                 </div>
-                <StudentsCallRateTable pagination={pagination} data={statistics?.items} isLoading={isLoadingStatistics} headers={["№", "O'quvchi", "Baholangan vaqt", "Call davomiyligi", "Sabab", "O'quvchi baholari"]} />
+                <StudentsCallRateTable data={statistics} isLoading={isLoadingStatistics} headers={["№", "O'quvchi", "Baholangan vaqt", "Call davomiyligi", "Sabab", "O'quvchi baholari"]} />
             </div>
             {
             statistics?.meta?.totalItems > pagination.limit && <div className={cls.pagination}>
