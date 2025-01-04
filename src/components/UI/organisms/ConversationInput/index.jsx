@@ -35,9 +35,9 @@ const ConversationInput = ({ userCourseId }) => {
     const formRef = useRef()
     const methods = useForm()
     const userId = useGetUserId()
-    const { generateMessage } = useMessage()
     const { editMessage, onEditComplete } = useContext(ChatMessageEditContext)
     const { conversationId, data: { user: { id: studentId } } } = useGetChat(userCourseId)
+    const { generateMessage } = useMessage(conversationId)
     const { addNewMessage, updateMessage, messages } = useGetChatMessages(conversationId)
     const { register, handleSubmit, reset, getValues, setValue, watch, formState: { isDirty, isValid } } = methods
     const [messageType, setMessageType] = useState(MessageTypes.TEXT)
