@@ -12,20 +12,29 @@ export const useGetNotifications = ({ ...options }) => {
         queryClient.setQueriesData(['notifications', userId], (oldData) => [newNotification, ...oldData])
     }
 
-    return { ...data, addNewNotification }
+    const updateNotificationsViewedState = (ids) => {
+        queryClient.setQueriesData(['notifications', userId], (oldData) => {
+            return oldData.map(notification => {
+                if (ids.includes(notification?.id)) {
+                    notification.isViewed = true
+                }
+                return notification
+            })
+        })
+        queryClient.setQueriesData(['notification-count', userId], (oldData) => oldData - ids.length)
+    }
+
+    return { ...data, addNewNotification, updateNotificationsViewedState }
 }
 
 export const useGetNotificationCount = () => {
     const userId = useGetUserId()
     const queryClient = useQueryClient()
     const data = useQuery(['notification-count', userId], () => getNotificationCount(userId), { staleTime: Infinity, cacheTime: Infinity, enabled: !!userId })
-    
+
     const addNewNotificationCount = (count) => {
         queryClient.setQueriesData(['notification-count', userId], (oldData) => oldData + count)
     }
 
-    return {
-        ...data,
-        addNewNotificationCount
-    }
+    return { ...data, addNewNotificationCount }
 }

@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
 import { usePopper } from 'react-popper';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/lib';
+import { socket } from '@/services/socket';
 import useClickOutside from '@/hooks/useClickOutside';
+import { setIsViewedNotifications } from '@/services/notification';
 import { useGetNotificationCount, useGetNotifications } from '@/hooks/useNotification';
 import { NotificationIcon } from '../../atoms/icons';
 import NotificationsPopup from '../NotificationsPopup';
 import cls from './NotificationButton.module.scss';
-import { socket } from '@/services/socket';
 
 const NotificationButton = () => {
+    const viewedNotifications = useRef([]);
     const [isVisible, setIsVisible] = useState(false);
     const [isOpenPopup, setIsOpenPopup] = useState(false);
-    const ref = useClickOutside({ onClickOutside: handleClickOutside })
+    const ref = useClickOutside({ onClickOutside: handleClosePopup })
     const [popperEl, setPopperEl] = useState(null);
     const [referenceEl, setReferenceEl] = useState(null);
     const { styles, attributes } = usePopper(referenceEl, popperEl, {
@@ -26,17 +28,24 @@ const NotificationButton = () => {
         ],
     });
     const { data: notificationCount } = useGetNotificationCount()
-    const { data: notifications, addNewNotification } = useGetNotifications({ enabled: notificationCount > 0 })
+    const { data: notifications, addNewNotification, updateNotificationsViewedState } = useGetNotifications({ enabled: notificationCount > 0 })
 
-    function handleClickOutside() {
+    function handleClosePopup() {
+        const ids = viewedNotifications.current
+
+        if (ids?.length > 0) {
+            updateNotificationsViewedState(ids)
+            setIsViewedNotifications({ ids })
+            viewedNotifications.current = []
+        }
+
         setIsOpenPopup(false);
         setTimeout(() => setIsVisible(false), 300);
     }
 
     function togglePopup() {
         if (isOpenPopup) {
-            setIsOpenPopup(false);
-            setTimeout(() => setIsVisible(false), 300);
+            handleClosePopup()
         } else {
             setIsVisible(true);
             setTimeout(() => setIsOpenPopup(true), 0);
@@ -44,11 +53,11 @@ const NotificationButton = () => {
     };
 
     const onNotificationsViewed = (ids) => {
-        console.log(ids);
+        viewedNotifications.current = [...viewedNotifications.current, ...ids];
     }
 
     useEffect(() => {
-        if(socket){
+        if (socket) {
             socket.on('notification-cron', addNewNotification)
         }
     }, [socket])
