@@ -15,7 +15,7 @@ export const useGetUncompletedMentorTasks = () => {
 export const useTaskMutations = (userCourseId) => {
     const queryClient = useQueryClient()
     const { conversationId } = useGetChat(userCourseId)
-    const { generateMessage } = useMessage()
+    const { generateMessage } = useMessage(conversationId)
     const { addNewMessage, updateMessage } = useGetChatMessages(conversationId)
     const createTaskMutation = useMutation({
         mutationFn: createTask,

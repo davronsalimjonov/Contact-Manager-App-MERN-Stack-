@@ -45,9 +45,10 @@ const ChatImageMessage = memo(({
                 style={{ width: imageWidth, height: imageHeight }}
                 onClick={() => setIsOpenModal(true)}
                 onError={onImageError}
+                loading='lazy'
                 alt=""
             />
-        </ChatMessageLayout>
+        </ChatMessageLayout> 
     );
 })
 

@@ -55,9 +55,7 @@ const ConversationInput = ({ userCourseId }) => {
         try {
             if (messageType !== MessageTypes.LESSON_TASK) {
                 const id = generateUUID()
-                const lastMessage = messages?.at(-1)
-                const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
-                const newMessage = generateMessage(data.message, messageType, { id, [isNewMessageInPeriod ? 'dateSeperator' : null]: new Date(Date.now()).toISOString() })
+                const newMessage = generateMessage(data.message, messageType, { id })
 
                 addNewMessage(newMessage)
                 reset()
@@ -203,8 +201,8 @@ const ConversationInput = ({ userCourseId }) => {
             <div className={cls.input__controls}>
                 <div>
                     {messageType === MessageTypes.SMS && (
-                        <SmsTemplateButton 
-                            onSelect={(message) => setValue('message', message, { shouldDirty: true, shouldValidate: true })} 
+                        <SmsTemplateButton
+                            onSelect={(message) => setValue('message', message, { shouldDirty: true, shouldValidate: true })}
                         />
                     )}
                 </div>

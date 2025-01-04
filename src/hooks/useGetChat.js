@@ -1,79 +1,8 @@
 import { useQuery, useQueryClient } from "react-query";
+import { isSameDay } from "@/utils/time";
 import { MessageTypes } from "@/constants/enum";
 import { getChatInfo, getChatMessages } from "@/services/chat";
 import useGetUser, { useGetUserId } from "./useGetUser";
-
-export const useMessage = () => {
-    const { data: user } = useGetUser()
-
-    function generateMessage(data, type, options = {}) {
-        switch (type) {
-            case MessageTypes.TASK: return ({
-                id: Date.now().toString(),
-                createdAt: new Date(Date.now()).toISOString(),
-                type: MessageTypes.TASK,
-                isViewed: false,
-                shouldScroll: true,
-                task: { mentor: user, isCompleted: false, ...data },
-                ...options
-            })
-            case MessageTypes.TEXT: return ({
-                id: Date.now().toString(),
-                createdAt: new Date(Date.now()).toISOString(),
-                type: MessageTypes.MESSAGE,
-                isViewed: false,
-                shouldScroll: true,
-                message: { text: data, type: MessageTypes.TEXT, whoSended: "mentor", mentor: user },
-                ...options
-            })
-            case MessageTypes.COMMENT: return ({
-                id: Date.now().toString(),
-                createdAt: new Date(Date.now()).toISOString(),
-                type: MessageTypes.COMMENT,
-                isViewed: false,
-                shouldScroll: true,
-                comment: { text: data, owner: user },
-                ...options
-            })
-            case MessageTypes.CALL: return ({
-                id: Date.now().toString(),
-                createdAt: new Date(Date.now()).toISOString(),
-                type: MessageTypes.CALL,
-                isViewed: false,
-                shouldScroll: true,
-                call: { audio: '', duration: '' },
-                ...options
-            })
-            case MessageTypes.SMS: return ({
-                id: Date.now().toString(),
-                createdAt: new Date(Date.now()).toISOString(),
-                type: MessageTypes.SMS,
-                isViewed: false,
-                shouldScroll: true,
-                sms: { text: data, sender: user },
-                ...options
-            })
-            case MessageTypes.LESSON_TASK: return ({
-                id: Date.now().toString(),
-                createdAt: new Date(Date.now()).toISOString(),
-                isViewed: false,
-                type: MessageTypes.LESSON_TASK,
-                shouldScroll: true,
-                homeTask: {
-                    ...data,
-                    status: 'send',
-                    mentor: user,
-                },
-                ...options
-            })
-            default: return null
-        }
-    }
-
-    return {
-        generateMessage
-    }
-}
 
 export const useGetChatMessages = (chatId) => {
     const queryClient = useQueryClient()
@@ -116,7 +45,7 @@ export const useGetChatMessages = (chatId) => {
     return {
         ...messages,
         messages: messages?.data?.reduce((acc, curr) => ([...acc, ...(curr?.items || [])]), []),
-        updateMessage, 
+        updateMessage,
         addPrevMessages,
         addNextMessages,
         addNewMessage
@@ -152,6 +81,87 @@ const useGetChat = (userCourseId) => {
         removeUnreadedMessagesCount,
         conversationId,
     }
+}
+
+export const useMessage = (conversationId) => {
+    const { data: user } = useGetUser()
+    const { messages } = useGetChatMessages(conversationId)
+
+    const lastMessage = messages?.at(-1)
+    const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
+    const dateSeperator = isNewMessageInPeriod ? new Date(Date.now()).toISOString() : null
+
+    function generateMessage(data, type, options = {}) {
+        switch (type) {
+            case MessageTypes.TASK: return ({
+                id: Date.now().toString(),
+                createdAt: new Date(Date.now()).toISOString(),
+                type: MessageTypes.TASK,
+                isViewed: false,
+                shouldScroll: true,
+                dateSeperator,
+                task: { mentor: user, isCompleted: false, ...data },
+                ...options
+            })
+            case MessageTypes.TEXT: return ({
+                id: Date.now().toString(),
+                createdAt: new Date(Date.now()).toISOString(),
+                type: MessageTypes.MESSAGE,
+                isViewed: false,
+                shouldScroll: true,
+                dateSeperator,
+                message: { text: data, type: MessageTypes.TEXT, whoSended: "mentor", mentor: user },
+                ...options
+            })
+            case MessageTypes.COMMENT: return ({
+                id: Date.now().toString(),
+                createdAt: new Date(Date.now()).toISOString(),
+                type: MessageTypes.COMMENT,
+                isViewed: false,
+                shouldScroll: true,
+                dateSeperator,
+                comment: { text: data, owner: user },
+                ...options
+            })
+            case MessageTypes.CALL: return ({
+                id: Date.now().toString(),
+                createdAt: new Date(Date.now()).toISOString(),
+                type: MessageTypes.CALL,
+                isViewed: false,
+                shouldScroll: true,
+                dateSeperator,
+                call: { audio: '', duration: '' },
+                ...options
+            })
+            case MessageTypes.SMS: return ({
+                id: Date.now().toString(),
+                createdAt: new Date(Date.now()).toISOString(),
+                type: MessageTypes.SMS,
+                isViewed: false,
+                shouldScroll: true,
+                dateSeperator,
+                sms: { text: data, sender: user },
+                ...options
+            })
+            case MessageTypes.LESSON_TASK: return ({
+                id: Date.now().toString(),
+                createdAt: new Date(Date.now()).toISOString(),
+                isViewed: false,
+                type: MessageTypes.LESSON_TASK,
+                shouldScroll: true,
+                dateSeperator,
+                homeTask: {
+                    ...data,
+                    status: 'send',
+                    mentor: user,
+                },
+                ...options
+            })
+            default: return null
+        }
+    }
+
+    return { generateMessage }
 }
 
 export default useGetChat;

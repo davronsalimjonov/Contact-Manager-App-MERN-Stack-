@@ -1,6 +1,6 @@
-import { BrowseIcon, LinkIcon, SortIcon, TagIcon } from '../../atoms/icons';
-import StudentStatus from '../../atoms/StudentStatus';
+import StudentStatusPicker from '../StudentStatusPicker';
 import ChatSidebarAccordion from '../../moleculs/ChatSidebarAccordion';
+import { BrowseIcon, LinkIcon, SortIcon, TagIcon } from '../../atoms/icons';
 import cls from './ChatPartnerDetails.module.scss';
 
 const ChatPartnerDetails = () => {
@@ -15,7 +15,7 @@ const ChatPartnerDetails = () => {
                 </div>
                 <div className={cls.section__item}>
                     <div className={cls.section__item__icon}><BrowseIcon /></div>
-                    <StudentStatus status='Adaptatsiya' />
+                    <StudentStatusPicker />
                 </div>
                 <div className={cls.section__item}>
                     <div className={cls.section__item__icon}><SortIcon /></div>
