@@ -14,3 +14,20 @@ export const updateEmployee = async (mentorId, data, params) => {
     const res = await api.put(`/employee/${mentorId}?${paramsToString(params)}`, data, { headers: { "Content-Type": 'multipart/form-data' } })
     return res.data
 }
+
+export const getEmployeeById = async (mentorId, role) => {
+    const res = await api.get(`/employee/${mentorId}?${paramsToString({role:role})}`);
+    return res.data
+}
+
+export const getAllStudents = async (params) => {
+    const filter = `/user-course/users-statistic?${paramsToString(params)}`
+    const res = await api.get(filter);
+
+    return res.data
+}
+
+export const addStudent= async (data)=>{
+    const res = await api.post('/user/student',data);
+    return res.data;
+}

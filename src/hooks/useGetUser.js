@@ -11,4 +11,4 @@ export function useGetUserId() {
     return user?.id
 }
 
-export default useGetUser
+export default useGetUser;

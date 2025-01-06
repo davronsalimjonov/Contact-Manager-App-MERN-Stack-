@@ -11,12 +11,14 @@ import StudentInformationForm from '@/components/UI/organisms/StudentInformation
 import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
 import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleStudent.module.scss';
+import SingleStudentCourse from '@/components/UI/organisms/SingleStudentCourse';
 
 const SingleStudent = () => {
     const { courseId } = useParams()
+    
     const queryClient = useQueryClient()
     const { data: course, isLoading: isLoadingStudent } = useGetStudentCourseById(courseId)
-    const student = course?.user
+    const student = course?.user;
 
     const studentFormData = {
         id: student?.id,
@@ -71,6 +73,7 @@ const SingleStudent = () => {
                         defaultValues={studentFormData}
                         courseId={courseId}
                     />
+                    <SingleStudentCourse course={course} />
                     <div className={cls.page__cards}>
                         <StudentActionHistory />
                         <StudentPersonalInfo

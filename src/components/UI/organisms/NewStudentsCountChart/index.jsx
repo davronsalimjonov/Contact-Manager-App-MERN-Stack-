@@ -8,6 +8,7 @@ import { getNewStudentsCount } from '@/services/statistic';
 import Select from '../../atoms/Form/Select';
 import cls from './NewStudentsCountChart.module.scss';
 import Loader from '../../atoms/Loader';
+import { useOutletContext } from 'react-router-dom';
 
 const options = {
     responsive: true,
@@ -18,14 +19,15 @@ const options = {
     },
 };
 
-const NewStudentsCountChart = ({ }) => {
-    const userId = useGetUserId()
+const NewStudentsCountChart = ({ mentorId }) => {
+    const [period] = useOutletContext();
+    const userId = mentorId || useGetUserId()
     const [dateRange, setDateRange] = useState({ startDate: dayjs().startOf('month').format('YYYY-MM-DD'), endDate: dayjs().endOf('month').format('YYYY-MM-DD') });
     const { data: newStudentsCount, isLoading: isLoadingNewStudentsCount } = useQuery(['statistic', 'new-students-count', dateRange?.startDate, dateRange.endDate], () => getNewStudentsCount({ teacher: userId, ...dateRange }))
 
     const handleMonthChange = (month) => {
         month = Number(month)
-        const year = new Date().getFullYear();
+        const year = new Date(period.date).getFullYear();
         const startDate = dayjs(new Date(year, month - 1, 1).toISOString()).format('YYYY-MM-DD');
         const endDate = dayjs(new Date(year, month, 0).toISOString()).format('YYYY-MM-DD');
         setDateRange({ startDate, endDate });

@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^2.3.0",
     "@tanstack/react-virtual": "^3.10.9",
     "@wavesurfer/react": "^1.0.7",
+    "antd": "^5.22.4",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
     "core-js-pure": "^3.39.0",

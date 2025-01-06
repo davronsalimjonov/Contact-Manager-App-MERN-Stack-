@@ -13,6 +13,22 @@ import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks } from "./data";
+import MainMentors from "@/components/pages/MainMentors";
+import MainMentorStatistic from "@/components/pages/MainMentorStatistic";
+import CallMentors from "@/components/pages/CallMentors";
+import CallMentorStatistic from "@/components/pages/CallMentorsStatistic";
+import AllStudents from "@/components/pages/AllStudents";
+import Courses from "@/components/pages/Courses";
+import AddStudent from "@/components/pages/AddStudent";
+import UpdateSingleStudentCourse from "@/components/pages/UpdateSingleStudentCourse";
+import UpdateCourse from "@/components/pages/UpdateCourse";
+import ServisStatistic from "@/components/pages/ServisStatistic";
+import StudentsRateForCallMentor from "@/components/pages/StudentsRateForCallMentor";
+import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
+import Dictionary from "@/components/pages/Dictionary";
+import Moderation from "@/components/pages/Moderation";
+import MentorsStatistic from "@/components/pages/MentorsStatistic";
+import Notification from "@/components/pages/Notification";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -30,6 +46,10 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '/workspace',
                 element: <Workspace />
+            },
+            {
+                path: '/dictionary',
+                element: <Dictionary />
             },
             {
                 path: '/students',
@@ -56,6 +76,10 @@ const callTecherRoutes = createBrowserRouter([
                 element: <MentorTasks />
             },
             {
+                path: 'mentor',
+                element: <MainMentors />
+            },
+            {
                 path: '*',
                 element: <PageNotFound />
             }
@@ -69,9 +93,13 @@ const mainMentorRoutes = createBrowserRouter([
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
             {
+                path: '/dictionary',
+                element: <Dictionary />
+            },
+            {
                 path: '*',
                 element: <PageNotFound />
-            }
+            },
         ]
     }
 ])
@@ -81,6 +109,78 @@ const managerRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={managerSidebarLinks} />,
         children: [
+            {
+                path: '/main-teachers',
+                element: <MainMentors />
+            },
+            {
+                path: '/main-teachers/:mentorId',
+                element: <MainMentorStatistic />
+            },
+            {
+                path: '/call-teachers',
+                element: <CallMentors />
+            },
+            {
+                path: '/call-teachers/:mentorId',
+                element: <CallMentorStatistic />
+            },
+            {
+                path: '/students',
+                element: <AllStudents />
+            },
+            {
+                path: '/students/:courseId',
+                element: <SingleStudent />
+            },
+            {
+                path: '/add-student',
+                element: <AddStudent />
+            },
+            {
+                path: '/update-course/:courseId',
+                element: <UpdateSingleStudentCourse />
+            },
+            {
+                path: '/courses',
+                element: <Courses />
+            },
+            {
+                path: '/courses/:courseId',
+                element: <UpdateCourse />
+            },
+            {
+                path:'/notifications',
+                element: <Notification/>
+            },
+            {
+                path: '/settings',
+                element: <Settings />
+            },
+            {
+                path: '/service-statistics',
+                element: <ServisStatistic />
+            },
+            {
+                path: '/service-statistics/lesson-rate/:teacherId/:groupId',
+                element: <StudentsRateForTeacher />
+            },
+            {
+                path: '/service-statistics/call-rate/:teacherId',
+                element: <StudentsRateForCallMentor />
+            },
+            {
+                path: '/dictionary',
+                element: <Dictionary />
+            },
+            {
+                path: '/moderation/:courseId',
+                element: <Moderation />
+            },
+            {
+                path: '/mentor-statistics',
+                element: <MentorsStatistic />
+            },
             {
                 path: '*',
                 element: <PageNotFound />

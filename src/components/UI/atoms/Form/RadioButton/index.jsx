@@ -9,19 +9,23 @@ const RadioButton = ({
     error,
     disabled,
     defaultChecked,
+    className,
+    radioClassName,
+    preffix
 }) => {
     return (
-        <label className={cn(cls.label, error && cls.error)}>
+        <label className={className||cn(cls.label, error && cls.error)}>
             <span>{label}</span>
             <input 
                 type="radio"
                 name={name} 
                 value={value} 
                 disabled={disabled}
-                className={cls.radio}
+                className={radioClassName||cls.radio}
                 defaultChecked={defaultChecked}
                 {...register}
             />
+            {preffix && <span>{preffix}</span>}
         </label>
     );
 }

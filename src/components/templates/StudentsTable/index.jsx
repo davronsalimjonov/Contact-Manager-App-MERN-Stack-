@@ -12,6 +12,9 @@ const StudentsTable = ({
     triggerRef,
     isLoading
 }) => {
+
+    // TODO
+
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             {students?.length > 0 ? (
@@ -33,7 +36,7 @@ const StudentsTable = ({
                                     days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
                                     time={student?.connectionTime}
                                     status={student?.status}
-                                    userCourseId={student.id}
+                                    userCourseId={student?.id}
                                     chatId={student?.id}
                                 />
                             )}
@@ -42,7 +45,7 @@ const StudentsTable = ({
                     </tbody>
                 </table>
             ) : (
-                !isLoading && <EmptyData />
+                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas."/>
             )}
             {isLoading && <Loader size={80} />}
         </div>

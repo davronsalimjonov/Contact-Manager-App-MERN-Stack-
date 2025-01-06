@@ -51,6 +51,7 @@ const StudentInformationForm = ({
         }
     }, [isSubmitSuccessful])
 
+
     const handleUpdateConnectionTimes = async (data) => {
         try {
             data.days = data?.days?.sort((a, b) => a - b)
