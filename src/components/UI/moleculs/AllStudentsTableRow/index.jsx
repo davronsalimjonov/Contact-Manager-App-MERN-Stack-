@@ -1,4 +1,4 @@
-import cls from './AllstudentsTableRow.module.scss';
+import cls from './AllStudentsTableRow.module.scss';
 import Avatar from 'react-avatar';
 import getStyleByStatus from '@/utils/getStyleByStatus';
 import { formatDate } from '@/utils/formatDate';
