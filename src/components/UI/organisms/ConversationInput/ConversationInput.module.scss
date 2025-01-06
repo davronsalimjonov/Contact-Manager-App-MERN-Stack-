@@ -55,6 +55,19 @@
             gap: 12px;
         }
 
+        &__file{
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & > input{
+                display: none;
+            }
+        }
+
         &__send {
             width: 40px;
             height: 40px;

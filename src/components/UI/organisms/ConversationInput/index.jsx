@@ -10,7 +10,7 @@ import useGetChat, { useGetChatMessages, useMessage } from '@/hooks/useGetChat';
 import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import { adjustHeight, cn, generateUUID, objectToFormData } from '@/utils/lib';
 import { createComment, createLessonTask, createTextMessage, createSms, updateHomeTask } from '@/services/chat';
-import { CloseIcon, SendIcon } from '../../atoms/icons';
+import { AttachmentIcon, CloseIcon, SendIcon } from '../../atoms/icons';
 import SmsTemplateButton from '../SmsTemplateButton';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
@@ -207,6 +207,12 @@ const ConversationInput = ({ userCourseId }) => {
                     )}
                 </div>
                 <div>
+                    {messageType === MessageTypes.TEXT && (
+                        <label className={cls.input__controls__file}>
+                            <AttachmentIcon />
+                            <input type="file" />
+                        </label>
+                    )}
                     <button
                         className={cls.input__controls__send}
                         disabled={!isDirty || !isValid}
