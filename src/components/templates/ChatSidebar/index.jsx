@@ -6,16 +6,26 @@ import cls from './ChatSidebar.module.scss';
 const ChatSidebar = ({
     userCourseId = '',
     conversationId = '',
+    userAvatar = '',
+    userFullName = '',
     firstPhoneNumber = '',
     secondPhoneNumber = '',
     thirdPhoneNumber = '',
-    email = ''
+    email = '',
+    status = '',
+    comment = ''
 }) => {
     const phoneNumbers = [firstPhoneNumber, secondPhoneNumber, thirdPhoneNumber].filter(Boolean)
 
     return (
         <div className={cls.sidebar}>
-            <ChatPartnerDetails />
+            <ChatPartnerDetails 
+                userCourseId={userCourseId}
+                status={status}
+                comment={comment}
+                userFullName={userFullName}
+                userAvatar={userAvatar} 
+            />
             <ChatTasksList userCourseId={userCourseId} conversationId={conversationId} />
             <ChatPartnerContacts 
                 phoneNumbers={phoneNumbers}

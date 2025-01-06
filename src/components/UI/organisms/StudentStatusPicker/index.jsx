@@ -2,16 +2,10 @@ import { useState } from 'react';
 import { usePopper } from 'react-popper';
 import { createPortal } from 'react-dom';
 import { cn } from '@/utils/lib';
+import { STUDENT_STATUS_ENUMS } from '@/constants';
 import useClickOutside from '@/hooks/useClickOutside';
 import StudentStatus from '../../atoms/StudentStatus';
 import cls from './StudentStatusPicker.module.scss';
-
-const statuses = [
-    { id: 1, label: 'Adaptatsiya', value: 'adaptation' },
-    { id: 2, label: 'Aktiv', value: 'active' },
-    { id: 3, label: 'Muzlatilgan', value: 'frozen' },
-    { id: 4, label: 'Yakunlangan', value: 'completed' }
-];
 
 const PopupContent = ({ 
     styles, 
@@ -34,15 +28,15 @@ const PopupContent = ({
             })}
         >
             <div className={cls.popup__content}>
-                {statuses.map(status => (
+                {STUDENT_STATUS_ENUMS.map((status, index) => (
                     <div
-                        key={status.id}
+                        key={index}
                         onClick={() => handleSelectStatus(status)}
                         className={cn(cls.status_item, {
-                            [cls.status_item_active]: selectedStatus.id === status.id
+                            [cls.status_item_active]: selectedStatus === status
                         })}
                     >
-                        <StudentStatus status={status.label} />
+                        <StudentStatus status={status} />
                     </div>
                 ))}
             </div>
@@ -51,8 +45,11 @@ const PopupContent = ({
     );
 };
 
-const StudentStatusPicker = () => {
-    const [selectedStatus, setSelectedStatus] = useState(statuses[0]);
+const StudentStatusPicker = ({
+    defaultStatus,
+    onChange
+}) => {
+    const [selectedStatus, setSelectedStatus] = useState(defaultStatus || STUDENT_STATUS_ENUMS[0]);
     const [isVisible, setIsVisible] = useState(false);
     const [isOpenPopup, setIsOpenPopup] = useState(false);
     const [popperEl, setPopperEl] = useState(null);
@@ -94,6 +91,7 @@ const StudentStatusPicker = () => {
 
     const handleSelectStatus = (status) => {
         setSelectedStatus(status);
+        onChange(status)
         handleClosePopup();
     };
 
@@ -104,9 +102,8 @@ const StudentStatusPicker = () => {
                 onClick={togglePopup}
                 className={cls.trigger}
             >
-                <StudentStatus status={selectedStatus.label} />
+                <StudentStatus status={selectedStatus} />
             </div>
-
             <PopupContent 
                 styles={styles}
                 attributes={attributes}
