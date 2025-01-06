@@ -4,7 +4,7 @@ import useGetUser from "@/hooks/useGetUser";
 import Login from "@/components/pages/Login";
 import Loader from "@/components/UI/atoms/Loader";
 import Settings from "@/components/pages/Settings";
-import Dashboard from "@/components/pages/Dashboard";
+import Dashboard from "@/components/pages/SupervisorDashboard";
 import Workspace from "@/components/pages/Workspace";
 import MyStudents from "@/components/pages/MyStudents";
 import MentorTasks from "@/components/pages/MentorTasks";
@@ -13,6 +13,10 @@ import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks } from "./data";
+import MainMentor from "@/components/pages/MainMentorDashboard";
+import MainMentorStudents from "@/components/pages/MainMentorStudents";
+import Users from "@/components/pages/Users";
+import SingleUser from "@/components/pages/SingleUser";
 import MainMentors from "@/components/pages/MainMentors";
 import MainMentorStatistic from "@/components/pages/MainMentorStatistic";
 import CallMentors from "@/components/pages/CallMentors";
@@ -92,6 +96,10 @@ const mainMentorRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
+            {
+                path: '/students',
+                element: <MainMentorStudents />
+            },
             {
                 path: '/dictionary',
                 element: <Dictionary />
@@ -184,7 +192,15 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '*',
                 element: <PageNotFound />
-            }
+            },
+            {
+                path: '/users',
+                element: <Users />
+            },
+            {
+                path: '/users/user/:userId',
+                element: <SingleUser />
+            },
         ]
     }
 ])

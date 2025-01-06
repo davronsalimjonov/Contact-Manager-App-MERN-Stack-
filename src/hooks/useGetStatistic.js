@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getMentorCallCount, getNewStudentsCount, getRating, getStudentCountByCourse, getStudentCountByLevel } from "@/services/statistic";
+import { getAllStudentsCount, getMentorCallCount, getNewStudentsCount, getOnlineUsers, getPaidStudentCount, getRating, getStatusUser, getStudentCountByCourse, getStudentCountByLevel, getTodayProUsers } from "@/services/statistic";
 import { useGetUserId } from "./useGetUser";
 
 const useGetStatistic = ({
@@ -13,12 +13,23 @@ const useGetStatistic = ({
     const newStudentsCount = useQuery(['statistic', 'new-students-count', startDate, endDate], () => getNewStudentsCount({ teacher: userId, startDate, endDate }))
     const rating = useQuery(['statistic', 'rating', startDate, endDate], () => getRating(userId, { startDate, endDate }))
 
+    const allStudentsCount = useQuery(['statistic', 'all-student-count'], () => getAllStudentsCount())
+    const paidStudentsCount = useQuery(['statistic', 'paid-student-count'], () => getPaidStudentCount({ startDate, endDate }))
+    const todayProUsers = useQuery(['statisctic', 'today-pro-users'], () => getTodayProUsers())
+    const todayOnlineUsers = useQuery(['statistic', 'online-users'], () => getOnlineUsers())
+    const statusUser = useQuery(['statistic', 'users-status'], () => getStatusUser({ startDate, endDate }))
+
     return {
         callCount,
         studentsCountByCourse,
         studentsCountByLevel,
         newStudentsCount,
-        rating
+        rating,
+        allStudentsCount,
+        paidStudentsCount,
+        todayProUsers,
+        todayOnlineUsers,
+        statusUser
     }
 }
 

@@ -79,3 +79,29 @@ export const getCallAndLessonLeaderboard = async (params) => {
 }
 
 
+
+
+// export const getAllStudentsCount = async () => {
+//     const res = await api.get(`/statistic/all-students-count`)
+//     return res.data
+// }
+
+export const getPaidStudentCount = async () => {
+    const res = await api.get(`/statistic/user-course/student-count-by-new-for-admin`)
+    return res.data
+}
+
+export const getTodayProUsers = async () => {
+    const res = await api.get(`/statistic/today-pro-users`)
+    return res.data
+}
+
+export const getOnlineUsers = async () => {
+    const res = await api.get(`/statistic/online`)
+    return res.data
+}
+
+export const getStatusUser = async () => {
+    const res = await api.get(`/statistic/user-course/student-count-by-status`)
+    return res.data
+}

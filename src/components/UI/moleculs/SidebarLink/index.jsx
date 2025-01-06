@@ -10,7 +10,8 @@ const SidebarLink = ({
     icon = <></>,
     label = '',
     isOpen = false,
-    children
+    children,
+    onClick
 }) => {
     const [isOpenDropDown, setIsOpenDropdown] = useState(false)
     const hasChildren = children?.length > 0
@@ -18,6 +19,7 @@ const SidebarLink = ({
         <NavLink 
             to={hasChildren ? children[0]?.link : to} 
             className={({ isActive }) => cn(cls.link, isActive ? cls.active : '')}
+            onClick={onClick}
         >
             <MenuItem
                 onClick={hasChildren ? () => setIsOpenDropdown(state => !state) : undefined}
