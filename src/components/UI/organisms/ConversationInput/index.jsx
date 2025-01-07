@@ -9,7 +9,7 @@ import useClickOutside from '@/hooks/useClickOutside';
 import useGetChat, { useGetChatMessages, useMessage } from '@/hooks/useGetChat';
 import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import { adjustHeight, cn, generateUUID, objectToFormData } from '@/utils/lib';
-import { createComment, createLessonTask, createTextMessage, createSms, updateHomeTask } from '@/services/chat';
+import { createComment, createLessonTask, createTextMessage, createSms, updateHomeTask, createFileMessage } from '@/services/chat';
 import { AttachmentIcon, CloseIcon, SendIcon } from '../../atoms/icons';
 import SmsTemplateButton from '../SmsTemplateButton';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
@@ -42,10 +42,10 @@ const ConversationInput = ({ userCourseId }) => {
     const { addNewMessage, updateMessage, messages } = useGetChatMessages(conversationId)
     const { register, handleSubmit, reset, getValues, setValue, watch, formState: { isDirty, isValid } } = methods
     const [messageType, setMessageType] = useState(MessageTypes.MESSAGE)
-    const [selectedFile, setSelectedFile] = useState(null)
+    const selectedFile = watch('file')
     const [isOpenDatepicker, setIsOpenDatepicker] = useState(false)
     const taskDatepickerRef = useClickOutside({ onClickOutside: () => setIsOpenDatepicker(false) })
-
+    
     useEffect(() => {
         if (editMessage) {
             setMessageType(editMessage.type)
@@ -53,16 +53,22 @@ const ConversationInput = ({ userCourseId }) => {
         }
     }, [editMessage])
 
-    const handleSendMessage = (data) => {
+    const handleSendMessage = async (data) => {
         try {
             if (messageType !== MessageTypes.LESSON_TASK) {
                 const id = generateUUID()
-                const newMessage = generateMessage(data.message, messageType, { id })
+                const newMessage = await generateMessage(data, messageType, { id })
 
                 addNewMessage(newMessage)
                 reset()
 
-                if (messageType === MessageTypes.MESSAGE) {
+                if (messageType === MessageTypes.MESSAGE && selectedFile) {
+                    const fd = objectToFormData({ chat: conversationId, file: selectedFile, caption: data.message })
+                    createFileMessage(fd).then(res => {
+                        socket.emit('room-message', { ...res, room: conversationId, studentId })
+                        updateMessage(id, res)
+                    })
+                } else if (messageType === MessageTypes.MESSAGE) {
                     createTextMessage({ chat: conversationId, text: data.message }).then(res => {
                         socket.emit('room-message', { ...res, room: conversationId, studentId })
                         updateMessage(id, res)
@@ -194,8 +200,8 @@ const ConversationInput = ({ userCourseId }) => {
                     className={cls.input__textarea}
                     placeholder={getTextAreaPlaceholder(messageType)}
                     {...register('message', {
-                        required: true,
-                        validate: (message) => message?.trim()?.length > 0,
+                        required: !selectedFile,
+                        validate: (message) => selectedFile || message?.trim()?.length > 0,
                         onChange: adjustHeight
                     })}
                 ></textarea>
@@ -204,7 +210,7 @@ const ConversationInput = ({ userCourseId }) => {
                 <div className={cls.input__files}>
                     <FileAttachment
                         name={selectedFile?.name}
-                        onRemove={() => setSelectedFile(null)} 
+                        onRemove={() => setValue('file', null, { shouldDirty: true, shouldValidate: true })}
                     />
                 </div>
             )}
@@ -223,7 +229,7 @@ const ConversationInput = ({ userCourseId }) => {
                             <input
                                 type="file"
                                 disabled={selectedFile}
-                                onChange={e => setSelectedFile(e.target.files[0])}
+                                onChange={e => setValue('file', e.target.files[0], { shouldDirty: true, shouldValidate: true })}
                             />
                         </label>
                     )}

@@ -37,10 +37,10 @@ export const useTaskMutations = (userCourseId) => {
         onMutate: (taskId) => updateTaskState(taskId, { isCompleted: true }),
     })
 
-    function addNewTask(newTask) {
+    async function addNewTask(newTask) {
         const tempId = generateUUID()
         newTask = { ...newTask, id: tempId }
-        const taskMessage = generateMessage(newTask, MessageTypes.TASK, { id: tempId })
+        const taskMessage = await generateMessage(newTask, MessageTypes.TASK, { id: tempId })
 
         addNewMessage(taskMessage)
         queryClient.setQueryData(['tasks', 'uncompleted', userCourseId], (oldData) => {

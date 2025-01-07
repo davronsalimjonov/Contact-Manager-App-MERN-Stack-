@@ -1,9 +1,9 @@
 import { useQuery, useQueryClient } from "react-query";
 import { isSameDay } from "@/utils/time";
+import { fileToObject, getFileType } from "@/utils/lib";
 import { MessageTypes } from "@/constants/enum";
 import { getChatInfo, getChatMessages } from "@/services/chat";
 import useGetUser, { useGetUserId } from "./useGetUser";
-import { getFileType } from "@/utils/lib";
 
 export const useGetChatMessages = (chatId) => {
     const queryClient = useQueryClient()
@@ -92,13 +92,18 @@ export const useMessage = (conversationId) => {
     const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
     const dateSeperator = isNewMessageInPeriod ? new Date(Date.now()).toISOString() : null 
 
-    function generateMessage(data, type, options = {}) {
+    async function generateMessage(data, type, options = {}) {
         let messageType = type
 
         if(messageType === MessageTypes.MESSAGE) {
             if(data?.file){
                 const type = getFileType(data?.file)
-                const specialTypes = [MessageTypes.IMAGE, MessageTypes.AUDIO]
+                const fileObj = await fileToObject(data?.file)
+                const specialTypes = [MessageTypes.IMAGE, MessageTypes.AUDIO, MessageTypes.VIDEO]
+
+                data.caption = data?.message
+                data.file = fileObj
+                delete data.message
 
                 if(specialTypes.includes(type)){
                     messageType = type
@@ -128,7 +133,7 @@ export const useMessage = (conversationId) => {
                 isViewed: false,
                 shouldScroll: true,
                 dateSeperator,
-                message: { text: data, type: messageType, whoSended: "mentor", mentor: user },
+                message: { ...data, type: messageType, whoSended: "mentor", mentor: user },
                 ...options
             })
             case MessageTypes.COMMENT: return ({
@@ -138,7 +143,7 @@ export const useMessage = (conversationId) => {
                 isViewed: false,
                 shouldScroll: true,
                 dateSeperator,
-                comment: { text: data, owner: user },
+                comment: { text: data.message, owner: user },
                 ...options
             })
             case MessageTypes.CALL: return ({
@@ -158,7 +163,7 @@ export const useMessage = (conversationId) => {
                 isViewed: false,
                 shouldScroll: true,
                 dateSeperator,
-                sms: { text: data, sender: user },
+                sms: { text: data.message, sender: user },
                 ...options
             })
             case MessageTypes.LESSON_TASK: return ({

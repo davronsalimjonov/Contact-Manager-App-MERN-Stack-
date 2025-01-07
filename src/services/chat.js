@@ -41,6 +41,11 @@ export const createLessonTask = async (fd) => {
     return res.data
 }
 
+export const createFileMessage = async (data) => {
+    const res = await api.post('/message/any-file', data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    return res.data
+}
+
 export const updateHomeTask = async (taskId, data) => {
     const res = await api.put(`/home-task/${taskId}`, data, {headers: {'Content-Type': 'multipart/form-data'}})
     return res.data
