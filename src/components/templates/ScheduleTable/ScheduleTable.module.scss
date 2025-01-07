@@ -1,0 +1,23 @@
+.table {
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    grid-template-columns:
+        minmax(150px, 1fr) minmax(150px, 1fr) minmax(150px, 1fr) 
+        minmax(50px, 50px);;
+
+    & tbody {
+        display: contents;
+    }
+
+    &__caption {
+        grid-area: 1/1/span 1/span 4;
+        padding: 16px;
+        font-family: "Raleway";
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 24px;
+        text-align: left;
+        background-color: var(--base-white-color);
+    }
+}

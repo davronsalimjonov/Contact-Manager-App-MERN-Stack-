@@ -13,6 +13,8 @@ import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks } from "./data";
+import Schedule from "@/components/pages/Schedule";
+import SingleSchedule from "@/components/pages/SingleSchedule";
 import MainMentor from "@/components/pages/MainMentorDashboard";
 import MainMentorStudents from "@/components/pages/MainMentorStudents";
 import Users from "@/components/pages/Users";
@@ -63,6 +65,22 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '/students/:courseId',
                 element: <SingleStudent />
+            },
+            {
+                path: '/lesson-schedule',
+                element: <Schedule />
+            },
+            {
+                path: '/lesson-schedule/:scheduleId',
+                element: <SingleSchedule />
+            },
+            {
+                path: '/lesson-schedule',
+                element: <Schedule />
+            },
+            {
+                path: '/lesson-schedule/:scheduleId',
+                element: <SingleSchedule />
             },
             {
                 path: '/students/chat/:userCourseId',

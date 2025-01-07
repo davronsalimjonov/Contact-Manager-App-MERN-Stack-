@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { MONTH_OPTIONS } from '@/constants/form';
 import { useGetUserId } from '@/hooks/useGetUser';
 import { getNewStudentsCount } from '@/services/statistic';
+import Loader from '../../atoms/Loader';
 import Select from '../../atoms/Form/Select';
 import cls from './NewStudentsCountChart.module.scss';
 import Loader from '../../atoms/Loader';
@@ -31,6 +32,47 @@ const NewStudentsCountChart = ({ mentorId }) => {
         const startDate = dayjs(new Date(year, month - 1, 1).toISOString()).format('YYYY-MM-DD');
         const endDate = dayjs(new Date(year, month, 0).toISOString()).format('YYYY-MM-DD');
         setDateRange({ startDate, endDate });
+    };
+
+    const pointImage = new Image();
+    pointImage.src = '/images/point.svg';
+    pointImage.width = '16';
+    pointImage.height = '16';
+
+    const options = {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            datalabels: {
+                color: '#475569',
+                align: 'top',
+                anchor: 'center',
+                formatter: function (value) {
+                    return value;
+                }
+            },
+        },
+        scales: {
+            y: {
+                min: 0,
+                max: Math.floor(maxCount(newStudentsCount)/20)*20 + 20,
+                ticks: {
+                    stepSize: 20,
+                }
+            }
+        },
+        elements: {
+            point: {
+                backgroundColor: 'rgba(18, 86, 219)',
+                borderColor: '#000',
+                borderWidth: 2,
+                radius: 4,
+                usePointStyle: true,
+                pointStyle: pointImage,
+            }
+        }
     };
 
     const data = {

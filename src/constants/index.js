@@ -24,6 +24,24 @@ export const DEGREE = [
 
 export const DEGREEOPTIONS = DEGREE.map((level) => ({ value: level, label: level }));
 
+export const STATUSOPTIONS = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
+
+export const WEEKDAYOPTIONS = daysOfWeekFull.map((day) => ({ value: day, label: day }));
+export const CALL_RECORD_DEFAULT_PEAKS = Array(300).fill(0);
+
+export const UNITS = Array.from(Array(12)).map((_, index) => ({ value: 5 * (index + 1), label: `Unit ${5 * (index + 1)}` }));
+
+export const DEGREE = [
+    "A1",
+    "A2",
+    "B1",
+    "B2",
+    "C1",
+    "C2"
+];
+
+export const DEGREEOPTIONS = DEGREE.map((level) => ({ value: level, label: level }));
+
 export const STUDENTS_STATUS_OPTION = STUDENT_STATUS_ENUMS.map((status) => ({
     value: status, label: status
 }));
