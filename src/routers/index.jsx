@@ -120,7 +120,7 @@ const mainMentorRoutes = createBrowserRouter([
 const managerRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
+        element: <MainLayout sidebarLinks={managerSidebarLinks} />,
         children: [
             {
                 path: '/main-teachers',
@@ -199,16 +199,16 @@ const managerRoutes = createBrowserRouter([
                 element: <MentorsStatistic />
             },
             {
-                path: '*',
-                element: <PageNotFound />
-            },
-            {
                 path: '/users',
                 element: <Users />
             },
             {
                 path: '/users/user/:userId',
                 element: <SingleUser />
+            },
+            {
+                path: '*',
+                element: <PageNotFound />
             },
         ]
     }
