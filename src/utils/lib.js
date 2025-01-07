@@ -154,3 +154,34 @@ export const getFileType = (file) => {
     const type = parts[0];
     return type;
 }
+
+export const fileToObject = async (file) => {
+    if(!file) return
+    const fileName = file?.name
+    const fileSize = Math.ceil((file?.size || 0) / 1024)
+    const fileUrl = URL.createObjectURL(file)
+    const fileType = getFileType(file)
+
+    const fileObj = {}
+
+    if (fileType === 'image'){
+        const image = new Image()
+        image.src = fileUrl
+
+        await new Promise((resolve, reject) => {
+            image.onload = () => {
+                fileObj.width = image.width
+                fileObj.height = image.height
+                resolve()
+            }
+            image.onerror = reject
+        })
+    }
+
+    return {
+        fileName,
+        size: fileSize,
+        url: fileUrl,
+        ...fileObj
+    }
+}

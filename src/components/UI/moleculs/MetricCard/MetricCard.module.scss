@@ -33,6 +33,9 @@
     }
 
     &__value {
+        display: flex;
+        align-items: center;
+        gap: 5px;
         font-size: 28px;
         font-weight: 700;
         line-height: 32.87px;

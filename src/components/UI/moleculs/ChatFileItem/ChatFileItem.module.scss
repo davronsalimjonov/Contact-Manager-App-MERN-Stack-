@@ -1,0 +1,39 @@
+.file {
+    align-self: flex-start;
+    display: grid;
+    grid-template-areas:
+        'file name'
+        'file size';
+    grid-template-columns: 40px 1fr;
+    gap: 0px 8px;
+    padding: 8px;
+    background-color: var(--blue-color);
+    border-radius: 10px;
+    color: var(--base-white-color);
+    cursor: pointer;
+
+    &__icon {
+        grid-area: file;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(113, 154, 233, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__name {
+        grid-area: name;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 18.78px;
+    }
+
+    &__size {
+        grid-area: size;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.44px;
+    }
+}

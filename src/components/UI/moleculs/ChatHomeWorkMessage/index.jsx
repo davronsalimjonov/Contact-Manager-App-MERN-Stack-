@@ -8,6 +8,7 @@ import MediaPreviewer from '../MediaPreviewer';
 import LessonTaskModal from '../LessonTaskModal';
 import ChatMessageLayout from '../ChatMessageLayout';
 import cls from './ChatHomeWorkMessage.module.scss';
+import ChatFileItem from '../ChatFileItem';
 
 const ChatHomeWorkMessage = memo(({
     avatar = '',
@@ -16,7 +17,7 @@ const ChatHomeWorkMessage = memo(({
     workId = '',
     fullName = '',
     time = '',
-    fileName = 'File name is not defined',
+    fileName = '',
     fileSize = 0,
     fileUrl = '',
     taskTitle = '',
@@ -59,13 +60,11 @@ const ChatHomeWorkMessage = memo(({
                 date={taskDate}
             />
             <div className={cls.work}>
-                <div className={cls.work__file} onClick={() => setVisible(true)}>
-                    <div className={cls.work__file__icon}>
-                        <FileIcon />
-                    </div>
-                    <h4 className={cls.work__file__name}>{fileName}</h4>
-                    <span className={cls.work__file__size}>{formatFileSize(fileSize || 0)}</span>
-                </div>
+                <ChatFileItem 
+                    fileName={fileName}
+                    fileSize={fileSize}
+                    onClick={() => setVisible(true)}
+                />
                 <div className={cls.work__ball}>
                     <span>Vazifani baholang:</span>
                     <Rater

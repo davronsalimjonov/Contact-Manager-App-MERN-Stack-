@@ -13,6 +13,7 @@ import ChatCommentMessage from "../../moleculs/ChatCommentMessage";
 import ChatHomeWorkMessage from "../../moleculs/ChatHomeWorkMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 import ChatTaskMessage from "../../moleculs/ChatTaskMessage";
+import ChatFileMessage from "../../moleculs/ChatFileMessage";
 
 const RenderMessage = memo(({
     message,
@@ -61,6 +62,17 @@ const RenderMessage = memo(({
                     />
                 </div>
             );
+        case MessageTypes.AUDIO:
+            return (
+                <div ref={ref}>
+                    <ChatVoiseMessage
+                        time={message?.createdAt}
+                        audioUrl={message?.message?.file?.url}
+                        avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
+                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                    />
+                </div>
+            )
         case MessageTypes.VOISE:
             return (
                 <div ref={ref}>
@@ -71,6 +83,28 @@ const RenderMessage = memo(({
                         fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
                     />
                 </div>
+            );
+        case MessageTypes.VIDEO:
+            return (
+                <ChatFileMessage
+                    avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
+                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                    time={message?.createdAt}
+                    fileName={message?.message?.file?.fileName}
+                    fileSize={message?.message?.file?.size}
+                    fileUrl={message?.message?.file?.url}
+                />
+            );
+        case MessageTypes.ANY_FILE:
+            return (
+                <ChatFileMessage
+                    avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
+                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                    time={message?.createdAt}
+                    fileName={message?.message?.file?.fileName}
+                    fileSize={message?.message?.file?.size}
+                    fileUrl={message?.message?.file?.url}
+                />
             );
         case MessageTypes.STUDENT_HOME_WORK:
             return (
@@ -94,7 +128,7 @@ const RenderMessage = memo(({
             );
         case MessageTypes.TASK:
             return (
-                <ChatTaskMessage 
+                <ChatTaskMessage
                     title={message?.task?.title}
                     deadline={message?.task?.date}
                     isCompleted={message?.task?.isCompleted}

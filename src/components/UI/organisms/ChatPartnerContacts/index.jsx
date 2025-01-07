@@ -17,6 +17,7 @@ const ChatPartnerContacts = ({
                         key={index}
                         placeholder='Telefon raqam'
                         value={phone}
+                        readOnly
                         className={cls.contacts__input}
                     />
                 ))}
@@ -25,8 +26,9 @@ const ChatPartnerContacts = ({
                     value={email}
                     suffix={<EmailIcon />}
                     className={cls.contacts__input}
+                    readOnly
                 />
-                <WhiteButton>
+                <WhiteButton disabled>
                     <PlusIcon fill='var(--blue-color)' /> Yangi nomer qo’shish
                 </WhiteButton>
             </div>
