@@ -3,6 +3,7 @@ import { isSameDay } from "@/utils/time";
 import { MessageTypes } from "@/constants/enum";
 import { getChatInfo, getChatMessages } from "@/services/chat";
 import useGetUser, { useGetUserId } from "./useGetUser";
+import { getFileType } from "@/utils/lib";
 
 export const useGetChatMessages = (chatId) => {
     const queryClient = useQueryClient()
@@ -89,9 +90,26 @@ export const useMessage = (conversationId) => {
 
     const lastMessage = messages?.at(-1)
     const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
-    const dateSeperator = isNewMessageInPeriod ? new Date(Date.now()).toISOString() : null
+    const dateSeperator = isNewMessageInPeriod ? new Date(Date.now()).toISOString() : null 
 
     function generateMessage(data, type, options = {}) {
+        let messageType = type
+
+        if(messageType === MessageTypes.MESSAGE) {
+            if(data?.file){
+                const type = getFileType(data?.file)
+                const specialTypes = [MessageTypes.IMAGE, MessageTypes.AUDIO]
+
+                if(specialTypes.includes(type)){
+                    messageType = type
+                } else {
+                    messageType = MessageTypes.ANY_FILE
+                }
+            } else {
+                messageType = MessageTypes.TEXT
+            }
+        }
+
         switch (type) {
             case MessageTypes.TASK: return ({
                 id: Date.now().toString(),
@@ -103,14 +121,14 @@ export const useMessage = (conversationId) => {
                 task: { mentor: user, isCompleted: false, ...data },
                 ...options
             })
-            case MessageTypes.TEXT: return ({
+            case MessageTypes.MESSAGE: return ({
                 id: Date.now().toString(),
                 createdAt: new Date(Date.now()).toISOString(),
                 type: MessageTypes.MESSAGE,
                 isViewed: false,
                 shouldScroll: true,
                 dateSeperator,
-                message: { text: data, type: MessageTypes.TEXT, whoSended: "mentor", mentor: user },
+                message: { text: data, type: messageType, whoSended: "mentor", mentor: user },
                 ...options
             })
             case MessageTypes.COMMENT: return ({

@@ -1,10 +1,10 @@
 import Avatar from 'react-avatar';
+import { debounce } from '@/utils/lib';
 import { useUserCourseMutations } from '@/hooks/useUserCourse';
 import StudentStatusPicker from '../StudentStatusPicker';
 import ChatSidebarAccordion from '../../moleculs/ChatSidebarAccordion';
 import { BrowseIcon, LinkIcon, SortIcon, TagIcon } from '../../atoms/icons';
 import cls from './ChatPartnerDetails.module.scss';
-import { debounce } from '@/utils/lib';
 
 const ChatPartnerDetails = ({
     userCourseId = '',

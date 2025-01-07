@@ -144,3 +144,9 @@ export function getProportionalDimensions({
 
     return { width: newWidth, height: newHeight };
 }
+
+export const getFileType = (file) => {
+    const parts = file.type.split('/');
+    const type = parts[0];
+    return type;
+}

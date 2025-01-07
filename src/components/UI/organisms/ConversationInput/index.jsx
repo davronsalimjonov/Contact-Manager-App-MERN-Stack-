@@ -15,16 +15,17 @@ import SmsTemplateButton from '../SmsTemplateButton';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
 import cls from './ConversationInput.module.scss';
+import FileAttachment from '../../moleculs/FileAttachment';
 
 const getTextAreaPlaceholder = (messageType) => {
     switch (messageType) {
-        case 'message':
+        case MessageTypes.MESSAGE:
             return 'O’quvchi bilan muloqot'
-        case 'task':
+        case MessageTypes.LESSON_TASK:
             return 'Vazifa yuborish'
-        case 'sms':
+        case MessageTypes.SMS:
             return 'SMS yuborish'
-        case 'comment':
+        case MessageTypes.COMMENT:
             return 'Comment yuborish'
         default:
             return 'O’quvchi bilan muloqot'
@@ -40,7 +41,8 @@ const ConversationInput = ({ userCourseId }) => {
     const { generateMessage } = useMessage(conversationId)
     const { addNewMessage, updateMessage, messages } = useGetChatMessages(conversationId)
     const { register, handleSubmit, reset, getValues, setValue, watch, formState: { isDirty, isValid } } = methods
-    const [messageType, setMessageType] = useState(MessageTypes.TEXT)
+    const [messageType, setMessageType] = useState(MessageTypes.MESSAGE)
+    const [selectedFile, setSelectedFile] = useState(null)
     const [isOpenDatepicker, setIsOpenDatepicker] = useState(false)
     const taskDatepickerRef = useClickOutside({ onClickOutside: () => setIsOpenDatepicker(false) })
 
@@ -60,7 +62,7 @@ const ConversationInput = ({ userCourseId }) => {
                 addNewMessage(newMessage)
                 reset()
 
-                if (messageType === MessageTypes.TEXT) {
+                if (messageType === MessageTypes.MESSAGE) {
                     createTextMessage({ chat: conversationId, text: data.message }).then(res => {
                         socket.emit('room-message', { ...res, room: conversationId, studentId })
                         updateMessage(id, res)
@@ -150,8 +152,8 @@ const ConversationInput = ({ userCourseId }) => {
             <div className={cls.input__tabs}>
                 <button
                     type='button'
-                    className={cn(messageType === MessageTypes.TEXT && cls.input__tabs__active)}
-                    onClick={() => setMessageType(MessageTypes.TEXT)}
+                    className={cn(messageType === MessageTypes.MESSAGE && cls.input__tabs__active)}
+                    onClick={() => setMessageType(MessageTypes.MESSAGE)}
                 >
                     Chat
                 </button>
@@ -198,6 +200,14 @@ const ConversationInput = ({ userCourseId }) => {
                     })}
                 ></textarea>
             )}
+            {selectedFile && (
+                <div className={cls.input__files}>
+                    <FileAttachment
+                        name={selectedFile?.name}
+                        onRemove={() => setSelectedFile(null)} 
+                    />
+                </div>
+            )}
             <div className={cls.input__controls}>
                 <div>
                     {messageType === MessageTypes.SMS && (
@@ -207,10 +217,14 @@ const ConversationInput = ({ userCourseId }) => {
                     )}
                 </div>
                 <div>
-                    {messageType === MessageTypes.TEXT && (
+                    {messageType === MessageTypes.MESSAGE && (
                         <label className={cls.input__controls__file}>
                             <AttachmentIcon />
-                            <input type="file" />
+                            <input
+                                type="file"
+                                disabled={selectedFile}
+                                onChange={e => setSelectedFile(e.target.files[0])}
+                            />
                         </label>
                     )}
                     <button
