@@ -68,6 +68,10 @@ const mainMentorRoutes = createBrowserRouter([
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
             {
+                path: '',
+                element: <MainMentor />
+            },
+            {
                 path: '/students',
                 element: <MainMentorStudents />
             },
@@ -82,7 +86,7 @@ const mainMentorRoutes = createBrowserRouter([
 const managerRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout sidebarLinks={managerSidebarLinks} />,
+        element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
             {
                 path: '*',

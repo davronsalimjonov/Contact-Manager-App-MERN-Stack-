@@ -16,7 +16,8 @@ const MainMentorStudentsTableRow = ({
     group = '',
     unreadedMessagesCount = 0,
     setIsTransfer,
-    setIsModal
+    setIsModal,
+    setCourseId
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -28,6 +29,8 @@ const MainMentorStudentsTableRow = ({
             setIsModal(true)
         }},
     ]
+
+    setCourseId(userCourseId)
 
     return (
         <tr className={cls.row}>

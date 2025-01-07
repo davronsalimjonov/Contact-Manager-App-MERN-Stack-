@@ -54,14 +54,14 @@ const StudentInformationForm = ({
     const handleUpdateConnectionTimes = async (data) => {
         try {
             data.days = data?.days?.sort((a, b) => a - b)
-            await updateUserCourse(courseId, data)
-            queryClient.setQueryData(['user-course', courseId], oldData => ({ ...oldData, ...data }))
+            await updateUserCourse(id, data)
+            queryClient.setQueryData(['user-course', id], oldData => ({ ...oldData, ...data }))
             queryClient.setQueryData(['students', userId], oldData => ({
                 ...oldData,
                 pages: oldData?.pages?.map(page => ({
                     ...page,
                     items: page.items?.map(item => {
-                        if(item.id === courseId){
+                        if(item.id === id){
                             item.days = data.days
                             item.connectionTime = data.connectionTime 
                         }

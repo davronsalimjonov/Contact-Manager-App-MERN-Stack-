@@ -1,17 +1,18 @@
-import { useState } from 'react';
-import useGetGroups from '@/hooks/useGetGroups';
-import cls from './MainMentorStudents.module.scss';
-import MainMentorStudentsTable from '@/components/templates/MainMentorStudentsTable';
-import MainMentorStudentsSearchBar from '@/components/UI/organisms/MainMentorStudentsSearchBar/indsx';
-import MainMentorStudentsGroupTab from '@/components/UI/organisms/MainMentorStudentsGroupTab';
-import { useGetMentors } from '@/hooks/useGetMentors';
-import { useGetUserId } from '@/hooks/useGetUser';
-import Loader from '@/components/UI/atoms/Loader';
-import { customToast } from '@/utils/toast';
-import { addStudentsToGroup, createGroups } from '@/services/groups';
-import { STUDENT_STATUS_ENUMS } from '@/constants';
-import StudentStatus from '@/components/UI/atoms/StudentStatus';
-import { useGetCourse } from '@/hooks/useGetCourse';
+import { useState } from 'react'
+import useGetGroups from '@/hooks/useGetGroups'
+import cls from './MainMentorStudents.module.scss'
+import MainMentorStudentsTable from '@/components/templates/MainMentorStudentsTable'
+import MainMentorStudentsSearchBar from '@/components/UI/organisms/MainMentorStudentsSearchBar/indsx'
+import MainMentorStudentsGroupTab from '@/components/UI/organisms/MainMentorStudentsGroupTab'
+import { useGetMentors } from '@/hooks/useGetMentors'
+import { useGetUserId } from '@/hooks/useGetUser'
+import Loader from '@/components/UI/atoms/Loader'
+import { customToast } from '@/utils/toast'
+import { addStudentsToGroup, createGroups } from '@/services/groups'
+import { STUDENT_STATUS_ENUMS } from '@/constants'
+import StudentStatus from '@/components/UI/atoms/StudentStatus'
+import { useGetCourse } from '@/hooks/useGetCourse'
+import { updateUserCourse } from '@/services/course'
 
 const MainMentorStudents = () => {
     const academyMentor = useGetUserId()
@@ -20,12 +21,14 @@ const MainMentorStudents = () => {
     const [groupName, setGroupName] = useState('')
     const [selectedMentor, setSelectedMentor] = useState(null)
     const [isModal, setIsModal] = useState(false)
+    const [transferModal, setIsTransferModal] = useState(false)
     const [selectedStudents, setSelectedStudents] = useState([])
     const [selectMainMentors, setSelectMainMentors] = useState([])
     const [selectedCourse, setSelectedCourse] = useState([])
     const [selectCallMentors, setSelectCallMentors] = useState([])
     const [selectStatus, setSelectStatus] = useState([])
     const [activeGroup, setActiveGroup] = useState('Barchasi') 
+    const [courseId, setCourseId] = useState('')
     
     const { 
         callMentors: { data: callMentors, isLoading: isLoadingCallMentors},
@@ -35,7 +38,7 @@ const MainMentorStudents = () => {
     const {
         courseForSelect: { data: courseForSelect, isLoading: isCourseForSelectLoading},
     } = useGetCourse()
-    
+
     const {
         groups: {data: groups, isLoading: isGroupsLoading},
         groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading },
@@ -75,69 +78,112 @@ const MainMentorStudents = () => {
     const handleCreateGroup = async () => {
         try {
             if (!groupName) {
-                customToast.error("Guruh nomi bo'sh bo'lishi mumkin emas");
-                return;
+                customToast.error("Guruh nomi bo'sh bo'lishi mumkin emas")
+                return
             }
             
             if (!selectedMentor) {
-                customToast.error("Nazoratchi mentor tanlanmagan");
-                return;
+                customToast.error("Nazoratchi mentor tanlanmagan")
+                return
             }
             
-            const existingGroup = tabOptions.find((tab) => tab.label === groupName);
+            const existingGroup = tabOptions.find((tab) => tab.label === groupName)
             if (!existingGroup) {
                 const response = await createGroups({
                     title: groupName,
                     academyMentor,
                     callMentor: selectedMentor.value,
-                });
+                })
                 
                 if (response?.status === 201) {
-                    setIsModal(false);
-                    setGroupName("");
-                    setSelectedMentor(null);
-                    customToast.success("Gurux yaratildi!");
+                    setIsModal(false)
+                    setGroupName("")
+                    setSelectedMentor(null)
+                    customToast.success("Gurux yaratildi!")
                 } else {
-                    customToast.error("Yaratishda xatolik yuz berdi.");
+                    customToast.error("Yaratishda xatolik yuz berdi.")
                 }
             }
         } catch (error) {
-            console.error("Error Details:", error);
+            console.error("Error Details:", error)
             if (error.response) {
-                console.error("Error Response:", error.response);
+                console.error("Error Response:", error.response)
                 customToast.error(
                     `Xatolik Yuz Berdi: ${error.response.status} - ${error.response.data.message || "Unknown Error"}`
-                );
+                )
             } else {
-                customToast.error("Xatolik Yuz Berdi");
+                customToast.error("Xatolik Yuz Berdi")
             }
         }
-    };
+    }
     
     const handleAddStudentToGroup = async () => {
         try {
             if (!selectedStudents || selectedStudents.length === 0) {
-                customToast?.error("O'quvchilar Qo'shing");
-                return;
+                customToast?.error("O'quvchilar Qo'shing")
+                return
             }
             
             const response = await addStudentsToGroup({
                 group: groupId,
                 studentIds: selectedStudents,
-            });
-            
-            console.log(response)
+            })
             
             if (response?.status === 201) {
-                setSelectedStudents([]); 
-                customToast?.success("O'quvchilar Guruxga Qo'shildi");
+                setSelectedStudents([]) 
+                customToast?.success("O'quvchilar Guruxga Qo'shildi")
             } else {
-                customToast?.error(`Xatolik: ${response?.statusText || "Unknown Error"}`);
+                customToast?.error(`Xatolik: ${response?.statusText || "Unknown Error"}`)
             }
         } catch (error) {
-            customToast?.error("Xatolik Yuz Berdi");
+            customToast?.error("Xatolik Yuz Berdi")
         }
-    };
+    }
+
+    const handleStudentTransfer = async () => {
+        try {
+            if (!selectedCourse || selectedCourse.length === 0) {
+                customToast?.error("Kurs Tanlang!");
+                return;
+            }
+    
+            if (!selectMainMentors || selectMainMentors.length === 0) {
+                customToast?.error("Asosiy Mentor Tanlang!");
+                return;
+            }
+    
+            if (!selectCallMentors || selectCallMentors.length === 0) {
+                customToast?.error("Nazoratchi Mentor Tanlang!");
+                return;
+            }
+    
+            if (!selectStatus || selectStatus.length === 0) {
+                customToast?.error("Status Tanlang!");
+                return;
+            }
+
+            const res = await updateUserCourse(courseId, {
+                course: selectedCourse.value,
+                teacher: selectMainMentors.value,
+                secondTeacher: selectCallMentors.value,
+                status: selectStatus.value
+            })
+
+            if (res?.status === 200) {
+                setSelectedCourse([])
+                setSelectMainMentors([])
+                setSelectCallMentors([])
+                setSelectStatus([])
+                setIsModal(false)
+                customToast?.success("Transfer Amalga Oshirildi")
+            } else {
+                customToast?.error(`Xatolik: ${res?.statusText || "Unknown Error"}`)
+            }
+            
+        } catch(error) {
+            customToast?.error("Xatolik Yuz Berdi")
+        }
+    }
 
     const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
     const statusOptionsSelect = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: <StudentStatus status={status} /> }))
@@ -178,8 +224,6 @@ const MainMentorStudents = () => {
                             setSelectedStudents={setSelectedStudents}
                             handleAddStudentToGroup={handleAddStudentToGroup}
                             isLoadingGroupSelectStudents={isLoadingGroupSelectStudents}
-                            isModal={isModal}
-                            setIsModal={setIsModal}
                             activeGroup={activeGroup}
                             callMentorOptions={callMentorOptions}
                             mainMentorOptions={mainMentorOptions}
@@ -193,14 +237,18 @@ const MainMentorStudents = () => {
                             setSelectCallMentors={setSelectCallMentors}
                             selectStatus={selectStatus}
                             setSelectStatus={setSelectStatus}
+                            handleStudentTranfer={handleStudentTransfer}
+                            isModal={transferModal}
+                            setIsModal={setIsTransferModal}
+                            setCourseId={setCourseId}
                         />
-                    ) : (
+                    ) : (   
                         <Loader />
                     )}
                 </>
             }
         </div>
-    );
+    )
 }
 
-export default MainMentorStudents;
+export default MainMentorStudents
