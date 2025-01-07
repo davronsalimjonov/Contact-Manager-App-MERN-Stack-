@@ -6,9 +6,9 @@ const NotificationTableHeader = () => {
         <thead className={cls.head}>
             <tr >
                 <th>№</th>
-                <th>Nomi</th>
-                <th>Jo’natilgan vaqti</th>
-                <th>Yangilangan vaqti</th>
+                <th>Eslatma</th>
+                <th>O’rnatilgan vaqti</th>
+                <th>Eslatma turi</th>
                 <th>Yuborilishi</th>
                 <th><FilterIcon /></th>
             </tr>

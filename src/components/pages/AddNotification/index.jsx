@@ -1,58 +1,108 @@
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { GENDER_OPTIONS } from '@/constants/form';
-import { studentInfoSchema } from '@/schemas/student';
-import Button from '@/components/UI/atoms/Buttons/Button';
-import FormInput from '@/components/UI/moleculs/Form/FormInput';
-import RedButton from '@/components/UI/atoms/Buttons/RedButton';
-import AvatarUpload from '@/components/UI/moleculs/AvatarUpload';
-import FormDatepicker from '@/components/UI/moleculs/Form/FormDatepicker';
-import FormPhoneInput from '@/components/UI/moleculs/Form/FormPhoneInput';
-import FormRadioGroup from '@/components/UI/moleculs/Form/FormRadioGroup';
-import { LeftArrowIcon } from '@/components/UI/atoms/icons';
 import cls from './AddNotification.module.scss';
-import { customToast } from '@/utils/toast';
-import { objectToFormData } from '@/utils/lib';
-import { AddNotification } from '@/services/user';
+import useGetCourses from '@/hooks/useGetCourses';
+import FormInput from '@/components/UI/moleculs/Form/FormInput';
+import { ClockIcon, CloseIcon } from '@/components/UI/atoms/icons';
+import Textarea from '@/components/UI/atoms/Form/Textarea';
+import FormTimeInput from '@/components/UI/moleculs/Form/FormTimeInput';
+import Button from '@/components/UI/atoms/Buttons/Button';
+import { STUDENTS_STATUS_OPTION } from '@/constants';
+import FormSelect from '@/components/UI/moleculs/Form/FormSelect';
+import FormDatepicker from '@/components/UI/moleculs/Form/FormDatepicker';
+import { addNotification } from '@/services/notification';
+import { notificationSchema } from '@/schemas/student';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
+import { customToast } from '@/utils/toast';
 import { queryClient } from '@/services/api';
 
-const AddNotification = ({ }) => {
-
+const AddNotification = () => {
+    const { data: courses } = useGetCourses();
     const defaultValues = {
-        firstName: "",
-        lastName: "",
-        phone: "",
-        gender: "",
-        birthday: "",
+        title: "",
+        description: "",
+        time: "",
+        startDate: "",
+        endDate: "",
+        course: "",
+        status: "",
+        isPro: "",
+        login: ""
     }
 
     const navigate = useNavigate();
 
-    const { register, control, reset, watch, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
+    const { register, control, reset, handleSubmit, formState: { isDirty, errors, isSubmitting } } = useForm({
         defaultValues,
         mode: 'onSubmit',
-        resolver: yupResolver(studentInfoSchema)
+        resolver: yupResolver(notificationSchema)
     })
-    const avatar = watch('avatar');
 
+    const USER__TYPE = [
+        {
+            label: 'pro',
+            value: 'pro',
+        },
+        {
+            label: 'free',
+            value: 'free',
+        },
+    ]
+
+    const LOGIN__TYPE = [
+        {
+            label: '3 kun',
+            value: '3',
+        },
+        {
+            label: '5 kun',
+            value: '5',
+        },
+        {
+            label: '7 kun',
+            value: '7',
+        },
+    ]
 
     const handleAddNotification = async (data) => {
         try {
-            delete data.createdAt;
-            data.phone = data.phone
-            data.gender = Number(data.gender)
+            const condition = {
+                startDate: data.startDate,
+                endDate: data.endDate,
+                course: data.course,
+                status: data.status,
+                isPro: data.isPro,
+                login: data.login,
+                level: data.level,
+            }
 
-            // if (!(data?.avatar instanceof File) && data?.avatar !== null) delete data.avatar
-            delete data.avatar;
-            // const fd = objectToFormData(data)
+            delete data.startDate;
+            delete data.endDate,
+                delete data.course,
+                delete data.status,
+                delete data.isPro,
+                delete data.login,
+                delete data.level,
 
-            const addedUser = await AddNotification(data);
-            queryClient.setQueryData(['student'], addedUser);
+
+                data.condition = condition;
+            data.type = 'notification';
+            data.isAuto = true;
+
+            const addedNotification = await addNotification(data);
+
+
+            queryClient.setQueriesData(['notification', 'notification'], oldData => {
+                return {
+                    ...oldData,
+                    items: [...oldData?.items, addedNotification]
+                }
+            });
+
             reset(defaultValues);
 
-            toast.success("Yangi o'quvchi qo'shildi")
+            toast.success("Yangi eslatma qo'shildi")
         } catch (error) {
             const res = error?.response?.data
             customToast.error(res?.message || error?.message || 'Xatolik yuz berdi')
@@ -61,65 +111,103 @@ const AddNotification = ({ }) => {
 
 
     return (
-        <>
+        <div className={cls.notification}>
+            <div className={cls.notification__header}>
+                <h2 className={cls.notification__header__text}>Eslatmalar qo’shish</h2>
+                <Button className={cls.notification__header__button} onClick={() => navigate(-1)} type='button'><CloseIcon /></Button>
+            </div>
             <form className={cls.form} onSubmit={handleSubmit(handleAddNotification)}>
-                <div className={cls.form__header}>
-                    <button
-                        type='button'
-                        onClick={() => navigate('/students')}
-                        className={cls.form__header__btn}
-                    >
-                        <LeftArrowIcon />
-                    </button>
-                    <AvatarUpload
-                        value={avatar instanceof File ? URL.createObjectURL(avatar) : avatar}
-                        onChange={file => setValue('avatar', file, { shouldDirty: true, shouldValidate: true })}
-                        onDelete={() => setValue('avatar', null, { shouldDirty: true })}
-                    />
-                    <span></span>
-                </div>
                 <div className={cls.form__elements}>
-                    <FormInput
-                        label='Eslatma nomi'
-                        placeholder='Ismi'
-                        register={{ ...register('firstName') }}
-                        error={errors?.firstName?.message}
-                    />
 
-                    <FormSelect
-                        className={cls.field}
-                        control={control}
-                        name='unit'
-                        rules={{ require: 'Mavzuni tanlang' }}
-                        options={UNITS}
-                        label='Holati'
-                        placeholder='Holati'
-                        error={errors?.word?.message}
-                    />
 
+                    <div className={cls.form__top}>
+                        <FormInput
+                            label='Eslatma nomi'
+                            placeholder='Kiriting'
+                            register={{ ...register('title') }}
+                            error={errors?.title?.message}
+                        />
+                        <FormSelect
+                            className={cls.filter__select}
+                            label='Kursi'
+                            control={control}
+                            name='course'
+                            options={courses?.map(course => ({ value: course.id, label: course.title }))}
+                            isClearable={true}
+                            placeholder='Kurslar bo’yicha'
+                        />
+                        <FormTimeInput
+                            control={control}
+                            label="Vaqt"
+                            name="time"
+                            register={{ ...register('time') }}
+                            preffix={<ClockIcon />}
+                            error={errors?.time?.message}
+                        />
+                    </div>
+                    <div className={cls.form__dates}>
+                        <FormDatepicker
+                            name='startDate'
+                            label='Registratsiya vaqti(...dan)'
+                            placeholder='dd/mm/yy'
+                            control={control}
+                            error={errors?.startDate?.message}
+                        />
+                        <FormDatepicker
+                            name='endDate'
+                            label='Registratsiya vaqti(...gacha)'
+                            placeholder='dd/mm/yy'
+                            control={control}
+                            error={errors?.endDate?.message}
+                        />
+                    </div>
+                    <div className={cls.form__bottom}>
+                        <FormSelect
+                            className={cls.filter__select}
+                            label='Statusi'
+                            control={control}
+                            name='status'
+                            options={STUDENTS_STATUS_OPTION}
+                            isClearable={true}
+                            placeholder='Status user'
+                        />
+
+                        <FormSelect
+                            label='User turi'
+                            className={cls.filter__select}
+                            control={control}
+                            name='isPro'
+                            options={USER__TYPE}
+                            isClearable={true}
+                            placeholder='User turi'
+                        />
+
+                        <FormSelect
+                            label='Tizimga kirmagan'
+                            className={cls.filter__select}
+                            control={control}
+                            name='login'
+                            options={LOGIN__TYPE}
+                            isClearable={true}
+                            placeholder='Tanlang'
+                        />
+
+                    </div>
                     <Textarea
                         className={cls.form__input}
-                        label="Matn"
+                        label='Matn'
                         register={{ ...register('description') }}
                         error={errors?.description?.message}
                     />
-
-                    <div className={cls.form__buttons}>
-                        <Button
-                            type='submit'
-                            isLoading={isSubmitting}
-                            disabled={!isDirty}
-                        >Qo'shish</Button>
-                        <RedButton
-                            disabled={!isDirty}
-                            onClick={() => reset(defaultValues)}
-                        >
-                            Bekor qilish
-                        </RedButton>
-                    </div>
+                    <Button
+                        className={cls.form__button}
+                        type='submit'
+                        isLoading={isSubmitting}
+                        disabled={!isDirty}
+                    >Eslatma qo'shish</Button>  
                 </div>
             </form>
-        </>
+        </div>
     );
 }
 
