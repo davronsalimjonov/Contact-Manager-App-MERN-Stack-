@@ -77,7 +77,6 @@ const MainMentorStudentsTable = ({
     const handleStatusOptionsChange = (selectedOptions) => {
         setSelectStatus(selectedOptions)
     }
-    
 
     groupSelectStudents?.forEach(groupStudent => {
         selectStudentOptions.push({value: groupStudent?.id, label: `${groupStudent?.user?.firstName} ${groupStudent?.user?.lastName}`, level: `${groupStudent?.level}`})
@@ -86,9 +85,6 @@ const MainMentorStudentsTable = ({
     courseForSelect?.forEach(courseSelect => {
         courseForSelectOptions.push({value: courseSelect?.id, label: courseSelect?.title})
     })
-
-    console.log(courseForSelectOptions);
-    
 
     const handleClick = (studentToRemove) => {
         setSelectedStudents((prevSelectedStudents) => {
