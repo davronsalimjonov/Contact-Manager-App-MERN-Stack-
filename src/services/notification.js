@@ -19,3 +19,15 @@ export const setIsViewedNotifications = async (data) => {
     const res = await api.put(`/teacher-notification/is-viewed`, data)
     return res.data
 }
+
+export const addNotification = async (data) => {
+    const res = await api.post('/notification/admin', data)
+    return res.data
+}
+
+
+export const deleteNotification = async (notificationId) => {
+    const res = await api.delete(`/notification/admin/${notificationId}`);
+    return res.data
+}
+

@@ -49,8 +49,6 @@ const DiscountForm = ({
         resolver: yupResolver(discountSchema)
     });
 
-    console.log(defaultValues);
-
     const dateRange = watch('discountDate');
     const price = watch('price');
     const discount = watch('discount');

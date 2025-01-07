@@ -4,18 +4,19 @@ import { useState } from 'react';
 import { Pagination } from 'antd';
 import { useGetNotification } from '@/hooks/useGetNotification';
 import NotificationTable from '@/components/templates/NotificationTable';
-import { useGetAllStudents } from '@/hooks/useGetAllStudents';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import { PlusIcon } from '@/components/UI/atoms/icons';
+import { useNavigate } from 'react-router-dom';
 
 const Notification = () => {
+    const navigate=useNavigate();
     const [filter, setFilter] = useState({
         page: 1,
         limit: 10,
     }
     );
     // TODO
-    const { ref, data: notifications, isLoading: isLoadingNotifications } = useGetNotification('auto', filter);
+    const { ref, data: notifications, isLoading: isLoadingNotifications } = useGetNotification('notification', filter);
     const onShowSizeChange = (current, pageSize) => {
         setFilter((prev) => {
             return {
@@ -28,7 +29,7 @@ const Notification = () => {
 
     return (
         <div className={cls.page}>
-            <Button className={cls.page__btn} type='button'><PlusIcon />Eslatmalar qo’shish</Button>
+            <Button className={cls.page__btn} onClick={()=>navigate('/notifications/add')} type='button'><PlusIcon />Eslatmalar qo’shish</Button>
             <div className={cls.content}>
                 <h2 className={cls.content__haeder}>Eslatmalar</h2>
                 <NotificationTable
