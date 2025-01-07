@@ -1,0 +1,19 @@
+
+.file{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--dark-gray-400-color);
+
+    & > span{
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 14.09px;
+        max-width: 200px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}

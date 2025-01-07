@@ -43,6 +43,12 @@
         }
     }
 
+    &__files {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
     &__controls {
         display: flex;
         align-items: center;
@@ -53,6 +59,23 @@
             display: flex;
             align-items: center;
             gap: 12px;
+        }
+
+        &__file{
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &:has(input:disabled){
+                opacity: 0.5;
+            }
+
+            & > input{
+                display: none;
+            }
         }
 
         &__send {

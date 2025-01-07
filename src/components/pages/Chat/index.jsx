@@ -21,12 +21,16 @@ const Chat = () => {
                         partnerPhoneNumber={info?.user?.phone}
                     />
                     <ChatSidebar
+                        userAvatar={info?.user?.url}
+                        userFullName={getUserFullName(info?.user)}
                         conversationId={conversationId}
-                        userCourseId={userCourseId} 
+                        userCourseId={userCourseId}
                         firstPhoneNumber={info?.user?.phone}
                         secondPhoneNumber={info?.user?.secondPhone}
                         thirdPhoneNumber={info?.user?.thirdPhone}
+                        status={info?.userCourse?.status}
                         email={info?.user?.email}
+                        comment={info?.userCourse?.comment}
                     />
                 </>
             ) : (
