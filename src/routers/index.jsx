@@ -119,7 +119,7 @@ const mainMentorRoutes = createBrowserRouter([
 const managerRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout sidebarLinks={managerSidebarLinks} />,
+        element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
             {
                 path: '/main-teachers',

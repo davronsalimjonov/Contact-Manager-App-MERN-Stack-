@@ -35,11 +35,14 @@ const MainMentorStudentsTable = ({
     selectCallMentors=[],
     setSelectCallMentors,
     selectStatus=[],
-    setSelectStatus
+    setSelectStatus,
+    handleStudentTranfer,
+    isModal=false,
+    setIsModal,
+    setCourseId
 }) => {
     const selectStudentOptions = []
     const courseForSelectOptions = []
-    const [isModal, setIsModal] = useState(false)
     const [isTransfer, setIsTransfer] = useState(false)
 
     const handleStudentChange = (selectedOptions) => {
@@ -74,7 +77,6 @@ const MainMentorStudentsTable = ({
     const handleStatusOptionsChange = (selectedOptions) => {
         setSelectStatus(selectedOptions)
     }
-    
 
     groupSelectStudents?.forEach(groupStudent => {
         selectStudentOptions.push({value: groupStudent?.id, label: `${groupStudent?.user?.firstName} ${groupStudent?.user?.lastName}`, level: `${groupStudent?.level}`})
@@ -178,8 +180,12 @@ const MainMentorStudentsTable = ({
                                 setIsModal(false)
                                 setIsTransfer(false)
                                 setSelectedStudents([])
+                                setSelectedCourse([])
+                                setSelectMainMentors([])
+                                setSelectCallMentors([])
+                                setSelectStatus([])
                             }}>Bekor Qilish</RedButton>
-                            <Button onClick={handleAddStudentToGroup}>Qo'shish</Button>
+                            <Button onClick={isTransfer ? handleStudentTranfer : handleAddStudentToGroup}>Qo'shish</Button>
                         </div>
                     </form>
                 </Dialog>
@@ -223,6 +229,7 @@ const MainMentorStudentsTable = ({
                                             group={student?.level}
                                             setIsTransfer={setIsTransfer}
                                             setIsModal={setIsModal}
+                                            setCourseId={setCourseId}
                                         />
                                     )}
                                 />
