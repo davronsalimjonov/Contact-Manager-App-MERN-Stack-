@@ -29,6 +29,7 @@ import Dictionary from "@/components/pages/Dictionary";
 import Moderation from "@/components/pages/Moderation";
 import MentorsStatistic from "@/components/pages/MentorsStatistic";
 import Notification from "@/components/pages/Notification";
+import AddNotification from "@/components/pages/AddNotification";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -152,6 +153,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path:'/notifications',
                 element: <Notification/>
+            },
+            {
+                path:'/notifications/add',
+                element: <AddNotification/>
             },
             {
                 path: '/settings',

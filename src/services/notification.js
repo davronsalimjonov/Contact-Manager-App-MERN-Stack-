@@ -14,3 +14,15 @@ export const getNotificationCount = async (userId) => {
     const res = await api.get(`/teacher-notification/teacher/notification-count/${userId}`)
     return res.data
 }
+
+export const addNotification = async (data) => {
+    const res = await api.post('/notification/admin', data)
+    return res.data
+}
+
+
+export const deleteNotification = async (notificationId) => {
+    const res = await api.delete(`/notification/admin/${notificationId}`);
+    return res.data
+}
+
