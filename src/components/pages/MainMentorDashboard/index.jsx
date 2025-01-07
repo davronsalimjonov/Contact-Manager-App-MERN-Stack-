@@ -53,8 +53,8 @@ const MainMentor = () => {
                         />
                         <MetricCard
                             title='Task bajarish tezligi'
-                            value={'01:24 s'}
-                            percentage={8.5}
+                            value={'--:-- s'}
+                            percentage={0}
                             icon={<MetricPersonsIcon />}
                             iconBg='rgba(255, 0, 0, 0.21)'
                         />

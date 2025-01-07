@@ -67,22 +67,6 @@ const callTecherRoutes = createBrowserRouter([
                 element: <SingleStudent />
             },
             {
-                path: '/lesson-schedule',
-                element: <Schedule />
-            },
-            {
-                path: '/lesson-schedule/:scheduleId',
-                element: <SingleSchedule />
-            },
-            {
-                path: '/lesson-schedule',
-                element: <Schedule />
-            },
-            {
-                path: '/lesson-schedule/:scheduleId',
-                element: <SingleSchedule />
-            },
-            {
                 path: '/students/chat/:userCourseId',
                 element: <Chat />
             },
@@ -126,6 +110,14 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '/dictionary',
                 element: <Dictionary />
+            },
+            {
+                path: '/lessons-schedule',
+                element: <Schedule />
+            },
+            {
+                path: '/lessons-schedule/:scheduleId',
+                element: <SingleSchedule />
             },
             {
                 path: '*',
