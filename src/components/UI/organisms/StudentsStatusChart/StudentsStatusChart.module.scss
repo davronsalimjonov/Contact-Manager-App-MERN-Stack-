@@ -13,8 +13,9 @@
     &>div {
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: space-between;
         gap: 5%;
+        padding-right: 40px;
     }
 
     &__chart {
