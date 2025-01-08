@@ -13,6 +13,7 @@ import { STUDENT_STATUS_ENUMS } from '@/constants'
 import StudentStatus from '@/components/UI/atoms/StudentStatus'
 import { useGetCourse } from '@/hooks/useGetCourse'
 import { updateUserCourse } from '@/services/course'
+import Pagination from '@/components/UI/moleculs/Pagination'
 
 const MainMentorStudents = () => {
     const academyMentor = useGetUserId()
@@ -29,6 +30,20 @@ const MainMentorStudents = () => {
     const [selectStatus, setSelectStatus] = useState([])
     const [activeGroup, setActiveGroup] = useState('Barchasi') 
     const [courseId, setCourseId] = useState('')
+
+    const [pagination, setPagination] = useState({
+        page: 1,
+        limit: 10,
+    });
+
+    const handlePageChange = (page) => {
+        setPagination((prev) => ({...prev, page }));
+    };
+
+    const handleLimitChange = (limit) => {
+        setPagination((prev) => ({...prev, limit }));
+    };
+    
     
     const { 
         callMentors: { data: callMentors, isLoading: isLoadingCallMentors},
@@ -43,7 +58,7 @@ const MainMentorStudents = () => {
         groups: {data: groups, isLoading: isGroupsLoading},
         groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading },
         groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents } 
-    } = useGetGroups({ group: groupId, ...filter }, groupId)
+    } = useGetGroups({ group: groupId, ...filter, ...pagination }, groupId)
     
     const callMentorOptions = callMentors?.map((item) => (
         {
@@ -216,32 +231,47 @@ const MainMentorStudents = () => {
                         statusOptions={statusOptions}
                     />
                     {!isGroupStudentsLoading ? (
-                        <MainMentorStudentsTable  
-                            students={groupStudents?.items}
-                            isLoading={isGroupStudentsLoading}
-                            selectedStudents={selectedStudents}
-                            groupSelectStudents={groupSelectStudents}
-                            setSelectedStudents={setSelectedStudents}
-                            handleAddStudentToGroup={handleAddStudentToGroup}
-                            isLoadingGroupSelectStudents={isLoadingGroupSelectStudents}
-                            activeGroup={activeGroup}
-                            callMentorOptions={callMentorOptions}
-                            mainMentorOptions={mainMentorOptions}
-                            statusOptions={statusOptionsSelect}
-                            courseForSelect={courseForSelect}
-                            selectedCourse={selectedCourse}
-                            setSelectedCourse={setSelectedCourse}
-                            selectMainMentors={selectMainMentors}
-                            setSelectMainMentors={setSelectMainMentors}
-                            selectCallMentors={selectCallMentors}
-                            setSelectCallMentors={setSelectCallMentors}
-                            selectStatus={selectStatus}
-                            setSelectStatus={setSelectStatus}
-                            handleStudentTranfer={handleStudentTransfer}
-                            isModal={transferModal}
-                            setIsModal={setIsTransferModal}
-                            setCourseId={setCourseId}
-                        />
+                        <>
+                            <MainMentorStudentsTable  
+                                students={groupStudents?.items}
+                                isLoading={isGroupStudentsLoading}
+                                selectedStudents={selectedStudents}
+                                groupSelectStudents={groupSelectStudents}
+                                setSelectedStudents={setSelectedStudents}
+                                handleAddStudentToGroup={handleAddStudentToGroup}
+                                isLoadingGroupSelectStudents={isLoadingGroupSelectStudents}
+                                activeGroup={activeGroup}
+                                callMentorOptions={callMentorOptions}
+                                mainMentorOptions={mainMentorOptions}
+                                statusOptions={statusOptionsSelect}
+                                courseForSelect={courseForSelect}
+                                selectedCourse={selectedCourse}
+                                setSelectedCourse={setSelectedCourse}
+                                selectMainMentors={selectMainMentors}
+                                setSelectMainMentors={setSelectMainMentors}
+                                selectCallMentors={selectCallMentors}
+                                setSelectCallMentors={setSelectCallMentors}
+                                selectStatus={selectStatus}
+                                setSelectStatus={setSelectStatus}
+                                handleStudentTranfer={handleStudentTransfer}
+                                isModal={transferModal}
+                                setIsModal={setIsTransferModal}
+                                setCourseId={setCourseId}
+                                metaData={groupStudents?.meta}
+                                limit={pagination.limit}
+                                setLimit={handleLimitChange}
+                                page={pagination.page}
+                                setPage={handlePageChange}
+                            />    
+                            {groupStudents?.items?.length === 0 ? <></> 
+                            : <Pagination
+                                metaData={groupStudents?.meta}
+                                limit={pagination.limit}
+                                setLimit={handleLimitChange}
+                                page={pagination.page}
+                                setPage={handlePageChange}
+                            />}
+                        </>
                     ) : (   
                         <Loader />
                     )}

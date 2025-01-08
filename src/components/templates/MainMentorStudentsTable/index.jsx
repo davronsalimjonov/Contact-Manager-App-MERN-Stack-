@@ -205,36 +205,38 @@ const MainMentorStudentsTable = ({
                         </div>
                     </div>
                     ) : (
-                        <table className={cls.table}>
-                            <MainMentorStudentsTableHeader />
-                            <tbody>
-                                <Mapper
-                                    data={students}
-                                    isInfinityQuery
-                                    isLoading={isLoading}
-                                    renderItem={(student, index) => (
-                                        <MainMentorStudentsTableRow
-                                            key={student?.id}
-                                            index={index + 1}
-                                            unreadedMessagesCount={student?.messageCount}
-                                            avatar={student?.url}
-                                            fullName={getUserFullName(student)}
-                                            phoneNumber={student?.phone}
-                                            days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
-                                            time={student?.connectionTime}
-                                            status={student?.status}
-                                            userCourseId={student.id}
-                                            hidden={true}
-                                            chatId={student?.id}
-                                            group={student?.level}
-                                            setIsTransfer={setIsTransfer}
-                                            setIsModal={setIsModal}
-                                            setCourseId={setCourseId}
-                                        />
-                                    )}
-                                />
-                            </tbody>
-                        </table>
+                        <>
+                            <table className={cls.table}>
+                                <MainMentorStudentsTableHeader />
+                                <tbody>
+                                    <Mapper
+                                        data={students}
+                                        isInfinityQuery
+                                        isLoading={isLoading}
+                                        renderItem={(student, index) => (
+                                            <MainMentorStudentsTableRow
+                                                key={student?.id}
+                                                index={index + 1}
+                                                unreadedMessagesCount={student?.messageCount}
+                                                avatar={student?.url}
+                                                fullName={getUserFullName(student)}
+                                                phoneNumber={student?.phone}
+                                                days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
+                                                time={student?.connectionTime}
+                                                status={student?.status}
+                                                userCourseId={student.id}
+                                                hidden={true}
+                                                chatId={student?.id}
+                                                group={student?.level}
+                                                setIsTransfer={setIsTransfer}
+                                                setIsModal={setIsModal}
+                                                setCourseId={setCourseId}
+                                            />
+                                        )}
+                                    />
+                                </tbody>
+                            </table>
+                        </>
                     )
                 }
             {isLoading && <Loader size={80} />}

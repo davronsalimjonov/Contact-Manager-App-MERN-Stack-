@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import useGetGroups from '@/hooks/useGetGroups';
-import useGetStudents from '@/hooks/useGetStudents';
 import cls from './Users.module.scss';
 import UsersTable from '@/components/templates/UsersTable';
 import UsersSearchBar from '@/components/UI/organisms/UsersSearchBar';
