@@ -25,7 +25,7 @@ const ScheduleTable = ({
                                 <ScheduleTableRow
                                     key={scheduleItem?.id}
                                     scheduleId={scheduleItem?.id}
-                                    lvl={scheduleItem?.degree}
+                                    lvl={scheduleItem?.group?.title}
                                     date={scheduleItem?.weekday}
                                     time={`${scheduleItem?.time}/${scheduleItem?.endTime}`}
                                 />

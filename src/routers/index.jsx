@@ -120,6 +120,10 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <SingleSchedule />
             },
             {
+                path: '/settings',
+                element: <Settings />
+            },
+            {
                 path: '*',
                 element: <PageNotFound />
             },
