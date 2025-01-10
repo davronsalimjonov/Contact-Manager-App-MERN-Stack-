@@ -65,12 +65,12 @@ const ConversationInput = ({ userCourseId }) => {
                 if (messageType === MessageTypes.MESSAGE && selectedFile) {
                     const fd = objectToFormData({ chat: conversationId, file: selectedFile, caption: data.message })
                     createFileMessage(fd).then(res => {
-                        socket.emit('room-message', { ...res, room: conversationId, studentId })
+                        socket.emit('room-message', { message: res, room: conversationId, studentId })
                         updateMessage(id, res)
                     })
                 } else if (messageType === MessageTypes.MESSAGE) {
                     createTextMessage({ chat: conversationId, text: data.message }).then(res => {
-                        socket.emit('room-message', { ...res, room: conversationId, studentId })
+                        socket.emit('room-message', { message: res, room: conversationId, studentId })
                         updateMessage(id, res)
                     })
                 } else if (messageType === MessageTypes.COMMENT) {
