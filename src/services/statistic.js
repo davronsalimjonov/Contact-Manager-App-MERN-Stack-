@@ -25,6 +25,16 @@ export const getRating = async (mentorId, params) => {
     return res.data
 }
 
+export const getStudentActivity = async (mentorId, params) => {
+    const res = await api.get(`/user-course/teacher-panel/active-students-count/${mentorId}?${paramsToString(params)}`)
+    return res.data
+}
+
+export const getMentorSalary = async (mentorId, params) => {
+    const res = await api.get(`/statistic/mentors/academy-mentor-salary/${mentorId}?${paramsToString(params)}`)
+    return res.data
+}
+
 export const getAllStudentsCount = async () => {
     const res = await api.get(`/statistic/all-students-count`)
     return res.data
@@ -45,7 +55,8 @@ export const getOnlineUsers = async () => {
     return res.data
 }
 
-export const getStatusUser = async () => {
-    const res = await api.get(`/statistic/user-course/student-count-by-status`)
+export const getStatusUser = async (params) => {
+    const res = await api.get(`/statistic/user-course/student-count-by-status?${paramsToString(params)}`)
     return res.data
 }
+

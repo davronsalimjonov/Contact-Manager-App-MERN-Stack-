@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getAllStudentsCount, getMentorCallCount, getNewStudentsCount, getOnlineUsers, getPaidStudentCount, getRating, getStatusUser, getStudentCountByCourse, getStudentCountByLevel, getTodayProUsers } from "@/services/statistic";
+import { getAllStudentsCount, getMentorCallCount, getMentorSalary, getNewStudentsCount, getOnlineUsers, getPaidStudentCount, getRating, getStatusUser, getStudentActivity, getStudentCountByCourse, getStudentCountByLevel, getTodayProUsers } from "@/services/statistic";
 import { useGetUserId } from "./useGetUser";
 
 const useGetStatistic = ({
@@ -7,6 +7,7 @@ const useGetStatistic = ({
     endDate
 } = {}) => {
     const userId = useGetUserId()
+    
     const callCount = useQuery(['statistic', 'call-count', startDate, endDate], () => getMentorCallCount(userId, { startDate, endDate }))
     const studentsCountByCourse = useQuery(['statistic', 'student-count-by-course', startDate, endDate], () => getStudentCountByCourse({ teacher: userId, startDate, endDate }))
     const studentsCountByLevel = useQuery(['statistic', 'student-count-by-level', startDate, endDate], () => getStudentCountByLevel({ teacher: userId, startDate, endDate }))
@@ -17,7 +18,9 @@ const useGetStatistic = ({
     const paidStudentsCount = useQuery(['statistic', 'paid-student-count'], () => getPaidStudentCount({ startDate, endDate }))
     const todayProUsers = useQuery(['statisctic', 'today-pro-users'], () => getTodayProUsers())
     const todayOnlineUsers = useQuery(['statistic', 'online-users'], () => getOnlineUsers())
-    const statusUser = useQuery(['statistic', 'users-status'], () => getStatusUser({ startDate, endDate }))
+    const statusUser = useQuery(['statistic', 'users-status'], () => getStatusUser({ teacher: userId ,startDate, endDate }))
+    const studentActivity = useQuery(['statistic', 'user-activity'], () => getStudentActivity(userId, {startDate, endDate}))
+    const mentorSalary = useQuery(['statistic', 'mentor-salary'], () => getMentorSalary(userId, {startDate, endDate}))
 
     return {
         callCount,
@@ -29,7 +32,9 @@ const useGetStatistic = ({
         paidStudentsCount,
         todayProUsers,
         todayOnlineUsers,
-        statusUser
+        statusUser,
+        studentActivity,
+        mentorSalary
     }
 }
 

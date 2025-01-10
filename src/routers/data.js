@@ -57,12 +57,6 @@ export const mainMentorSidebarLinks = [
         link: '/workspace',
         label: 'Workspace',
         icon: MenuBookIcon()
-    },
-    {
-        id: 5,
-        link: '/users',
-        label: 'Foydalanuvchilar',
-        icon: Person()
     }
 ]
 

@@ -1,11 +1,9 @@
 import { useOutletContext } from 'react-router-dom'
 import Loader from '@/components/UI/atoms/Loader'
 import useGetStatistic from '@/hooks/useGetStatistic'
-import { convertSecondsToTimeFormat } from '@/utils/lib'
 import CoursesChart from '@/components/UI/organisms/CoursesChart'
-import StudentsLevelChart from '@/components/UI/organisms/StudentsLevelChart'
 import NewStudentsCountChart from '@/components/UI/organisms/NewStudentsCountChart'
-import { MetricCashIcon, MetricPersonBlue, MetricPersonGreen, MetricPersonOrange, MetricPersonsIcon, MetricStarsIcon, MetricTimeIcon, StarIcon } from '@/components/UI/atoms/icons'
+import { MetricPersonBlue, MetricPersonGreen, MetricPersonOrange, MetricPersonsIcon } from '@/components/UI/atoms/icons'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './AcademicManager.module.scss'
 import MentorMetricCard from '@/components/UI/moleculs/MentorMetricCard'
@@ -61,8 +59,8 @@ const AcademicManager = () => {
                             iconBg='rgba(255, 0, 0, 0.2)'
                             />
                         <MetricCard
-                            title='Adaptatsiya Faolligi'
-                            value={'01:24 s'}
+                            title='Qayta Sotuv'
+                            value={'Tez orada qo`shiladi'}
                             percentage={8.5}
                             icon={<MetricPersonBlue />}
                             iconBg='rgba(160, 188, 241, 0.2)'
@@ -99,8 +97,8 @@ const AcademicManager = () => {
                         <MentorMetricCard
                             title="Yangi Qo'shilganlar"
                             count={todayProUsers?.all}
-                            free={todayProUsers?.pro}
-                            pro={todayProUsers?.all - todayProUsers?.pro}
+                            free={todayProUsers?.all - todayProUsers?.pro}
+                            pro={todayProUsers?.pro}
                             countColor='#F98600'
                         />
                         <MentorMetricCard
