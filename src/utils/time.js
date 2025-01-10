@@ -3,6 +3,7 @@ import { uz } from 'date-fns/locale';
 import { daysOfWeekFull, daysOfWeekShort } from "@/constants";
 
 export const getTimeFromDate = (date) => {
+    if(!date) return
     return format(date, 'HH:mm');
 }
 
