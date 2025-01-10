@@ -76,8 +76,8 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <MainMentorStudents />
             },
             {
-                path: '/users/user/:userId',
-                element: <SingleUser />
+                path: '/students/:courseId',
+                element: <SingleStudent />
             },
             {
                 path: '*',

@@ -12,7 +12,10 @@ const MainMentorStudentsSearchBar = ({
     onChangeLastName,
     onChangePhone,
     onChangeGroup,
-    statusOptions=[]
+    statusOptions=[],
+    setIsTransferModal,
+    setIsTransfer,
+    activeGroup='Barchasi'
 }) => {
     
     const studentGroups = GROUPS.map((status) => ({ value: status, label: status }))
@@ -48,14 +51,17 @@ const MainMentorStudentsSearchBar = ({
                 onChange={onChangeStatus}
                 isClearable
             />
-            <Button>
-                Guruh Qo'shish
-                <span>+</span>
-            </Button>
-            <Button className={cls.bar__form__button}>
-                O'quvchi Qo'shish
-                <span>+</span>
-            </Button>
+            {activeGroup === 'Barchasi' ? <></> : <Button 
+                    className={cls.bar__form__button}
+                    onClick={() => {
+                        setIsTransferModal(true)
+                        setIsTransfer(true)
+                    }}
+                >
+                    O'quvchi Qo'shish
+                    <span>+</span>
+                </Button>
+            }
         </div>
     );
 }

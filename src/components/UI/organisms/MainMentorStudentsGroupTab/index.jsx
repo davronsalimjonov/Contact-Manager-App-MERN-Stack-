@@ -20,7 +20,8 @@ const MainMentorStudentsGroupTab = ({
     isModal=false,
     setIsModal,
     activeGroup='Barchasi',
-    setActiveGroup
+    setActiveGroup,
+    setPagination
   }) => { 
 
   return (

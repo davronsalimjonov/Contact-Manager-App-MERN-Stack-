@@ -23,7 +23,7 @@ const MainMentorStudentsTableRow = ({
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const dropdownMenuItems = [
-        { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(`/users/user/${userCourseId}`) },
+        { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(`/students/${userCourseId}`) },
         { label: 'Transfer Student', onClick: () => {
             setIsTransfer(true)
             setIsModal(true)

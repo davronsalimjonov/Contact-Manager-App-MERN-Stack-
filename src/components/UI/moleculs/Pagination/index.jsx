@@ -30,7 +30,6 @@ const Pagination = (({
       itemsPerPage: newItemsPerPage,
     }));
     setLimit(newItemsPerPage);
-    // Update the page if the current page is greater than the new total pages
     if (paginationMeta.currentPage > Math.ceil(paginationMeta.itemCount / newItemsPerPage)) {
       setPaginationMeta((prev) => ({...prev, currentPage: Math.ceil(paginationMeta.itemCount / newItemsPerPage) }));
       setPage(Math.ceil(paginationMeta.itemCount / newItemsPerPage));
@@ -62,7 +61,6 @@ const Pagination = (({
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>
-          <option value="100">100</option>
         </select>
       </div>
     </div>
