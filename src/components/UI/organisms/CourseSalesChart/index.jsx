@@ -11,7 +11,6 @@ import {
 } from "chart.js";
 import useGetStatistic from "@/hooks/useGetStatistic";
 import { useOutletContext } from "react-router-dom";
-import Loader from "../../atoms/Loader";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 

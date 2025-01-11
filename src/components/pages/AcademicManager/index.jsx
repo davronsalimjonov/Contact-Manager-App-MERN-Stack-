@@ -1,11 +1,9 @@
 import { useOutletContext } from 'react-router-dom'
 import Loader from '@/components/UI/atoms/Loader'
 import useGetStatistic from '@/hooks/useGetStatistic'
-import { convertSecondsToTimeFormat } from '@/utils/lib'
 import CoursesChart from '@/components/UI/organisms/CoursesChart'
-import StudentsLevelChart from '@/components/UI/organisms/StudentsLevelChart'
 import NewStudentsCountChart from '@/components/UI/organisms/NewStudentsCountChart'
-import { MetricCashIcon, MetricPersonBlue, MetricPersonGreen, MetricPersonOrange, MetricPersonsIcon, MetricStarsIcon, MetricTimeIcon, StarIcon } from '@/components/UI/atoms/icons'
+import { MetricPersonsIcon } from '@/components/UI/atoms/icons'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './AcademicManager.module.scss'
 import MentorMetricCard from '@/components/UI/moleculs/MentorMetricCard'
@@ -43,14 +41,14 @@ const AcademicManager = () => {
                             title="O'quvchilar Soni"
                             value={`${allStudentsCount?.pro || 0}`}
                             percentage={callCount?.countPercentage || 0}
-                            icon={<MetricPersonGreen />}
+                            icon={<MetricPersonsIcon />}
                             iconBg='rgba(0, 182, 155, 0.21)'
                         />
                         <MetricCard
                             title='Faolligi'
                             value={`${rating?.rate || 0}%`}
                             percentage={rating?.ratePercentage || 0}
-                            icon={<MetricPersonOrange />}
+                            icon={<MetricPersonsIcon />}
                             iconBg='rgba(254, 197, 61, 0.2)'
                         />
                         <MetricCard
@@ -61,10 +59,10 @@ const AcademicManager = () => {
                             iconBg='rgba(255, 0, 0, 0.2)'
                             />
                         <MetricCard
-                            title='Adaptatsiya Faolligi'
-                            value={'01:24 s'}
+                            title='Qayta Sotuv'
+                            value={'Tez orada qo`shiladi'}
                             percentage={8.5}
-                            icon={<MetricPersonBlue />}
+                            icon={<MetricPersonsIcon />}
                             iconBg='rgba(160, 188, 241, 0.2)'
                         />
                     </div>
@@ -99,8 +97,8 @@ const AcademicManager = () => {
                         <MentorMetricCard
                             title="Yangi Qo'shilganlar"
                             count={todayProUsers?.all}
-                            free={todayProUsers?.pro}
-                            pro={todayProUsers?.all - todayProUsers?.pro}
+                            free={todayProUsers?.all - todayProUsers?.pro}
+                            pro={todayProUsers?.pro}
                             countColor='#F98600'
                         />
                         <MentorMetricCard

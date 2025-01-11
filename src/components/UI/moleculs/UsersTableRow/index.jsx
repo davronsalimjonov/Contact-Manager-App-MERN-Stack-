@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
-import TableActionButton from '../TableActionButton';
 import cls from './UsersTableRow.module.scss';
 import Avatar from 'react-avatar';
 import dayjs from 'dayjs';
+import { PasswordLockIcon } from '../../atoms/icons';
 
 const UsersTableRow = ({
     index = 0,
@@ -17,14 +17,14 @@ const UsersTableRow = ({
     uniqueId = '',
     createdAt = '',
     hidden = false,
-    unreadedMessagesCount = 0
+    unreadedMessagesCount = 0,
+    setIsModal,
+    userCourseId,
+    setUserId
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
-
-    const dropdownMenuItems = [
-        { label: 'Foydalanuvchi ma’lumotlari', onClick: () => navigate(`/users/user/${student}`) },
-    ]
+    
 
     return (
         <tr className={cls.row} onClick={() => navigate(`/users/user/${student}`)}>
@@ -48,7 +48,12 @@ const UsersTableRow = ({
             <td><StudentStatus status={uniqueId} /></td>
             <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={createdAt}>{createdAt ? dayjs(createdAt).format('DD.MM.YYYY HH:mm') : <EmptyDataText />}</span></td>
             <td onClick={(e) => (e.stopPropagation())}>
-                <TableActionButton menuItems={dropdownMenuItems} />
+                <div onClick={() => {
+                    setIsModal(true)
+                    setUserId(userCourseId)
+                }} >
+                    <PasswordLockIcon />
+                </div>
             </td>
         </tr>
     );

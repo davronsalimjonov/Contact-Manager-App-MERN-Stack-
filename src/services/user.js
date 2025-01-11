@@ -36,3 +36,8 @@ export const addStudent= async (data)=>{
     const res = await api.post('/user/student',data);
     return res.data;
 }
+
+export const updateUserPassword = async (id, params) => {
+    const res = await api.put(`/user/change-password/by-admin/${id}?${paramsToString(params)}`)
+    return res.data
+}

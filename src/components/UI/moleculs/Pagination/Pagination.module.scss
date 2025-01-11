@@ -1,0 +1,83 @@
+.paginationWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+}
+
+.page a,
+.break {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #d9d9d9;
+    background-color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.pageLink {
+    text-decoration: none;
+    color: #000;
+}
+
+.previous, .next {
+    background-color: #fff; 
+}
+
+.arrowContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    background: none; 
+    padding: 0;
+}
+
+
+.arrowContainer:active{
+    border: 1px solid #0052cc;
+    color: #0052cc;
+}
+
+.active a {
+    color: #fff;
+    background-color: #0052cc;
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.itemsPerPage {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    outline: none;
+    
+
+    select {
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+        padding: 4px 8px;
+        outline: none;
+        height: 36px;
+        font-size: 14px;
+    }
+}

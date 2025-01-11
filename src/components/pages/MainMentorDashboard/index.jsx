@@ -16,7 +16,9 @@ const MainMentor = () => {
         studentsCountByCourse: { data: studentsCountByCourse, isLoading: isLoadingStudentsCountByCourse },
         studentsCountByLevel: { data: studentsCountByLevel, isLoading: isLoadingStudentsCountByLevel },
         newStudentsCount: { data: newStudentsCount, isLoading: isLoadingNewStudentsCount },
-        statusUser: {data: statusUser, isLoading: isLoadingStatusUser}
+        statusUser: {data: statusUser, isLoading: isLoadingStatusUser},
+        studentActivity: {data: studentActivity, isLoading: isLoadingStudentActivity},
+        mentorSalary: {data: mentorSalary, isLoading: isLoadingMentorSalary},
     } = useGetStatistic({ startDate: period.startDate, endDate: period.endDate })
 
     return (
@@ -31,32 +33,32 @@ const MainMentor = () => {
                 <>
                     <div className={cls.page__metrics}>
                         <MetricCard
-                            title='Qo’ng’iroqlar soni'
+                            title='Teacherlar soni'
                             value={`${callCount?.count || 0} ta`}
                             percentage={callCount?.countPercentage || 0}
                             icon={<MetricTimeIcon />}
                             iconBg='rgba(0, 182, 155, 0.21)'
                         />
                         <MetricCard
-                            title='Reytinggi'
-                            value={<><StarIcon /> {rating?.rate || 0}</>}
-                            percentage={rating?.ratePercentage || 0}
-                            icon={<MetricStarsIcon />}
-                            iconBg='rgba(160, 188, 241, 0.3)'
+                            title='O`quvchilar Aktivligi'
+                            value={`${studentActivity?.active || 0}`}
+                            percentage={`${studentActivity?.percentage || 0}`}
+                            icon={<MetricPersonsIcon />}
+                            iconBg='rgba(255, 0, 0, 0.21)'
                         />
                         <MetricCard
-                            title='Qo’ng’iroq davomiyligi'
-                            value={`${callCount?.duration || 0} s`}
-                            percentage={callCount?.durationPercentage || 0}
+                            title='O’rtacha oylik maoshi'
+                            value={`${mentorSalary?.salaryAmount || 0}`}
+                            percentage={mentorSalary?.salaryPercentage || 0}
                             icon={<MetricCashIcon />}
                             iconBg='rgba(254, 197, 61, 0.2)'
                         />
                         <MetricCard
-                            title='Task bajarish tezligi'
-                            value={'--:-- s'}
-                            percentage={0}
-                            icon={<MetricPersonsIcon />}
-                            iconBg='rgba(255, 0, 0, 0.21)'
+                            title='O`rtacha Reytinggi'
+                            value={<><StarIcon /> {rating?.rate || 0}</>}
+                            percentage={rating?.ratePercentage || 0}
+                            icon={<MetricStarsIcon />}
+                            iconBg='rgba(160, 188, 241, 0.3)'
                         />
                     </div>
                     <div className={cls.page__charts}>

@@ -36,6 +36,7 @@ import Moderation from "@/components/pages/Moderation";
 import MentorsStatistic from "@/components/pages/MentorsStatistic";
 import Notification from "@/components/pages/Notification";
 import AddNotification from "@/components/pages/AddNotification";
+import AcademicManager from "@/components/pages/AcademicManager";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -124,6 +125,10 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <Settings />
             },
             {
+                path: '/students/:courseId',
+                element: <SingleStudent />
+            },
+            {
                 path: '*',
                 element: <PageNotFound />
             },
@@ -136,6 +141,10 @@ const managerRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={managerSidebarLinks} />,
         children: [
+            {
+                path: '/',
+                element: <AcademicManager />
+            },
             {
                 path: '/main-teachers',
                 element: <MainMentors />

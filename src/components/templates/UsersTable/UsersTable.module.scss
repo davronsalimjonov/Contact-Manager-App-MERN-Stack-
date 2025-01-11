@@ -15,3 +15,17 @@
       display: contents;
     }
 }
+
+.change__psw {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  width: 400px;
+
+  &__btn {
+    width: 40%;
+  }
+}
