@@ -22,7 +22,7 @@ const ChatConversation = ({
 }) => {
     const userId = useGetUserId()
     const unreadedMessages = useRef({ ids: [], index: null })
-    const { removeUnreadedMessagesCount } = useGetChat(userCourseId)
+    const { data: chatInfo, removeUnreadedMessagesCount, addUnreadedMessagesCount } = useGetChat(userCourseId)
     const { data, messages, isLoading: isLoadingMessages, addPrevMessages, addNextMessages, addNewMessage } = useGetChatMessages(conversationId)
 
     const handleTopReach = async (beforeTopReach) => {
@@ -78,15 +78,16 @@ const ChatConversation = ({
         if (socket && conversationId) {
             const handleReceiveNewMessage = (newMessage) => {
                 addNewMessage(newMessage);
+                addUnreadedMessagesCount(1)
 
-                // if (!soundTimer) {
-                //     const audio = new Audio('/audio/new-message-came.mp3')
-                //     audio.play()
+                if (!soundTimer) {
+                    const audio = new Audio('/audio/new-message-came.mp3')
+                    audio.play();
 
-                //     soundTimer = setTimeout(() => {
-                //         soundTimer = null;
-                //     }, 300);
-                // }
+                    soundTimer = setTimeout(() => {
+                        soundTimer = null;
+                    }, 300);
+                }
             }
 
             socket.emit('join-room', conversationId)
@@ -120,6 +121,7 @@ const ChatConversation = ({
                         initialMessageIndex={data?.[0]?.index}
                         hasAboveMessages={typeof data?.[0]?.above === 'boolean' ? data?.[0]?.above : undefined}
                         hasBelowMessages={typeof data?.[0]?.bellow === 'boolean' ? data?.[0]?.bellow : undefined}
+                        unreadedMessagesCount={chatInfo?.count || 0}
                     />
                 )}
                 <ConversationInput userCourseId={userCourseId} />

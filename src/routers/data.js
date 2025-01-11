@@ -20,12 +20,6 @@ export const callMentorSidebarLinks = [
         icon: TranslateIcon()
     },
     {
-        id: 3,
-        link: '/lesson-schedule',
-        label: 'Dars jadvali',
-        icon: ScheduleIcon()
-    },
-    {
         id: 4,
         link: '/workspace',
         label: 'Workspace',

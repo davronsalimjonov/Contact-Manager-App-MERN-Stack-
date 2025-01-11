@@ -5,6 +5,8 @@ import { removeEmptyKeys } from "@/utils/lib";
 import { getCallMentorStudents } from "@/services/course";
 import { useGetUserId } from "./useGetUser";
 
+let soundTimer = null;
+
 const useGetStudents = (params = {}) => {
     const userId = useGetUserId()
     const queryClient = useQueryClient()
@@ -31,6 +33,14 @@ const useGetStudents = (params = {}) => {
         if (socket && !socket.hasListeners('new-message')) {            
             socket.on('new-message', userCourseId => {
                 addNewMessage(userCourseId)
+                if (!soundTimer) {
+                    const audio = new Audio('/audio/new-message-came.mp3')
+                    audio.play()
+
+                    soundTimer = setTimeout(() => {
+                        soundTimer = null;
+                    }, 300);
+                }
             })
         }
     }, [socket])

@@ -6,6 +6,7 @@ import { useTaskMutations } from '@/hooks/useTask';
 import { ChatMessageEditContext } from '@/providers/ChatMessageEditProvider';
 import Loader from '../../atoms/Loader';
 import RenderMessage from '../RenderChatMessage';
+import ChatScrollButton from '../ChatScrollButton';
 import cls from './ConversationMessages.module.scss';
 
 const OVERSCAN_COUNT = 50;
@@ -35,11 +36,13 @@ const ConversationMessages = ({
     onMessageVisible,
     hasAboveMessages = true,
     hasBelowMessages = true,
+    unreadedMessagesCount = 0
 }) => {
     messages = addDateSeparators(messages);
     const { statusChangeMutation } = useTaskMutations(userCourseId)
     const { handleSetMessage } = useContext(ChatMessageEditContext);
     const [isFirstRender, setIsFirstRender] = useState(false);
+    const [isVisibleButton, setIsVisibleButton] = useState(false);
     const [scrollState, setScrollState] = useState({
         wasMessagesAddedOnTop: false,
         wasMessagesAddedOnBottom: false,
@@ -54,7 +57,8 @@ const ConversationMessages = ({
         scrollOffset: 0,
         sizeCache: {},
         resizeObserver: null,
-        observedMessages: new Set()
+        observedMessages: new Set(),
+        scrolling: false
     });
 
     useEffect(() => {
@@ -130,7 +134,7 @@ const ConversationMessages = ({
         measureElement: (el) => {
             const messageId = el.getAttribute('data-message-id');
             const message = messages.find(m => m.id === messageId);
-            
+
             if (messageId && message && shouldObserveMessage(message)) {
                 // Начинаем наблюдение только если еще не наблюдаем
                 if (!refs.current.observedMessages.has(messageId)) {
@@ -145,8 +149,30 @@ const ConversationMessages = ({
             return height;
         },
         overscan: OVERSCAN_COUNT,
-        onChange: handleScroll
+        onChange: handleScroll,
     });
+
+    const handleScrollToBottom = () => {
+        const offset = virtualizer.getScrollOffset()
+        const scrollSize = virtualizer.getTotalSize()
+        const behavior = (scrollSize - offset) < 17000 ? 'smooth' : 'auto'
+
+        setTimeout(() => {
+            virtualizer.scrollToIndex(messages?.length - 1, { align: 'start', behavior })
+            setTimeout(() => refs.current.scrolling = false)
+        })
+    }
+
+    useEffect(() => {
+        if (!refs.current.scrolling) {
+            setTimeout(() => {
+                const scrollSize = (virtualizer.getTotalSize() || 0) - (virtualizer?.scrollRect?.height || 0);
+                const scrollOffset = (virtualizer.scrollOffset || 0);
+                const scrollSizeFromBottom = scrollSize - scrollOffset;
+                setIsVisibleButton(isFirstRender && scrollSize > 0 && scrollSizeFromBottom > 20)
+            }, 100)
+        }
+    }, [virtualizer.scrollOffset, messages?.length]);
 
     useLayoutEffect(() => {
         const firstUnreadIndex = messages?.findIndex(msg => msg.index === initialMessageIndex);
@@ -176,12 +202,8 @@ const ConversationMessages = ({
         }
 
         if (isUserGeneratedMessage) {
-            const offset = virtualizer.scrollOffset
-            const scrollSize = virtualizer.getTotalSize()
-            const behavior = (scrollSize - offset) < 17000 ? 'smooth' : 'auto'
-
-            setTimeout(() => virtualizer.scrollToOffset(scrollSize, { align: 'start', behavior }))
-
+            refs.current.scrolling = true
+            handleScrollToBottom()
             lastMessage.shouldScroll = false
         }
     }, [messages.length, virtualizer]);
@@ -232,6 +254,11 @@ const ConversationMessages = ({
                     })}
                 </div>
             </div>
+            <ChatScrollButton
+                isOpened={isVisibleButton}
+                onClick={handleScrollToBottom}
+                count={unreadedMessagesCount}
+            />
         </div>
     );
 }

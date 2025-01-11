@@ -60,6 +60,7 @@ const useGetChat = (userCourseId) => {
     const conversationId = info?.data?.id
 
     const removeUnreadedMessagesCount = (count) => {
+        queryClient.setQueriesData(['chat', 'info', userCourseId], (oldData) => ({ ...oldData, count: Math.max(oldData?.count - count, 0) }))
         queryClient.setQueriesData(['students', userId], (students) => {
             const studentIndex = students?.findIndex(student => student.id === userCourseId);
 
@@ -77,9 +78,14 @@ const useGetChat = (userCourseId) => {
         })
     }
 
+    const addUnreadedMessagesCount = (count) => {
+        queryClient.setQueriesData(['chat', 'info', userCourseId], (oldData) => ({ ...oldData, count: (oldData?.count || 0) + count }))
+    }
+
     return {
         ...info,
         removeUnreadedMessagesCount,
+        addUnreadedMessagesCount,
         conversationId,
     }
 }
