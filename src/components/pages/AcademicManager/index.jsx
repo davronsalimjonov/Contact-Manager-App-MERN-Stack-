@@ -41,14 +41,14 @@ const AcademicManager = () => {
                             title="O'quvchilar Soni"
                             value={`${allStudentsCount?.pro || 0}`}
                             percentage={callCount?.countPercentage || 0}
-                            icon={<MetricPersonsIcon />}
+                            icon={<MetricPersonsIcon color='rgba(0, 182, 155, 1)' />}
                             iconBg='rgba(0, 182, 155, 0.21)'
                         />
                         <MetricCard
                             title='Faolligi'
                             value={`${rating?.rate || 0}%`}
                             percentage={rating?.ratePercentage || 0}
-                            icon={<MetricPersonsIcon />}
+                            icon={<MetricPersonsIcon color='rgba(255, 144, 102, 1)' />}
                             iconBg='rgba(254, 197, 61, 0.2)'
                         />
                         <MetricCard
@@ -62,7 +62,7 @@ const AcademicManager = () => {
                             title='Qayta Sotuv'
                             value={'Tez orada qo`shiladi'}
                             percentage={8.5}
-                            icon={<MetricPersonsIcon />}
+                            icon={<MetricPersonsIcon color='rgba(18, 86, 219, 1)' />}
                             iconBg='rgba(160, 188, 241, 0.2)'
                         />
                     </div>
