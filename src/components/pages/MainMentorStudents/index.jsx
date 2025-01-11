@@ -4,7 +4,6 @@ import cls from './MainMentorStudents.module.scss'
 import MainMentorStudentsTable from '@/components/templates/MainMentorStudentsTable'
 import MainMentorStudentsSearchBar from '@/components/UI/organisms/MainMentorStudentsSearchBar/indsx'
 import MainMentorStudentsGroupTab from '@/components/UI/organisms/MainMentorStudentsGroupTab'
-import { useGetMentors } from '@/hooks/useGetMentors'
 import { useGetUserId } from '@/hooks/useGetUser'
 import Loader from '@/components/UI/atoms/Loader'
 import { customToast } from '@/utils/toast'
@@ -14,6 +13,7 @@ import StudentStatus from '@/components/UI/atoms/StudentStatus'
 import { useGetCourse } from '@/hooks/useGetCourse'
 import { updateUserCourse } from '@/services/course'
 import Pagination from '@/components/UI/moleculs/Pagination'
+import useGetMentors from '@/hooks/useGetMentors'
 
 const MainMentorStudents = () => {
     const academyMentor = useGetUserId()

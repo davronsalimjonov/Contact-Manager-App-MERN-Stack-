@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import useGetGroups from '@/hooks/useGetGroups';
 import cls from './Users.module.scss';
 import UsersTable from '@/components/templates/UsersTable';
 import UsersSearchBar from '@/components/UI/organisms/UsersSearchBar';
@@ -10,7 +9,6 @@ import { updateUserPassword } from '@/services/user';
 import { customToast } from '@/utils/toast';
 
 const Users = () => {
-    const { data: groups } = useGetGroups()
     const [filter, setFilter] = useState({})
     const [modal, setModal] = useState(false)
     const [userId, setUserId] = useState('')
@@ -19,14 +17,6 @@ const Users = () => {
         page: 1,
         limit: 10,
     });
-
-    const tabOptions = [
-        { value: '', label: 'Barchasi' },
-    ]
-    
-    groups?.forEach(group => {
-        tabOptions.push({ value: group.id, label: group.title })
-    })
 
     const handlePageChange = (page) => {
         setPagination((prev) => ({...prev, page }));

@@ -17,6 +17,7 @@ import MainMentorStudents from "@/components/pages/MainMentorStudents";
 import Users from "@/components/pages/Users";
 import SingleUser from "@/components/pages/SingleUser";
 import AcademicManager from "@/components/pages/AcademicManager";
+import AllMentors from "@/components/pages/AllMentors";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -109,6 +110,10 @@ const managerRoutes = createBrowserRouter([
                 path: '/users/user/:userId',
                 element: <SingleUser />
             },
+            {
+                path: '/mentors',
+                element: <AllMentors />
+            }
         ]
     }
 ])
