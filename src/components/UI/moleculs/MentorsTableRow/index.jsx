@@ -4,8 +4,7 @@ import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import cls from './MentorsTableRow.module.scss';
 import Avatar from 'react-avatar';
-import dayjs from 'dayjs';
-import { PasswordLockIcon } from '../../atoms/icons';
+import { EditMentorIcon, PasswordLockIcon } from '../../atoms/icons';
 
 const MentorsTableRow = ({
     index = 0,
@@ -14,12 +13,7 @@ const MentorsTableRow = ({
     student = '',
     fullName = '',
     phoneNumber = '',
-    uniqueId = '',
-    createdAt = '',
-    hidden = false,
-    unreadedMessagesCount = 0,
-    userCourseId,
-    setUserId
+    degree = 'Kiritlmagan',
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -35,21 +29,19 @@ const MentorsTableRow = ({
                         src={`${avatar}`}
                         name={fullName}
                     />
-                    {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount}</span>}
                 </div>
                 <span title={fullName}>{fullName}</span>
             </td>
+
             <td>
                 <span title={formatedPhoneNumber}>{formatedPhoneNumber ? formatedPhoneNumber : <EmptyDataText />}</span>
             </td>
+            <td><StudentStatus status={degree} /></td>
             <td><StudentStatus status={status} /></td>
-            <td><StudentStatus status={uniqueId} /></td>
-            <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={createdAt}>{createdAt ? dayjs(createdAt).format('DD.MM.YYYY HH:mm') : <EmptyDataText />}</span></td>
+            <td><span>{student}</span></td>
             <td onClick={(e) => (e.stopPropagation())}>
-                <div onClick={() => {   
-                    setUserId(userCourseId)
-                }} >
-                    <PasswordLockIcon />
+                <div>
+                    <EditMentorIcon />
                 </div>
             </td>
         </tr>

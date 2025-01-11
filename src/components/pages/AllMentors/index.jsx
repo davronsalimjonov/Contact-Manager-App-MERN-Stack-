@@ -23,10 +23,8 @@ const AllMentors = () => {
 
   const { 
     allMentors: { data: allMentors, isLoading: isLoadingAllMentors }
-   } = useGetMentors({...filter, ...pagination})
+  } = useGetMentors({...filter, ...pagination})
 
-  console.log(allMentors , pagination, 'hmmm');
-  
   return (
     <div className={cls.AllMentors}>
         <MentorsSearchBar 
@@ -36,6 +34,7 @@ const AllMentors = () => {
             onChangeStatus={(isPro) => setFilter(state => ({ ...state, isPro: isPro?.value === "Pro" ? true : false  }))}
             onChangeUniqueId={e => setFilter(state => ({ ...state, uniqueId: e.target.value?.trim()}))}
             onChangeDate={createdAt => setFilter(state => ({ ... state, createdAt}))}
+            onChangleDegree={degree => setFilter(state => ({ ...state, degree: degree?.value}))}
         />
         {(!isLoadingAllMentors) ? (
             <div className={cls.AllMentors__Table}>

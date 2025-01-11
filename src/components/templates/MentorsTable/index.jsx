@@ -3,8 +3,8 @@ import Mapper from '@/components/UI/atoms/Mapper';
 import Loader from '@/components/UI/atoms/Loader';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import cls from './MentorsTable.module.scss';
-import MentorsTableHeader from '@/components/UI/organisms/UsersTableHeader';
-import MentorsTableRow from '@/components/UI/moleculs/UsersTableRow';
+import MentorsTableHeader from '@/components/UI/organisms/MentorsTableHeader';
+import MentorsTableRow from '@/components/UI/moleculs/MentorsTableRow';
 
 const MentorsTable = ({
     students = [],

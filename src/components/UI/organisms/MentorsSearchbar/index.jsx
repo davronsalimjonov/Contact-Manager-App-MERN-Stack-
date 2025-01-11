@@ -1,5 +1,5 @@
 import { debounce } from '@/utils/lib';
-import { USER_STATUS_ENUMS } from '@/constants';
+import { GROUPS, USER_STATUS_ENUMS } from '@/constants';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import PhoneInput from '../../atoms/Form/PhoneInput';
@@ -13,19 +13,11 @@ const MentorsSearchBar = ({
     onChangeFirstName,
     onChangeLastName,
     onChangePhone,
-    onChangeUniqueId,
-    onChangeDate
+    onChangeDegree
 }) => {
-    const statusOptions = USER_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
+    const languageLevelOptions = GROUPS.map((status) => ({ value: status, label: status }))
     const [_, setDate] = useState()
 
-    const handleDateChange = (newDate) => {
-        setDate(newDate);
-        if (newDate) {
-            const formattedDate = newDate.toISOString();
-            onChangeDate(formattedDate);
-        }
-    }
 
     return (
         <div className={cls.bar}>
@@ -47,18 +39,20 @@ const MentorsSearchBar = ({
             <Select
                 className={cls.bar__form__select}
                 placeholder='Til Bilish Darajasi'
-                options={statusOptions}
-                onChange={onChangeStatus}
+                options={languageLevelOptions}
+                onChange={debounce(onChangeDegree, 200)}
                 isClearable
             />
             <Select
                 className={cls.bar__form__select}
                 placeholder='Statusi'
-                options={statusOptions}
-                onChange={onChangeStatus}
+                options={languageLevelOptions}
+                onChange={debounce(onChangeStatus, 200)}
                 isClearable
             />
-            <Button>
+            <Button
+                isSpaced={true}
+            >
                 Mentor Qo'shish
                 <span className='arrowIconClr'>
                     <Arrow />

@@ -7,9 +7,9 @@ const UsersTableHeader = () => {
                 <th>№</th>
                 <th>Ism,familiya</th>
                 <th>Telefon raqami</th>
-                <th>Daraja</th>
-                <th>Statusi</th>
-                <th>O'quvchilar Soni</th>
+                <th>Status</th>
+                <th>ID</th>
+                <th>Ro'yxatdan O'tdi</th>
                 <th></th>
             </tr>
         </thead>
