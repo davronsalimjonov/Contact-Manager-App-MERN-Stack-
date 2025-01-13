@@ -18,7 +18,7 @@ const AddNewWord = () => {
 
     return (
         <>
-            <Button type="button" onClick={handleAddWord}>Lug’at qo’shish</Button>
+            <Button disabled type="button" onClick={handleAddWord}>Lug’at qo’shish</Button>
             <Dialog isOpen={addWord} onClose={handleCancel}>
                 <AddNewWordForm closeModal={handleCancel} />
             </Dialog>

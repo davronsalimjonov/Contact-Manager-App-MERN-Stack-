@@ -89,7 +89,7 @@ const Dictionary = () => {
                     isClearable={true}
                     placeholder='Darajasi'
                 />
-                <Button disabled type='submit' className={cls.button}>Qidirish <SearchIcon /></Button>
+                <Button type='submit' className={cls.button}>Qidirish <SearchIcon /></Button>
                 <AddNewWord />
 
             </form>
