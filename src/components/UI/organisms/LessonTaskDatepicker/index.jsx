@@ -19,11 +19,13 @@ const LessonTaskDatepicker = ({
     defaultValue,
 }) => {
     const [date, setDate] = useState(defaultValue)
+    const [selectedTime, setSelectedTime] = useState()
 
     const handleSetTime = (minutesToAdd) => {
         const currentTime = new Date();
         currentTime.setMinutes(currentTime.getMinutes() + minutesToAdd);
         setDate(currentTime.toISOString());
+        setSelectedTime(minutesToAdd)
     }
 
     return (
@@ -39,7 +41,13 @@ const LessonTaskDatepicker = ({
                 <div className={cls.picker__times}>
                     <span>Eslating</span>
                     {times?.length > 0 && times.map(time => (
-                        <button key={time.value} onClick={() => handleSetTime(time.value)}>{time.label}</button>
+                        <button 
+                            key={time.value}
+                            className={selectedTime !== undefined && selectedTime !== time.value && cls.disable} 
+                            onClick={() => handleSetTime(time.value)}
+                        >
+                            {time.label}
+                        </button>
                     ))}
                 </div>
                 <Button onClick={() => onSave?.(date)} disabled={!date}>Saqlash</Button>

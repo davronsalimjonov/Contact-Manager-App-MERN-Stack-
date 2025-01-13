@@ -39,6 +39,10 @@
     }
 }
 
+.disable{
+    opacity: 0.5;
+}
+
 @keyframes open {
     from {
         opacity: 0;
