@@ -28,7 +28,7 @@ const MainMentorStudents = () => {
     const [selectedCourse, setSelectedCourse] = useState([])
     const [selectCallMentors, setSelectCallMentors] = useState([])
     const [selectStatus, setSelectStatus] = useState([])
-    const [activeGroup, setActiveGroup] = useState('Barchasi') 
+    const [activeGroup, setActiveGroup] = useState('Barchasi')
     const [courseId, setCourseId] = useState('')
     const [pagination, setPagination] = useState({
         page: 1,
@@ -36,53 +36,53 @@ const MainMentorStudents = () => {
     });
 
     const handlePageChange = (page) => {
-        setPagination((prev) => ({...prev, page }));
+        setPagination((prev) => ({ ...prev, page }));
     };
 
     const handleLimitChange = (limit) => {
-        setPagination((prev) => ({...prev, limit }));
+        setPagination((prev) => ({ ...prev, limit }));
     };
-    
-    
-    const { 
-        callMentors: { data: callMentors, isLoading: isLoadingCallMentors},
-        mainMentors: { data: mainMentors, isLoading: isLoadingMainMentors}
+
+
+    const {
+        callMentors: { data: callMentors, isLoading: isLoadingCallMentors },
+        mainMentors: { data: mainMentors, isLoading: isLoadingMainMentors }
     } = useGetMentors()
 
     const {
-        courseForSelect: { data: courseForSelect, isLoading: isCourseForSelectLoading},
+        courseForSelect: { data: courseForSelect, isLoading: isCourseForSelectLoading },
     } = useGetCourse()
 
     const {
-        groups: {data: groups, isLoading: isGroupsLoading},
-        groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading },
-        groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents } 
+        groups: { data: groups, isLoading: isGroupsLoading },
+        groupStudents: { data: groupStudents, isLoading: isGroupStudentsLoading },
+        groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents }
     } = useGetGroups({ group: groupId, ...filter, ...pagination }, groupId)
-    
+
     const callMentorOptions = callMentors?.map((item) => (
         {
             value: `${item?.id}`,
             label: `${item?.firstName} ${item?.lastName}`
         }
-    )) 
-    
+    ))
+
     const mainMentorOptions = mainMentors?.map((item) => (
         {
             value: `${item?.id}`,
             label: `${item?.firstName} ${item?.lastName}`
         }
     ))
-    
+
     const handleGroupNameChange = (event) => {
         setGroupName(event.target.value)
     }
-    
+
     const handleMentorChange = (option) => {
         setSelectedMentor(option)
     }
-    
-    const [tabOptions, setTabOptions] = useState([{ value: '', label: 'Barchasi' }]); 
-    
+
+    const [tabOptions, setTabOptions] = useState([{ value: '', label: 'Barchasi' }]);
+
     useEffect(() => {
         const newTabs = groups?.map(group => ({ value: group.id, label: group.title })) || [];
         setTabOptions(prevState => {
@@ -90,22 +90,22 @@ const MainMentorStudents = () => {
             const uniqueTabs = newTabs.filter(tab => !existingValues.includes(tab.value));
             return [...prevState, ...uniqueTabs];
         });
-    }, [groups]); 
+    }, [groups]);
 
-    useEffect(() => {}, [tabOptions])
-    
+    useEffect(() => { }, [tabOptions])
+
     const handleCreateGroup = async () => {
         try {
             if (!groupName) {
                 customToast.error("Guruh nomi bo'sh bo'lishi mumkin emas")
                 return
             }
-    
+
             if (!selectedMentor) {
                 customToast.error("Nazoratchi mentor tanlanmagan")
                 return
             }
-    
+
             const existingGroup = tabOptions.find((tab) => tab.label === groupName)
             if (!existingGroup) {
                 const response = await createGroups({
@@ -113,7 +113,7 @@ const MainMentorStudents = () => {
                     academyMentor,
                     callMentor: selectedMentor.value,
                 })
-    
+
                 if (response?.status === 201) {
                     setIsModal(false)
                     setGroupName("")
@@ -123,7 +123,7 @@ const MainMentorStudents = () => {
                     setTabOptions(prevState => [
                         ...prevState,
                         { value: response.data.id, label: response.data.title }
-                    ]); 
+                    ]);
                 } else {
                     customToast.error("Yaratishda xatolik yuz berdi.")
                 }
@@ -140,21 +140,21 @@ const MainMentorStudents = () => {
             }
         }
     }
-    
+
     const handleAddStudentToGroup = async () => {
         try {
             if (!selectedStudents || selectedStudents.length === 0) {
                 customToast?.error("O'quvchilar Qo'shing")
                 return
             }
-            
+
             const response = await addStudentsToGroup({
                 group: groupId,
                 studentIds: selectedStudents,
             })
-            
+
             if (response?.status === 201) {
-                setSelectedStudents([]) 
+                setSelectedStudents([])
                 customToast?.success("O'quvchilar Guruxga Qo'shildi")
             } else {
                 customToast?.error(`Xatolik: ${response?.statusText || "Unknown Error"}`)
@@ -170,54 +170,50 @@ const MainMentorStudents = () => {
                 customToast?.error("Kurs Tanlang!");
                 return;
             }
-    
+
             if (!selectMainMentors || selectMainMentors.length === 0) {
                 customToast?.error("Asosiy Mentor Tanlang!");
                 return;
             }
-    
+
             if (!selectCallMentors || selectCallMentors.length === 0) {
                 customToast?.error("Nazoratchi Mentor Tanlang!");
                 return;
             }
-    
+
             if (!selectStatus || selectStatus.length === 0) {
                 customToast?.error("Status Tanlang!");
                 return;
             }
 
-            const res = await updateUserCourse(courseId, {
+            await updateUserCourse(courseId, {
                 course: selectedCourse.value,
                 teacher: selectMainMentors.value,
                 secondTeacher: selectCallMentors.value,
                 status: selectStatus.value
             })
 
-            if (res?.status === 200) {
-                setIsTransferModal(false)
-                setSelectedCourse([])
-                setSelectMainMentors([])
-                setSelectCallMentors([])
-                setSelectStatus([])
-                customToast?.success("Transfer Amalga Oshirildi")
-            } else {
-                customToast?.error(`Xatolik: ${res?.statusText || "Unknown Error"}`)
-            }
-            
-        } catch(error) {
+            setIsTransferModal(false)
+            setSelectedCourse([])
+            setSelectMainMentors([])
+            setSelectCallMentors([])
+            setSelectStatus([])
+            customToast?.success("Transfer Amalga Oshirildi")
+
+        } catch (error) {
             customToast?.error("Xatolik Yuz Berdi")
         }
     }
 
     const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
     const statusOptionsSelect = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: <StudentStatus status={status} /> }))
-    
+
     return (
         <div className={cls.page}>
             {
                 <>
-                    <MainMentorStudentsGroupTab 
-                        handleMentorChange={handleMentorChange} 
+                    <MainMentorStudentsGroupTab
+                        handleMentorChange={handleMentorChange}
                         handleGroupNameChange={handleGroupNameChange}
                         handleCreateGroup={handleCreateGroup}
                         callMentorOptions={callMentorOptions}
@@ -233,18 +229,18 @@ const MainMentorStudents = () => {
                         setPagination={setPagination}
                     />
                     <MainMentorStudentsSearchBar
-                        onChangeFirstName={e => setFilter(state => ({...state, firstName: e.target.value?.trim() }))}
-                        onChangeLastName={e => setFilter(state => ({...state, lastName: e.target.value?.trim() }))}
-                        onChangePhone={phone => setFilter(state => ({...state, phone }))}
-                        onChangeGroup={level => setFilter(state => ({...state, level: level?.label}))}
-                        onChangeStatus={(status) => setFilter(state => ({...state, status: status?.value }))}
+                        onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
+                        onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
+                        onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
+                        onChangeGroup={level => setFilter(state => ({ ...state, level: level?.label }))}
+                        onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
                         statusOptions={statusOptions}
                         setIsTransferModal={setIsTransferModal}
                         activeGroup={activeGroup}
                     />
                     {!isGroupStudentsLoading ? (
                         <>
-                            <MainMentorStudentsTable  
+                            <MainMentorStudentsTable
                                 students={groupStudents?.items}
                                 isLoading={isGroupStudentsLoading}
                                 selectedStudents={selectedStudents}
@@ -274,17 +270,17 @@ const MainMentorStudents = () => {
                                 setLimit={handleLimitChange}
                                 page={pagination.page}
                                 setPage={handlePageChange}
-                            />    
-                            {groupStudents?.items?.length === 0 ? <></> 
-                            : <Pagination
-                                metaData={groupStudents?.meta}
-                                limit={pagination.limit}
-                                setLimit={handleLimitChange}
-                                page={pagination.page}
-                                setPage={handlePageChange}
-                            />}
+                            />
+                            {groupStudents?.items?.length === 0 ? <></>
+                                : <Pagination
+                                    metaData={groupStudents?.meta}
+                                    limit={pagination.limit}
+                                    setLimit={handleLimitChange}
+                                    page={pagination.page}
+                                    setPage={handlePageChange}
+                                />}
                         </>
-                    ) : (   
+                    ) : (
                         <Loader />
                     )}
                 </>
