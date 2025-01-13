@@ -1,12 +1,11 @@
 import { debounce } from '@/utils/lib';
-import { GROUPS, USER_STATUS_ENUMS } from '@/constants';
+import { GROUPS, MENTORS_STATUS_ENUMS } from '@/constants';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import PhoneInput from '../../atoms/Form/PhoneInput';
 import cls from './MentorsSearchBar.module.scss';
 import Button from '../../atoms/Buttons/Button';
 import { Arrow } from '../../atoms/icons';
-import { useState } from 'react';
 
 const MentorsSearchBar = ({
     onChangeStatus,
@@ -16,8 +15,7 @@ const MentorsSearchBar = ({
     onChangeDegree
 }) => {
     const languageLevelOptions = GROUPS.map((status) => ({ value: status, label: status }))
-    const [_, setDate] = useState()
-
+    const mentorStatusOptions = MENTORS_STATUS_ENUMS.map((status) => ({ value: status, label: status}))
 
     return (
         <div className={cls.bar}>
@@ -40,14 +38,14 @@ const MentorsSearchBar = ({
                 className={cls.bar__form__select}
                 placeholder='Til Bilish Darajasi'
                 options={languageLevelOptions}
-                onChange={debounce(onChangeDegree, 200)}
+                onChange={onChangeDegree}
                 isClearable
             />
             <Select
                 className={cls.bar__form__select}
                 placeholder='Statusi'
-                options={languageLevelOptions}
-                onChange={debounce(onChangeStatus, 200)}
+                options={mentorStatusOptions}
+                onChange={onChangeStatus}
                 isClearable
             />
             <Button

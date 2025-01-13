@@ -8,6 +8,8 @@ import Pagination from '@/components/UI/moleculs/Pagination'
 
 const AllMentors = () => {
   const [filter, setFilter] = useState({})
+  const [id, setId] = useState('')
+  const [role, setRole] = useState('')
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
@@ -23,24 +25,25 @@ const AllMentors = () => {
 
   const { 
     allMentors: { data: allMentors, isLoading: isLoadingAllMentors }
-  } = useGetMentors({...filter, ...pagination})
+  } = useGetMentors({...filter, ...pagination}, id, role)
 
   return (
     <div className={cls.AllMentors}>
         <MentorsSearchBar 
-            onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
-            onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
-            onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
-            onChangeStatus={(isPro) => setFilter(state => ({ ...state, isPro: isPro?.value === "Pro" ? true : false  }))}
-            onChangeUniqueId={e => setFilter(state => ({ ...state, uniqueId: e.target.value?.trim()}))}
-            onChangeDate={createdAt => setFilter(state => ({ ... state, createdAt}))}
-            onChangleDegree={degree => setFilter(state => ({ ...state, degree: degree?.value}))}
+            onChangeFirstName={(e) => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
+            onChangeLastName={(e) => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
+            onChangePhone={(phone) => setFilter(state => ({ ...state, phone }))}
+            onChangeDegree={(degree) => setFilter(state => ({ ...state, degree: degree?.value }))}
+            onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value  }))}
         />
         {(!isLoadingAllMentors) ? (
             <div className={cls.AllMentors__Table}>
                 <MentorsTable
-                    students={allMentors?.items}
+                    mentors={allMentors?.items}
                     isLoading={isLoadingAllMentors}
+                    setId={setId}
+                    setRole={setRole}
+                    role={role}
                 />
                 <Pagination
                     metaData={allMentors?.meta}

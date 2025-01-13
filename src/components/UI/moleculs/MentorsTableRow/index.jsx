@@ -8,18 +8,26 @@ import { EditMentorIcon, PasswordLockIcon } from '../../atoms/icons';
 
 const MentorsTableRow = ({
     index = 0,
+    role = '',
     avatar = '',
+    mentor = '',
     status = '',
     student = '',
     fullName = '',
     phoneNumber = '',
     degree = 'Kiritlmagan',
+    setRole,
+    setId
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
     
     return (
-        <tr className={cls.row} onClick={() => navigate(`/users/user/${student}`)}>
+        <tr className={cls.row} onClick={() => {
+            navigate(`/mentors/mentor/${mentor}?${role}`)
+            setRole(role)
+            setId(mentor)
+        }}>
             <td>{index}</td>
             <td className={cls.row__name}>
                 <div className={cls.row__notification}>

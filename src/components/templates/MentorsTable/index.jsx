@@ -7,32 +7,39 @@ import MentorsTableHeader from '@/components/UI/organisms/MentorsTableHeader';
 import MentorsTableRow from '@/components/UI/moleculs/MentorsTableRow';
 
 const MentorsTable = ({
-    students = [],
+    mentors = [],
     triggerRef,
     isLoading,
+    setRole,
+    setId,
+    role=''
 }) => {
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {students?.length > 0 ? (
+            {mentors?.length > 0 ? (
                 <>
                     <table className={cls.table}>
                         <MentorsTableHeader />
                         <tbody>
                             <Mapper
-                                data={students}
+                                data={mentors}
                                 isInfinityQuery
                                 isLoading={isLoading}
-                                renderItem={(student, index) => (
+                                renderItem={(mentor, index) => (
                                     <MentorsTableRow
-                                        key={student?.id}
+                                        mentor={mentor?.id}
+                                        key={mentor?.id}
                                         index={index + 1}
-                                        fullName={getUserFullName(student)}
-                                        avatar={student?.url}
-                                        phoneNumber={student?.phone}
-                                        degree={student?.degree}
-                                        status={student?.status}
-                                        student={student?.student}
+                                        fullName={getUserFullName(mentor)}
+                                        avatar={mentor?.url}
+                                        phoneNumber={mentor?.phone}
+                                        degree={mentor?.degree}
+                                        status={mentor?.status}
+                                        student={mentor?.student}
+                                        role={mentor?.role}
+                                        setRole={setRole}
+                                        setId={setId}
                                     />
                                 )}
                             />
