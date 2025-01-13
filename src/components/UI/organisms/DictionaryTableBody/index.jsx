@@ -27,7 +27,7 @@ const DictionaryTableBody = ({
                             <td className={cls.dictionary__row__td}>{word.unit && `Unit ${word.unit}`}</td>
                             <td className={cls.dictionary__row__td}>{word.lvl}</td>
                             <td className={cls.dictionary__row__td}>
-                                <Button className={cls.edit__button} onClick={()=>handleUpdate(word.id)} type='button'><EditIcon /></Button>
+                                <Button disabled className={cls.edit__button} onClick={()=>handleUpdate(word.id)} type='button'><EditIcon /></Button>
                             </td>
                         </tr>
                     ))

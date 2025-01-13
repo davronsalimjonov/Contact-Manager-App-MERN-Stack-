@@ -87,7 +87,7 @@ const ConversationInput = ({ userCourseId }) => {
         }
     }
 
-    const handleCreateTask = (date) => {
+    const handleCreateTask = async (date) => {
         try {
             const data = watch()
             data.date = date
@@ -97,7 +97,7 @@ const ConversationInput = ({ userCourseId }) => {
                 const id = generateUUID()
                 const lastMessage = messages?.at(-1)
                 const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
-                const newMessage = generateMessage(data, messageType, { id, [isNewMessageInPeriod ? 'dateSeperator' : null]: new Date(Date.now()).toISOString() })
+                const newMessage = await generateMessage(data, messageType, { id, [isNewMessageInPeriod ? 'dateSeperator' : null]: new Date(Date.now()).toISOString() })
 
                 addNewMessage(newMessage)
                 reset()
@@ -206,7 +206,7 @@ const ConversationInput = ({ userCourseId }) => {
                     })}
                 ></textarea>
             )}
-            {selectedFile && (
+            {selectedFile && messageType === MessageTypes.MESSAGE && (
                 <div className={cls.input__files}>
                     <FileAttachment
                         name={selectedFile?.name}

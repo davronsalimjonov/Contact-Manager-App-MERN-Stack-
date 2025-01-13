@@ -25,7 +25,7 @@ export const getUserCourseById = async (courseId) => {
 
 export const updateUserCourse = async (id, data) => {
     const res = await api.put(`/user-course/${id}`, data)
-    return res
+    return res?.data
 }
 
 export const getCourseForSelect = async () => {
