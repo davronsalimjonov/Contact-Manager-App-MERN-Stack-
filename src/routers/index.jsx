@@ -12,7 +12,6 @@ import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks } from "./data";
 import Schedule from "@/components/pages/Schedule";
 import SingleSchedule from "@/components/pages/SingleSchedule";
 import MainMentor from "@/components/pages/MainMentorDashboard";
@@ -37,6 +36,11 @@ import MentorsStatistic from "@/components/pages/MentorsStatistic";
 import Notification from "@/components/pages/Notification";
 import AddNotification from "@/components/pages/AddNotification";
 import AcademicManager from "@/components/pages/AcademicManager";
+import SellersDashboard from "@/components/pages/SellersDashboard";
+import SellerWorkspace from "@/components/pages/SellerWorkspace";
+import SellerStatistics from "@/components/pages/SellerStatistics";
+import SellerStudents from "@/components/pages/SellerStudents";
+import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -237,6 +241,43 @@ const managerRoutes = createBrowserRouter([
     }
 ])
 
+const sellerRoutes = createBrowserRouter([
+    {
+        path: '/',
+        element: <MainLayout sidebarLinks={sellerSidebarLinks} />,
+        children: [
+            {
+                path: '/',
+                element: <SellersDashboard />
+            },
+            {
+                path: '/dashboard',
+                element: <SellerStatistics />
+            },
+            {
+                path: '/students',
+                element: <SellerStudents />
+            },
+            // {
+            //     path: '/students/chat/:userCourseId',
+            //     element: <Chat />
+            // },
+            {
+                path: '/workspace',
+                element: <SellerWorkspace />
+            },
+            {
+                path: '/settings',
+                element: <Settings />
+            },
+            {
+                path: '*',
+                element: <PageNotFound />
+            }
+        ]
+    }
+])
+
 const authRoutes = createBrowserRouter([
     {
         path: '',
@@ -275,7 +316,8 @@ const Routers = () => {
         switch (role) {
             case 2: return mainMentorRoutes;
             case 4: return callTecherRoutes;
-            case 6: return managerRoutes
+            case 6: return managerRoutes;
+            case 5: return sellerRoutes;
             default: return emptyRoute;
         }
     }

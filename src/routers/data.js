@@ -1,4 +1,4 @@
-import { AutoStoriesIcon, CircleNotificationIcon, HouseIcon, LanIcon, ListIcon, ManageAccountsIcon, MenuBookIcon, MicrophoneIcon, NoteIcon, PersonsIcon, SchoolIcon, TaskIcon, TranslateIcon, ScheduleIcon } from "@/components/UI/atoms/icons";
+import { AutoStoriesIcon, CircleNotificationIcon, HouseIcon, LanIcon, LeaderboardIcon, ListIcon, ManageAccountsIcon, MenuBookIcon, MicrophoneIcon, PersonsIcon, SchoolIcon, TaskIcon, TranslateIcon } from "@/components/UI/atoms/icons";
 
 export const callMentorSidebarLinks = [
     {
@@ -154,5 +154,32 @@ export const managerSidebarLinks = [
         label: 'Recording',
         link: '/recordings',
         icon: MicrophoneIcon()
+    }
+]
+
+export const sellerSidebarLinks = [
+    {
+        id: 0,
+        link: '/',
+        label: 'Home',
+        icon: HouseIcon()
+    },
+    {
+        id: 1,
+        link: '/dashboard',
+        label: 'Dashboard',
+        icon: LeaderboardIcon()
+    },
+    {
+        id: 2,
+        link: '/students',
+        label: 'O’quvchilarim',
+        icon: PersonsIcon()
+    },
+    {
+        id: 3,
+        link: '/workspace',
+        label: 'Workspace',
+        icon: MenuBookIcon()
     }
 ]

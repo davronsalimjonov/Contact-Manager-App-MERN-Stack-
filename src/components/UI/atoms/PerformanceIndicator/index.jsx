@@ -6,7 +6,7 @@ const PerformanceIndicator = ({
     label = '',
     positively = true
 }) => {
-    const valueColor = positively ? '#00B69B' : '#F93C65'
+    const valueColor = positively ? 'rgba(0, 212, 59, 1)' : '#F93C65'
 
     return (
         <div className={cls.indicator}>
