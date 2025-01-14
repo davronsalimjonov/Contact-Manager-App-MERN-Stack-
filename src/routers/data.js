@@ -157,7 +157,7 @@ export const managerSidebarLinks = [
     }
 ]
 
-export const salesManagerSidebarLinks = [
+export const sellerSidebarLinks = [
     {
         id: 0,
         link: '/',
@@ -172,7 +172,7 @@ export const salesManagerSidebarLinks = [
     },
     {
         id: 2,
-        link: '/studetnts',
+        link: '/students',
         label: 'O’quvchilarim',
         icon: PersonsIcon()
     },

@@ -36,7 +36,7 @@ const StudentsTableRow = ({
                         src={avatar}
                         name={fullName}
                     />
-                    {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount}</span>}
+                    {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount > 9 ? '9+' : unreadedMessagesCount  }</span>}
                 </div>
                 <span title={fullName}>{fullName}</span>
             </td>

@@ -1,0 +1,28 @@
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &>div {
+        display: grid;
+        gap: 16px;
+
+        &:nth-child(odd) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        &:nth-child(even) {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    &__value {
+        &__currency {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 16.44px;
+            color: var(--blue-gray-400-color);
+            transform: translateY(5px);
+        }
+    }
+}

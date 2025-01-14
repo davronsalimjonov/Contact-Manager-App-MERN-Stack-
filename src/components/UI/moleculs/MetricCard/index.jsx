@@ -6,16 +6,17 @@ const MetricCard = ({
   value = "",
   icon = <></>,
   iconBg = "",
+  iconStyle = {},
   percentage = 0,
 }) => {
   return (
     <div className={cls.card}>
         <div>
-            <div>
+              <div>
                 <h3 className={cls.card__title}>{title}</h3>
                 <span className={cls.card__value}>{value}</span>
               </div>
-              <div className={cls.card__icon} style={{ backgroundColor: iconBg }}>{icon}</div>
+              <div className={cls.card__icon} style={{ backgroundColor: iconBg, ...iconStyle }}>{icon}</div>
         </div>
         <PerformanceIndicator
             value={Math.abs(percentage)}
