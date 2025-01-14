@@ -10,7 +10,12 @@ export const getAllMentors = async (params) => {
     return res.data
 }
 
-export const getSingleMentor = async (id, role) => {
-    const res = await api.get(`/employee/${id}?${role}`)
+export const getSingleMentor = async (mentorId, params) => {
+    const res = await api.get(`/employee/${mentorId}?${paramsToString(params)}`,  )
+    return res.data
+}
+
+export const updateMentors = async (mentorId, data) => {
+    const res = await api.put(`/employee/${mentorId}`, data, { headers: { "Content-Type": 'multipart/form-data' } })
     return res.data
 }

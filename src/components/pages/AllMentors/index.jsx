@@ -8,8 +8,6 @@ import Pagination from '@/components/UI/moleculs/Pagination'
 
 const AllMentors = () => {
   const [filter, setFilter] = useState({})
-  const [id, setId] = useState('')
-  const [role, setRole] = useState('')
   const [pagination, setPagination] = useState({
     page: 1,
     limit: 10,
@@ -25,7 +23,8 @@ const AllMentors = () => {
 
   const { 
     allMentors: { data: allMentors, isLoading: isLoadingAllMentors }
-  } = useGetMentors({...filter, ...pagination}, id, role)
+  } = useGetMentors({...filter, ...pagination})
+
 
   return (
     <div className={cls.AllMentors}>
@@ -41,9 +40,6 @@ const AllMentors = () => {
                 <MentorsTable
                     mentors={allMentors?.items}
                     isLoading={isLoadingAllMentors}
-                    setId={setId}
-                    setRole={setRole}
-                    role={role}
                 />
                 <Pagination
                     metaData={allMentors?.meta}

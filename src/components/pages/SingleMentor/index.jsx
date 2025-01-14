@@ -1,42 +1,36 @@
 import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
-import { useQueryClient } from 'react-query';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';  
 import { customToast } from '@/utils/toast';
-import { updateUser } from '@/services/user';
 import Loader from '@/components/UI/atoms/Loader';
 import { objectToFormData } from '@/utils/lib';
 import MentorInformationForm from '@/components/UI/organisms/MentorInformationForm';
-// import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
-// import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleMentor.module.scss';
-import useGetMentors from '@/hooks/useGetMentors';
+import { useGetSingleMentor } from '@/hooks/useGetSingleMentor';
+import { updateMentors } from '@/services/mentors';
 
 const SingleMentor = () => {
-    const { mentorId, mentorRole } = useParams()
-    const course = {}
-    const queryClient = useQueryClient()
-    const { data: singleMentor, isLoading: isLoadingSingleMentor } = useGetMentors({}, mentorId, mentorRole)
-    const student = course?.user
-
-    console.log(singleMentor, 'wasaap');
-    
+    const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
+    const mentorRole = searchParams.get('role')
+    const { mentorId } = useParams()
+    const {singleMentor: { data: singleMentor, isLoading: isLoadingSingleMentor }} = useGetSingleMentor(mentorId , {role: mentorRole}, [mentorId, mentorRole])
+   
 
     const studentFormData = {
-        id: student?.id,
-        avatar: student?.url,
-        firstName: student?.firstName,
-        lastName: student?.lastName,
-        phone: student?.phone,
-        birthday: student?.birthday,
-        gender: String(student?.gender),
-        createdAt: student?.createdAt ? dayjs(student?.createdAt).format('DD.MM.YYYY') : ''
+        role: singleMentor?.role,
+        degree: singleMentor?.degree,   
+        avatar: singleMentor?.url,
+        firstName: singleMentor?.firstName,
+        lastName: singleMentor?.lastName,
+        phone: singleMentor?.phone,
+        birthday: singleMentor?.birthday,
+        gender: String(singleMentor?.gender),
+        createdAt: singleMentor?.createdAt ? dayjs(singleMentor?.createdAt).format('DD.MM.YYYY') : ''
     }
 
     const handleUpdateUser = async (data) => {
         try {
-            const studentId = data?.id
-            delete data.id
             delete data.createdAt
             data.phone = data.phone
             data.gender = String(data.gender)
@@ -45,21 +39,8 @@ const SingleMentor = () => {
             if (!(data?.avatar instanceof File) && data?.avatar !== null) delete data.avatar
 
             const fd = objectToFormData(data)
-
-            const updatedUser = await updateUser(studentId, fd)
-            queryClient.setQueryData(['user-course', courseId], (oldData) => ({ ...oldData, user: updatedUser }))
-            queryClient.setQueriesData(['students'], oldData => ({
-                ...oldData,
-                pages: oldData?.pages?.map(page => ({
-                    ...page,
-                    items: page?.items?.map(item => {
-                        if (item?.user?.id === courseId) {
-                            item.user = updatedUser
-                        }
-                        return item
-                    })
-                }))
-            }))
+            await updateMentors(mentorId, fd)
+            navigate(-1)
             toast.success("Malumotlar o'zgartirildi")
         } catch (error) {
             const res = error?.response?.data
@@ -69,26 +50,13 @@ const SingleMentor = () => {
 
     return (
         <div className={cls.page}>
-            {!isLoadingStudent ? (
+            {!isLoadingSingleMentor ? (
                 <>
                     <MentorInformationForm 
-                        connectionDays={course?.days}
-                        connectionTime={course?.connectionTime}
                         onSubmit={handleUpdateUser} 
-                        defaultValues={studentFormData} 
-                        courseId={courseId}
+                        defaultValues={studentFormData}
+                        role={mentorRole}
                     />
-                    <div className={cls.page__cards}>
-                        {/* <StudentActionHistory />
-                        <StudentPersonalInfo
-                            email={student?.email}
-                            direction={student?.onboarding?.learnField}
-                            purpose={student?.onboarding?.aim}
-                            level={student?.onboarding?.degree}
-                            address={student?.onboarding?.address}
-                            job={student?.onboarding?.job}
-                        /> */}
-                    </div>
                 </>
             ) : (
                 <Loader />

@@ -20,6 +20,7 @@ const StudentsSearchBar = ({
                 placeholder='Status user'
                 options={statusOptions}
                 onChange={onChangeStatus}
+                
                 isClearable
             />
             <Input 

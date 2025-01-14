@@ -25,6 +25,7 @@ const Select = ({
     className = '',
     isSearchable = true,
     error,
+    register,
     ...otherProps
 }) => {
     return (
@@ -40,6 +41,7 @@ const Select = ({
             onChange={onChange}
             isClearable={isClearable}
             isSearchable={isSearchable}
+            {...register}
             {...otherProps}
         />
     );

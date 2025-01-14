@@ -4,30 +4,24 @@ import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import cls from './MentorsTableRow.module.scss';
 import Avatar from 'react-avatar';
-import { EditMentorIcon, PasswordLockIcon } from '../../atoms/icons';
+import { EditMentorIcon } from '../../atoms/icons';
 
 const MentorsTableRow = ({
     index = 0,
-    role = '',
     avatar = '',
-    mentor = '',
     status = '',
     student = '',
+    mentorId = '',
     fullName = '',
+    mentorRole = '',
     phoneNumber = '',
-    degree = 'Kiritlmagan',
-    setRole,
-    setId
+    degree = 'Kiritlmagan'
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
     
     return (
-        <tr className={cls.row} onClick={() => {
-            navigate(`/mentors/mentor/${mentor}?${role}`)
-            setRole(role)
-            setId(mentor)
-        }}>
+        <tr className={cls.row} >
             <td>{index}</td>
             <td className={cls.row__name}>
                 <div className={cls.row__notification}>
@@ -47,7 +41,10 @@ const MentorsTableRow = ({
             <td><StudentStatus status={degree} /></td>
             <td><StudentStatus status={status} /></td>
             <td><span>{student}</span></td>
-            <td onClick={(e) => (e.stopPropagation())}>
+            <td onClick={(e) => {
+                (e.stopPropagation())
+                navigate(`/mentors/mentor/${mentorId}?role=${mentorRole}`)
+            }}>
                 <div>
                     <EditMentorIcon />
                 </div>

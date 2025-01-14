@@ -12,7 +12,8 @@ const FormSelect = ({
     isSearchable = false,
     defaultValue,
     control,
-    onChange
+    onChange,
+    register = {}
 }) => {
     return (
         <FormElementWrapper label={label} error={error}>
@@ -30,6 +31,7 @@ const FormSelect = ({
                             isSearchable={isSearchable}
                             isClearable={isClearable}
                             error={error}
+                            register={register}
                         />
                     )}
                 />

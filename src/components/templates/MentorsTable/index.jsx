@@ -10,9 +10,6 @@ const MentorsTable = ({
     mentors = [],
     triggerRef,
     isLoading,
-    setRole,
-    setId,
-    role=''
 }) => {
 
     return (
@@ -28,7 +25,7 @@ const MentorsTable = ({
                                 isLoading={isLoading}
                                 renderItem={(mentor, index) => (
                                     <MentorsTableRow
-                                        mentor={mentor?.id}
+                                        mentorId={mentor?.id}
                                         key={mentor?.id}
                                         index={index + 1}
                                         fullName={getUserFullName(mentor)}
@@ -37,9 +34,7 @@ const MentorsTable = ({
                                         degree={mentor?.degree}
                                         status={mentor?.status}
                                         student={mentor?.student}
-                                        role={mentor?.role}
-                                        setRole={setRole}
-                                        setId={setId}
+                                        mentorRole={mentor?.role}
                                     />
                                 )}
                             />

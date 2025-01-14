@@ -1,16 +1,10 @@
-import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { cn } from '@/utils/lib';
-import { getDayName } from '@/utils/time';
-import { useGetUserId } from '@/hooks/useGetUser';
-import { GENDER_OPTIONS } from '@/constants/form';
-import { updateUserCourse } from '@/services/course';
+import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS } from '@/constants/form';
 import { studentInfoSchema } from '@/schemas/student';
-import Dialog from '../../moleculs/Dialog';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
 import RedButton from '../../atoms/Buttons/RedButton';
@@ -18,21 +12,15 @@ import AvatarUpload from '../../moleculs/AvatarUpload';
 import FormDatepicker from '../../moleculs/Form/FormDatepicker';
 import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
-import ConnectionTimeFormPopup from '../ConnectionTimeFormPopup';
-import { EditIcon, LeftArrowIcon, PlusIcon } from '../../atoms/icons';
+import { EditIcon, LeftArrowIcon } from '../../atoms/icons';
 import cls from './MentorInformationForm.module.scss';
+import FormSelect from '../../moleculs/Form/FormSelect';
 
 const MentorInformationForm = ({
-    courseId = '',
-    connectionDays = [],
-    connectionTime = '',
     defaultValues,
-    onSubmit
+    onSubmit,
 }) => {
-    const userId = useGetUserId()
     const navigate = useNavigate()
-    const queryClient = useQueryClient()
-    const [isOpenDialog, setIsOpenDialog] = useState(false)
     const [isEditable, setIsEditable] = useState(false)
     const { register, control, reset, watch, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
         defaultValues,
@@ -40,51 +28,15 @@ const MentorInformationForm = ({
         resolver: yupResolver(studentInfoSchema)
     })
     const avatar = watch('avatar')
-    const connectionTimesLabel = [
-        `${connectionDays?.length > 0 ? `${connectionDays?.map(day => getDayName(day, 'short')).join(', ')} kunlari` : ''}`,
-        `${connectionTime ? `${connectionTime} oralig’ida` : ''}`
-    ].filter(text => text).join('; ')
-
+    
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset(defaultValues)
         }
     }, [isSubmitSuccessful])
 
-    const handleUpdateConnectionTimes = async (data) => {
-        try {
-            data.days = data?.days?.sort((a, b) => a - b)
-            await updateUserCourse(id, data)
-            queryClient.setQueryData(['user-course', id], oldData => ({ ...oldData, ...data }))
-            queryClient.setQueryData(['students', userId], oldData => ({
-                ...oldData,
-                pages: oldData?.pages?.map(page => ({
-                    ...page,
-                    items: page.items?.map(item => {
-                        if(item.id === id){
-                            item.days = data.days
-                            item.connectionTime = data.connectionTime 
-                        }
-                        return item
-                    })
-                }))
-            }))
-            toast.success("Bog'lanish vaqti o'zgartirildi!")
-            setIsOpenDialog(false)
-        } catch (error) {
-            const errorMessage = error?.response?.data?.message || error?.message || 'Xatolik yuz berdi'
-            toast.error(errorMessage)
-        }
-    }
-
     return (
         <>
-            <Dialog isOpen={isOpenDialog} onClose={() => setIsOpenDialog(false)}>
-                <ConnectionTimeFormPopup
-                    onSubmit={handleUpdateConnectionTimes}
-                    defaultValues={{ days: connectionDays, connectionTime }}
-                />
-            </Dialog>
             <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
                 <div className={cls.form__header}>
                     <button
@@ -152,20 +104,13 @@ const MentorInformationForm = ({
                         disabled
                         register={{ ...register('createdAt') }}
                     />
-                    <FormInput
-                        label='Bog’lanish kunlari'
-                        placeholder='Bog’lanish kunlarini kiriting'
-                        value={connectionTimesLabel}
-                        readOnly
-                        preffix={(
-                            <button
-                                type='button'
-                                className={cls.form__elements__btn}
-                                onClick={() => setIsOpenDialog(true)}
-                            >
-                                {connectionTimesLabel ? <EditIcon /> : <PlusIcon fill='#5F6C86' />}
-                            </button>
-                        )}
+                    <FormSelect
+                        label='Til bilish darajasi'
+                        placeholder="A1"
+                        options={ENGLISH_LEVEL_OPTIONS}
+                        control={control}
+                        name='degree'
+                        defaultValue={"A1"}
                     />
                     <span></span>
                     <Button
