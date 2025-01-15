@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { cn } from '@/utils/lib';
 import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS } from '@/constants/form';
@@ -15,10 +15,12 @@ import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
 import { EditIcon, LeftArrowIcon } from '../../atoms/icons';
 import cls from './MentorInformationForm.module.scss';
 import FormSelect from '../../moleculs/Form/FormSelect';
+import { USER_TYPE } from '@/constants';
 
 const MentorInformationForm = ({
     defaultValues,
     onSubmit,
+    isUpdateMode
 }) => {
     const navigate = useNavigate()
     const [isEditable, setIsEditable] = useState(false)
@@ -33,7 +35,11 @@ const MentorInformationForm = ({
         if (isSubmitSuccessful) {
             reset(defaultValues)
         }
-    }, [isSubmitSuccessful])
+
+        if (!isUpdateMode) {
+            setIsEditable(true); 
+        }
+    }, [isSubmitSuccessful, isUpdateMode])
 
     return (
         <>
@@ -52,13 +58,18 @@ const MentorInformationForm = ({
                         onChange={file => setValue('avatar', file, { shouldDirty: true, shouldValidate: true })}
                         onDelete={() => setValue('avatar', null, { shouldDirty: true })}
                     />
-                    <button
-                        type='button'
-                        className={cn(cls.form__header__btn, isEditable && cls.form__header__btn__edit)}
-                        onClick={() => setIsEditable(state => !state)}
-                    >
-                        <EditIcon />
-                    </button>
+                    {isUpdateMode ? (
+                        <button
+                            type='button'
+                            className={cn(cls.form__header__btn, isEditable && cls.form__header__btn__edit)}
+                            onClick={() => setIsEditable(state => !state)}
+                        >
+                            <EditIcon />
+                        </button>
+                    ) : 
+                        <span></span>
+                    }
+                    
                 </div>
                 <div className={cls.form__elements}>
                     <FormInput
@@ -98,12 +109,21 @@ const MentorInformationForm = ({
                         register={{ ...register('gender') }}
                         error={errors?.gender?.message}
                     />
-                    <FormInput
-                        label='Ro’yxatdan o’tgan sanasi'
-                        placeholder='Ro’yxatdan o’tgan sanasi'
-                        disabled
-                        register={{ ...register('createdAt') }}
-                    />
+                    { isUpdateMode ?
+                        <FormInput
+                            label='Ro’yxatdan o’tgan sanasi'
+                            placeholder='Ro’yxatdan o’tgan sanasi'
+                            disabled
+                            register={{ ...register('createdAt') }}
+                        /> : <FormSelect
+                            label='Mentor'
+                            placeholder="Mentorni Tanlang"
+                            options={USER_TYPE}
+                            control={control}
+                            name='role'
+                            defaultValue={"A1"}
+                        />
+                    }
                     <FormSelect
                         label='Til bilish darajasi'
                         placeholder="A1"
@@ -118,7 +138,7 @@ const MentorInformationForm = ({
                         isLoading={isSubmitting}
                         disabled={!isEditable || !isDirty}
                     >
-                        Tahrirlash
+                        {isUpdateMode ? "Tahrirlash" : "Mentor Qo'shish"}
                     </Button>
                     <RedButton
                         disabled={!isDirty || !isEditable}

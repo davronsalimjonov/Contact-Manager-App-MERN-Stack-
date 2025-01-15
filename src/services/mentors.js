@@ -19,3 +19,8 @@ export const updateMentors = async (mentorId, data) => {
     const res = await api.put(`/employee/${mentorId}`, data, { headers: { "Content-Type": 'multipart/form-data' } })
     return res.data
 }
+
+export const createMentors = async (data) => {
+    const res = await api.post(`/employee/mentor`, data, { headers: { "Content-Type": 'multipart/form-data' } })
+    return res.data
+}

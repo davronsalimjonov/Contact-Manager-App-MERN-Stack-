@@ -6,6 +6,7 @@ import PhoneInput from '../../atoms/Form/PhoneInput';
 import cls from './MentorsSearchBar.module.scss';
 import Button from '../../atoms/Buttons/Button';
 import { Arrow } from '../../atoms/icons';
+import { useNavigate } from 'react-router-dom';
 
 const MentorsSearchBar = ({
     onChangeStatus,
@@ -16,6 +17,7 @@ const MentorsSearchBar = ({
 }) => {
     const languageLevelOptions = GROUPS.map((status) => ({ value: status, label: status }))
     const mentorStatusOptions = MENTORS_STATUS_ENUMS.map((status) => ({ value: status, label: status}))
+    const navigate = useNavigate()
 
     return (
         <div className={cls.bar}>
@@ -50,6 +52,7 @@ const MentorsSearchBar = ({
             />
             <Button
                 isSpaced={true}
+                onClick={() => navigate(`/mentors/add-mentor`)}
             >
                 Mentor Qo'shish
                 <span className='arrowIconClr'>

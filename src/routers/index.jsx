@@ -118,7 +118,11 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/mentors/mentor/:mentorId',
                 element: <SingleMentor />
-            }
+            },
+            {
+                path: '/mentors/add-mentor',
+                element: <SingleMentor />
+            },
         ]
     }
 ])
