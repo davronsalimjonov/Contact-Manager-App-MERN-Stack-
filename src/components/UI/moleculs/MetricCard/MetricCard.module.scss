@@ -7,7 +7,7 @@
     flex-direction: column;
 
     &>div:last-child{
-        margin-top: auto;
+        // margin-top: auto;
     }
 
     &>div:nth-child(1) {
@@ -15,7 +15,10 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: 10px;
-        margin-bottom: 35px;
+        
+        &:not(:last-child){
+            margin-bottom: 35px;
+        }
 
         &>div {
             display: flex;

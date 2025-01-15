@@ -9,6 +9,14 @@ export const USER_STATUS_ENUMS = ['Free', 'Pro']
 
 export const WORKSPACE_ENUMS = ['not-connected', 'call-back', 'not-answered', 'connected', 'filled-form', 'level-determined', 'attached-to-the-teacher']
 
+export const CALL_RECORD_DEFAULT_PEAKS = Array(300).fill(0)
+
+export const USER_ROLES = {
+    CALL_MENTOR: 4,
+    MAIN_MENTROR: 2,
+    ACADEMY_MANAGER: 6,
+    SELLER: 5
+}
 export const UNITS = Array.from(Array(12)).map((_, index) => ({ value: 5 * (index + 1), label: `Unit ${5 * (index + 1)}` }));
 
 export const DEGREE = [

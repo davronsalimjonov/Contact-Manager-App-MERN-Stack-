@@ -7,8 +7,11 @@ const MetricCard = ({
   icon = <></>,
   iconBg = "",
   iconStyle = {},
-  percentage = 0,
+  additionalInformation,
+  percentage = undefined,
 }) => {
+  console.log(percentage);
+  
   return (
     <div className={cls.card}>
         <div>
@@ -18,11 +21,14 @@ const MetricCard = ({
               </div>
               <div className={cls.card__icon} style={{ backgroundColor: iconBg, ...iconStyle }}>{icon}</div>
         </div>
-        <PerformanceIndicator
-            value={Math.abs(percentage)}
-            positively={percentage >= 0}
-            label='Bu oydagi natijalar'
-        />
+        {!isNaN(percentage) && (
+          <PerformanceIndicator
+              value={Math.abs(percentage)}
+              positively={percentage >= 0}
+              label='Bu oydagi natijalar'
+          />
+        )}
+        {additionalInformation}
     </div>
   )
 }
