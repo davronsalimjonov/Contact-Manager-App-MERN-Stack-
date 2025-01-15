@@ -17,6 +17,17 @@
     }
 
     &__value {
+        &__additional {
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 18.78px;
+            color: var(--blue-gray-400-color);
+            
+            &>span {
+                color: rgba(0, 212, 59, 1);
+            }
+        }
+
         &__currency {
             font-size: 14px;
             font-weight: 400;

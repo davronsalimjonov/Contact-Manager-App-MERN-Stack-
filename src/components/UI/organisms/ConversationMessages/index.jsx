@@ -39,6 +39,8 @@ const ConversationMessages = ({
     unreadedMessagesCount = 0
 }) => {
     messages = addDateSeparators(messages);
+    console.log(messages);
+    
     const { statusChangeMutation } = useTaskMutations(userCourseId)
     const { handleSetMessage } = useContext(ChatMessageEditContext);
     const [isFirstRender, setIsFirstRender] = useState(false);

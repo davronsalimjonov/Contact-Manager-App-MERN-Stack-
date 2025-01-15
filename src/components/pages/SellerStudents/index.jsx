@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useGetSellerStudents from '@/hooks/useSellerStudents';
+import useGetSellerStudents from '@/hooks/useSeller';
 import StudentsTable from '@/components/templates/StudentsTable';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
 import cls from './SellerStudents.module.scss';

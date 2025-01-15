@@ -110,10 +110,10 @@ const sellerRoutes = createBrowserRouter([
                 path: '/students',
                 element: <SellerStudents />
             },
-            // {
-            //     path: '/students/chat/:userCourseId',
-            //     element: <Chat />
-            // },
+            {
+                path: '/students/chat/:userCourseId',
+                element: <Chat />
+            },
             {
                 path: '/workspace',
                 element: <SellerWorkspace />
@@ -173,10 +173,10 @@ const Routers = () => {
             default: return emptyRoute;
         }
     }
-
+ 
     return (isUserLoading ? (
         <RouterProvider router={loadingRoute} />
-    ) : (
+    ) : ( 
         <RouterProvider router={isAuth ? getRoutesByRole(user?.role) : authRoutes} />
     ))
 }

@@ -8,3 +8,10 @@ export const STUDENT_STATUS_ENUMS = ['Yangi', 'Adaptatsiya', "O'qiyapti", 'Pauza
 export const WORKSPACE_ENUMS = ['not-connected', 'call-back', 'not-answered', 'connected', 'filled-form', 'level-determined', 'attached-to-the-teacher']
 
 export const CALL_RECORD_DEFAULT_PEAKS = Array(300).fill(0)
+
+export const USER_ROLES = {
+    CALL_MENTOR: 4,
+    MAIN_MENTROR: 2,
+    ACADEMY_MANAGER: 6,
+    SELLER: 5
+}

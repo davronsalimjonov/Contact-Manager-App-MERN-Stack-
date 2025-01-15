@@ -5,7 +5,11 @@ import cls from './SalesChart.module.scss';
 
 ChartJS.register(Filler);
 
-const SalesChart = () => {
+const SalesChart = ({
+    data = [],
+    defaultSeason = 'daily',
+    onChangeTabs
+}) => {
     const getGradient = (ctx, chartArea) => {
         const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
         gradient.addColorStop(0, "rgba(0, 133, 255, 0.2)");
@@ -13,12 +17,12 @@ const SalesChart = () => {
         return gradient;
     };
 
-    const data = {
-        labels: ["2020", "2021", "2022", "2023", "2024", "2025"],
+    const dataOptions = {
+        labels: data?.map((item) => item?.label),
         datasets: [
             {
                 label: "Sotuvlar soni",
-                data: [0, 950, 200, 430, 1100, 600],
+                data: data?.map((item) => item?.sum),
                 fill: true,
                 backgroundColor: (context) => {
                     const { chart } = context;
@@ -31,9 +35,9 @@ const SalesChart = () => {
                     return getGradient(ctx, chartArea);
                 },
                 borderColor: "rgba(18, 86, 219, 1)",
-                pointRadius: 0,
+                pointRadius: 1,
                 borderWidth: 2,
-                tension: 0.03,
+                tension: 0.05,
             },
         ],
     };
@@ -52,7 +56,7 @@ const SalesChart = () => {
                     display: false,
                 },
                 ticks: {
-                    color: "#000",
+                    color: "rgba(115, 115, 115, 1)",
                 },
                 border: { display: false },
             },
@@ -64,7 +68,7 @@ const SalesChart = () => {
                 },
                 border: { dash: [15, 15], display: false },
                 ticks: {
-                    color: "#000",
+                    color: "rgba(115, 115, 115, 1)",
                 },
                 beginAtZero: true,
             },
@@ -78,14 +82,16 @@ const SalesChart = () => {
                 <Tabs
                     className={cls.wrapper__header__tabs}
                     activeTabClassName={cls.wrapper__header__tabs__active}
+                    defaultValue={defaultSeason}
+                    onChange={onChangeTabs}
                     options={[
-                        { label: 'Kunlik', value: 'day' },
-                        { label: 'Oylik', value: 'month' },
-                        { label: 'Yillik', value: 'year' },
+                        { label: 'Kunlik', value: 'daily' },
+                        { label: 'Oylik', value: 'monthly' },
+                        { label: 'Yillik', value: 'yearly' },
                     ]}
                 />
             </div>
-            <Line data={data} height={50} options={options} />
+            <Line data={dataOptions} height={50} options={options} />
         </div>
     );
 }
