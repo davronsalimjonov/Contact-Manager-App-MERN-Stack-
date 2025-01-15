@@ -28,17 +28,13 @@ export const DEGREE = [
     "C2"
 ];
 
-
 export const STATUSOPTIONS = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
 
 export const WEEKDAYOPTIONS = daysOfWeekFull.map((day) => ({ value: day, label: day }));
-export const CALL_RECORD_DEFAULT_PEAKS = Array(300).fill(0);
 
 export const DEGREEOPTIONS = DEGREE.map((level) => ({ value: level, label: level }));
 
-export const STUDENTS_STATUS_OPTION = STUDENT_STATUS_ENUMS.map((status) => ({
-    value: status, label: status
-}));
+export const STUDENTS_STATUS_OPTION = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }));
 
 export const STATUS_COLOR = [
     {
