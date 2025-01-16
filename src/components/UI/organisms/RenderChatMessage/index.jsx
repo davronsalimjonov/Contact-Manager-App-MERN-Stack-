@@ -14,6 +14,7 @@ import ChatHomeWorkMessage from "../../moleculs/ChatHomeWorkMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 import ChatTaskMessage from "../../moleculs/ChatTaskMessage";
 import ChatFileMessage from "../../moleculs/ChatFileMessage";
+import { USER_ROLES } from "@/constants";
 
 const RenderMessage = memo(({
     message,
@@ -35,6 +36,16 @@ const RenderMessage = memo(({
     })
 
     const messageType = message?.type === MessageTypes.MESSAGE ? message?.message?.type : message?.type
+    let owner = null
+
+    if(message?.type === MessageTypes.MESSAGE) {
+        owner = message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user
+    } else if(message?.type === MessageTypes.COMMENT) {
+        owner = message?.comment?.createdBy === USER_ROLES.SELLER ? message?.comment?.salesManager : message?.comment?.owner 
+    } else if(message?.type === MessageTypes.TASK) {
+        owner = message?.task?.createdBy === USER_ROLES.SELLER ? message?.task?.salesManager : message?.task?.mentor
+    }
+console.log(messageType, owner);
 
     switch (messageType) {
         case MessageTypes.TEXT:
@@ -43,9 +54,9 @@ const RenderMessage = memo(({
                     <ChatTextMessage
                         time={message?.createdAt}
                         message={message?.message?.text}
-                        avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
-                        isSender={message?.message?.whoSended === 'mentor' && message?.message?.mentor?.id === userId}
-                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                        avatar={owner.url}
+                        isSender={owner.id === userId}
+                        fullName={getUserFullName(owner)}
                     />
                 </div>
             );
@@ -57,8 +68,8 @@ const RenderMessage = memo(({
                         imageUrl={message?.message?.file?.url}
                         width={message?.message?.file?.width}
                         height={message?.message?.file?.height}
-                        avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
-                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                        avatar={owner.url}
+                        fullName={getUserFullName(owner)}
                     />
                 </div>
             );
@@ -68,7 +79,7 @@ const RenderMessage = memo(({
                     <ChatVoiseMessage
                         time={message?.createdAt}
                         audioUrl={message?.message?.file?.url}
-                        avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
+                        avatar={owner?.url}
                         fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
                     />
                 </div>
