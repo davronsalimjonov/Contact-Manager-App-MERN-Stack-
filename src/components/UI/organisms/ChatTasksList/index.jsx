@@ -9,6 +9,7 @@ import ChatSidebarAccordion from '../../moleculs/ChatSidebarAccordion';
 import cls from './ChatTasksList.module.scss';
 
 const ChatTasksList = ({
+    disabled = false,
     conversationId = '',
     userCourseId = ''
 }) => {
@@ -22,7 +23,7 @@ const ChatTasksList = ({
     }
 
     return (
-        <ChatSidebarAccordion name='Tasklar'>
+        <ChatSidebarAccordion name='Tasklar' count={tasks?.length}>
             {isLoading ? (
                 <Loader />
             ) : (
@@ -39,7 +40,7 @@ const ChatTasksList = ({
                         />
                     ))}
                     {isOpenForm && <TaskForm onSubmit={handleCreateTask} />}
-                    <WhiteButton onClick={() => setIsOpenForm(true)}>
+                    <WhiteButton disabled={disabled} onClick={() => setIsOpenForm(true)}>
                         <PlusIcon fill='var(--blue-color)' /> Yangi task qo’shish
                     </WhiteButton>
                 </div>

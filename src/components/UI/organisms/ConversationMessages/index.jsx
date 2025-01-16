@@ -229,7 +229,7 @@ const ConversationMessages = ({
 
     return (
         <div className={cls.chat}>
-            <div ref={(el) => refs.current.container = el} className={cls.chat__window} style={{ opacity: isFirstRender ? 1 : 0, transition: 'opacity 0.2s ease', willChange: 'transform' }}>
+            <div ref={(el) => refs.current.container = el} className={cls.chat__window} style={{ opacity: isFirstRender ? 1 : 1, transition: 'opacity 0.2s ease', willChange: 'transform' }}>
                 {scrollState.hasMoreItems.above && messages?.length > 0 && (<Loader size={40} className={cls.chat__loader} />)}
                 <div style={{ height: `${virtualizer.getTotalSize()}px`, width: '100%', position: 'relative', willChange: 'transform' }}>
                     {virtualizer.getVirtualItems().map((virtualRow) => {
@@ -246,14 +246,16 @@ const ConversationMessages = ({
                             >
                                 <RenderMessage
                                     message={message}
-                                    onEditMessage={() => handleSetMessage(message)}
+                                    skipObserver={message?.index <= initialMessageIndex || message?.type === MessageTypes.DATE_SEPARATOR}
                                     onMessageVisible={onMessageVisible}
+                                    onEditMessage={() => handleSetMessage(message)}
                                     onTaskComplete={statusChangeMutation.mutate}
                                 />
                             </div>
                         );
                     })}
                 </div>
+                {scrollState.hasMoreItems.below && messages?.length > 0 && (<Loader size={40} className={cls.chat__loader} />)}
             </div>
             <ChatScrollButton
                 isOpened={isVisibleButton}

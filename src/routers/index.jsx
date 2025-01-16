@@ -17,6 +17,9 @@ import SellersDashboard from "@/components/pages/SellersDashboard";
 import SellerWorkspace from "@/components/pages/SellerWorkspace";
 import SellerStatistics from "@/components/pages/SellerStatistics";
 import SellerStudents from "@/components/pages/SellerStudents";
+import { MessageTypes } from "@/constants/enum";
+
+const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -112,7 +115,7 @@ const sellerRoutes = createBrowserRouter([
             },
             {
                 path: '/students/chat/:userCourseId',
-                element: <Chat />
+                element: <Chat allowedMessagesTypes={sellerAllowedMessagesTypes} />
             },
             {
                 path: '/workspace',

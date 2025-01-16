@@ -4,6 +4,7 @@ import ChatPartnerContacts from '@/components/UI/organisms/ChatPartnerContacts';
 import cls from './ChatSidebar.module.scss';
 
 const ChatSidebar = ({
+    hasSecondTeacher = true,
     userCourseId = '',
     conversationId = '',
     userAvatar = '',
@@ -26,7 +27,11 @@ const ChatSidebar = ({
                 userFullName={userFullName}
                 userAvatar={userAvatar} 
             />
-            <ChatTasksList userCourseId={userCourseId} conversationId={conversationId} />
+            <ChatTasksList 
+                userCourseId={userCourseId} 
+                conversationId={conversationId} 
+                disabled={!hasSecondTeacher}
+            />
             <ChatPartnerContacts 
                 phoneNumbers={phoneNumbers}
                 email={email}
