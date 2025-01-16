@@ -8,7 +8,7 @@ import cls from './MyStudents.module.scss';
 
 const MyStudents = () => {
     const [filter, setFilter] = useState({})
-    const { data: groups } = useGetGroups()
+    const { groups: { data: groups } } = useGetGroups()
     const { ref, data: students, isLoading: isLoadingStudents } = useGetStudents(filter)
 
     const tabOptions = [
