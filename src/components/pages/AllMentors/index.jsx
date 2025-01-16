@@ -32,7 +32,6 @@ const AllMentors = () => {
             onChangeFirstName={(e) => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
             onChangeLastName={(e) => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
             onChangePhone={(phone) => setFilter(state => ({ ...state, phone }))}
-            onChangeDegree={(degree) => setFilter(state => ({ ...state, degree: degree?.value }))}
             onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value  }))}
         />
         {(!isLoadingAllMentors) ? (

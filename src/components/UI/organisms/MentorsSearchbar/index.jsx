@@ -38,13 +38,6 @@ const MentorsSearchBar = ({
             />
             <Select
                 className={cls.bar__form__select}
-                placeholder='Til Bilish Darajasi'
-                options={languageLevelOptions}
-                onChange={onChangeDegree}
-                isClearable
-            />
-            <Select
-                className={cls.bar__form__select}
                 placeholder='Statusi'
                 options={mentorStatusOptions}
                 onChange={onChangeStatus}

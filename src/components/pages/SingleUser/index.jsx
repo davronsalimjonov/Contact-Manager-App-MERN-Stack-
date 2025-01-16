@@ -1,23 +1,39 @@
 import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import { customToast } from '@/utils/toast';
 import { updateUser } from '@/services/user';
 import Loader from '@/components/UI/atoms/Loader';
 import { objectToFormData } from '@/utils/lib';
-import useGetStudentCourseById from '@/hooks/useGetStudentCourseById';
-import StudentInformationForm from '@/components/UI/organisms/StudentInformationForm';
-import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
-import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleUser.module.scss';
 import useGetUserById from '@/hooks/useGetUserById';
 import UserInformationForm from '@/components/UI/organisms/UserInformationForm';
+import UserCourseListTable from '@/components/templates/UserCourseListTable';
+import { useState } from 'react';
+import { useGetCourse } from '@/hooks/useGetCourse';
+import useGetMentors from '@/hooks/useGetMentors';
 
 const SingleUser = () => {
     const { userId } = useParams()
     const queryClient = useQueryClient()
-    const { data: user, isLoading: isLoadingUser} = useGetUserById(userId) 
+
+    const { 
+        singleUser: {data: user, isLoading: isLoadingSingleUser},
+        userCourseList: {data: userCourseList, isLoading: isUserCourseListLoading}
+    } = useGetUserById(userId) 
+
+    const { 
+        callMentors: { data: callMentors, isLoading: isLoadingCallMentors},
+        mainMentors: { data: mainMentors, isLoading: isLoadingMainMentors}
+    } = useGetMentors()
+
+    const {
+        courseForSelect: { data: courseForSelect, isLoading: isCourseForSelectLoading},
+    } = useGetCourse()
+
+    const navigate = useNavigate()
+    const [isModal, setIsModal] = useState(false)
     
     const userFormData = {
         id: user?.id,
@@ -61,6 +77,8 @@ const SingleUser = () => {
                 }))
             }))
             toast.success("Malumotlar o'zgartirildi")
+            navigate(-1)
+            
         } catch (error) {
             const res = error?.response?.data
             customToast.error(res?.message || error?.message || 'Xatolik yuz berdi')
@@ -69,12 +87,20 @@ const SingleUser = () => {
 
     return (
         <div className={cls.page}>
-            {!isLoadingUser ? (
+            {!isLoadingSingleUser && !isUserCourseListLoading ? (
                 <>
                     <UserInformationForm 
                         onSubmit={handleUpdateUser} 
                         defaultValues={userFormData} 
                         courseId={userId}
+                    />
+                    <UserCourseListTable
+                        courses={userCourseList}
+                        isModal={isModal}
+                        setIsModal={setIsModal}
+                        callMentors={callMentors}
+                        mainMentors={mainMentors}
+                        courseForSelect={courseForSelect}
                     />
                 </>
             ) : (

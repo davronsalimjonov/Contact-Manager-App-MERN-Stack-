@@ -15,9 +15,13 @@ const SingleMentor = () => {
     const mentorRole = searchParams.get('role')
     const { mentorId } = useParams()
     const { pathname } = useLocation()
-    const { singleMentor: { data: singleMentor, isLoading: isLoadingSingleMentor }} = useGetSingleMentor(mentorId , {role: mentorRole}, [mentorId, mentorRole])
     const isUpdateMode = pathname.startsWith(`/mentors/mentor/${mentorId}`)
+    const { singleMentor: { data: singleMentor, isLoading: isLoadingSingleMentor }} = useGetSingleMentor(mentorId , {role: mentorRole}, [mentorId, mentorRole])
     
+
+    console.log(isUpdateMode);
+    
+
     const studentFormData = {
         role: singleMentor?.role,
         degree: singleMentor?.degree,   
