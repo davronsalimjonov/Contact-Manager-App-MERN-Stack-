@@ -1,7 +1,7 @@
 
-export const MyTeacherLogo = ({ className = '' }) => {
+export const MyTeacherLogo = ({ className = '', width = 156, height = 44 }) => {
     return (
-        <svg className={className} width={156} height={44} viewBox="0 0 156 44" style={{ transformOrigin: 'left', transition: 'all 0.3s' }} fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className={className} width={width} height={height} viewBox="0 0 156 44" style={{ transformOrigin: 'left', transition: 'all 0.3s' }} fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_1450_23770)">
                 <path d="M20.3273 18.072H6.77575L0 29.7369L6.77575 41.4019H20.3273L27.1042 29.7369L20.3273 18.072Z" fill="#1256DB" />
                 <path d="M43.2218 3.01147H29.6704L22.8945 14.6764L29.6704 26.3425H43.2218L49.9988 14.6764L43.2218 3.01147Z" fill="#1256DB" />

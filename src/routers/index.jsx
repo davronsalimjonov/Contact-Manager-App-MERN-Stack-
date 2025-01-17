@@ -18,6 +18,8 @@ import SellerWorkspace from "@/components/pages/SellerWorkspace";
 import SellerStatistics from "@/components/pages/SellerStatistics";
 import SellerStudents from "@/components/pages/SellerStudents";
 import { MessageTypes } from "@/constants/enum";
+import SalesForm from "@/components/pages/SalesForm";
+import SinglePageLayout from "@/components/templates/SinglePageLayout";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -130,7 +132,17 @@ const sellerRoutes = createBrowserRouter([
                 element: <PageNotFound />
             }
         ]
-    }
+    },
+    {
+        path: '/sales-form',
+        element: <SinglePageLayout />,
+        children: [
+            {
+                path: '',
+                element: <SalesForm />
+            }
+        ]
+    },
 ])
 
 const authRoutes = createBrowserRouter([

@@ -4,7 +4,7 @@ import { genderSchema, phoneNumberSchema } from '.';
 export const studentInfoSchema = Yup.object().shape({
     firstName: Yup.string().required('Ism kiritish majburiy'),
     lastName: Yup.string().required('Familiya kiritish majburiy'),
-    phone: phoneNumberSchema,
+    phone: phoneNumberSchema.required("Telefon raqam majburiy"),
     gender: genderSchema,
     birthday: Yup.string().nullable(),
 })

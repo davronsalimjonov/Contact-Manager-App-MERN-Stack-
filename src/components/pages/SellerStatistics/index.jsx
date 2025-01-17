@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import Loader from '@/components/UI/atoms/Loader';
 import { fillMissingSalesData } from '@/utils/chart';
 import SalesChart from '@/components/UI/organisms/SalesChart';
@@ -7,9 +8,10 @@ import SellerStatisticsCards from '@/components/templates/SellerStatisticsCards'
 import cls from './SellerStatistics.module.scss';
 
 const SellerStatistics = () => {
+    const [period] = useOutletContext()
     const [season, setSeason] = useState('daily');
     const { data: saleStatistic } = useGetSaleStatistic({ type: season });
-    const { data: metrics, isLoading: isLoadingMetrics } = useGetSellerMetrics();
+    const { data: metrics, isLoading: isLoadingMetrics } = useGetSellerMetrics({ date: period?.startDate });
 
     return (
         <div className={cls.page}>
