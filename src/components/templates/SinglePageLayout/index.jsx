@@ -5,7 +5,7 @@ import cls from './SinglePageLayout.module.scss';
 const SinglePageLayout = () => {
     return (
         <div className={cls.layout}>
-            <Navbar goToBack />
+            <Navbar />
             <div className={cls.layout__children}>
                 <Outlet />
             </div>
