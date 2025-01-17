@@ -11,8 +11,6 @@ const Navbar = ({ onPerionChange, goToBack }) => {
     const navigate = useNavigate()
     const { data: user } = useGetUser()
     const timeperiodPickerPath = ['/', '/main-teachers', '/dashboard']
-console.log(timeperiodPickerPath.includes(location.pathname));
-
 
     return (
         <nav className={cls.navbar}>

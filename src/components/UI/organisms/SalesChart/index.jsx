@@ -48,6 +48,7 @@ const SalesChart = ({
             legend: {
                 display: false,
             },
+            datalabels: false
         },
         scales: {
             x: {

@@ -6,11 +6,6 @@ export const getCallMentorStudents = async (mentorId, params) => {
     return res.data
 }
 
-export const getCourseForSelect = async () => {
-    const res = await api.get(`/course/for-select`);
-    return res.data
-}
-
 export const getMentorGroups = async (mentorId) => {
     if (!mentorId) return null
     const res = await api.get(`/group/mentor-groups/${mentorId}`)
