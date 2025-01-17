@@ -6,7 +6,7 @@ import ChatSidebar from '@/components/templates/ChatSidebar';
 import ChatConversation from '@/components/templates/ChatConversation';
 import cls from './Chat.module.scss';
 
-const Chat = () => {
+const Chat = ({ allowedMessagesTypes }) => {
     const { userCourseId } = useParams()
     const { data: info, isLoading: isLoadingInfo, conversationId } = useGetChat(userCourseId)
 
@@ -19,6 +19,7 @@ const Chat = () => {
                         conversationId={conversationId}
                         partnerFullName={getUserFullName(info?.user)}
                         partnerPhoneNumber={info?.user?.phone}
+                        allowedMessagesTypes={allowedMessagesTypes}
                     />
                     <ChatSidebar
                         userAvatar={info?.user?.url}
@@ -31,6 +32,7 @@ const Chat = () => {
                         status={info?.userCourse?.status}
                         email={info?.user?.email}
                         comment={info?.userCourse?.comment}
+                        hasSecondTeacher={Boolean(info?.userCourse?.secondTeacher)}
                     />
                 </>
             ) : (

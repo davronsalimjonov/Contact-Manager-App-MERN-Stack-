@@ -1,6 +1,6 @@
-import { useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import { removeEmptyKeys } from "@/utils/lib"
-import { getSaleStatistic, getSellerMetrics, getSellerStudents } from "@/services/seller"
+import { createSellerStudent, getSaleStatistic, getSellerMetrics, getSellerStudents } from "@/services/seller"
 import { useGetUserId } from "./useGetUser"
 
 const useGetSellerStudents = (params = {}) => {
@@ -21,9 +21,25 @@ export const useGetSaleStatistic = (params = {}) => {
     ) 
 }
 
-export const useGetSellerMetrics = () => {
+export const useGetSellerMetrics = (params = {}) => {
     const userId = useGetUserId()
-    return useQuery(['seller-metrics', userId], () => getSellerMetrics(userId), { cacheTime: Infinity, staleTime: Infinity })
+    return useQuery(['seller-metrics', userId, ...Object.values(removeEmptyKeys(params))], () => getSellerMetrics(userId, params), { cacheTime: Infinity, staleTime: Infinity })
+}
+
+export const useSellerMutations = () => {
+    const queryClient = useQueryClient()
+    const createSellerStudentMutation = useMutation({ 
+        mutationFn: createSellerStudent,
+        onSuccess: onCreateStudentSuccess
+    })
+
+    function onCreateStudentSuccess() {
+        queryClient.invalidateQueries(['seller-students'])
+    }
+
+    return {
+        createSellerStudentMutation
+    }
 }
 
 export default useGetSellerStudents

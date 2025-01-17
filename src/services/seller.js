@@ -10,7 +10,12 @@ export const getSaleStatistic = async (sellerId, params) => {
     return res?.data
 }
 
-export const getSellerMetrics = async (sellerId) => {
-    const res = await api.get(`/sales-manager/sale-dashboard/${sellerId}`)
+export const getSellerMetrics = async (sellerId, params) => {
+    const res = await api.get(`/sales-manager/sale-dashboard/${sellerId}?${paramsToString(params)}`)
+    return res?.data
+}
+
+export const createSellerStudent = async (data) => {
+    const res = await api.post(`/user-course/create-sales-form`, data)
     return res?.data
 }

@@ -12,6 +12,8 @@ const ChatTaskMessage = ({
     avatar = '',
     fullName = '',
     time = '',
+    dischargerFullName = '',
+    dischargerAvatar = '',
     onComplete
 }) => {
     return (
@@ -34,8 +36,8 @@ const ChatTaskMessage = ({
                     <h3 className={cls.task__details__title}>{title}</h3>
                     <span className={cls.task__details__deadline}>{formatMessageDate(deadline)}, {getTimeFromDate(deadline)}</span>
                     <div className={cls.task__details__user}>
-                        <Avatar src={avatar} name={fullName} size={23} round />
-                        <span className={cls.task__details__user__name}>{fullName}</span>
+                        <Avatar src={dischargerAvatar} name={dischargerFullName} size={23} round />
+                        <span className={cls.task__details__user__name}>{dischargerFullName}</span>
                     </div>
                 </div>
                 {!isCompleted && (

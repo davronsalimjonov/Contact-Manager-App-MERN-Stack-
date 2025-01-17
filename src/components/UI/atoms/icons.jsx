@@ -1,7 +1,7 @@
 
-export const MyTeacherLogo = ({ className = '' }) => {
+export const MyTeacherLogo = ({ className = '', width = 156, height = 44 }) => {
     return (
-        <svg className={className} width={156} height={44} viewBox="0 0 156 44" style={{ transformOrigin: 'left', transition: 'all 0.3s' }} fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg className={className} width={width} height={height} viewBox="0 0 156 44" style={{ transformOrigin: 'left', transition: 'all 0.3s' }} fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_1450_23770)">
                 <path d="M20.3273 18.072H6.77575L0 29.7369L6.77575 41.4019H20.3273L27.1042 29.7369L20.3273 18.072Z" fill="#1256DB" />
                 <path d="M43.2218 3.01147H29.6704L22.8945 14.6764L29.6704 26.3425H43.2218L49.9988 14.6764L43.2218 3.01147Z" fill="#1256DB" />
@@ -39,7 +39,7 @@ export const DirectionLeftIcon = () => {
 export const Arrow = () => {
     return (
         <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.414376 0.531506C0.673133 0.20806 1.1451 0.155619 1.46855 0.414376L6.00003 4.03956L10.5315 0.414376C10.855 0.155619 11.3269 0.20806 11.5857 0.531506C11.8444 0.854953 11.792 1.32692 11.4685 1.58568L6.46855 5.58568C6.19464 5.80481 5.80542 5.80481 5.53151 5.58568L0.531506 1.58568C0.20806 1.32692 0.155619 0.854953 0.414376 0.531506Z" fill="#28303F" />
+            <path fillRule="evenodd" clipRule="evenodd" d="M0.414376 0.531506C0.673133 0.20806 1.1451 0.155619 1.46855 0.414376L6.00003 4.03956L10.5315 0.414376C10.855 0.155619 11.3269 0.20806 11.5857 0.531506C11.8444 0.854953 11.792 1.32692 11.4685 1.58568L6.46855 5.58568C6.19464 5.80481 5.80542 5.80481 5.53151 5.58568L0.531506 1.58568C0.20806 1.32692 0.155619 0.854953 0.414376 0.531506Z" fill="#28303F" />
         </svg>
     )
 }

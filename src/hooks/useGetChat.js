@@ -4,31 +4,42 @@ import { fileToObject, getFileType } from "@/utils/lib";
 import { MessageTypes } from "@/constants/enum";
 import { getChatInfo, getChatMessages } from "@/services/chat";
 import useGetUser, { useGetUserId } from "./useGetUser";
+import { USER_ROLES } from "@/constants";
 
 export const useGetChatMessages = (chatId) => {
     const queryClient = useQueryClient()
-    const messages = useQuery(['chat', 'messages', chatId], () => getChatMessages(chatId), { staleTime: 60, cacheTime: 60 })
+    const queryKey = ['chat', 'messages', chatId]
+    const messages = useQuery(queryKey, () => getChatMessages(chatId), { staleTime: 60, cacheTime: 60 })
 
     const addPrevMessages = (newMessages = {}) => {
         if (Array.isArray(newMessages) && !newMessages?.length) return
-        queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([newMessages, ...oldData]))
+        queryClient.setQueryData(queryKey, (oldData) => ([newMessages, ...oldData]))
     }
 
     const addNextMessages = (newMessages = {}) => {
         if (Array.isArray(newMessages) && !newMessages?.length) return
-        queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => ([...oldData, newMessages]))
+        queryClient.setQueryData(queryKey, (oldData) => ([...oldData, newMessages]))
     }
 
     const addNewMessage = (newMessage) => {
-        queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => {
-            const lastItems = oldData?.at(-1)?.items || []
-            oldData.at(-1).items = [...lastItems, newMessage]
-            return oldData
-        })
+        const hasBellowMessages = messages?.data?.at(-1)?.bellow
+
+        if (hasBellowMessages) {
+            setTimeout(() => {
+                queryClient.removeQueries({ queryKey })
+                queryClient.invalidateQueries({ queryKey })
+            }, 100)
+        } else {
+            queryClient.setQueryData(queryKey, (oldData) => {
+                const lastItems = oldData?.at(-1)?.items || []
+                oldData.at(-1).items = [...lastItems, newMessage]
+                return oldData
+            })
+        }
     }
 
     const updateMessage = (id, data, condition) => {
-        queryClient.setQueryData(['chat', 'messages', chatId], (oldData) => {
+        queryClient.setQueryData(queryKey, (oldData) => {
             return oldData?.map(message => ({
                 ...message,
                 items: message?.items?.map(item => {
@@ -55,27 +66,36 @@ export const useGetChatMessages = (chatId) => {
 
 const useGetChat = (userCourseId) => {
     const userId = useGetUserId()
+    const { data: user } = useGetUser()
+    const userRole = user?.role
     const queryClient = useQueryClient()
     const info = useQuery(['chat', 'info', userCourseId], () => getChatInfo(userCourseId), { staleTime: Infinity, cacheTime: Infinity })
     const conversationId = info?.data?.id
 
     const removeUnreadedMessagesCount = (count) => {
+        let studentsQueryKey = null
+
+        if (userRole === USER_ROLES.SELLER) studentsQueryKey = ['seller-students', userId]
+        else if (userRole === USER_ROLES.CALL_MENTOR) studentsQueryKey = ['students', userId]
+
         queryClient.setQueriesData(['chat', 'info', userCourseId], (oldData) => ({ ...oldData, count: Math.max(oldData?.count - count, 0) }))
-        queryClient.setQueriesData(['students', userId], (students) => {
-            const studentIndex = students?.findIndex(student => student.id === userCourseId);
+        if (studentsQueryKey) {
+            queryClient.setQueriesData(studentsQueryKey, (students) => {
+                const studentIndex = students?.findIndex(student => student.id === userCourseId);
 
-            if (studentIndex === -1) {
-                return students;
-            }
+                if (studentIndex === -1) {
+                    return students;
+                }
 
-            const updatedStudents = [...students];
-            const [student] = updatedStudents.splice(studentIndex, 1);
+                const updatedStudents = [...students];
+                const [student] = updatedStudents.splice(studentIndex, 1);
 
-            student.messageCount = Math.max((student.messageCount || 0) - count, 0);
-            updatedStudents.unshift(student);
+                student.messageCount = Math.max((student.messageCount || 0) - count, 0);
+                updatedStudents.unshift(student);
 
-            return updatedStudents;
-        })
+                return updatedStudents;
+            })
+        }
     }
 
     const addUnreadedMessagesCount = (count) => {
@@ -90,19 +110,22 @@ const useGetChat = (userCourseId) => {
     }
 }
 
-export const useMessage = (conversationId) => {
+export const useMessage = (userCourseId) => {
     const { data: user } = useGetUser()
+    const { conversationId, data: chatInfo } = useGetChat(userCourseId)
     const { messages } = useGetChatMessages(conversationId)
 
+    const userRole = user?.role
+    const mentor = chatInfo?.userCourse?.secondTeacher
     const lastMessage = messages?.at(-1)
     const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
-    const dateSeperator = isNewMessageInPeriod ? new Date(Date.now()).toISOString() : null 
+    const dateSeperator = isNewMessageInPeriod ? new Date(Date.now()).toISOString() : null
 
     async function generateMessage(data, type, options = {}) {
         let messageType = type
 
-        if(messageType === MessageTypes.MESSAGE) {
-            if(data?.file){
+        if (messageType === MessageTypes.MESSAGE) {
+            if (data?.file) {
                 const type = getFileType(data?.file)
                 const fileObj = await fileToObject(data?.file)
                 const specialTypes = [MessageTypes.IMAGE, MessageTypes.AUDIO, MessageTypes.VIDEO]
@@ -111,7 +134,7 @@ export const useMessage = (conversationId) => {
                 data.file = fileObj
                 delete data.message
 
-                if(specialTypes.includes(type)){
+                if (specialTypes.includes(type)) {
                     messageType = type
                 } else {
                     messageType = MessageTypes.ANY_FILE
@@ -129,7 +152,13 @@ export const useMessage = (conversationId) => {
                 isViewed: false,
                 shouldScroll: true,
                 dateSeperator,
-                task: { mentor: user, isCompleted: false, ...data },
+                task: {
+                    mentor: userRole === USER_ROLES.SELLER ? mentor : user,
+                    isCompleted: false,
+                    createdBy: userRole,
+                    salesManager: userRole === USER_ROLES.SELLER ? user : null,
+                    ...data
+                },
                 ...options
             })
             case MessageTypes.MESSAGE: return ({
@@ -149,7 +178,7 @@ export const useMessage = (conversationId) => {
                 isViewed: false,
                 shouldScroll: true,
                 dateSeperator,
-                comment: { text: data.message, owner: user },
+                comment: { text: data.message, owner: userRole === USER_ROLES.SELLER ? mentor : user, salesManager: userRole === USER_ROLES.SELLER ? user : null, createdBy: userRole },
                 ...options
             })
             case MessageTypes.CALL: return ({

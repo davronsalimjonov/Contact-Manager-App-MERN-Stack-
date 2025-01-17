@@ -14,9 +14,11 @@ import ChatHomeWorkMessage from "../../moleculs/ChatHomeWorkMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 import ChatTaskMessage from "../../moleculs/ChatTaskMessage";
 import ChatFileMessage from "../../moleculs/ChatFileMessage";
+import { getMessageOwner } from "@/utils/chat";
 
 const RenderMessage = memo(({
     message,
+    skipObserver = false,
     onEditMessage,
     onMessageVisible,
     onTaskComplete
@@ -25,7 +27,7 @@ const RenderMessage = memo(({
     const { ref } = useInView({
         threshold: 0.5,
         triggerOnce: true,
-        skip: message?.isViewed,
+        skip: skipObserver,
         onChange: (isVisible) => {
             if (isVisible) {
                 onMessageVisible?.(message)
@@ -35,6 +37,7 @@ const RenderMessage = memo(({
     })
 
     const messageType = message?.type === MessageTypes.MESSAGE ? message?.message?.type : message?.type
+    const owner = getMessageOwner(message)
 
     switch (messageType) {
         case MessageTypes.TEXT:
@@ -43,9 +46,9 @@ const RenderMessage = memo(({
                     <ChatTextMessage
                         time={message?.createdAt}
                         message={message?.message?.text}
-                        avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
-                        isSender={message?.message?.whoSended === 'mentor' && message?.message?.mentor?.id === userId}
-                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                        avatar={owner.url}
+                        isSender={owner.id === userId}
+                        fullName={getUserFullName(owner)}
                     />
                 </div>
             );
@@ -57,8 +60,8 @@ const RenderMessage = memo(({
                         imageUrl={message?.message?.file?.url}
                         width={message?.message?.file?.width}
                         height={message?.message?.file?.height}
-                        avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
-                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                        avatar={owner.url}
+                        fullName={getUserFullName(owner)}
                     />
                 </div>
             );
@@ -68,8 +71,8 @@ const RenderMessage = memo(({
                     <ChatVoiseMessage
                         time={message?.createdAt}
                         audioUrl={message?.message?.file?.url}
-                        avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
-                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                        avatar={owner?.url}
+                        fullName={getUserFullName(owner)}
                     />
                 </div>
             )
@@ -79,38 +82,43 @@ const RenderMessage = memo(({
                     <ChatVoiseMessage
                         time={message?.createdAt}
                         audioUrl={message?.message?.file?.url}
-                        avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
-                        fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
+                        avatar={owner?.url}
+                        fullName={getUserFullName(owner)}
                     />
                 </div>
             );
         case MessageTypes.VIDEO:
             return (
-                <ChatFileMessage
-                    avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
-                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
-                    time={message?.createdAt}
-                    fileName={message?.message?.file?.fileName}
-                    fileSize={message?.message?.file?.size}
-                    fileUrl={message?.message?.file?.url}
-                />
+                <div ref={ref}>
+                    <ChatFileMessage
+                        avatar={owner?.url}
+                        fullName={getUserFullName(owner)}
+                        time={message?.createdAt}
+                        fileName={message?.message?.file?.fileName}
+                        fileSize={message?.message?.file?.size}
+                        fileUrl={message?.message?.file?.url}
+                    />
+                </div>
             );
         case MessageTypes.ANY_FILE:
             return (
-                <ChatFileMessage
-                    avatar={message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.url : message?.message?.user?.url}
-                    fullName={getUserFullName(message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user)}
-                    time={message?.createdAt}
-                    fileName={message?.message?.file?.fileName}
-                    fileSize={message?.message?.file?.size}
-                    fileUrl={message?.message?.file?.url}
-                />
+                <div ref={ref}>
+                    <ChatFileMessage
+                        avatar={owner?.url}
+                        fullName={getUserFullName(owner)}
+                        time={message?.createdAt}
+                        fileName={message?.message?.file?.fileName}
+                        fileSize={message?.message?.file?.size}
+                        fileUrl={message?.message?.file?.url}
+                    />
+                </div>
             );
         case MessageTypes.STUDENT_HOME_WORK:
             return (
                 <div ref={ref}>
                     <ChatHomeWorkMessage
-                        avatar={message?.studentHomeWork?.student?.url}
+                        fullName={getUserFullName(owner)}
+                        avatar={owner?.url}
                         onTime={new Date(message?.createdAt).getTime() <= new Date(message?.studentHomeWork?.homeTask?.date).getTime()}
                         time={message?.createdAt}
                         workId={message?.studentHomeWork?.id}
@@ -119,7 +127,6 @@ const RenderMessage = memo(({
                         fileName={message?.studentHomeWork?.file?.fileName}
                         fileSize={message?.studentHomeWork?.file?.size}
                         fileUrl={message?.studentHomeWork?.file?.url}
-                        fullName={getUserFullName(message?.studentHomeWork?.student)}
                         taskTitle={message?.studentHomeWork?.homeTask?.title}
                         taskDescription={message?.studentHomeWork?.homeTask?.description}
                         taskDate={message?.studentHomeWork?.homeTask?.date}
@@ -128,54 +135,66 @@ const RenderMessage = memo(({
             );
         case MessageTypes.TASK:
             return (
-                <ChatTaskMessage
-                    title={message?.task?.title}
-                    deadline={message?.task?.date}
-                    isCompleted={message?.task?.isCompleted}
-                    avatar={message?.task?.mentor?.url}
-                    fullName={getUserFullName(message?.task?.mentor)}
-                    time={message?.createdAt}
-                    onComplete={!message?.task?.isCompleted && (() => onTaskComplete?.(message?.task?.id))}
-                />
+                <div ref={ref}>
+                    <ChatTaskMessage
+                        title={message?.task?.title}
+                        deadline={message?.task?.date}
+                        isCompleted={message?.task?.isCompleted}
+                        avatar={owner?.url}
+                        fullName={getUserFullName(owner)}
+                        dischargerAvatar={message?.task?.mentor?.url}
+                        dischargerFullName={getUserFullName(message?.task?.mentor)}
+                        time={message?.createdAt}
+                        onComplete={!message?.task?.isCompleted && (() => onTaskComplete?.(message?.task?.id))}
+                    />
+                </div>
             )
         case MessageTypes.CALL:
             return (
-                <ChatCallMessage
-                    recordUrl={message?.call?.audio}
-                    recordDuration={message?.call?.duration}
-                />
+                <div ref={ref}>
+                    <ChatCallMessage
+                        recordUrl={message?.call?.audio}
+                        recordDuration={message?.call?.duration}
+                    />
+                </div>
             );
         case MessageTypes.COMMENT:
             return (
-                <ChatCommentMessage
-                    time={message?.createdAt}
-                    text={message?.comment?.text}
-                    avatar={message?.comment?.owner?.url}
-                    fullName={getUserFullName(message?.comment?.owner)}
-                />
+                <div ref={ref}>
+                    <ChatCommentMessage
+                        time={message?.createdAt}
+                        text={message?.comment?.text}
+                        avatar={owner?.url}
+                        fullName={getUserFullName(owner)}
+                    />
+                </div>
             );
         case MessageTypes.SMS:
             return (
-                <ChatSmsMessage
-                    avatar={message?.sms?.sender?.url}
-                    fullName={getUserFullName(message?.sms?.sender)}
-                    text={message?.sms?.text}
-                    time={message?.createdAt}
-                />
+                <div ref={ref}>
+                    <ChatSmsMessage
+                        avatar={owner?.url}
+                        fullName={getUserFullName(owner)}
+                        text={message?.sms?.text}
+                        time={message?.createdAt}
+                    />
+                </div>
             );
         case MessageTypes.LESSON_TASK:
             return (
-                <ChatLessonTaskMessage
-                    avatar={message?.homeTask?.mentor?.url}
-                    fullName={getUserFullName(message?.homeTask?.mentor)}
-                    title={message?.homeTask?.title}
-                    file={message?.homeTask?.url}
-                    description={message?.homeTask?.description}
-                    time={message?.createdAt}
-                    date={message?.homeTask?.date}
-                    status={message?.homeTask?.status}
-                    onEdit={onEditMessage}
-                />
+                <div ref={ref}>
+                    <ChatLessonTaskMessage
+                        avatar={message?.homeTask?.mentor?.url}
+                        fullName={getUserFullName(message?.homeTask?.mentor)}
+                        title={message?.homeTask?.title}
+                        file={message?.homeTask?.url}
+                        description={message?.homeTask?.description}
+                        time={message?.createdAt}
+                        date={message?.homeTask?.date}
+                        status={message?.homeTask?.status}
+                        onEdit={onEditMessage}
+                    />
+                </div>
             );
         case MessageTypes.DATE_SEPARATOR:
             return (

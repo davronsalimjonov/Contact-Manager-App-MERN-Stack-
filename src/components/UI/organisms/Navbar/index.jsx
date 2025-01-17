@@ -1,20 +1,28 @@
 import Avatar from 'react-avatar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useGetUser from '@/hooks/useGetUser';
 import { getUserFullName } from '@/utils/lib';
 import TimePeriodPicker from '../TimePeriodPicker';
 import NotificationButton from '../NotificationButton';
 import cls from './Navbar.module.scss';
 
-const Navbar = ({ onPerionChange }) => {
+const Navbar = ({ onPerionChange, goToBack }) => {
     const location = useLocation()
+    const navigate = useNavigate()
     const { data: user } = useGetUser()
-    const timeperiodPickerPath = ['/', '/main-teachers']
+    const timeperiodPickerPath = ['/', '/main-teachers', '/dashboard']
+console.log(timeperiodPickerPath.includes(location.pathname));
+
+
     return (
         <nav className={cls.navbar}>
-            <span className={cls.navbar__name}>Dashboard</span>
+            {goToBack ? (
+                <button className={cls.navbar__back} onClick={() => navigate(-1)}>Orqaga</button>
+            ) : (
+                <span className={cls.navbar__name}>Dashboard</span>
+            )}
             <div className={cls.navbar__controls}>
-                {timeperiodPickerPath.map(link => link.includes(location.pathname)) && <TimePeriodPicker onChange={onPerionChange} />}
+                {timeperiodPickerPath.includes(location.pathname) && <TimePeriodPicker onChange={onPerionChange} />}
                 <NotificationButton />
                 <Avatar src={user?.url} name={getUserFullName(user)} size={56} round />
             </div>

@@ -1,7 +1,6 @@
 import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { isSameDay } from '@/utils/time';
 import { socket } from '@/services/socket';
 import { MessageTypes } from '@/constants/enum';
 import { useGetUserId } from '@/hooks/useGetUser';
@@ -14,8 +13,8 @@ import { AttachmentIcon, CloseIcon, SendIcon } from '../../atoms/icons';
 import SmsTemplateButton from '../SmsTemplateButton';
 import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
-import cls from './ConversationInput.module.scss';
 import FileAttachment from '../../moleculs/FileAttachment';
+import cls from './ConversationInput.module.scss';
 
 const getTextAreaPlaceholder = (messageType) => {
     switch (messageType) {
@@ -32,16 +31,21 @@ const getTextAreaPlaceholder = (messageType) => {
     }
 }
 
-const ConversationInput = ({ userCourseId }) => {
+const defaultAllowedMessagesTypes = [MessageTypes.MESSAGE, MessageTypes.LESSON_TASK, MessageTypes.SMS, MessageTypes.COMMENT]
+
+const ConversationInput = ({ 
+    userCourseId,
+    allowedMessagesTypes = defaultAllowedMessagesTypes 
+}) => {
     const formRef = useRef()
     const methods = useForm()
     const userId = useGetUserId()
     const { editMessage, onEditComplete } = useContext(ChatMessageEditContext)
     const { conversationId, data: { user: { id: studentId } } } = useGetChat(userCourseId)
-    const { generateMessage } = useMessage(conversationId)
-    const { addNewMessage, updateMessage, messages } = useGetChatMessages(conversationId)
+    const { generateMessage } = useMessage(userCourseId)
+    const { addNewMessage, updateMessage } = useGetChatMessages(conversationId)
     const { register, handleSubmit, reset, getValues, setValue, watch, formState: { isDirty, isValid } } = methods
-    const [messageType, setMessageType] = useState(MessageTypes.MESSAGE)
+    const [messageType, setMessageType] = useState(allowedMessagesTypes?.[0] || MessageTypes.MESSAGE)
     const selectedFile = watch('file')
     const [isOpenDatepicker, setIsOpenDatepicker] = useState(false)
     const taskDatepickerRef = useClickOutside({ onClickOutside: () => setIsOpenDatepicker(false) })
@@ -74,7 +78,10 @@ const ConversationInput = ({ userCourseId }) => {
                         updateMessage(id, res)
                     })
                 } else if (messageType === MessageTypes.COMMENT) {
-                    createComment({ chat: conversationId, text: data.message }).then(res => updateMessage(id, res))
+                    createComment({ chat: conversationId, text: data.message }).then(res => {
+                        socket.emit('room-message', { message: res, room: conversationId, studentId })
+                        updateMessage(id, res)
+                    })
                 } else if (messageType === MessageTypes.SMS) {
                     createSms(studentId, { chat: conversationId, text: data.message }).then(res => updateMessage(id, res))
                 }
@@ -95,9 +102,7 @@ const ConversationInput = ({ userCourseId }) => {
 
             if (!editMessage) {
                 const id = generateUUID()
-                const lastMessage = messages?.at(-1)
-                const isNewMessageInPeriod = !isSameDay(lastMessage?.createdAt, new Date(Date.now()))
-                const newMessage = await generateMessage(data, messageType, { id, [isNewMessageInPeriod ? 'dateSeperator' : null]: new Date(Date.now()).toISOString() })
+                const newMessage = await generateMessage(data, messageType, { id })
 
                 addNewMessage(newMessage)
                 reset()
@@ -158,6 +163,7 @@ const ConversationInput = ({ userCourseId }) => {
             <div className={cls.input__tabs}>
                 <button
                     type='button'
+                    disabled={!allowedMessagesTypes?.includes(MessageTypes.MESSAGE)}
                     className={cn(messageType === MessageTypes.MESSAGE && cls.input__tabs__active)}
                     onClick={() => setMessageType(MessageTypes.MESSAGE)}
                 >
@@ -165,6 +171,7 @@ const ConversationInput = ({ userCourseId }) => {
                 </button>
                 <button
                     type='button'
+                    disabled={!allowedMessagesTypes?.includes(MessageTypes.LESSON_TASK)}
                     className={cn(messageType === MessageTypes.LESSON_TASK && cls.input__tabs__active)}
                     onClick={() => setMessageType(MessageTypes.LESSON_TASK)}
                 >
@@ -172,6 +179,7 @@ const ConversationInput = ({ userCourseId }) => {
                 </button>
                 <button
                     type='button'
+                    disabled={!allowedMessagesTypes?.includes(MessageTypes.SMS)}
                     className={cn(messageType === MessageTypes.SMS && cls.input__tabs__active)}
                     onClick={() => setMessageType(MessageTypes.SMS)}
                 >
@@ -179,6 +187,7 @@ const ConversationInput = ({ userCourseId }) => {
                 </button>
                 <button
                     type='button'
+                    disabled={!allowedMessagesTypes?.includes(MessageTypes.COMMENT)}
                     className={cn(messageType === MessageTypes.COMMENT && cls.input__tabs__active)}
                     onClick={() => setMessageType(MessageTypes.COMMENT)}
                 >

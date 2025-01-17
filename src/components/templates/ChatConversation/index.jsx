@@ -11,6 +11,7 @@ import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
 import ConversationMessages from '@/components/UI/organisms/ConversationMessages';
 import { getChatAboveMessages, getChatBellowMessages, sendViewedMessages } from '@/services/chat';
 import cls from './ChatConversation.module.scss';
+import { getMessageOwner } from '@/utils/chat';
 
 let soundTimer = null
 
@@ -19,6 +20,7 @@ const ChatConversation = ({
     conversationId = '',
     partnerFullName = '',
     partnerPhoneNumber = '',
+    allowedMessagesTypes
 }) => {
     const userId = useGetUserId()
     const unreadedMessages = useRef({ ids: [], index: null })
@@ -56,13 +58,8 @@ const ChatConversation = ({
     }, 300)
 
     const handleMessageVisible = (message) => {
-        let messageSenderId = null
-
-        if (message?.type === MessageTypes.MESSAGE) {
-            messageSenderId = message?.message?.whoSended === 'mentor' ? message?.message?.mentor?.id : message?.message?.user?.id
-        } else if(message?.type === MessageTypes.STUDENT_HOME_WORK) {
-            messageSenderId = message?.studentHomeWork?.student?.id
-        }
+        const messageOwner = getMessageOwner(message)
+        const messageSenderId = messageOwner?.id
 
         if (messageSenderId && messageSenderId !== userId) {
             if (!unreadedMessages.current?.ids?.includes(messageSenderId)) {
@@ -124,7 +121,10 @@ const ChatConversation = ({
                         unreadedMessagesCount={chatInfo?.count || 0}
                     />
                 )}
-                <ConversationInput userCourseId={userCourseId} />
+                <ConversationInput 
+                    userCourseId={userCourseId}
+                    allowedMessagesTypes={allowedMessagesTypes} 
+                />
             </div>
         </ChatMessageEditProvider>
     );

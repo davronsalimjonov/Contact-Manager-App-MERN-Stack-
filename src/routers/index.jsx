@@ -40,6 +40,11 @@ import SellersDashboard from "@/components/pages/SellersDashboard";
 import SellerWorkspace from "@/components/pages/SellerWorkspace";
 import SellerStatistics from "@/components/pages/SellerStatistics";
 import SellerStudents from "@/components/pages/SellerStudents";
+import { MessageTypes } from "@/constants/enum";
+import SalesForm from "@/components/pages/SalesForm";
+import SinglePageLayout from "@/components/templates/SinglePageLayout";
+
+const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 
 const callTecherRoutes = createBrowserRouter([
@@ -260,7 +265,7 @@ const sellerRoutes = createBrowserRouter([
             },
             {
                 path: '/students/chat/:userCourseId',
-                element: <Chat />
+                element: <Chat allowedMessagesTypes={sellerAllowedMessagesTypes} />
             },
             {
                 path: '/workspace',
@@ -275,7 +280,17 @@ const sellerRoutes = createBrowserRouter([
                 element: <PageNotFound />
             }
         ]
-    }
+    },
+    {
+        path: '/sales-form',
+        element: <SinglePageLayout />,
+        children: [
+            {
+                path: '',
+                element: <SalesForm />
+            }
+        ]
+    },
 ])
 
 const authRoutes = createBrowserRouter([

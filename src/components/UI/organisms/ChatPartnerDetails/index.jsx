@@ -23,7 +23,7 @@ const ChatPartnerDetails = ({
     }, 300)
 
     return (
-        <ChatSidebarAccordion name='Foydalanuvchi' count='2'>
+        <ChatSidebarAccordion name='Foydalanuvchi' count=''>
             <div className={cls.section}>
                 <div className={cls.section__item}>
                     <div className={cls.section__item__icon}><LinkIcon /></div>
