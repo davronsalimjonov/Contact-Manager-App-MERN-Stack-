@@ -8,8 +8,8 @@ export const useGetNotifications = ({ ...options }) => {
     const data = useQuery(['notifications', userId], () => getNotifications(userId), { staleTime: Infinity, cacheTime: Infinity, ...options })
 
     const addNewNotification = (newNotification) => {
-        queryClient.setQueriesData(['notification-count', userId], (oldData) => oldData + 1)
-        queryClient.setQueriesData(['notifications', userId], (oldData) => [newNotification, ...oldData])
+        queryClient.setQueriesData(['notification-count', userId], (oldData) => (oldData || 0) + 1)
+        queryClient.setQueriesData(['notifications', userId], (oldData) => [newNotification, ...(oldData || [])])
     }
 
     const updateNotificationsViewedState = (ids) => {
