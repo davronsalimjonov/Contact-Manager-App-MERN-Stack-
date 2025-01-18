@@ -4,22 +4,27 @@ import UsersCourseListTableRow from '@/components/UI/moleculs/UsersCourseListTab
 import UsersCourseListTableHeader from '@/components/UI/organisms/UsersCourseListTableHeader'
 import React from 'react'
 import cls from './UserCourseListTable.module.scss'
-import Loader from '@/components/UI/atoms/Loader'
 import Dialog from '@/components/UI/moleculs/Dialog'
 import RedButton from '@/components/UI/atoms/Buttons/RedButton'
-import FormInput from '@/components/UI/moleculs/Form/FormInput'
-import Select from '@/components/UI/atoms/Form/Select'
 import FormSelect from '@/components/UI/moleculs/Form/FormSelect'
 import FormDatepicker from '@/components/UI/moleculs/Form/FormDatepicker'
+import dayjs from 'dayjs'
 
 const UserCourseListTable = ({
-    courses = [],
+    courses = [] || '',
     isLoading,
     isModal=false,
     setIsModal,
     callMentors,
     mainMentors,
-    courseForSelect
+    courseForSelect,
+    setCourseData,
+    handleSelectChange,
+    handleDateChange,
+    handleAddCourseToUser,
+    handleUpdateUserCourse,
+    isUpdate=false,
+    setIsUpdate
 }) => {
   const courseForSelectOptions = []
   const mainMentorOptions = []
@@ -34,11 +39,13 @@ const UserCourseListTable = ({
   })
 
   courseForSelect?.forEach(course => {
-    courseForSelectOptions?.push({ value: course?.id, label: `${course?.firstName} ${course?.lastName}` })
+    courseForSelectOptions?.push({ value: course?.id, label: `${course?.title}` })
   })
 
-  console.log(callMentorOptions, mainMentorOptions, courseForSelectOptions, 'select hahah');
-  
+  const handleClose = () => {
+    setIsModal(false);
+    setIsUpdate(false);
+};
 
   return (
     <div className={cls.courses__table}>
@@ -65,16 +72,18 @@ const UserCourseListTable = ({
                                     endDate={course?.endDate}
                                     level={course?.level}
                                     index={index}
+                                    setIsUpdate={setIsUpdate}
+                                    setIsModal={setIsModal}
                                 />
                             )} 
                         />
                     </tbody>
                 </table>
             </>) : (<>
-                <Loader />
+                <h1>Kurs Biriktirilmagan</h1>
             </>)
         }
-        <Dialog isOpen={isModal} onClose={setIsModal}>
+        <Dialog isOpen={isModal} onClose={handleClose}>
             <form className={cls.MainMentorStudentsGroupTab__dialog}>
                 <h2>Kurs Biriktirish</h2>
                 <div>
@@ -82,8 +91,11 @@ const UserCourseListTable = ({
                         <FormSelect
                             label='Kurs Tanlang'
                             placeholder='Kurs Tanlang'
+                            options={courseForSelectOptions}
                             isClearable
                             isSearchable
+                            onChange={(option) => handleSelectChange('course', option?.value)}
+                            defaultValue={{}}
                         />
                     </div>
                     <div>
@@ -91,6 +103,7 @@ const UserCourseListTable = ({
                             name='birthday'
                             label='Kurs Boshlanish Sanasi'
                             placeholder='Kurs Boshlanish Sanasi'
+                            onChange={(date) => handleDateChange('startDate',  dayjs(date).format('YYYY-MM-DD'))}
                         />
                     </div>
                     <div>
@@ -98,28 +111,42 @@ const UserCourseListTable = ({
                             name='birthday'
                             label='Kurs Tugash Sanasi'
                             placeholder='Kurs Tugash Sanasi'
+                            onChange={(date) => handleDateChange('endDate', dayjs(date).format('YYYY-MM-DD'))}
                         />
                     </div>
                     <div>
                         <FormSelect
                             label='Asosiy Mentor Tanlang'
                             placeholder='Asosiy Mentorni Tanlang'
+                            options={mainMentorOptions}
                             isClearable
                             isSearchable
+                            onChange={(option) => handleSelectChange('teacher', option?.value)}
                         />
                     </div>
                     <div>
                         <FormSelect
                             label='Nazoratchi Mentor Tanlang'
                             placeholder='Nazoratchi Mentorni Tanlang'
+                            options={callMentorOptions}
                             isClearable
                             isSearchable
+                            onChange={(option) => handleSelectChange('secondTeacher', option?.value)}
                         />
                     </div>
                 </div>
                 <div className={cls.MainMentorStudentsGroupTab__dialog__buttons}>
-                    <RedButton onClick={() => setIsModal(false)}>Bekor Qilish</RedButton>
-                    <Button>Qo'shish</Button>
+                    <RedButton onClick={() => {
+                        setIsModal(false) 
+                        setIsUpdate(false)
+                        setCourseData(null)
+                        }
+                    }>Bekor Qilish</RedButton>
+                    {isUpdate ? 
+                        <Button onClick={() => handleUpdateUserCourse()}>O'zgartirish</Button>
+                    : 
+                        <Button onClick={() => handleAddCourseToUser()}>Qo'shish</Button>
+                    }
                 </div>
             </form>
         </Dialog>

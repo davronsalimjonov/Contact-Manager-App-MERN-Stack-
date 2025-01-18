@@ -14,7 +14,6 @@ const MainMentorStudentsSearchBar = ({
     onChangeGroup,
     statusOptions=[],
     setIsTransferModal,
-    setIsTransfer,
     activeGroup='Barchasi'
 }) => {
     
@@ -55,7 +54,7 @@ const MainMentorStudentsSearchBar = ({
                     className={cls.bar__form__button}
                     onClick={() => {
                         setIsTransferModal(true)
-                        setIsTransfer(true)
+                        // setIsTransfer(true)
                     }}
                 >
                     O'quvchi Qo'shish

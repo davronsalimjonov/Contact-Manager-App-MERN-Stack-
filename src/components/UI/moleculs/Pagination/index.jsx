@@ -7,7 +7,7 @@ const Pagination = (({
   limit,
   setLimit,
   page,
-  setPage,
+  setPage
 }) => {
   const [paginationMeta, setPaginationMeta] = useState({
     currentPage: page,

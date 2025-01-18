@@ -11,19 +11,25 @@ const UsersCourseListTableRow = ({
     startDate='',
     endDate='',
     level='',
-    index=''
+    index='',
+    setIsUpdate,
+    setIsModal
 }) => {
+
   return (
     <tr key={key} className={cls.UsersCourseListTableRow}>
         <td>{index + 1}</td>
         <td>{course ? course : "Kiritilmagan"}</td>
-        <td>{teacher ? teacher : "Kiritilmagan"}</td>
-        <td>{callMentor ? callMentor : "Kiritilmagan"}</td>
+        <td>{teacher ? `${teacher?.firstName} ${teacher?.lastName}` : "Kiritilmagan"}</td>
+        <td>{callMentor ? `${callMentor?.firstName} ${callMentor?.lastName}` : "Kiritilmagan"}</td>
         <td>{startDate ? dayjs(startDate).format('DD.MM.YYYY') : "Kiritilmagan"}</td>
         <td>{endDate ? dayjs(endDate).format('DD.MM.YYYY') : "Kiritilmagan"}</td>
         <td>{level ? level : "Kiritilmagan"}</td>
         <td>
-            <button className="edit-button">
+            <button className="edit-button" onClick={() => {
+              setIsUpdate(true)
+              setIsModal(true)
+            }}>
                 <EditMentorIcon />
             </button>
         </td>

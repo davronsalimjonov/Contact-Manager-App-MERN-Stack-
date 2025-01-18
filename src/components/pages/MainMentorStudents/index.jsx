@@ -54,9 +54,9 @@ const MainMentorStudents = () => {
     } = useGetCourse()
 
     const {
-        groups: {data: groups, isLoading: isGroupsLoading},
-        groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading },
-        groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents } 
+        groups: {data: groups, isLoading: isGroupsLoading} ,
+        groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading, refetch},
+        groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents },
     } = useGetGroups({ group: groupId, ...filter, ...pagination }, groupId)
     
     const callMentorOptions = callMentors?.map((item) => (
@@ -92,7 +92,7 @@ const MainMentorStudents = () => {
         });
     }, [groups]); 
 
-    useEffect(() => {}, [tabOptions])
+    useEffect(() => {}, [tabOptions, groupStudents])
     
     const handleCreateGroup = async () => {
         try {
@@ -154,6 +154,8 @@ const MainMentorStudents = () => {
             })
             
             if (response?.status === 201) {
+                await refetch()
+                setIsTransferModal(false)
                 setSelectedStudents([]) 
                 customToast?.success("O'quvchilar Guruxga Qo'shildi")
             } else {
@@ -211,7 +213,7 @@ const MainMentorStudents = () => {
 
     const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
     const statusOptionsSelect = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: <StudentStatus status={status} /> }))
-    
+
     return (
         <div className={cls.page}>
             {
@@ -231,6 +233,7 @@ const MainMentorStudents = () => {
                         activeGroup={activeGroup}
                         setActiveGroup={setActiveGroup}
                         setPagination={setPagination}
+                        refetch={refetch}
                     />
                     <MainMentorStudentsSearchBar
                         onChangeFirstName={e => setFilter(state => ({...state, firstName: e.target.value?.trim() }))}

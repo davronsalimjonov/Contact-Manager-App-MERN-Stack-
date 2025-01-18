@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import useGetStatistic from "@/hooks/useGetStatistic";
 import { useOutletContext } from "react-router-dom";
+import dayjs from "dayjs";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -19,7 +20,7 @@ const BarChart = () => {
   const { paidStudentsCount: {data: paidStudentsCount, isLoading: isLoadingPaidStudentsCount} } = useGetStatistic({ startDate: period.startDate, endDate: period.endDate })
 
   const chartData = paidStudentsCount?.map(item => item.count) || []
-  const chartLabel = paidStudentsCount?.map((_, idx) => idx + 1) || []
+  const chartLabel = paidStudentsCount?.map(item => dayjs(item?.date).format('DD')) || []
 
   const data = {
     labels: chartLabel,
