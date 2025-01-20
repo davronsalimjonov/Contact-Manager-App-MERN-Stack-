@@ -43,6 +43,7 @@ import SellerStudents from "@/components/pages/SellerStudents";
 import { MessageTypes } from "@/constants/enum";
 import SalesForm from "@/components/pages/SalesForm";
 import SinglePageLayout from "@/components/templates/SinglePageLayout";
+import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
 import SingleMentor from "@/components/pages/SingleMentor";
 import AllMentors from "@/components/pages/AllMentors";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
@@ -85,6 +86,10 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '/workspace',
                 element: <Workspace />
+            },
+            {
+                path: '/adaptation-workspace',
+                element: <AdaptationWorkspace />
             },
             {
                 path: '/settings',
@@ -276,6 +281,10 @@ const sellerRoutes = createBrowserRouter([
             {
                 path: '/students',
                 element: <SellerStudents />
+            },
+            {
+                path: '/students/:courseId',
+                element: <SingleStudent />
             },
             {
                 path: '/students/chat/:userCourseId',

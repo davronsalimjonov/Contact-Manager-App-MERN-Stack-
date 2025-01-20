@@ -20,8 +20,6 @@ const NotificationProvider = ({ children }) => {
     };
 
     const addNotification = (notification) => {
-        console.log(notification);
-        
         setNotifications((prev) => [notification, ...prev]);
         const audio = new Audio('/audio/new-notification-sound.mp3')
         audio.play()
