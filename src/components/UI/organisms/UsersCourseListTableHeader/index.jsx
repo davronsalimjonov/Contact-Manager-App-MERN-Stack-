@@ -1,4 +1,4 @@
-import cls from './UsersCourseListTableHeader.module.scss'
+import cls from './UserCourseListTableHeader.module.scss'
 
 const UsersCourseListTableHeader = () => {
   return (
