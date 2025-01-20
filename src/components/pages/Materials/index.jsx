@@ -1,12 +1,20 @@
+import { useState } from 'react';
 import { PlusIcon } from '@/components/UI/atoms/icons';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import EmptyData from '@/components/UI/organisms/EmptyData';
+import CreateMaterialModal from '@/components/UI/organisms/CreateMaterialModal';
 import cls from './Materials.module.scss';
 
 const Materials = () => {
+    const [isOpenModal, setIsOpenModal] = useState(false)
+
     return (
         <div className={cls.page}>
-            <Button className={cls.page__btn}>
+            <CreateMaterialModal 
+                isOpen={isOpenModal}
+                onClose={() => setIsOpenModal(false)}
+            />
+            <Button className={cls.page__btn} onClick={() => setIsOpenModal(true)}>
                 <PlusIcon /> Qo’shish
             </Button>
             <EmptyData 
