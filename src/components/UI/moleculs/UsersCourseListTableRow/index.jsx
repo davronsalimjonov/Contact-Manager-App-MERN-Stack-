@@ -12,8 +12,10 @@ const UsersCourseListTableRow = ({
     endDate='',
     level='',
     index='',
+    courseId='',
     setIsUpdate,
-    setIsModal
+    setIsModal,
+    setCourseId
 }) => {
 
   return (
@@ -29,6 +31,7 @@ const UsersCourseListTableRow = ({
             <button className="edit-button" onClick={() => {
               setIsUpdate(true)
               setIsModal(true)
+              setCourseId(courseId)
             }}>
                 <EditMentorIcon />
             </button>

@@ -9,6 +9,7 @@ import RedButton from '@/components/UI/atoms/Buttons/RedButton'
 import FormSelect from '@/components/UI/moleculs/Form/FormSelect'
 import FormDatepicker from '@/components/UI/moleculs/Form/FormDatepicker'
 import dayjs from 'dayjs'
+import PageNotFound from '@/components/pages/PageNotFound'
 
 const UserCourseListTable = ({
     courses = [] || '',
@@ -24,7 +25,8 @@ const UserCourseListTable = ({
     handleAddCourseToUser,
     handleUpdateUserCourse,
     isUpdate=false,
-    setIsUpdate
+    setIsUpdate,
+    setCourseId
 }) => {
   const courseForSelectOptions = []
   const mainMentorOptions = []
@@ -45,16 +47,17 @@ const UserCourseListTable = ({
   const handleClose = () => {
     setIsModal(false);
     setIsUpdate(false);
+    setCourseId('')
 };
 
   return (
     <div className={cls.courses__table}>
-        <div className={cls.courses__table__header}>
-            <h2>Kurslar</h2>
-            <Button onClick={() => setIsModal(true)}>Kurs biriktirish</Button>
-        </div>
         {
             courses.length > 0 ? (<>
+                <div className={cls.courses__table__header}>
+                    <h2>Kurslar</h2>
+                    <Button onClick={() => setIsModal(true)}>Kurs biriktirish</Button>
+                </div>
                 <table>
                     <UsersCourseListTableHeader />
                     <tbody>
@@ -74,30 +77,40 @@ const UserCourseListTable = ({
                                     index={index}
                                     setIsUpdate={setIsUpdate}
                                     setIsModal={setIsModal}
+                                    setCourseId={setCourseId}
+                                    courseId={course?.id}
                                 />
                             )} 
                         />
                     </tbody>
                 </table>
-            </>) : (<>
-                <h1>Kurs Biriktirilmagan</h1>
-            </>)
+            </>) : (
+                <div className={cls.userCourseNotAssigned}>
+                    <div>
+                        <h1>Kurs Biriktirish</h1>
+                    </div>
+                    <img src="/images/userCourse.svg" alt="" />
+                    <Button onClick={() => setIsModal(true)}>Qo'shish</Button>
+                </div>
+            )
         }
         <Dialog isOpen={isModal} onClose={handleClose}>
             <form className={cls.MainMentorStudentsGroupTab__dialog}>
-                <h2>Kurs Biriktirish</h2>
+                <h2>{isUpdate ? "Kursni Taxrirlash" : "Kurs Biriktirish"}</h2>
                 <div>
-                    <div>
-                        <FormSelect
-                            label='Kurs Tanlang'
-                            placeholder='Kurs Tanlang'
-                            options={courseForSelectOptions}
-                            isClearable
-                            isSearchable
-                            onChange={(option) => handleSelectChange('course', option?.value)}
-                            defaultValue={{}}
-                        />
-                    </div>
+                    {isUpdate ? <></> :
+                        <div>
+                            <FormSelect
+                                label='Kurs Tanlang'
+                                placeholder='Kurs Tanlang'
+                                options={courseForSelectOptions}
+                                isClearable
+                                isSearchable
+                                onChange={(option) => handleSelectChange('course', option?.value)}
+                                defaultValue={{}}
+                            />
+                        </div>
+                    }
                     <div>
                         <FormDatepicker
                             name='birthday'

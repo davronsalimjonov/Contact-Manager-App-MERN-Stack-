@@ -20,13 +20,14 @@
         const queryClient = useQueryClient()
         const [isModal, setIsModal] = useState(false)
         const [isUpdate, setIsUpdate] = useState(false)
+        const [courseId, setCourseId] = useState('')
         const [courseData, setCourseData] = useState( isModal ? {
             course: '', 
             startDate: '', 
             endDate: '', 
             teacher: '', 
             secondTeacher: '', 
-        } : null);
+        } : null)
 
         const { 
             singleUser: {data: user, isLoading: isLoadingSingleUser},
@@ -134,12 +135,13 @@
                     customToast?.error('Kamida 1 ta ma`lumot o`zgartiring')
                 }
 
-                const res = await updateUserCourse(userId, {...courseData})
+                const res = await updateUserCourse(courseId, {...courseData})
 
                 if (res?.status === 200) {
                     await refetch()
                     setIsModal(false)
                     setIsUpdate(false)
+                    setCourseId('')
                     customToast?.success("Ma'lumotlar O'zgartirildi")
                 } 
             } catch (error) {
@@ -171,6 +173,7 @@
                             handleAddCourseToUser={handleAddCourseToUser}
                             setIsUpdate={setIsUpdate}
                             isUpdate={isUpdate}
+                            setCourseId={setCourseId}
                         />
                     </>
                 ) : (
