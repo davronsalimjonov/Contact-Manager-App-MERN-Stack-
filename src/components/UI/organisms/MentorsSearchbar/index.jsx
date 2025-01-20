@@ -1,23 +1,23 @@
 import { debounce } from '@/utils/lib';
-import { GROUPS } from '@/constants';
+import { GROUPS, MENTORS_STATUS_ENUMS } from '@/constants';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import PhoneInput from '../../atoms/Form/PhoneInput';
-import cls from './MainMentorStudentsSearchBar.module.scss';
+import cls from './MentorsSearchBar.module.scss';
 import Button from '../../atoms/Buttons/Button';
+import { Arrow } from '../../atoms/icons';
+import { useNavigate } from 'react-router-dom';
 
-const MainMentorStudentsSearchBar = ({
+const MentorsSearchBar = ({
     onChangeStatus,
     onChangeFirstName,
     onChangeLastName,
     onChangePhone,
-    onChangeGroup,
-    statusOptions=[],
-    setIsTransferModal,
-    activeGroup='Barchasi'
+    onChangeDegree
 }) => {
-    
-    const studentGroups = GROUPS.map((status) => ({ value: status, label: status }))
+    const languageLevelOptions = GROUPS.map((status) => ({ value: status, label: status }))
+    const mentorStatusOptions = MENTORS_STATUS_ENUMS.map((status) => ({ value: status, label: status}))
+    const navigate = useNavigate()
 
     return (
         <div className={cls.bar}>
@@ -38,31 +38,22 @@ const MainMentorStudentsSearchBar = ({
             />
             <Select
                 className={cls.bar__form__select}
-                placeholder='Group user'
-                options={studentGroups}
-                onChange={onChangeGroup}
-                isClearable
-            />
-            <Select
-                className={cls.bar__form__select}
-                placeholder='Status user'
-                options={statusOptions}
+                placeholder='Statusi'
+                options={mentorStatusOptions}
                 onChange={onChangeStatus}
                 isClearable
             />
-            {activeGroup === 'Barchasi' ? <></> : <Button 
-                    className={cls.bar__form__button}
-                    onClick={() => {
-                        setIsTransferModal(true)
-                        // setIsTransfer(true)
-                    }}
-                >
-                    O'quvchi Qo'shish
-                    <span>+</span>
-                </Button>
-            }
+            <Button
+                isSpaced={true}
+                onClick={() => navigate(`/mentors/add-mentor`)}
+            >
+                Mentor Qo'shish
+                <span className='arrowIconClr'>
+                    <Arrow />
+                </span>
+            </Button>
         </div>
     );
 }
 
-export default MainMentorStudentsSearchBar;
+export default MentorsSearchBar;

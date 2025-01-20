@@ -64,7 +64,9 @@ const UsersSearchBar = ({
                     onChange={handleDateChange}
                 />
             </div>
-            <Button>
+            <Button
+                isSpaced={true}
+            >
                 Foydalanuvchi Qo'shish
                 <span className='arrowIconClr'>
                     <Arrow />

@@ -27,6 +27,7 @@ const Select = ({
     isSearchable = true,
     error,
     isMulti=false,
+    register,
     ...otherProps
 }) => {
     return (
@@ -43,6 +44,7 @@ const Select = ({
             isClearable={isClearable}
             isSearchable={isSearchable}
             isMulti={isMulti}
+            {...register}
             {...otherProps}
         />
     );

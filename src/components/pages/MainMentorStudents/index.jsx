@@ -4,7 +4,6 @@ import cls from './MainMentorStudents.module.scss'
 import MainMentorStudentsTable from '@/components/templates/MainMentorStudentsTable'
 import MainMentorStudentsSearchBar from '@/components/UI/organisms/MainMentorStudentsSearchBar/indsx'
 import MainMentorStudentsGroupTab from '@/components/UI/organisms/MainMentorStudentsGroupTab'
-import { useGetMentors } from '@/hooks/useGetMentors'
 import { useGetUserId } from '@/hooks/useGetUser'
 import Loader from '@/components/UI/atoms/Loader'
 import { customToast } from '@/utils/toast'
@@ -14,6 +13,7 @@ import StudentStatus from '@/components/UI/atoms/StudentStatus'
 import { useGetCourse } from '@/hooks/useGetCourse'
 import { updateUserCourse } from '@/services/course'
 import Pagination from '@/components/UI/moleculs/Pagination'
+import useGetMentors from '@/hooks/useGetMentors'
 
 const MainMentorStudents = () => {
     const academyMentor = useGetUserId()
@@ -54,9 +54,9 @@ const MainMentorStudents = () => {
     } = useGetCourse()
 
     const {
-        groups: { data: groups, isLoading: isGroupsLoading },
-        groupStudents: { data: groupStudents, isLoading: isGroupStudentsLoading },
-        groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents }
+        groups: {data: groups, isLoading: isGroupsLoading} ,
+        groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading, refetch},
+        groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents },
     } = useGetGroups({ group: groupId, ...filter, ...pagination }, groupId)
 
     const callMentorOptions = callMentors?.map((item) => (
@@ -92,8 +92,8 @@ const MainMentorStudents = () => {
         });
     }, [groups]);
 
-    useEffect(() => { }, [tabOptions])
-
+    useEffect(() => {}, [tabOptions, groupStudents])
+    
     const handleCreateGroup = async () => {
         try {
             if (!groupName) {
@@ -154,7 +154,9 @@ const MainMentorStudents = () => {
             })
 
             if (response?.status === 201) {
-                setSelectedStudents([])
+                await refetch()
+                setIsTransferModal(false)
+                setSelectedStudents([]) 
                 customToast?.success("O'quvchilar Guruxga Qo'shildi")
             } else {
                 customToast?.error(`Xatolik: ${response?.statusText || "Unknown Error"}`)
@@ -227,6 +229,7 @@ const MainMentorStudents = () => {
                         activeGroup={activeGroup}
                         setActiveGroup={setActiveGroup}
                         setPagination={setPagination}
+                        refetch={refetch}
                     />
                     <MainMentorStudentsSearchBar
                         onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}

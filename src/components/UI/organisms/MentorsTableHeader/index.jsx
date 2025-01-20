@@ -1,18 +1,19 @@
 import cls from './MentorsTableHeader.module.scss';
 
-
-const MentorsTableHeader = ({
-    headers
-}) => {
+const MentorsTableHeader = () => {
     return (
         <thead className={cls.head}>
             <tr>
-                {
-                    headers.map(head => (<th>{head}</th>))
-                }
+                <th>№</th>
+                <th>Ism familiyasi</th>
+                <th>Telefon Nomer</th>
+                <th>Daraja</th>
+                <th>Statusi</th>
+                <th>O'quvchilar Soni</th>
+                <th></th>
             </tr>
         </thead>
-    )
+    );
 }
 
 export default MentorsTableHeader;

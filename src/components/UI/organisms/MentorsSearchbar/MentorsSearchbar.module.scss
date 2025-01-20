@@ -1,0 +1,53 @@
+.bar {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 24px;
+
+    &>* {
+        flex: 1;
+    }
+
+    &__form{
+        display: flex;
+        align-items: center;
+        flex: 2;
+
+        &__input, &__select{
+            background-color: var(--base-white-color) !important;
+            z-index: 20;
+        }
+
+        & > *:first-child{
+            flex: 1;
+        }
+
+        &>*:nth-child(2){
+            flex: 2;
+        }
+
+        &__btn{
+            justify-content: space-between;
+        }
+
+        &__datePicker {
+            background-color: #fff;
+            & > ._wrapper_kjvn3_1 {
+                & > div {
+                    background-color: #fff !important;
+                }
+            }
+        }
+        
+        .arrowIconClr > * {
+            color: #fff;
+        }
+    }
+}
+
+
+.MentorSearchBar__btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

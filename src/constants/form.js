@@ -36,3 +36,7 @@ export const ENGLISH_LEVEL_OPTIONS = [
     {value: 'C1', label: 'C1'},
     {value: 'C2', label: 'C2'},
 ]
+
+export const MENTOR_TYPE_OPTIONS = [
+    {value: ''}
+]

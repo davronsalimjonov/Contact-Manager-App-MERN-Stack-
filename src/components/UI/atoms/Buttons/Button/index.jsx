@@ -10,6 +10,7 @@ const Button = ({
     className = '',
     type = 'button',
     rounded = false,
+    isSpaced=false,
     ...otherProps
 }) => {
     return (
@@ -18,6 +19,7 @@ const Button = ({
             className={cn(cls.btn, rounded && cls.rounded, className)}
             onClick={isLoading ? e => e.preventDefault() : onClick}
             disabled={disabled}
+            style={isSpaced ? {"justifyContent": "space-between"} :  {"justifyContent": "center"}}
             {...otherProps}
         >
             {isLoading ? <ButtonLoader children={children} /> : children}

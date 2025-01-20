@@ -14,7 +14,8 @@ const FormSelect = ({
     control,
     isMulti,
     onChange,
-    className
+    className,
+    register = {}
 }) => {
     return (
         <FormElementWrapper label={label} error={error}>
@@ -34,6 +35,7 @@ const FormSelect = ({
                             isMulti={isMulti}
                             error={error}
                             className={className}
+                            register={register}
                         />
                     )}
                 />

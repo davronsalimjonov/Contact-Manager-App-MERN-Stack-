@@ -96,8 +96,8 @@ export const getCallAndLessonLeaderboard = async (params) => {
 //     return res.data
 // }
 
-export const getPaidStudentCount = async () => {
-    const res = await api.get(`/statistic/user-course/student-count-by-new-for-admin`)
+export const getPaidStudentCount = async (params) => {
+    const res = await api.get(`/statistic/user-course/student-count-by-new-for-admin?${paramsToString(params)}`)
     return res.data
 }
 

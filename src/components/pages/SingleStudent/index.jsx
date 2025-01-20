@@ -13,7 +13,9 @@ import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory
 import cls from './SingleStudent.module.scss';
 import SingleStudentCourse from '@/components/UI/organisms/SingleStudentCourse';
 
-const SingleStudent = () => {
+const SingleStudent = ({
+    courseList = false
+}) => {
     const { courseId } = useParams()
     
     const queryClient = useQueryClient()
@@ -73,7 +75,7 @@ const SingleStudent = () => {
                         defaultValues={studentFormData}
                         courseId={courseId}
                     />
-                    <SingleStudentCourse course={course} />
+                    {courseList && <SingleStudentCourse course={course} />}
                     <div className={cls.page__cards}>
                         <StudentActionHistory />
                         <StudentPersonalInfo

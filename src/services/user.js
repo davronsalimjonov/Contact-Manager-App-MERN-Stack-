@@ -41,3 +41,8 @@ export const updateUserPassword = async (id, params) => {
     const res = await api.put(`/user/change-password/by-admin/${id}?${paramsToString(params)}`)
     return res.data
 }
+
+export const getUserCourseList = async (id) => {
+    const res = await api.get(`/user-course/courses-web/${id}`)
+    return res.data
+}

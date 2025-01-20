@@ -43,9 +43,11 @@ import SellerStudents from "@/components/pages/SellerStudents";
 import { MessageTypes } from "@/constants/enum";
 import SalesForm from "@/components/pages/SalesForm";
 import SinglePageLayout from "@/components/templates/SinglePageLayout";
+import SingleMentor from "@/components/pages/SingleMentor";
+import AllMentors from "@/components/pages/AllMentors";
+import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
-import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 
 const callTecherRoutes = createBrowserRouter([
     {
@@ -176,7 +178,7 @@ const managerRoutes = createBrowserRouter([
             },
             {
                 path: '/students/:courseId',
-                element: <SingleStudent />
+                element: <SingleStudent courseList />
             },
             {
                 path: '/add-student',
@@ -237,6 +239,18 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/users/user/:userId',
                 element: <SingleUser />
+            },
+            {
+                path: '/mentors',
+                element: <AllMentors />
+            },
+            {
+                path: '/mentors/mentor/:mentorId',
+                element: <SingleMentor />
+            },
+            {
+                path: '/mentors/add-mentor',
+                element: <SingleMentor />
             },
             {
                 path: '*',

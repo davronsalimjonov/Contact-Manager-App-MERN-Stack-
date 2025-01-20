@@ -1,0 +1,11 @@
+
+.UsersCourseListTableRow {
+    &:hover {
+        background-color: #f1f1f1;
+    }
+
+    td {
+        padding: 20px;
+        color: #555;
+    }
+}
