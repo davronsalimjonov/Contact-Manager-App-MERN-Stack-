@@ -21,3 +21,10 @@ export const HomeLessonTaskStatus = {
     DONE: 'done',
     CHECKED: 'checked'
 }
+
+export const WORKSPACE_STATUS = {
+    NOT_CONNECTED: 'not-connected',
+    CALL_BACK: 'call-back',
+    NOT_ANSWERED: 'not-answered',
+    CONNECTED: 'connected',
+}
