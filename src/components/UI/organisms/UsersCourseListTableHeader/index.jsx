@@ -1,5 +1,4 @@
-import React from 'react'
-import cls from './UserCourseListTableHeader.module.scss'
+import cls from './UsersCourseListTableHeader.module.scss'
 
 const UsersCourseListTableHeader = () => {
   return (
