@@ -42,10 +42,10 @@ import SellerStatistics from "@/components/pages/SellerStatistics";
 import SellerStudents from "@/components/pages/SellerStudents";
 import { MessageTypes } from "@/constants/enum";
 import SalesForm from "@/components/pages/SalesForm";
+import AllMentors from "@/components/pages/AllMentors";
 import SinglePageLayout from "@/components/templates/SinglePageLayout";
 import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
 import SingleMentor from "@/components/pages/SingleMentor";
-import AllMentors from "@/components/pages/AllMentors";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
