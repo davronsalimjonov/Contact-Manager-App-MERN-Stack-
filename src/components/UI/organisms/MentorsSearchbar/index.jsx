@@ -3,7 +3,7 @@ import { GROUPS, MENTORS_STATUS_ENUMS } from '@/constants';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import PhoneInput from '../../atoms/Form/PhoneInput';
-import cls from './MentorsSearchBar.module.scss';
+import cls from './MentorsSearchbar.module.scss';
 import Button from '../../atoms/Buttons/Button';
 import { Arrow } from '../../atoms/icons';
 import { useNavigate } from 'react-router-dom';
