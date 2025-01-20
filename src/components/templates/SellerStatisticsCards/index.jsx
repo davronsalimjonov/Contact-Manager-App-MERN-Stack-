@@ -1,5 +1,5 @@
 import MetricCard from '@/components/UI/moleculs/MetricCard';
-import { HourglassIcon, MetricCashIcon, MetricPersentageIcon, PaseIcon, PersonIcon, SmartWakerIcon } from '@/components/UI/atoms/icons';
+import { DollarIcon, HourglassIcon, MetricCashIcon, MetricPersentageIcon, PaseIcon, PersonIcon, SmartWakerIcon } from '@/components/UI/atoms/icons';
 import cls from './SellerStatisticsCards.module.scss';
 import { formatPrice } from '@/utils/lib';
 
@@ -19,7 +19,7 @@ const SellerStatisticsCards = ({
                 <MetricCard
                     title='Sotuv summasi'
                     value={<>{formatPrice(salesAmount)} <span className={cls.cards__value__currency}>so’m</span></>}
-                    icon={<PersonIcon />}
+                    icon={<DollarIcon />}
                     iconBg='rgba(230, 251, 236, 1)'
                     additionalInformation={<span className={cls.cards__value__additional}>Plan: <span>{formatPrice(plan)} so’m</span></span>}
                     iconStyle={{ borderRadius: '10px' }}
