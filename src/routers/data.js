@@ -1,4 +1,4 @@
-import { AutoStoriesIcon, CircleNotificationIcon, HouseIcon, LanIcon, LeaderboardIcon, ListIcon, ManageAccountsIcon, MenuBookIcon, MicrophoneIcon, PersonsIcon, SchoolIcon, TaskIcon, TranslateIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons";
+import { AutoStoriesIcon, BooksMoviesAndMusicIcon, CircleNotificationIcon, HouseIcon, LanIcon, LeaderboardIcon, ListIcon, ManageAccountsIcon, MenuBookIcon, MicrophoneIcon, PersonsIcon, SchoolIcon, TaskIcon, TranslateIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons";
 
 export const callMentorSidebarLinks = [
     {
@@ -63,6 +63,12 @@ export const mainMentorSidebarLinks = [
         link: '/lessons-schedule',
         label: 'Dars jadvali',
         icon: ListIcon()    
+    },
+    {
+        id: 5,
+        link: '/materials',
+        label: 'Materials',
+        icon: BooksMoviesAndMusicIcon()
     }
 ]
 

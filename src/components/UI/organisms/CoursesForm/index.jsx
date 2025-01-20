@@ -1,5 +1,4 @@
 import { PAYMENT_LINK } from "@/constants";
-import Textarea from "../../atoms/Form/Textarea";
 import cls from './CoursesForm.module.scss';
 import { useForm } from "react-hook-form";
 import { PlusIcon } from "../../atoms/icons";
@@ -11,6 +10,7 @@ import RedButton from "../../atoms/Buttons/RedButton";
 import { courseSchema } from "@/schemas/student";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { cn } from "@/utils/lib";
+import FormTextArea from "../../moleculs/Form/FormTextArea";
 
 const CoursesForm = ({
     onOpenDiscount,
@@ -70,7 +70,7 @@ const CoursesForm = ({
                             <Button className={cls.form__btn} onClick={onOpenDiscount} type="button">Chegirma qo'shish <PlusIcon fill={"#1256DB"} /></Button>
                     }
                 </div>
-                <Textarea
+                <FormTextArea
                     className={cls.form__input}
                     label="Description"
                     register={{ ...register('description') }}

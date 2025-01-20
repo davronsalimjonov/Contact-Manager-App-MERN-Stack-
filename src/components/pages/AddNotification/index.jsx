@@ -4,7 +4,6 @@ import cls from './AddNotification.module.scss';
 import useGetCourses from '@/hooks/useGetCourses';
 import FormInput from '@/components/UI/moleculs/Form/FormInput';
 import { ClockIcon, CloseIcon } from '@/components/UI/atoms/icons';
-import Textarea from '@/components/UI/atoms/Form/Textarea';
 import FormTimeInput from '@/components/UI/moleculs/Form/FormTimeInput';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import { STUDENTS_STATUS_OPTION } from '@/constants';
@@ -16,6 +15,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { customToast } from '@/utils/toast';
 import { queryClient } from '@/services/api';
+import FormTextArea from '@/components/UI/moleculs/Form/FormTextArea';
 
 const AddNotification = () => {
     const { data: courses } = useGetCourses();
@@ -193,7 +193,7 @@ const AddNotification = () => {
                         />
 
                     </div>
-                    <Textarea
+                    <FormTextArea
                         className={cls.form__input}
                         label='Matn'
                         register={{ ...register('description') }}

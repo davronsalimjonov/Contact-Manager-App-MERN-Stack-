@@ -45,6 +45,7 @@ import SalesForm from "@/components/pages/SalesForm";
 import AllMentors from "@/components/pages/AllMentors";
 import SinglePageLayout from "@/components/templates/SinglePageLayout";
 import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
+import Materials from "@/components/pages/Materials";
 import SingleMentor from "@/components/pages/SingleMentor";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 
@@ -116,6 +117,10 @@ const mainMentorRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
+            {
+                path: '/materials',
+                element: <Materials />
+            },
             {
                 path: '',
                 element: <MainMentor />
