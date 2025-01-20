@@ -1,6 +1,6 @@
 import ReactPaginate from "react-paginate";
 import cls from "./Pagination.module.scss";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 const Pagination = (({
   metaData,
@@ -35,6 +35,16 @@ const Pagination = (({
       setPage(Math.ceil(paginationMeta.itemCount / newItemsPerPage));
     }
   }, [setLimit, paginationMeta, setPage]);
+
+  useEffect(()=>{
+    setPaginationMeta({
+      currentPage: page,
+      itemsPerPage: limit,
+      itemCount: metaData?.itemCount || 0,
+      totalItems: metaData?.totalItems || 0,
+      totalPages: metaData?.totalPages || 1,
+    })
+  }, [metaData, page, limit])
 
   return (
     <div className={cls.paginationWrapper}>

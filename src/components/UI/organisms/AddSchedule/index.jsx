@@ -9,12 +9,15 @@ import { useGetUserId } from '@/hooks/useGetUser';
 import Dialog from '@/components/UI/moleculs/Dialog';
 const AddSchedule = ({
     openModal,
-    closeModal
+    closeModal,
+    groupOptions,
+    isLoading,
+    refetch
 }) => {
     const userId = useGetUserId()
     const queryClient = useQueryClient()
     const defaultValues = {
-        degree: null,
+        group: null,
         weekday: null,
         time: "",
         endTime: "",
@@ -34,6 +37,7 @@ const AddSchedule = ({
             });
             queryClient.invalidateQueries(['schedule'])
             toast.success("Yangi dars jadvali kiritildi.");
+            await refetch()
             closeModal();
         } catch (error) {
             const res = error?.response?.data
@@ -44,7 +48,12 @@ const AddSchedule = ({
         <Dialog className={cls.page} isOpen={openModal} onClose={closeModal}>
             <div className={cls.schedule}>
                 <h2 className={cls.schedule__header}>Dars jadvali</h2>
-                <SingleScheduleForm defaultValues={defaultValues} onSubmit={handleAddSchedule} submitBtn={"Qo'shish"} />
+                <SingleScheduleForm 
+                    defaultValues={defaultValues} 
+                    onSubmit={handleAddSchedule} 
+                    submitBtn={"Qo'shish"} groupOptions={groupOptions} 
+                    isLoading={isLoading}
+                />
             </div>
         </Dialog>
     );

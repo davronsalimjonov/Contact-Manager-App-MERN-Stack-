@@ -6,7 +6,7 @@ const TabButton = ({
     activeClassName,
     children,
     onClick,
-    isActive = false,
+    isActive = false
 }) => {
     return (
         <button 

@@ -4,17 +4,23 @@ import useGetSchedule from '@/hooks/useGetSchedule';
 import AddSchedule from '../../UI/organisms/AddSchedule';
 import { useState } from 'react';
 import cls from './Schedule.module.scss';
+import useGetGroups from '@/hooks/useGetGroups';
 
 const Schedule = () => {
     const [openModal, setOpenModal] = useState(false);
     const [filter, setFilter] = useState({})
-    const { ref, data: schedule, isLoading: isLoadingSchedule } = useGetSchedule(filter);
+    const { ref, data: schedule, isLoading: isLoadingSchedule, refetch } = useGetSchedule(filter);
+    const { groups: {data: groups, isLoading: isLoadingGroups}} = useGetGroups({}, '')
+    const groupOptions = !isLoadingGroups && groups.map((group) => ({ value: group?.id, label: group?.title }))
+    
+
     const handleOpen = () => {
         setOpenModal(true);
     }
     const handleClose = () => {
         setOpenModal(false);
     }
+
     return (
         <div className={cls.page}>
             <ScheduleSearchBar
@@ -27,7 +33,13 @@ const Schedule = () => {
                 schedule={schedule}
                 isLoading={isLoadingSchedule}
             />
-            <AddSchedule openModal={openModal} closeModal={handleClose} />
+            <AddSchedule 
+                refetch={refetch}
+                openModal={openModal} 
+                closeModal={handleClose} 
+                groupOptions={groupOptions} 
+                isLoading={isLoadingGroups} 
+            />
         </div>
     );
 }
