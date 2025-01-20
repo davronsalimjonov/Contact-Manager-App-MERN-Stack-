@@ -7,7 +7,7 @@ const EmptyData = ({
     return (
         <div className={cls.block}>
             <img src={image} alt="" />
-            <span className={cls.block__text}>{text}</span>
+            <span className={cls.block__text} dangerouslySetInnerHTML={{ __html: text }}></span>
         </div>
     );
 }

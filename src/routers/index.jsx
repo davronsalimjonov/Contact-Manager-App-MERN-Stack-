@@ -21,6 +21,7 @@ import { MessageTypes } from "@/constants/enum";
 import SalesForm from "@/components/pages/SalesForm";
 import SinglePageLayout from "@/components/templates/SinglePageLayout";
 import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
+import Materials from "@/components/pages/Materials";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -82,6 +83,10 @@ const mainMentorRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
+            {
+                path: '/materials',
+                element: <Materials />
+            },
             {
                 path: '*',
                 element: <PageNotFound />
