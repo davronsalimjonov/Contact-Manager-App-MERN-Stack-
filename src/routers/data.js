@@ -57,6 +57,12 @@ export const mainMentorSidebarLinks = [
         link: '/lessons-schedule',
         label: 'Dars jadvali',
         icon: ListIcon()    
+    },
+    {
+        id: 4,
+        link: '/courses-iframe',
+        label: 'Kurslar',
+        icon: ListIcon()    
     }
 ]
 

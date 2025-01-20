@@ -1,0 +1,14 @@
+.CoursesIFrame {
+    display: flex; 
+    flex-direction: column;
+    height: 100%;
+    border-radius: 10px;
+    overflow: auto;
+  
+    .iframe {
+      flex: 1; 
+      width: 100%; 
+      border: none; 
+    }
+}
+  
