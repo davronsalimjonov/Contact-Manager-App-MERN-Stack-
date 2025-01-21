@@ -1,0 +1,15 @@
+.form {
+    width: 414px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 16px;
+    background-color: var(--base-white-color);
+    border-radius: 10px;
+    gap: 24px;
+
+    &__title {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 28.18px;
+    }
+}
