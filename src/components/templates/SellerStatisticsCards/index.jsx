@@ -30,7 +30,8 @@ const SellerStatisticsCards = ({
                     iconBg='rgba(230, 251, 236, 1)'
                     additionalInformation={(
                         <span className={cls.cards__value__plan}>
-                            Plan: <button onClick={() => setIsOpenForm(true)}><PlusIcon fill='rgba(0, 212, 59, 1)' /></button>
+                            {/* Plan: <button onClick={() => setIsOpenForm(true)}><PlusIcon fill='rgba(0, 212, 59, 1)' /></button> */}
+                            Plan: <span>{formatPrice(plan)} so’m</span> 
                         </span>
                     )}
                     iconStyle={{ borderRadius: '10px' }}
