@@ -24,8 +24,10 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <NotificationProvider>
-          <Routers />
-          <Toaster />
+          <div id="app">
+            <Routers />
+          </div>
+          <Toaster containerStyle={{ zIndex: 100000 }} />
         </NotificationProvider>
       </PersistGate>
     </Provider>

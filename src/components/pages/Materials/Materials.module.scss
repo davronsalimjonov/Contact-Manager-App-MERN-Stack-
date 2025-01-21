@@ -9,4 +9,12 @@
     &__btn{
         padding: 10px 40px;
     }
+
+    &__items{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        overflow-y: auto;
+    }
 }

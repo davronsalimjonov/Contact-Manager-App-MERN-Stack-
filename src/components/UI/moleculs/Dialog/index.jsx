@@ -26,7 +26,7 @@ const Dialog = ({
                 {children}
             </div>
         </div>
-    ) : <></>, document.body);
+    ) : <></>, document.getElementById('app'));
 }
 
 export default Dialog;

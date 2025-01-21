@@ -1,0 +1,47 @@
+.item {
+    padding: 8px 12px;
+    border-radius: 10px;
+    background-color: var(--base-white-color);
+    display: grid;
+    grid-template-areas:
+        'title icon'
+        'file file'
+        'description description';
+    gap: 12px;
+    grid-template-columns: 1fr 24px;
+    grid-template-rows: auto auto 1fr;
+    align-items: flex-start;
+
+    &__title {
+        grid-area: title;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 22px;
+    }
+
+    &__dots {
+        grid-area: icon;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__file {
+        grid-area: file;
+        padding: 6px;
+        cursor: pointer;
+    }
+
+    &__description {
+        grid-area: description;
+        font-size: 14px;
+        line-height: 18px;
+        color: var(--blue-gray-400-color);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+}
