@@ -1,7 +1,11 @@
-import MetricCard from '@/components/UI/moleculs/MetricCard';
-import { DollarIcon, HourglassIcon, MetricCashIcon, MetricPersentageIcon, PaseIcon, PersonIcon, SmartWakerIcon } from '@/components/UI/atoms/icons';
-import cls from './SellerStatisticsCards.module.scss';
+import { useState } from 'react';
 import { formatPrice } from '@/utils/lib';
+import MetricCard from '@/components/UI/moleculs/MetricCard';
+import PlanFormModal from '@/components/UI/organisms/PlanFormModal';
+import { DollarIcon, HourglassIcon, MetricCashIcon, MetricPersentageIcon, PaseIcon, PersonIcon, PlusIcon, SmartWakerIcon } from '@/components/UI/atoms/icons';
+import cls from './SellerStatisticsCards.module.scss';
+
+{/* <span>{formatPrice(plan)} so’m</span> */ }
 
 const SellerStatisticsCards = ({
     plan = 0,
@@ -13,27 +17,35 @@ const SellerStatisticsCards = ({
     totalTime = 0,
     averageTime = 0
 }) => {
+    const [isOpenForm, setIsOpenForm] = useState(false);
+
     return (
         <div className={cls.cards}>
+            <PlanFormModal isOpen={isOpenForm} onClose={() => setIsOpenForm(false)} />
             <div>
                 <MetricCard
                     title='Sotuv summasi'
                     value={<>{formatPrice(salesAmount)} <span className={cls.cards__value__currency}>so’m</span></>}
                     icon={<DollarIcon />}
                     iconBg='rgba(230, 251, 236, 1)'
-                    additionalInformation={<span className={cls.cards__value__additional}>Plan: <span>{formatPrice(plan)} so’m</span></span>}
+                    additionalInformation={(
+                        <span className={cls.cards__value__plan}>
+                            {/* Plan: <button onClick={() => setIsOpenForm(true)}><PlusIcon fill='rgba(0, 212, 59, 1)' /></button> */}
+                            Plan: <span>{formatPrice(plan)} so’m</span> 
+                        </span>
+                    )}
                     iconStyle={{ borderRadius: '10px' }}
                 />
                 <MetricCard
                     title='Lidlar soni'
-                    value={leadsCount}
+                    value={leadsCount || 0}
                     icon={<PersonIcon />}
                     iconBg='rgba(231, 238, 251, 1)'
                     iconStyle={{ borderRadius: '10px' }}
                 />
                 <MetricCard
                     title='Konversiyasi'
-                    value={conversion}
+                    value={conversion || 0}
                     icon={<MetricPersentageIcon />}
                     iconBg='rgba(196, 3, 132, 0.1)'
                     iconStyle={{ borderRadius: '10px' }}

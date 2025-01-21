@@ -20,8 +20,8 @@ const TextArea = ({
             disabled={disabled}
             readOnly={readOnly}
             placeholder={placeholder}
-            {...register}
             {...otherProps}
+            {...register}
         />
     );
 }

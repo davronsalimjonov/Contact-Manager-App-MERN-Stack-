@@ -39,7 +39,7 @@ const TableActionButton = ({
                     style={{ ...styles.popper, zIndex: 1 }}
                     {...attributes.popper}
                 >
-                    <DropdownMenu items={menuItems} />
+                    <DropdownMenu items={menuItems} onClick={() => setIsOpen(false)} />
                 </div>
             )}
         </div>

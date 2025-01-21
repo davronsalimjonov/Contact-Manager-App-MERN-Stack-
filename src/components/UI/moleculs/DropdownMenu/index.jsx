@@ -1,7 +1,8 @@
 import cls from './DropdownMenu.module.scss';
 
 const DropdownMenu = ({
-    items = []
+    items = [],
+    onClick
 }) => {
     return (
         items?.length > 0 && (
@@ -11,7 +12,7 @@ const DropdownMenu = ({
                         <button
                             key={index}
                             className={cls.menu__item}
-                            onClick={item?.onClick}
+                            onClick={() => (item?.onClick?.(), onClick?.())}
                         >
                             {item?.label}
                         </button>
