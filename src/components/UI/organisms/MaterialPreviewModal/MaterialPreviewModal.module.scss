@@ -1,0 +1,21 @@
+.modal {
+    padding: 16px;
+    width: 753px;
+    border-radius: 8px;
+    background-color: var(--base-white-color);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__title {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 26px;
+    }
+
+    &__description {
+        font-size: 14px;
+        line-height: 18px;
+        color: var(--blue-gray-400-color);
+    }
+}

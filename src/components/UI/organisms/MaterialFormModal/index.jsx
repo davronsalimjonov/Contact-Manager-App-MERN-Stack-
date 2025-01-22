@@ -29,7 +29,7 @@ const MaterialFormModal = ({
     }, [])
 
     useEffect(() => {
-        if (isSubmitSuccessful && !isEditing) reset({})
+        if (isSubmitSuccessful && !isEditing) reset()
     }, [isSubmitSuccessful])
 
     return (
