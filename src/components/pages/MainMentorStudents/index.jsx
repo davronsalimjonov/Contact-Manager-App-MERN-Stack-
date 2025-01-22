@@ -235,8 +235,9 @@ const MainMentorStudents = () => {
                         onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
                         onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
                         onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
-                        onChangeGroup={level => setFilter(state => ({ ...state, level: level?.label }))}
+                        onChangeGroup={group => setFilter(state => ({ ...state, group: group?.value }))}
                         onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
+                        tabOptions={tabOptions}
                         statusOptions={statusOptions}
                         setIsTransferModal={setIsTransferModal}
                         activeGroup={activeGroup}
