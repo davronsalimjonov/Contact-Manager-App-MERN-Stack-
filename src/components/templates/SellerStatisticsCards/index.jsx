@@ -6,6 +6,8 @@ import { DollarIcon, HourglassIcon, MetricCashIcon, MetricPersentageIcon, PaseIc
 import cls from './SellerStatisticsCards.module.scss';
 import { useSellerMutations } from '@/hooks/useSeller';
 import toast from 'react-hot-toast';
+import Button from '@/components/UI/atoms/Buttons/Button';
+import CommingSoomModal from '@/components/UI/organisms/CommingSoomModal';
 
 const SellerStatisticsCards = ({
     selectedDate,
@@ -19,6 +21,7 @@ const SellerStatisticsCards = ({
     averageTime = 0
 }) => {
     const [isOpenForm, setIsOpenForm] = useState(false);
+    const [isOpenCommingSoon, setIsOpenCommingSoon] = useState(false);
     const { sellerPlanMutation } = useSellerMutations()
 
     const handleSetPlan = async (data) => {
@@ -35,6 +38,10 @@ const SellerStatisticsCards = ({
                 isOpen={isOpenForm} 
                 onClose={() => setIsOpenForm(false)}
                 onSubmit={handleSetPlan}
+            />
+            <CommingSoomModal 
+                isOpen={isOpenCommingSoon} 
+                onClose={() => setIsOpenCommingSoon(false)}
             />
             <div>
                 <MetricCard
@@ -59,6 +66,7 @@ const SellerStatisticsCards = ({
                     icon={<PersonIcon />}
                     iconBg='rgba(231, 238, 251, 1)'
                     iconStyle={{ borderRadius: '10px' }}
+                    additionalInformation={<Button className={cls.cards__value__btn} onClick={() => setIsOpenCommingSoon(true)}>Pulni yechib olish</Button>}
                 />
                 <MetricCard
                     title='Konversiyasi'
