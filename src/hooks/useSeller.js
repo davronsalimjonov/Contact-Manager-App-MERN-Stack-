@@ -37,7 +37,7 @@ export const useSellerMutations = () => {
     }
 
     function onPlanUpdateSuccess(_, data) {
-        queryClient.invalidateQueries(['sale-statistic', userId, data?.date], oldData => ({...oldData, plan: data?.plan}))
+        queryClient.invalidateQueries(['seller-metrics', userId, data?.date], oldData => ({...oldData, plan: data?.plan}))
     }
 
     return {
