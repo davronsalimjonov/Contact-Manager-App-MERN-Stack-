@@ -17,6 +17,12 @@
     }
 
     &__value {
+        &__btn {
+            padding: 6px 8px;
+            background-color: rgba(207, 183, 0, 1);
+            align-self: flex-start;
+        }
+
         &__plan {
             display: flex;
             align-items: center;
