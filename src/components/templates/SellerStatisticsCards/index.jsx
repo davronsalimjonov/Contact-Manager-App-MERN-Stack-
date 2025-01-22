@@ -34,13 +34,13 @@ const SellerStatisticsCards = ({
 
     return (
         <div className={cls.cards}>
-            <PlanFormModal 
-                isOpen={isOpenForm} 
+            <PlanFormModal
+                isOpen={isOpenForm}
                 onClose={() => setIsOpenForm(false)}
                 onSubmit={handleSetPlan}
             />
-            <CommingSoomModal 
-                isOpen={isOpenCommingSoon} 
+            <CommingSoomModal
+                isOpen={isOpenCommingSoon}
                 onClose={() => setIsOpenCommingSoon(false)}
             />
             <div>
@@ -61,25 +61,25 @@ const SellerStatisticsCards = ({
                     iconStyle={{ borderRadius: '10px' }}
                 />
                 <MetricCard
+                    title='Oylik maoshi'
+                    value={<>{formatPrice(salary)} <span className={cls.cards__value__currency}>so’m</span></>}
+                    icon={<MetricCashIcon color='rgba(207, 183, 0, 1)' />}
+                    iconBg='rgba(207, 183, 0, 0.1)'
+                    iconStyle={{ borderRadius: '10px' }}
+                    additionalInformation={<Button className={cls.cards__value__btn} onClick={() => setIsOpenCommingSoon(true)}>Pulni yechib olish</Button>}
+                />
+                <MetricCard
                     title='Lidlar soni'
                     value={leadsCount || 0}
                     icon={<PersonIcon />}
                     iconBg='rgba(231, 238, 251, 1)'
                     iconStyle={{ borderRadius: '10px' }}
-                    additionalInformation={<Button className={cls.cards__value__btn} onClick={() => setIsOpenCommingSoon(true)}>Pulni yechib olish</Button>}
                 />
                 <MetricCard
                     title='Konversiyasi'
                     value={conversion || 0}
                     icon={<MetricPersentageIcon />}
                     iconBg='rgba(196, 3, 132, 0.1)'
-                    iconStyle={{ borderRadius: '10px' }}
-                />
-                <MetricCard
-                    title='Oylik maoshi'
-                    value={<>{formatPrice(salary)} <span className={cls.cards__value__currency}>so’m</span></>}
-                    icon={<MetricCashIcon color='rgba(207, 183, 0, 1)' />}
-                    iconBg='rgba(207, 183, 0, 0.1)'
                     iconStyle={{ borderRadius: '10px' }}
                 />
             </div>
