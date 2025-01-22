@@ -4,10 +4,11 @@ import MetricCard from '@/components/UI/moleculs/MetricCard';
 import PlanFormModal from '@/components/UI/organisms/PlanFormModal';
 import { DollarIcon, HourglassIcon, MetricCashIcon, MetricPersentageIcon, PaseIcon, PersonIcon, PlusIcon, SmartWakerIcon } from '@/components/UI/atoms/icons';
 import cls from './SellerStatisticsCards.module.scss';
-
-{/* <span>{formatPrice(plan)} so’m</span> */ }
+import { useSellerMutations } from '@/hooks/useSeller';
+import toast from 'react-hot-toast';
 
 const SellerStatisticsCards = ({
+    selectedDate,
     plan = 0,
     salesAmount = 0,
     leadsCount = 0,
@@ -18,10 +19,23 @@ const SellerStatisticsCards = ({
     averageTime = 0
 }) => {
     const [isOpenForm, setIsOpenForm] = useState(false);
+    const { sellerPlanMutation } = useSellerMutations()
+
+    const handleSetPlan = async (data) => {
+        data.date = selectedDate
+        await sellerPlanMutation.mutateAsync(data, {
+            onSuccess: () => setIsOpenForm(false),
+            onError: (res) => toast.error(res?.response?.data?.message || 'Xatolik yuz berdi')
+        })
+    }
 
     return (
         <div className={cls.cards}>
-            <PlanFormModal isOpen={isOpenForm} onClose={() => setIsOpenForm(false)} />
+            <PlanFormModal 
+                isOpen={isOpenForm} 
+                onClose={() => setIsOpenForm(false)}
+                onSubmit={handleSetPlan}
+            />
             <div>
                 <MetricCard
                     title='Sotuv summasi'
@@ -30,8 +44,11 @@ const SellerStatisticsCards = ({
                     iconBg='rgba(230, 251, 236, 1)'
                     additionalInformation={(
                         <span className={cls.cards__value__plan}>
-                            {/* Plan: <button onClick={() => setIsOpenForm(true)}><PlusIcon fill='rgba(0, 212, 59, 1)' /></button> */}
-                            Plan: <span>{formatPrice(plan)} so’m</span> 
+                            Plan: {plan ? (
+                                <span>{formatPrice(plan)} so’m</span>
+                            ) : (
+                                <button onClick={() => setIsOpenForm(true)}><PlusIcon fill='rgba(0, 212, 59, 1)' /></button>
+                            )}
                         </span>
                     )}
                     iconStyle={{ borderRadius: '10px' }}

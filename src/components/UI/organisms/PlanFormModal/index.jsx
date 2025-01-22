@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 
 const PlanFormModal = ({
     isOpen = false,
-    onClose
+    onClose,
+    onSubmit
 }) => {
     const { register, handleSubmit, formState: { isDirty, isSubmitting, errors } } = useForm()
 

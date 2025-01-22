@@ -19,3 +19,8 @@ export const createSellerStudent = async (data) => {
     const res = await api.post(`/user-course/create-sales-form`, data)
     return res?.data
 }
+
+export const updateSellerPlan = async (sellerId,data) => {
+    const res = await api.put(`/sales-manager/plan/${sellerId}`, data)
+    return res?.data
+}
