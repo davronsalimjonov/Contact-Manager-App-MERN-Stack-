@@ -23,6 +23,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/tasks', title: 'Vazifalarim', showBackButton: false },
         { path: '/settings', title: 'Sozlamalar', showBackButton: true },
         { path: '/sales-form', title: 'Sotuv formasi', showBackButton: true },
+        { path: '/materials', title: 'Materials', showBackButton: false }
     ];
 
     const matchRoute = (pattern, pathname) => {
