@@ -13,12 +13,14 @@ const SingleScheduleForm = ({
     groupOptions,
     isLoading
 }
+
 ) => {
     const { register, control, handleSubmit, formState: { errors } } = useForm({
         defaultValues,
         mode: 'onSubmit',
         resolver: yupResolver(scheduleSchema)
     })
+
     return (
         <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
             {!isLoading && 

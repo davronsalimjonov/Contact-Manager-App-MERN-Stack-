@@ -7,6 +7,7 @@ import SingleScheduleForm from '@/components/UI/organisms/SingleScheduleForm';
 import { addNewSchedule, updateSchedule } from '@/services/schedule';
 import { useGetUserId } from '@/hooks/useGetUser';
 import Dialog from '@/components/UI/moleculs/Dialog';
+
 const AddSchedule = ({
     openModal,
     closeModal,
@@ -51,7 +52,8 @@ const AddSchedule = ({
                 <SingleScheduleForm 
                     defaultValues={defaultValues} 
                     onSubmit={handleAddSchedule} 
-                    submitBtn={"Qo'shish"} groupOptions={groupOptions} 
+                    submitBtn={"Qo'shish"} 
+                    groupOptions={groupOptions} 
                     isLoading={isLoading}
                 />
             </div>
