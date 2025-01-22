@@ -3,10 +3,11 @@ import { AudioIcon, DocsIcon, PdfIcon, PictureIcon, VideoIcon } from '../../atom
 import cls from './FilePreviewItem.module.scss';
 
 const FilePreviewItem = ({
+    className = '',
     name = '',
     size = 0,
-    className = '',
-    type = ''
+    type = '',
+    onClick
 }) => {
     const getFileIcon = (type) => {
         switch (type) {
@@ -20,7 +21,7 @@ const FilePreviewItem = ({
     }
 
     return (
-        <div className={cn(cls.item, className)}>
+        <div className={cn(cls.item, className)} onClick={onClick}>
             <div className={cls.item__icon}>{getFileIcon(type)}</div>
             <span className={cls.item__name} title={name}>{name}</span>
             <span className={cls.item__size}>{formatFileSize(size)}</span>

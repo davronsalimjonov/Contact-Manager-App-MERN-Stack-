@@ -11,7 +11,7 @@ const MaterialItem = ({
     fileUrl = '',
     onClickEdit,
     onClickDelete,
-    onClick
+    onClickFile
 }) => {
     const fileType = getFileCategory(fileUrl)
 
@@ -21,7 +21,7 @@ const MaterialItem = ({
     ]
 
     return (
-        <div className={cls.item} onClick={onClick}>
+        <div className={cls.item}>
             <span className={cls.item__title}>{title}</span>
             <TableActionButton menuItems={dropdownMenuItems} />
             <FilePreviewItem
@@ -29,6 +29,7 @@ const MaterialItem = ({
                 name={fileName}
                 size={fileSize}
                 type={fileType}
+                onClick={onClickFile}
             />
             {description && <span className={cls.item__description} title={description}>{description}</span>}
         </div>

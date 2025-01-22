@@ -8,6 +8,7 @@ import EmptyData from '@/components/UI/organisms/EmptyData';
 import MaterialItem from '@/components/UI/moleculs/MaterialItem';
 import MaterialFormModal from '@/components/UI/organisms/MaterialFormModal';
 import ConfirmationModal from '@/components/UI/organisms/ConfirmationModal';
+import MaterialPreviewModal from '@/components/UI/organisms/MaterialPreviewModal';
 import { useGetMentorMaterials, useMaterialMutations } from '@/hooks/useMaterial';
 import cls from './Materials.module.scss';
 
@@ -15,6 +16,7 @@ const Materials = () => {
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [editMaterialObj, setEditMaterialObj] = useState(null)
     const [deleteMaterialId, setDeleteMaterialId] = useState(null)
+    const [materialPreviewId, setPreviewMaterialId] = useState(null)
     const { createMaterialMutation, updateMaterialMutation, deleteMaterialMutation } = useMaterialMutations()
     const { data: materials, isLoading: isLoadingMaterials, ref } = useGetMentorMaterials()
 
@@ -30,13 +32,13 @@ const Materials = () => {
     }
 
     const handleSetMaterial = (material) => {
-        material = Object.assign({}, material) 
+        material = Object.assign({}, material)
         material.file = { type: getFileTypeFromUrl(material.file?.url), name: material.file?.fileName, size: material.file?.size * 1024 }
         setEditMaterialObj(material)
     }
 
     const handleUpdateMaterial = async (data) => {
-        const fd = objectToFormData({...data, id: editMaterialObj?.id})
+        const fd = objectToFormData({ ...data, id: editMaterialObj?.id })
         await updateMaterialMutation.mutateAsync(fd, {
             onSuccess: () => {
                 setEditMaterialObj(null)
@@ -58,7 +60,11 @@ const Materials = () => {
 
     return (
         <div className={cls.page}>
-            <ConfirmationModal 
+            <MaterialPreviewModal 
+                isOpen={Boolean(materialPreviewId)}
+                onClose={() => setPreviewMaterialId(null)}
+            />
+            <ConfirmationModal
                 isOpen={Boolean(deleteMaterialId)}
                 onClose={() => setDeleteMaterialId(null)}
                 onConfirm={() => handleDeleteMaterial(deleteMaterialId)}
@@ -86,7 +92,7 @@ const Materials = () => {
                     <div className={cls.page__items}>
                         {materials?.map((item) => (
                             <MaterialItem
-                                key={item.id} 
+                                key={item.id}
                                 title={item.title}
                                 description={item.description}
                                 fileName={item.file?.fileName}
@@ -94,6 +100,7 @@ const Materials = () => {
                                 fileUrl={item.file?.url}
                                 onClickEdit={() => handleSetMaterial(item)}
                                 onClickDelete={() => setDeleteMaterialId(item.id)}
+                                onClickFile={() => setPreviewMaterialId(item.id)}
                             />
                         ))}
                         <div ref={ref}></div>
