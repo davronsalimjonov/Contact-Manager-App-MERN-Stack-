@@ -6,12 +6,11 @@ import SalesChart from '@/components/UI/organisms/SalesChart';
 import { useGetSaleStatistic, useGetSellerMetrics } from '@/hooks/useSeller';
 import SellerStatisticsCards from '@/components/templates/SellerStatisticsCards';
 import cls from './SellerStatistics.module.scss';
-import dayjs from 'dayjs';
 
 const SellerStatistics = () => {
     const [period] = useOutletContext()
     const [season, setSeason] = useState('daily');
-    const selectedDate = dayjs(period?.startDate).startOf('month').format('YYYY-MM-DD');
+    const selectedDate = period?.startDate
     const { data: saleStatistic } = useGetSaleStatistic({ type: season });
     const { data: metrics, isLoading: isLoadingMetrics } = useGetSellerMetrics({ date: selectedDate });
 
