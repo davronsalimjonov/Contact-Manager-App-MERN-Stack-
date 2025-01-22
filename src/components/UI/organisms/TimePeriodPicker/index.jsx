@@ -15,7 +15,7 @@ const TimePeriodPicker = ({ onChange }) => {
     const [timePeriod, setTimePeriod] = useState('month')
     const [isOpenPopover, setIsOpenPopover] = useState(false)
     const ref = useClickOutside({ onClickOutside: () => setIsOpenPopover(false) })
-    const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate })
+    const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate, type: timePeriod })
 
     const handleChangeDatepicker = (date) => {
         date = new Date(date)
@@ -42,8 +42,8 @@ const TimePeriodPicker = ({ onChange }) => {
             endDate = date
         }
 
-        setDate({ startDate, endDate, date })
-        typeof onChange === 'function' && onChange({ startDate, endDate, date })
+        setDate({ startDate, endDate, date, type: timePeriod })
+        typeof onChange === 'function' && onChange({ startDate, endDate, date, type: timePeriod })
     }
 
     useEffect(() => {
