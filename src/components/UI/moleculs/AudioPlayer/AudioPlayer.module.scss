@@ -1,0 +1,40 @@
+.player {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: white;
+    display: grid;
+    grid-template-areas:
+        'btn title'
+        'btn range'
+        'btn time';
+    grid-template-columns: 48px 1fr;
+    gap: 5px 12px;
+    align-items: center;
+
+    &__btn {
+        grid-area: btn;
+        font-size: 40px;
+        width: 48px;
+        height: 48px;
+    }
+
+    &__title {
+        grid-area: title;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 18.78px;
+    }
+
+    &__range {
+        grid-area: range;
+        height: 2px;
+    }
+
+    &__time {
+        grid-area: time;
+        font-size: 14px;
+        line-height: 16.44px;
+        color: var(--dark-gray-700-color);
+    }
+}

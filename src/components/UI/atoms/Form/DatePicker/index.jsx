@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import ReactDatePicker from 'react-datepicker'
 import { cn } from '@/utils/lib';
 import { CalendarIcon } from '../../icons';
@@ -13,20 +13,29 @@ const DatePicker = forwardRef(({
     readOnly,
     error,
     defaultValue,
+    selectsRange,
     ...otherProps
 }, ref) => {
     const [date, setDate] = useState(defaultValue)
 
-    const handleChange = (date) => { 
+    const handleChange = (date) => {
         setDate(date)
         typeof onChange === 'function' && onChange(date)
     }
+
+    useEffect(() => {
+        if(selectsRange){
+            setDate([date?.[0], date?.[0]])
+        }
+    }, [selectsRange])
 
     return (
         <ReactDatePicker 
             ref={ref}
             showIcon
             selected={date}
+            startDate={selectsRange ? date?.[0] : undefined}
+            endDate={selectsRange ? date?.[1] : undefined}
             wrapperClassName={cn(cls.wrapper, error && cls.error,)}
             className={cn(cls.datepicker, className)}
             icon={<CalendarIcon />}
@@ -38,6 +47,7 @@ const DatePicker = forwardRef(({
             readOnly={readOnly}
             calendarStartDay={1}
             disabledKeyboardNavigation
+            selectsRange={selectsRange}
             {...otherProps}
         />
     );

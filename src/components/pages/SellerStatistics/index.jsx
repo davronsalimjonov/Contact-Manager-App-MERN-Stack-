@@ -10,9 +10,9 @@ import cls from './SellerStatistics.module.scss';
 const SellerStatistics = () => {
     const [period] = useOutletContext()
     const [season, setSeason] = useState('daily');
-    const selectedDate = period?.startDate
+    const { startDate, endDate, } = period
     const { data: saleStatistic } = useGetSaleStatistic({ type: season });
-    const { data: metrics, isLoading: isLoadingMetrics } = useGetSellerMetrics({ date: selectedDate });
+    const { data: metrics, isLoading: isLoadingMetrics } = useGetSellerMetrics({ startDate, endDate });
 
     return (
         <div className={cls.page}>
@@ -21,7 +21,9 @@ const SellerStatistics = () => {
             ) : (
                 <>
                     <SellerStatisticsCards
-                        selectedDate={selectedDate}
+                        startDate={startDate}
+                        endDate={endDate}
+                        selectedDate={startDate}
                         plan={metrics?.plan}
                         salesAmount={metrics?.salesAmount}
                         leadsCount={metrics?.leadsCount}
