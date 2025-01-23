@@ -23,7 +23,7 @@ const MaterialPreviewModal = ({
                 <div>
                     {fileType === 'image' && <img className={cls.modal__image} src={fileUrl} alt="" />}
                     {fileType === 'video' && <video className={cls.modal__video} src={fileUrl} controls />}
-                    {(fileType === 'pdf' || fileType === 'docs') && <iframe className={cls.modal__iframe} src={'https://docs.google.com/viewer?embedded=true&url=' + fileUrl} frameBorder="0" />}
+                    {(fileType === 'pdf' || fileType === 'docs') && <iframe className={cls.modal__iframe} src={'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(fileUrl)} frameBorder="0" />}
                     {fileType === 'audio' && <audio className={cls.modal__audio} src={fileUrl} controls />}
                 </div>
             </div>
