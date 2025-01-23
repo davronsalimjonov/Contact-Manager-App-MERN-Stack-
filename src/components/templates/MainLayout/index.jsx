@@ -11,7 +11,7 @@ let defaultEndDate = dayjs().endOf('month').format('YYYY-MM-DD')
 const MainLayout = ({
     sidebarLinks = []
 }) => {
-    const [period, setPeriod] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate })
+    const [period, setPeriod] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate, type: 'month' })
     
     return (
         <div className={cls.layout}>

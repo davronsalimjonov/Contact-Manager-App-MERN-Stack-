@@ -16,7 +16,7 @@ const Materials = () => {
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [editMaterialObj, setEditMaterialObj] = useState(null)
     const [deleteMaterialId, setDeleteMaterialId] = useState(null)
-    const [materialPreviewId, setPreviewMaterialId] = useState(null)
+    const [previewMaterial, setPreviewMaterial] = useState({isOpen: false, material: null})
     const { createMaterialMutation, updateMaterialMutation, deleteMaterialMutation } = useMaterialMutations()
     const { data: materials, isLoading: isLoadingMaterials, ref } = useGetMentorMaterials()
 
@@ -60,9 +60,12 @@ const Materials = () => {
 
     return (
         <div className={cls.page}>
-            <MaterialPreviewModal 
-                isOpen={Boolean(materialPreviewId)}
-                onClose={() => setPreviewMaterialId(null)}
+            <MaterialPreviewModal
+                isOpen={previewMaterial.isOpen}
+                onClose={() => setPreviewMaterial(state => ({ ...state, isOpen: false}))}
+                title={previewMaterial?.material?.title}
+                description={previewMaterial?.material?.description}
+                fileUrl={previewMaterial?.material?.file?.url}
             />
             <ConfirmationModal
                 isOpen={Boolean(deleteMaterialId)}
@@ -100,7 +103,7 @@ const Materials = () => {
                                 fileUrl={item.file?.url}
                                 onClickEdit={() => handleSetMaterial(item)}
                                 onClickDelete={() => setDeleteMaterialId(item.id)}
-                                onClickFile={() => setPreviewMaterialId(item.id)}
+                                onClickFile={() => setPreviewMaterial({isOpen: true, material: item})}
                             />
                         ))}
                         <div ref={ref}></div>
