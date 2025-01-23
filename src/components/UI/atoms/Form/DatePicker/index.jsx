@@ -14,6 +14,8 @@ const DatePicker = forwardRef(({
     error,
     defaultValue,
     selectsRange,
+    selectedEndDate,
+    selectedStartDate,
     ...otherProps
 }, ref) => {
     const [date, setDate] = useState(defaultValue)
@@ -23,9 +25,12 @@ const DatePicker = forwardRef(({
         typeof onChange === 'function' && onChange(date)
     }
 
+
     useEffect(() => {
         if(selectsRange){
-            setDate([date?.[0], date?.[0]])
+            console.log(selectedEndDate);
+            
+            setDate([new Date(selectedStartDate), new Date(selectedEndDate)])
         }
     }, [selectsRange])
 

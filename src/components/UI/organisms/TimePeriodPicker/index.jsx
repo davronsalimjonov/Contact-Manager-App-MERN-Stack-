@@ -17,7 +17,7 @@ const TimePeriodPicker = ({ onChange, selectsRange = false }) => {
     const ref = useClickOutside({ onClickOutside: () => setIsOpenPopover(false) })
     const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate, type: timePeriod })
 
-    const handleChangeDatepicker = (date) => {
+    const handleChangeDatepicker = (date, timePeriod) => {
         let startDate;
         let endDate;
 
@@ -26,8 +26,6 @@ const TimePeriodPicker = ({ onChange, selectsRange = false }) => {
             endDate = new Date(date?.[1] || date?.[0])
             endDate.setHours(23, 59, 59, 0)
             endDate = endDate.toISOString()
-            console.log(endDate);
-            
             date =  new Date(date?.[0]).toISOString()
         } else {
             date = new Date(date)
@@ -56,13 +54,22 @@ const TimePeriodPicker = ({ onChange, selectsRange = false }) => {
         typeof onChange === 'function' && onChange({ startDate, endDate, date, type: timePeriod })
     }
 
-    useEffect(() => {
-        handleChangeDatepicker((selectsRange && timePeriod === 'day') ? (
+    // useEffect(() => {
+    //     handleChangeDatepicker((selectsRange && timePeriod === 'day') ? (
+    //         [date?.date, date?.date]
+    //      ) : (
+    //         date?.date || new Date(Date.now()).toISOString()
+    //      ))
+    // }, [timePeriod])
+
+    const handleChangePeriod = (period) => {
+        handleChangeDatepicker((selectsRange && period === 'day') ? (
             [date?.date, date?.date]
          ) : (
             date?.date || new Date(Date.now()).toISOString()
-         ))
-    }, [timePeriod])
+         ), period)
+        setTimePeriod(period)
+    }
 
     return (
         <div style={{ position: 'relative' }} ref={ref}>
@@ -73,18 +80,20 @@ const TimePeriodPicker = ({ onChange, selectsRange = false }) => {
             {isOpenPopover && (
                 <div className={cls.popover}>
                     <div className={cls.popover__btns}>
-                        <Button onClick={() => setTimePeriod('day')} className={cn(timePeriod === 'day' && cls.active)}>1 kun</Button>
-                        <Button onClick={() => setTimePeriod('week')} className={cn(timePeriod === 'week' && cls.active)}>1 hafta</Button>
-                        <Button onClick={() => setTimePeriod('month')} className={cn(timePeriod === 'month' && cls.active)}>1 oy</Button>
+                        <Button onClick={() => handleChangePeriod('day')} className={cn(timePeriod === 'day' && cls.active)}>1 kun</Button>
+                        <Button onClick={() => handleChangePeriod('week')} className={cn(timePeriod === 'week' && cls.active)}>1 hafta</Button>
+                        <Button onClick={() => handleChangePeriod('month')} className={cn(timePeriod === 'month' && cls.active)}>1 oy</Button>
                     </div>
                     <DatePicker
                         inline
                         selected={date?.date}
+                        selectedEndDate={date?.endDate}
+                        selectedStartDate={date?.startDate}
                         maxDate={new Date(Date.now())}
                         className={cls.popover__datepicker}
                         showWeekPicker={timePeriod === 'week'}
                         showMonthYearPicker={timePeriod === 'month'}
-                        onChange={handleChangeDatepicker}
+                        onChange={date => handleChangeDatepicker(date, timePeriod)}
                         selectsRange={selectsRange && (timePeriod === 'day')}
                     />
                 </div>
