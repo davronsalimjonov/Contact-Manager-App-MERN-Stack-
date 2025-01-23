@@ -10,6 +10,8 @@ import Button from '@/components/UI/atoms/Buttons/Button';
 import CommingSoomModal from '@/components/UI/organisms/CommingSoomModal';
 
 const SellerStatisticsCards = ({
+    startDate, 
+    endDate,
     selectedDate,
     plan = 0,
     salesAmount = 0,
@@ -22,7 +24,7 @@ const SellerStatisticsCards = ({
 }) => {
     const [isOpenForm, setIsOpenForm] = useState(false);
     const [isOpenCommingSoon, setIsOpenCommingSoon] = useState(false);
-    const { sellerPlanMutation } = useSellerMutations()
+    const { sellerPlanMutation } = useSellerMutations({startDate, endDate})
 
     const handleSetPlan = async (data) => {
         data.date = selectedDate

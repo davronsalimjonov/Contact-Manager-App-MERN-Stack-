@@ -99,6 +99,18 @@ export const getFileFromUrl = (url, fileName) => {
     })
 }
 
+export const getFileSizeFromUrl = async (url) => {
+    try {
+        const response = await axios.head(url);
+        const sizeInBytes = parseInt(response.headers['content-length'], 10);
+        return (sizeInBytes / 1024).toFixed(0);
+    } catch (error) {
+        console.error('Error getting file size:', error);
+        return null;
+    }
+};
+
+
 export function formatFileSize(sizeInKilobytes = 0) {
     if (isNaN(sizeInKilobytes) && sizeInKilobytes == null) return '0 KB';
     const units = ["KB", "MB", "GB", "TB", "PB"];
@@ -270,36 +282,35 @@ export function getFileTypeFromUrl(url) {
 
 export function getFileCategory(input) {
     let extension;
-  
+
     if (input instanceof Object) {
-      const fileName = input.name;
-      const fileExtensionMatch = fileName.match(/\.([a-zA-Z0-9]+)$/);
-      if (!fileExtensionMatch) return;
-      extension = fileExtensionMatch[1].toLowerCase();
+        const fileName = input.name;
+        const fileExtensionMatch = fileName.match(/\.([a-zA-Z0-9]+)$/);
+        if (!fileExtensionMatch) return;
+        extension = fileExtensionMatch[1].toLowerCase();
     }
     // Если передан URL
     else if (typeof input === "string") {
-      const fileExtensionMatch = input.match(/\.([a-zA-Z0-9]+)$/);
-      if (!fileExtensionMatch) return;
-      extension = fileExtensionMatch[1].toLowerCase();
+        const fileExtensionMatch = input.match(/\.([a-zA-Z0-9]+)$/);
+        if (!fileExtensionMatch) return;
+        extension = fileExtensionMatch[1].toLowerCase();
     } else {
-      return "any"; // Неподдерживаемый тип входных данных
+        return "any"; // Неподдерживаемый тип входных данных
     }
-  
+
     const fileCategories = {
-      image: ["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp"],
-      video: ["mp4", "mkv", "mov", "avi", "wmv", "flv", "webm"],
-      audio: ["mp3", "wav", "aac", "ogg", "flac", "m4a"],
-      pdf: ["pdf"],
-      docs: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "csv", "odt", "rtf"],
+        image: ["png", "jpg", "jpeg", "gif", "bmp", "svg", "webp"],
+        video: ["mp4", "mkv", "mov", "avi", "wmv", "flv", "webm"],
+        audio: ["mp3", "wav", "aac", "ogg", "flac", "m4a"],
+        pdf: ["pdf"],
+        docs: ["doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt", "csv", "odt", "rtf"],
     };
-  
+
     for (const [category, extensions] of Object.entries(fileCategories)) {
-      if (extensions.includes(extension)) {
-        return category;
-      }
+        if (extensions.includes(extension)) {
+            return category;
+        }
     }
-  
+
     return "any";
-  }
-  
+}

@@ -1,11 +1,11 @@
 import Avatar from 'react-avatar';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { USER_ROLES } from '@/constants';
 import useGetUser from '@/hooks/useGetUser';
 import { getUserFullName } from '@/utils/lib';
 import TimePeriodPicker from '../TimePeriodPicker';
 import NotificationButton from '../NotificationButton';
 import cls from './Navbar.module.scss';
-import { USER_ROLES } from '@/constants';
 
 const Navbar = ({ onPerionChange }) => {
     const location = useLocation()
@@ -23,7 +23,8 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/tasks', title: 'Vazifalarim', showBackButton: false },
         { path: '/settings', title: 'Sozlamalar', showBackButton: true },
         { path: '/sales-form', title: 'Sotuv formasi', showBackButton: true },
-        { path: '/materials', title: 'Materials', showBackButton: false }
+        { path: '/materials', title: 'Materials', showBackButton: false },
+        { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [USER_ROLES.SELLER]: true }, showBackButton: false },
     ];
 
     const matchRoute = (pattern, pathname) => {
@@ -36,13 +37,14 @@ const Navbar = ({ onPerionChange }) => {
             const match = matchRoute(route.path, location.pathname);
             if (match) {
                 const roleTitle = route.roleTitles?.[user?.role];
-                return { ...route, title: roleTitle || route.title };
+                const rangeTimepicker = route.rangeTimepicker?.[user?.role];
+                return { ...route, title: roleTitle || route.title, rangeTimepicker };
             }
         }
         return { title: 'Dashboard', showBackButton: false };
     };
 
-    const { title, showBackButton } = getPageConfig();
+    const { title, showBackButton, rangeTimepicker } = getPageConfig();
 
     return (
         <nav className={cls.navbar}>
@@ -52,7 +54,7 @@ const Navbar = ({ onPerionChange }) => {
                 <span className={cls.navbar__name}>{title}</span>
             )}
             <div className={cls.navbar__controls}>
-                {timeperiodPickerPath.includes(location.pathname) && <TimePeriodPicker onChange={onPerionChange} />}
+                {timeperiodPickerPath.includes(location.pathname) && <TimePeriodPicker onChange={onPerionChange} selectsRange={rangeTimepicker} />}
                 <NotificationButton />
                 <Avatar src={user?.url} name={getUserFullName(user)} size={56} round />
             </div>

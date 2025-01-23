@@ -5,6 +5,7 @@ import Loader from '@/components/UI/atoms/Loader';
 import { PlusIcon } from '@/components/UI/atoms/icons';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import EmptyData from '@/components/UI/organisms/EmptyData';
+import AudioPlayer from '@/components/UI/moleculs/AudioPlayer';
 import MaterialItem from '@/components/UI/moleculs/MaterialItem';
 import MaterialFormModal from '@/components/UI/organisms/MaterialFormModal';
 import ConfirmationModal from '@/components/UI/organisms/ConfirmationModal';
@@ -85,6 +86,7 @@ const Materials = () => {
                 onClose={() => setEditMaterialObj(null)}
                 onSubmit={handleUpdateMaterial}
             />}
+            {/* <AudioPlayer /> */}
             <Button className={cls.page__btn} onClick={() => setIsOpenModal(true)}>
                 <PlusIcon /> Qo’shish
             </Button>

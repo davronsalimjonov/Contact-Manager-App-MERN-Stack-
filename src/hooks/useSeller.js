@@ -26,7 +26,7 @@ export const useGetSellerMetrics = (params = {}) => {
     return useQuery(['seller-metrics', userId, ...Object.values(removeEmptyKeys(params))], () => getSellerMetrics(userId, params), { cacheTime: Infinity, staleTime: Infinity })
 }
 
-export const useSellerMutations = () => {
+export const useSellerMutations = (dateKey) => {
     const userId = useGetUserId()
     const queryClient = useQueryClient()
     const createSellerStudentMutation = useMutation({ mutationFn: createSellerStudent, onSuccess: onCreateStudentSuccess })
@@ -37,7 +37,7 @@ export const useSellerMutations = () => {
     }
 
     function onPlanUpdateSuccess(_, data) {
-        queryClient.invalidateQueries(['seller-metrics', userId, data?.date], oldData => ({...oldData, plan: data?.plan}))
+        queryClient.invalidateQueries(['seller-metrics', userId, ...Object.values(removeEmptyKeys(dateKey))], oldData => ({...oldData, plan: data?.plan}))
     }
 
     return {

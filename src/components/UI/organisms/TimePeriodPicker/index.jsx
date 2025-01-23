@@ -11,35 +11,45 @@ import cls from './TimePeriodPicker.module.scss';
 let defaultDate = dayjs().startOf('month').format('YYYY-MM-DD')
 let defaultEndDate = dayjs().endOf('month').format('YYYY-MM-DD')
 
-const TimePeriodPicker = ({ onChange }) => {
+const TimePeriodPicker = ({ onChange, selectsRange = false }) => {
     const [timePeriod, setTimePeriod] = useState('month')
     const [isOpenPopover, setIsOpenPopover] = useState(false)
     const ref = useClickOutside({ onClickOutside: () => setIsOpenPopover(false) })
     const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate, type: timePeriod })
 
     const handleChangeDatepicker = (date) => {
-        date = new Date(date)
-        date.setHours(0, 0, 0, 0)
-        date = new Date(date.getTime() + 5 * 60 * 60000).toISOString()
-
         let startDate;
         let endDate;
 
-        if (timePeriod === 'day') {
-            let lastHours = new Date(date)
-            lastHours.setHours(23, 59, 59, 0)
-
-            startDate = date
-            endDate = new Date(lastHours.getTime() + 5 * 60 * 60000).toISOString()
-        } else if (timePeriod === 'week') {
-            startDate = new Date(startOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
-            endDate = new Date(endOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
-        } else if (timePeriod === 'month') {
-            startDate = dayjs(date).startOf('month').format('YYYY-MM-DD')
-            endDate = dayjs(date).endOf('month').format('YYYY-MM-DD')
+        if (selectsRange && timePeriod === 'day') {
+            startDate = new Date(date?.[0]).toISOString()
+            endDate = new Date(date?.[1] || date?.[0])
+            endDate.setHours(23, 59, 59, 0)
+            endDate = endDate.toISOString()
+            console.log(endDate);
+            
+            date =  new Date(date?.[0]).toISOString()
         } else {
-            startDate = date
-            endDate = date
+            date = new Date(date)
+            date.setHours(0, 0, 0, 0)
+            date = new Date(date.getTime() + 5 * 60 * 60000).toISOString()
+
+            if (timePeriod === 'day') {
+                let lastHours = new Date(date)
+                lastHours.setHours(23, 59, 59, 0)
+
+                startDate = date
+                endDate = new Date(lastHours.getTime() + 5 * 60 * 60000).toISOString()
+            } else if (timePeriod === 'week') {
+                startDate = new Date(startOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
+                endDate = new Date(endOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
+            } else if (timePeriod === 'month') {
+                startDate = dayjs(date).startOf('month').format('YYYY-MM-DD')
+                endDate = dayjs(date).endOf('month').format('YYYY-MM-DD')
+            } else {
+                startDate = date
+                endDate = date
+            }
         }
 
         setDate({ startDate, endDate, date, type: timePeriod })
@@ -47,7 +57,11 @@ const TimePeriodPicker = ({ onChange }) => {
     }
 
     useEffect(() => {
-        handleChangeDatepicker(date?.date || new Date(Date.now()).toISOString())
+        handleChangeDatepicker((selectsRange && timePeriod === 'day') ? (
+            [date?.date, date?.date]
+         ) : (
+            date?.date || new Date(Date.now()).toISOString()
+         ))
     }, [timePeriod])
 
     return (
@@ -71,6 +85,7 @@ const TimePeriodPicker = ({ onChange }) => {
                         showWeekPicker={timePeriod === 'week'}
                         showMonthYearPicker={timePeriod === 'month'}
                         onChange={handleChangeDatepicker}
+                        selectsRange={selectsRange && (timePeriod === 'day')}
                     />
                 </div>
             )}
