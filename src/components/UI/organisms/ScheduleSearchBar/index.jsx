@@ -14,7 +14,7 @@ const ScheduleSearchBar = ({
         <div className={cls.search}>
             <div className={cls.bar}>
                 
-            <Select
+{/*             <Select
                     className={cls.bar__form__select}
                     placeholder='Hafta kuni'
                     options={WEEKDAYOPTIONS}
@@ -27,7 +27,7 @@ const ScheduleSearchBar = ({
                     options={DEGREEOPTIONS}
                     onChange={onChangeDegree}
                     isClearable
-                />
+                /> */}
 
             </div>
             <Button title="Qo'shish" className={cls.bar__form__btn} onClick={onAddLesson} type='button'><PlusIcon />Qo'shish</Button>
