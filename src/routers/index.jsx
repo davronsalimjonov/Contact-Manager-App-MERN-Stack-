@@ -48,6 +48,7 @@ import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
 import Materials from "@/components/pages/Materials";
 import SingleMentor from "@/components/pages/SingleMentor";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
+import CoursesIFrame from "@/components/pages/CoursesIFrame";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -148,6 +149,10 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '/students/:courseId',
                 element: <SingleStudent />
+            },
+            {
+                path: '/courses-iframe',
+                element: <CoursesIFrame />
             },
             {
                 path: '*',

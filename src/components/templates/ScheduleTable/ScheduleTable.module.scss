@@ -9,8 +9,11 @@
     & tbody {
         display: contents;
     }
+}
 
-    &__caption {
+.scheduleTableParent {
+
+    & .__caption {
         grid-area: 1/1/span 1/span 4;
         padding: 16px;
         font-family: "Raleway";

@@ -65,6 +65,12 @@ export const mainMentorSidebarLinks = [
         icon: ListIcon()    
     },
     {
+        id: 4,
+        link: '/courses-iframe',
+        label: 'Kurslar',
+        icon: ListIcon()    
+    },
+    {
         id: 5,
         link: '/materials',
         label: 'Materials',

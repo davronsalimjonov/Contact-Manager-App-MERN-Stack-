@@ -14,7 +14,7 @@ const ScheduleSearchBar = ({
         <div className={cls.search}>
             <div className={cls.bar}>
                 
-{/*             <Select
+                {/* <Select
                     className={cls.bar__form__select}
                     placeholder='Hafta kuni'
                     options={WEEKDAYOPTIONS}

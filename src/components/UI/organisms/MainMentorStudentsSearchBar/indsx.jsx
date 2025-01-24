@@ -14,10 +14,15 @@ const MainMentorStudentsSearchBar = ({
     onChangeGroup,
     statusOptions=[],
     setIsTransferModal,
-    activeGroup='Barchasi'
+    activeGroup='Barchasi',
+    tabOptions  
 }) => {
+
+    const groupFilters = []
     
-    const studentGroups = GROUPS.map((status) => ({ value: status, label: status }))
+    {tabOptions.map((tab) => 
+        tab?.label === "Barchasi" ? null : groupFilters.push(tab)  
+    )}
 
     return (
         <div className={cls.bar}>
@@ -39,7 +44,7 @@ const MainMentorStudentsSearchBar = ({
             <Select
                 className={cls.bar__form__select}
                 placeholder='Group user'
-                options={studentGroups}
+                options={groupFilters}
                 onChange={onChangeGroup}
                 isClearable
             />

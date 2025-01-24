@@ -58,31 +58,31 @@ const MainMentorStudents = () => {
         groupStudents: {data: groupStudents, isLoading: isGroupStudentsLoading, refetch},
         groupSelectStudents: { data: groupSelectStudents, isLoading: isLoadingGroupSelectStudents },
     } = useGetGroups({ group: groupId, ...filter, ...pagination }, groupId)
-
+    
     const callMentorOptions = callMentors?.map((item) => (
         {
             value: `${item?.id}`,
             label: `${item?.firstName} ${item?.lastName}`
         }
     ))
-
+    
     const mainMentorOptions = mainMentors?.map((item) => (
         {
             value: `${item?.id}`,
             label: `${item?.firstName} ${item?.lastName}`
         }
     ))
-
+    
     const handleGroupNameChange = (event) => {
         setGroupName(event.target.value)
     }
-
+    
     const handleMentorChange = (option) => {
         setSelectedMentor(option)
     }
-
+    
     const [tabOptions, setTabOptions] = useState([{ value: '', label: 'Barchasi' }]);
-
+    
     useEffect(() => {
         const newTabs = groups?.map(group => ({ value: group.id, label: group.title })) || [];
         setTabOptions(prevState => {
@@ -91,7 +91,7 @@ const MainMentorStudents = () => {
             return [...prevState, ...uniqueTabs];
         });
     }, [groups]);
-
+    
     useEffect(() => {}, [tabOptions, groupStudents])
     
     const handleCreateGroup = async () => {
@@ -100,12 +100,12 @@ const MainMentorStudents = () => {
                 customToast.error("Guruh nomi bo'sh bo'lishi mumkin emas")
                 return
             }
-
+            
             if (!selectedMentor) {
                 customToast.error("Nazoratchi mentor tanlanmagan")
                 return
             }
-
+            
             const existingGroup = tabOptions.find((tab) => tab.label === groupName)
             if (!existingGroup) {
                 const response = await createGroups({
@@ -113,13 +113,13 @@ const MainMentorStudents = () => {
                     academyMentor,
                     callMentor: selectedMentor.value,
                 })
-
+                
                 if (response?.status === 201) {
                     setIsModal(false)
                     setGroupName("")
                     setSelectedMentor(null)
                     customToast.success("Gurux yaratildi!")
-
+                    
                     setTabOptions(prevState => [
                         ...prevState,
                         { value: response.data.id, label: response.data.title }
@@ -140,19 +140,19 @@ const MainMentorStudents = () => {
             }
         }
     }
-
+    
     const handleAddStudentToGroup = async () => {
         try {
             if (!selectedStudents || selectedStudents.length === 0) {
                 customToast?.error("O'quvchilar Qo'shing")
                 return
             }
-
+            
             const response = await addStudentsToGroup({
                 group: groupId,
                 studentIds: selectedStudents,
             })
-
+            
             if (response?.status === 201) {
                 await refetch()
                 setIsTransferModal(false)
@@ -165,51 +165,51 @@ const MainMentorStudents = () => {
             customToast?.error("Xatolik Yuz Berdi")
         }
     }
-
+    
     const handleStudentTransfer = async () => {
         try {
             if (!selectedCourse || selectedCourse.length === 0) {
                 customToast?.error("Kurs Tanlang!");
                 return;
             }
-
+            
             if (!selectMainMentors || selectMainMentors.length === 0) {
                 customToast?.error("Asosiy Mentor Tanlang!");
                 return;
             }
-
+            
             if (!selectCallMentors || selectCallMentors.length === 0) {
                 customToast?.error("Nazoratchi Mentor Tanlang!");
                 return;
             }
-
+            
             if (!selectStatus || selectStatus.length === 0) {
                 customToast?.error("Status Tanlang!");
                 return;
             }
-
+            
             await updateUserCourse(courseId, {
                 course: selectedCourse.value,
                 teacher: selectMainMentors.value,
                 secondTeacher: selectCallMentors.value,
                 status: selectStatus.value
             })
-
+            
             setIsTransferModal(false)
             setSelectedCourse([])
             setSelectMainMentors([])
             setSelectCallMentors([])
             setSelectStatus([])
             customToast?.success("Transfer Amalga Oshirildi")
-
+            
         } catch (error) {
             customToast?.error("Xatolik Yuz Berdi")
         }
     }
-
+    
     const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
     const statusOptionsSelect = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: <StudentStatus status={status} /> }))
-
+    
     return (
         <div className={cls.page}>
             {
@@ -235,8 +235,9 @@ const MainMentorStudents = () => {
                         onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
                         onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
                         onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
-                        onChangeGroup={level => setFilter(state => ({ ...state, level: level?.label }))}
+                        onChangeGroup={group => setFilter(state => ({ ...state, group: group?.value }))}
                         onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
+                        tabOptions={tabOptions}
                         statusOptions={statusOptions}
                         setIsTransferModal={setIsTransferModal}
                         activeGroup={activeGroup}

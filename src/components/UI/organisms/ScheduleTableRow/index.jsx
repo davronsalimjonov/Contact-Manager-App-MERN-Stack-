@@ -14,7 +14,7 @@ const ScheduleTableRow = ({
     ]
     return (
         <tr className={cls.row}>
-            <td>{lvl}</td>
+            <td>{lvl ? lvl : "Kiritilmagan"}</td>
             <td>{date}</td>
             <td>{time}</td>
             <td>

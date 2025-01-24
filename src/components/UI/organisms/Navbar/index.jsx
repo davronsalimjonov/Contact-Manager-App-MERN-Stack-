@@ -23,6 +23,8 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/tasks', title: 'Vazifalarim', showBackButton: false },
         { path: '/settings', title: 'Sozlamalar', showBackButton: true },
         { path: '/sales-form', title: 'Sotuv formasi', showBackButton: true },
+        { path: '/lessons-schedule', title: 'Dars Jadvali' },
+        { path: '/courses-iframe', title: 'Kurslar' },
         { path: '/materials', title: 'Materials', showBackButton: false },
         { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [USER_ROLES.SELLER]: true }, showBackButton: false },
     ];
