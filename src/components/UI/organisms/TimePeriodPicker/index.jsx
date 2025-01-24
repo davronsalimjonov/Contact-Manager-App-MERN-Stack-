@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { endOfISOWeek, startOfISOWeek } from 'date-fns';
 import { cn } from '@/utils/lib';
 import useClickOutside from '@/hooks/useClickOutside';

@@ -1,22 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { formatFileSize, getFileSizeFromUrl } from '@/utils/lib';
+import { formatFileSize } from '@/utils/lib';
+import { ArrowCircleDownIcon } from '../../atoms/icons';
 import AudioPlayButton from '../../atoms/AudioPlayButton';
+import useFileDownload from '@/hooks/useFileDownload';
 import cls from './AudioPlayer.module.scss';
 
 const AudioPlayer = ({
-    url = 'https://api.myteacher.uz/file/material/296a4b1d-fc31-4f59-ba1b-9fa7ff246d0a-17309735691401737622741460.mp3',
-    title = '2-dars. Present simple'
+    url = null,
+    title = ''
 }) => {
-    const [size, setSize] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
-
-    useEffect(() => {
-
-        getFileSizeFromUrl(url).then(setSize)
-    }, [url])
+    const [duration, setDuration] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isAudioLoaded, setIsAudioLoaded] = useState(false);
+    const { progress, isDownloading, downloadFile, fileSize } = useFileDownload(url)
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -25,16 +23,24 @@ const AudioPlayer = ({
     };
 
     const togglePlay = () => {
-        if (isPlaying) {
-            audioRef.current.pause();
+        if(isAudioLoaded){   
+            if (isPlaying) {
+                audioRef.current.pause();
+            } else {
+                audioRef.current.play();
+            }
+            setIsPlaying(!isPlaying);
         } else {
+            downloadFile()
+            setIsAudioLoaded(true)
             audioRef.current.play();
+            setIsPlaying(true);
         }
-        setIsPlaying(!isPlaying);
     };
-    const handleSeek = (e) => {
+
+    const handleProgressChange = (e) => {
         const audio = audioRef.current;
-        const newTime = (e.target.value / 100) * duration;
+        const newTime = Number(e.target.value);
         audio.currentTime = newTime;
         setCurrentTime(newTime);
     };
@@ -64,23 +70,29 @@ const AudioPlayer = ({
                 ref={audioRef}
                 src={url}
             />
-            <AudioPlayButton
-                className={cls.player__btn}
-                isPlaying={isPlaying}
-                onClick={togglePlay}
-            />
+            <div className={cls.player__controls}>
+                <AudioPlayButton
+                    className={cls.player__btn}
+                    isPlaying={isPlaying}
+                    isLoading={isDownloading}
+                    percentage={progress}
+                    onClick={togglePlay}
+                />
+                {!isAudioLoaded && <ArrowCircleDownIcon />}
+            </div>
             <span className={cls.player__title}>{title}</span>
             <input
-                className={cls.player__range}
-                type="range"
-                min="0"
-                max="100"
-                value={(currentTime / duration) * 100 || 0}
-                onChange={handleSeek}
+                className={cls.player__range} 
+                type="range" 
+                min="0" 
+                max={duration} 
+                step="0.1"
+                value={currentTime}
+                onChange={handleProgressChange}
             />
             <span className={cls.player__time}>
                 {formatTime(currentTime)} / {formatTime(duration)}, <></>
-                {formatFileSize(size || 0)}
+                {formatFileSize(fileSize || 0)}
             </span>
         </div>
     );
