@@ -12,7 +12,7 @@ export function fillMissingSalesData(data = [], type) {
         while (currentDate <= endDate) {
             const day = currentDate.getDate() - 1;
             const dateString = currentDate.toISOString().split('T')[0];
-            
+
             if (dateSet.has(dateString)) {
                 const existingEntry = data.find(entry => entry.date === dateString);
                 filledDaily.push({ label: String(day), sum: existingEntry.sum });
