@@ -4,7 +4,7 @@ const ScheduleTableHeader = () => {
         <thead className={cls.head}>
             <tr>
                 <th>Darajasi</th>
-                <th>Sanasi</th>
+                <th>Hafta kunlari</th>
                 <th>Vaqti</th>
                 <th></th>
             </tr>

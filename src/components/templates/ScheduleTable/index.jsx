@@ -12,9 +12,9 @@ const ScheduleTable = ({
 }) => {
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            <div className={cls.scheduleTableParent}>
-                <h1 className={cls.__caption}>Dars jadvali</h1>
-                {schedule?.length > 0 ? (
+            {schedule?.length > 0 ? (
+                <div className={cls.scheduleTableParent}>
+                    <h1 className={cls.__caption}>Dars jadvali</h1>
                     <table className={cls.table}>
                         <ScheduleTableHeader />
                         <tbody>
@@ -35,10 +35,10 @@ const ScheduleTable = ({
                             <tr ref={triggerRef}></tr>
                         </tbody>
                     </table>
-                ) : (
-                    !isLoading && <EmptyData />
-                )}
-            </div>
+                </div>
+            ) : (
+                !isLoading && <EmptyData />
+            )}
             {isLoading && <Loader size={80} />}
         </div>
     );

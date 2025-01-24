@@ -12,7 +12,9 @@
 }
 
 .scheduleTableParent {
-
+    border-radius: 4px;
+    overflow: hidden;
+    
     & .__caption {
         grid-area: 1/1/span 1/span 4;
         padding: 16px;
