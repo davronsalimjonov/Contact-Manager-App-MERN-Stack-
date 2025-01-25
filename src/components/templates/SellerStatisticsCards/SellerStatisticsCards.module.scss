@@ -1,7 +1,7 @@
 .cards {
     display: grid;
     grid-template-areas: 'salary plan' 'salary time';
-    grid-template-columns: 283px 1fr;
+    grid-template-columns: 300px 1fr;
     gap: 16px;
 
     &>div {

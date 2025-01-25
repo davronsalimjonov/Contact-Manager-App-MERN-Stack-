@@ -13,7 +13,7 @@ const CommingSoomModal = ({
                     src="/images/comming_soon.svg" 
                     alt="" 
                 />
-                <h2 className={cls.modal__title}>Tez orada ishga tushadi</h2>
+                <h2 className={cls.modal__title}>Tez orada ishga tushadi😉</h2>
             </div>
         </Dialog>
     );

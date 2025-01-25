@@ -1,9 +1,11 @@
 import { formatPrice } from '@/utils/lib';
 import { MetricCashIcon, MinusIcon, PlusIcon } from '../../atoms/icons';
 import cls from './SellerSalaryCard.module.scss';
+import EmptyDataText from '../../atoms/EmptyDataText';
 
 const SellerSalaryCard = ({
-    salary = '',
+    salary = 0,
+    profit = 0,
     onClickCash,
     onClickCheck
 }) => {
@@ -19,13 +21,13 @@ const SellerSalaryCard = ({
                     <div>
                         <PlusIcon fill='rgba(30, 181, 58, 1)' width={20} height={20} />
                     </div>
-                    <span>100 000 so’m</span>
+                    <span>{formatPrice(profit || 0)} so’m</span>
                 </div>
                 <div>
                     <div style={{backgroundColor: 'rgba(255, 240, 240, 1)'}}>
                         <MinusIcon />
                     </div>
-                    <span>10 000 so’m</span>
+                    <span><EmptyDataText /></span>
                 </div>
             </div>
             <div className={cls.card__buttons}>
