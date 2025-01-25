@@ -52,6 +52,7 @@ const SellerStatisticsCards = ({
                 salary={salary}
                 onClickCash={() => setIsOpenCommingSoon(true)}
                 onClickCheck={() => navigate('/checks')}
+                profit={salary}
             />
             <div>
                 <MetricCard
