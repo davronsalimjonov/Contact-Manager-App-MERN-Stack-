@@ -14,7 +14,7 @@ const useGetStatistic = ({
     const newStudentsCount = useQuery(['statistic', 'new-students-count', startDate, endDate, userId], () => getNewStudentsCount({ teacher: userId, startDate, endDate }))
     const rating = useQuery(['statistic', 'rating', startDate, endDate], () => getRating(userId, { startDate, endDate }))
 
-    const allStudentsCount = useQuery(['statistic', 'all-student-count'], () => getAllStudentsCount())
+    const allStudentsCount = useQuery(['statistic', 'all-student-count'], () => getAllStudentsCount(userId))
     const paidStudentsCount = useQuery(['statistic', 'paid-student-count', startDate, endDate], () => getPaidStudentCount({ startDate, endDate }))
     const todayProUsers = useQuery(['statisctic', 'today-pro-users'], () => getTodayProUsers())
     const todayOnlineUsers = useQuery(['statistic', 'online-users'], () => getOnlineUsers())

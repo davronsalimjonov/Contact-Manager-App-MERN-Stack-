@@ -83,7 +83,7 @@ const AcademicManager = () => {
                         <MentorMetricCard
                             title="Ro'yxatdan O'tganlar"
                             count={allStudentsCount?.all}
-                            free={allStudentsCount?.all - allStudentsCount?.pro}
+                            free={(allStudentsCount?.all || 0) - (allStudentsCount?.pro || 0)}
                             pro={allStudentsCount?.pro}
                             countColor='#1256DB'
                         />

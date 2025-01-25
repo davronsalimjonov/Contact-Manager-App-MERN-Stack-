@@ -9,7 +9,7 @@ const MentorsPageCards = ({ cards }) => {
     return (
         <div className={cls.cards}>
             {
-                cards?.map((card, index) => (<MentorsPageCard title={card.title} text={card.text} bgColor={backgroundColors[index]} />))
+                cards?.map((card, index) => (<MentorsPageCard key={index} title={card.title} text={card.text} bgColor={backgroundColors[index]} />))
             }
         </div>)
 }
