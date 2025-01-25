@@ -37,7 +37,7 @@ const SalesChart = ({
                 borderColor: "rgba(18, 86, 219, 1)",
                 pointRadius: 1,
                 borderWidth: 2,
-                tension: 0.05,
+                tension: 0.3,
             },
         ],
     };

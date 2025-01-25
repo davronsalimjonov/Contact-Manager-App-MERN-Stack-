@@ -1,17 +1,23 @@
 .cards {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas: 'salary plan' 'salary time';
     gap: 16px;
 
     &>div {
         display: grid;
         gap: 16px;
 
-        &:nth-child(odd) {
-            grid-template-columns: repeat(4, 1fr);
+        &:first-child{
+            grid-area: salary;
         }
 
-        &:nth-child(even) {
+        &:nth-child(2) {
+            grid-area: plan;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        &:nth-child(3) {
+            grid-area: time;
             grid-template-columns: repeat(3, 1fr);
         }
     }
