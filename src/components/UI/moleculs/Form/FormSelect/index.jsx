@@ -15,7 +15,8 @@ const FormSelect = ({
     isMulti,
     onChange,
     className,
-    register = {}
+    register = {},
+    rules 
 }) => {
     return (
         <FormElementWrapper label={label} error={error}>
@@ -23,6 +24,7 @@ const FormSelect = ({
                 <Controller
                     name={name}
                     control={control}
+                    rules={rules}
                     defaultValue={defaultValue}
                     render={({ field: { value, onChange } }) => (
                         <Select

@@ -77,6 +77,7 @@ const Users = () => {
                             page={pagination.page}
                             setPage={handlePageChange}
                         />
+                        
                     </>
                 ) : (
                     <Loader />

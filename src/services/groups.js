@@ -2,7 +2,7 @@ import { api } from "./api"
 
 export const createGroups = async (data) => {
     const res = await api.post(`/group`, data)
-    return res
+    return res.data
 }
 
 export const getSelectGroupStudents = async (teacherId, groupId) => {
