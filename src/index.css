@@ -298,3 +298,55 @@ label {
 .rc-dialog-content{
   cursor: initial;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  list-style: none;
+}
+
+.pagination .page-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.page-link, 
+.break > a,
+.next, .previous {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--dark-gray-400-color);
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.next, .previous {
+  padding: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.next path, .previous path {
+  fill: var(--blue-gray-600-color);
+}
+
+.break > a{
+  margin-right: 8px;
+}
+
+.pagination .page-link:hover {
+  background-color: #e5e7eb;
+}
+
+.pagination .page-item.active .page-link {
+  color: #fff;
+  background-color: var(--blue-color);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6b7280;
+  cursor: not-allowed;
+}

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { removeEmptyKeys } from "@/utils/lib"
-import { createSellerStudent, getSaleStatistic, getSellerMetrics, getSellerStudents, updateSellerPlan } from "@/services/seller"
+import { createSellerStudent, getSaleStatistic, getSellerInvoice, getSellerMetrics, getSellerStudents, updateSellerPlan } from "@/services/seller"
 import { useGetUserId } from "./useGetUser"
 
 const useGetSellerStudents = (params = {}) => {
@@ -24,6 +24,11 @@ export const useGetSaleStatistic = (params = {}) => {
 export const useGetSellerMetrics = (params = {}) => {
     const userId = useGetUserId()
     return useQuery(['seller-metrics', userId, ...Object.values(removeEmptyKeys(params))], () => getSellerMetrics(userId, params), { cacheTime: Infinity, staleTime: Infinity })
+}
+
+export const useGetSellerInvoices = (params = {}) => {
+    const userId = useGetUserId()
+    return useQuery(['seller-invoices', userId, ...Object.values(removeEmptyKeys(params))], () => getSellerInvoice(userId, params))
 }
 
 export const useSellerMutations = (dateKey) => {

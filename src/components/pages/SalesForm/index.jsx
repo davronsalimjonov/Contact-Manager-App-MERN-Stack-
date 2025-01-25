@@ -1,7 +1,6 @@
 import toast from 'react-hot-toast';
 import { useSellerMutations } from '@/hooks/useSeller';
 import SaleForm from '@/components/UI/organisms/SaleForm';
-import { MyTeacherLogo } from '@/components/UI/atoms/icons';
 import cls from './SalesForm.module.scss';
 
 const SalesForm = () => {
@@ -18,7 +17,7 @@ const SalesForm = () => {
 
     return (
         <div className={cls.page}>
-                <SaleForm onSubmit={handleCreateStudent} />
+            <SaleForm onSubmit={handleCreateStudent} />
         </div>
     );
 }

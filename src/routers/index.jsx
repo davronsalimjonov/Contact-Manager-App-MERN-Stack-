@@ -22,6 +22,7 @@ import SalesForm from "@/components/pages/SalesForm";
 import SinglePageLayout from "@/components/templates/SinglePageLayout";
 import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
 import Materials from "@/components/pages/Materials";
+import SellerChecks from "@/components/pages/SellerChecks";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -148,12 +149,16 @@ const sellerRoutes = createBrowserRouter([
         ]
     },
     {
-        path: '/sales-form',
+        path: '',
         element: <SinglePageLayout />,
         children: [
             {
-                path: '',
+                path: '/sales-form',
                 element: <SalesForm />
+            },
+            {
+                path: '/checks',
+                element: <SellerChecks />
             }
         ]
     },

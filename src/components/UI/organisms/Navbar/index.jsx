@@ -25,6 +25,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/sales-form', title: 'Sotuv formasi', showBackButton: true },
         { path: '/materials', title: 'Materials', showBackButton: false },
         { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [USER_ROLES.SELLER]: true }, showBackButton: false },
+        { path: '/checks', title: 'Checks', showBackButton: true }
     ];
 
     const matchRoute = (pattern, pathname) => {

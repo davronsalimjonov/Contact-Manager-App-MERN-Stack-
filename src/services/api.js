@@ -58,7 +58,7 @@ api.interceptors.response.use(
     }
 )
 
-export const paramsToString = (params) => {
+export const paramsToString = (params = {}) => {
     params = removeEmptyKeys(params)
     const paramsObj = new URLSearchParams(params)
     return paramsObj.toString()

@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import CommingSoomModal from '@/components/UI/organisms/CommingSoomModal';
 import SellerSalaryCard from '@/components/UI/organisms/SellerSalaryCard';
+import { useNavigate } from 'react-router-dom';
 
 const SellerStatisticsCards = ({
     startDate,
@@ -23,6 +24,7 @@ const SellerStatisticsCards = ({
     totalTime = 0,
     averageTime = 0
 }) => {
+    const navigate = useNavigate()
     const [isOpenForm, setIsOpenForm] = useState(false);
     const [isOpenCommingSoon, setIsOpenCommingSoon] = useState(false);
     const { sellerPlanMutation } = useSellerMutations({ startDate, endDate })
@@ -47,7 +49,9 @@ const SellerStatisticsCards = ({
                 onClose={() => setIsOpenCommingSoon(false)}
             />
             <SellerSalaryCard
-
+                salary={salary}
+                onClickCash={() => setIsOpenCommingSoon(true)}
+                onClickCheck={() => navigate('/checks')}
             />
             <div>
                 <MetricCard
@@ -83,7 +87,7 @@ const SellerStatisticsCards = ({
                 />
                 <MetricCard
                     title='Konversiyasi'
-                    value={conversion || 0}
+                    value={`${conversion || 0}%`}
                     icon={<MetricPersentageIcon />}
                     iconBg='rgba(196, 3, 132, 0.1)'
                     iconStyle={{ borderRadius: '10px' }}
