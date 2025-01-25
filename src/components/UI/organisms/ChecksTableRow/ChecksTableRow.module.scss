@@ -1,0 +1,19 @@
+.row {
+    display: contents;
+    
+    &>td {
+        border-bottom: 1px solid rgba(243, 244, 245, 1);
+        padding: 14px 10px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 19px;
+    }
+
+    &__profit{
+        color: var(--green-color);
+    }
+
+    &__loss{
+        color: var(--red-color);
+    }
+}

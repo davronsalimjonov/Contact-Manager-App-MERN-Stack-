@@ -46,9 +46,10 @@ import AllMentors from "@/components/pages/AllMentors";
 import SinglePageLayout from "@/components/templates/SinglePageLayout";
 import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
 import Materials from "@/components/pages/Materials";
+import SellerChecks from "@/components/pages/SellerChecks";
 import SingleMentor from "@/components/pages/SingleMentor";
-import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 import CoursesIFrame from "@/components/pages/CoursesIFrame";
+import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -315,12 +316,16 @@ const sellerRoutes = createBrowserRouter([
         ]
     },
     {
-        path: '/sales-form',
+        path: '',
         element: <SinglePageLayout />,
         children: [
             {
-                path: '',
+                path: '/sales-form',
                 element: <SalesForm />
+            },
+            {
+                path: '/checks',
+                element: <SellerChecks />
             }
         ]
     },

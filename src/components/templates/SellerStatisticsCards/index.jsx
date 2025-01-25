@@ -8,9 +8,11 @@ import { useSellerMutations } from '@/hooks/useSeller';
 import toast from 'react-hot-toast';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import CommingSoomModal from '@/components/UI/organisms/CommingSoomModal';
+import SellerSalaryCard from '@/components/UI/organisms/SellerSalaryCard';
+import { useNavigate } from 'react-router-dom';
 
 const SellerStatisticsCards = ({
-    startDate, 
+    startDate,
     endDate,
     selectedDate,
     plan = 0,
@@ -22,9 +24,10 @@ const SellerStatisticsCards = ({
     totalTime = 0,
     averageTime = 0
 }) => {
+    const navigate = useNavigate()
     const [isOpenForm, setIsOpenForm] = useState(false);
     const [isOpenCommingSoon, setIsOpenCommingSoon] = useState(false);
-    const { sellerPlanMutation } = useSellerMutations({startDate, endDate})
+    const { sellerPlanMutation } = useSellerMutations({ startDate, endDate })
 
     const handleSetPlan = async (data) => {
         data.date = selectedDate
@@ -45,6 +48,11 @@ const SellerStatisticsCards = ({
                 isOpen={isOpenCommingSoon}
                 onClose={() => setIsOpenCommingSoon(false)}
             />
+            <SellerSalaryCard
+                salary={salary}
+                onClickCash={() => setIsOpenCommingSoon(true)}
+                onClickCheck={() => navigate('/checks')}
+            />
             <div>
                 <MetricCard
                     title='Sotuv summasi'
@@ -62,14 +70,14 @@ const SellerStatisticsCards = ({
                     )}
                     iconStyle={{ borderRadius: '10px' }}
                 />
-                <MetricCard
+                {/* <MetricCard
                     title='Oylik maoshi'
                     value={<>{formatPrice(salary)} <span className={cls.cards__value__currency}>so’m</span></>}
                     icon={<MetricCashIcon color='rgba(207, 183, 0, 1)' />}
                     iconBg='rgba(207, 183, 0, 0.1)'
                     iconStyle={{ borderRadius: '10px' }}
                     additionalInformation={<Button className={cls.cards__value__btn} onClick={() => setIsOpenCommingSoon(true)}>Pulni yechib olish</Button>}
-                />
+                /> */}
                 <MetricCard
                     title='Lidlar soni'
                     value={leadsCount || 0}
@@ -79,7 +87,7 @@ const SellerStatisticsCards = ({
                 />
                 <MetricCard
                     title='Konversiyasi'
-                    value={conversion || 0}
+                    value={`${conversion || 0}%`}
                     icon={<MetricPersentageIcon />}
                     iconBg='rgba(196, 3, 132, 0.1)'
                     iconStyle={{ borderRadius: '10px' }}
