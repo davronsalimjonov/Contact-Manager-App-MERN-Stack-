@@ -10,6 +10,7 @@ const MetricCard = ({
   additionalInformation,
   percentage = undefined,
 }) => {
+  
   return (
     <div className={cls.card}>
         <div>

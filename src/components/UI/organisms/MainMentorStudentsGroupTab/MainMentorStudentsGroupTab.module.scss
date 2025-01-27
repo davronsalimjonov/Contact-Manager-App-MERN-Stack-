@@ -3,11 +3,17 @@
         display: flex;
         align-items: center;
         justify-content: start;
-        gap: 20px;
+        gap: 4px;
 
-        &__whiteBtn {
-            height: 40px;
+        &>button {
             border-radius: 4px;
+            padding: 8px 16px;
+            background-color: white;
+            color: #1256db;
+            border: none;
+            box-shadow: 0px 1px 4px 0px #0000000A;
+            box-shadow: 0px -1px 4px 0px #0000000A;
+            color: var(--dark-gray-700-color);
         }
     }
 
@@ -17,19 +23,19 @@
         padding: 15px;
         border-radius: 8px;
 
-        & > div:nth-child(1) {
+        &>div:nth-child(1) {
             display: flex;
             flex-direction: column;
             gap: 20px;
 
-            & > div {
+            &>div {
                 display: flex;
                 flex-direction: column;
                 gap: 5px;
             }
         }
 
-        & > div:nth-child(2) {
+        &>div:nth-child(2) {
             margin-top: 15px;
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -39,22 +45,6 @@
 }
 
 .activeButton {
-    background-color: #1256db;
-    color: white;
-    border: none;
-  }
-  
-  .inactiveButton {
-    background-color: white;
-    color: #1256db;
-    border: 1px solid #1256db;
-  }
-  
-  .MainMentorStudentsGroupTab__tabs button {
-    padding: 0 20px;
-    margin: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-    height: 40px;
-  }
-  
+    background-color: #1256db !important;
+    color: white !important;
+}

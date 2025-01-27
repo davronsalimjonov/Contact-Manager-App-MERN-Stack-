@@ -1,10 +1,11 @@
 import { debounce } from '@/utils/lib';
-import { GROUPS } from '@/constants';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import PhoneInput from '../../atoms/Form/PhoneInput';
 import cls from './MainMentorStudentsSearchBar.module.scss';
 import Button from '../../atoms/Buttons/Button';
+import useGetGroups from '@/hooks/useGetGroups';
+import { STUDENT_STATUS_ENUMS } from '@/constants';
 
 const MainMentorStudentsSearchBar = ({
     onChangeStatus,
@@ -12,17 +13,20 @@ const MainMentorStudentsSearchBar = ({
     onChangeLastName,
     onChangePhone,
     onChangeGroup,
-    statusOptions=[],
-    setIsTransferModal,
-    activeGroup='Barchasi',
-    tabOptions  
+    groupId='',
+    setIsOpen
 }) => {
 
     const groupFilters = []
-    
-    {tabOptions.map((tab) => 
-        tab?.label === "Barchasi" ? null : groupFilters.push(tab)  
+    const {
+        groups: { data: groups }
+    } = useGetGroups()
+
+    {groups?.map((group) => 
+        groupFilters.push({ label: group?.title, value: group?.id })  
     )}
+
+    const statusOptions = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
 
     return (
         <div className={cls.bar}>
@@ -55,11 +59,10 @@ const MainMentorStudentsSearchBar = ({
                 onChange={onChangeStatus}
                 isClearable
             />
-            {activeGroup === 'Barchasi' ? <></> : <Button 
+            {groupId === '' ? <></> : <Button 
                     className={cls.bar__form__button}
                     onClick={() => {
-                        setIsTransferModal(true)
-                        // setIsTransfer(true)
+                        setIsOpen(true)
                     }}
                 >
                     O'quvchi Qo'shish

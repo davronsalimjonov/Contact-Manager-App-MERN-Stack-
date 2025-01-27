@@ -5,14 +5,10 @@ import UsersSearchBar from '@/components/UI/organisms/UsersSearchBar';
 import { useGetUsers } from '@/hooks/useGetUsers';
 import Loader from '@/components/UI/atoms/Loader';
 import Pagination from '@/components/UI/moleculs/Pagination';
-import { updateUserPassword } from '@/services/user';
-import { customToast } from '@/utils/toast';
 
 const Users = () => {
     const [filter, setFilter] = useState({})
     const [modal, setModal] = useState(false)
-    const [userId, setUserId] = useState('')
-    const [password, setPassword] = useState('')
     const [pagination, setPagination] = useState({
         page: 1,
         limit: 10,
@@ -27,24 +23,6 @@ const Users = () => {
     };
 
     const { ref, data: allUsers, isLoading: isLoadingAllUsers } = useGetUsers({...filter, ...pagination})
-
-    const handleChangePsw = async () => {
-        try {
-            if (!password || password.length === 0) {
-                customToast?.error("Parol Kiriting!");
-                return;
-            }
-
-            await updateUserPassword(userId, { password })
-
-            setModal(false)
-            setPassword('')
-            customToast?.success("Password O'zgartirildi")
-
-        } catch(error) {
-            customToast?.error("Xatolik Yuz Berdi")
-        }
-    }
 
     return (
             <div className={cls.page}>
@@ -66,9 +44,6 @@ const Users = () => {
                             isLoading={isLoadingAllUsers}
                             isModal={modal}
                             setIsModal={setModal}
-                            setUserId={setUserId}
-                            handleChangePsw={handleChangePsw}
-                            setPassword={setPassword}
                         />
                         <Pagination
                             metaData={allUsers?.meta}
@@ -77,6 +52,7 @@ const Users = () => {
                             page={pagination.page}
                             setPage={handlePageChange}
                         />
+                        
                     </>
                 ) : (
                     <Loader />

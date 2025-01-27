@@ -1,82 +1,68 @@
-import React from 'react'
-import WhiteButton from '../../atoms/Buttons/WhiteButton'
+import { useState } from 'react'
+import toast from 'react-hot-toast'
+import { useGetUserId } from '@/hooks/useGetUser'
+import useGetGroups, { useGroupMutations } from '@/hooks/useGetGroups'
+import { PlusIcon } from '../../atoms/icons'
 import Button from '../../atoms/Buttons/Button'
-import Dialog from '../../moleculs/Dialog'
-import RedButton from '../../atoms/Buttons/RedButton'
-import Select from '../../atoms/Form/Select'
+import WhiteButton from '../../atoms/Buttons/WhiteButton'
+import { CreateGroupForm } from '../CreateGroupForm'
 import cls from './MainMentorStudentsGroupTab.module.scss'
-import FormInput from '../../moleculs/Form/FormInput'
 
 const MainMentorStudentsGroupTab = ({
-    handleGroupNameChange,
-    handleMentorChange,
-    handleCreateGroup,
-    callMentorOptions,
-    groupName='',
-    setGroupName,
-    selectedMentor=null, 
-    setGroupId,
-    tabOptions,
-    isModal=false,
-    setIsModal,
-    activeGroup='Barchasi',
-    setActiveGroup
-  }) => { 
+  onGroupChange,
+  setGroupId,
+  setGroupLabel
+}) => {
+  const userId = useGetUserId()
+  const [isOpen, setIsOpen] = useState(false)
+  const { groups: { data: groups } } = useGetGroups()
+  const { createGroupMutation } = useGroupMutations()
+  const groupOptions = [{ value: '', label: 'Barchasi' }, ...(groups?.map(group => ({ value: group.id, label: group.title })) || [])]
+  const [activeGroup, setActiveGroup] = useState(groupOptions?.[0].value)
+
+  const handleGroupChange = (groupId) => {
+    setActiveGroup(groupId)
+    onGroupChange?.(groupId)
+    setGroupId(groupId)
+  }
+
+  const handleCreateGroup = async (data) => {
+    data.academyMentor = userId
+    await createGroupMutation.mutateAsync(data, {
+      onSuccess: () => {
+        toast.success("Gurux Yaratildi!")
+        setIsOpen(false)
+      },
+      onError: (err) => toast.error(err?.response?.data?.message || "Xatolik Yuz Berdi!")
+    })
+  }
 
   return (
     <div className={cls.MainMentorStudentsGroupTab}>
       <div className={cls.MainMentorStudentsGroupTab__tabs}>
-        {tabOptions.map((tab) => (
+        {groupOptions?.map((tab) => (
           <Button
-            key={`tab-${tab?.label}`}
-            className={activeGroup === `${tab?.label}` ? cls.activeButton : cls.inactiveButton}
+            key={tab.value}
+            className={activeGroup === `${tab?.value}` ? cls.activeButton : ''}
             onClick={() => {
-              setActiveGroup(`${tab?.label}`)
-              tab?.label === "Barchasi" ? setGroupName('') : setGroupName(tab?.label)
-              tab?.label === "Barchasi" ? setGroupId('') : setGroupId(tab?.value)
-            }} 
-            value={tab?.value}
+              handleGroupChange(tab?.value)
+              setGroupLabel(tab?.label === "Barchasi" ? "" : tab?.label)
+            }}
           >
             {tab?.label}
           </Button>
         ))}
-        {tabOptions.length < 7 ? (
-          <WhiteButton onClick={() => setIsModal(true)} className={cls.MainMentorStudentsGroupTab__tabs__whiteBtn}>
-            Guruh Qo'shish
-            <span>+</span>
+        {groupOptions.length < 7 && (
+          <WhiteButton onClick={() => setIsOpen(true)}>
+            Guruh Qo'shish <PlusIcon fill='#9EA4B0' width={20} height={20} />
           </WhiteButton>
-        ) : <></>}
+        )}
       </div>
-      <Dialog isOpen={isModal} onClose={() => setIsModal(false)}>
-        <form className={cls.MainMentorStudentsGroupTab__dialog}>
-          <div>
-            <div>
-              <label htmlFor="select">Guruh Qo'shish</label>
-              <FormInput
-                placeholder='Guruh Nomini Yozing'
-                isClearable
-                value={groupName}
-                onChange={handleGroupNameChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="select">Nazoratchi Mentor</label>
-              <Select
-                placeholder='Nazoratchi Mentorni Tanlang'
-                options={callMentorOptions}
-                value={selectedMentor}
-                onChange={handleMentorChange}
-                isClearable
-                isSearchable
-              />
-            </div>
-          </div>
-          <div className={cls.MainMentorStudentsGroupTab__dialog__buttons}>
-            <RedButton onClick={() => setIsModal(false)}>Bekor Qilish</RedButton>
-            <Button onClick={handleCreateGroup}>Qo'shish</Button>
-          </div>
-        </form>
-      </Dialog>
+      <CreateGroupForm
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onSubmit={handleCreateGroup}
+      />
     </div>
   )
 }

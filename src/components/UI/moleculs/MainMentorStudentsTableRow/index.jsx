@@ -8,16 +8,16 @@ import Avatar from 'react-avatar';
 
 const MainMentorStudentsTableRow = ({
     index = 0,
+    group = '',
+    setIsModal,
     avatar = '',
     status = '',
+    setCourseId,
+    setIsTransfer,
     fullName = '',
+    setPasswordModal,
     phoneNumber = '',
     userCourseId = '',
-    group = '',
-    unreadedMessagesCount = 0,
-    setIsTransfer,
-    setIsModal,
-    setCourseId
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -28,12 +28,13 @@ const MainMentorStudentsTableRow = ({
             setIsTransfer(true)
             setIsModal(true)
         }},
+        { label: "O'quvchi Parolini O'zgartirish", onClick: () => setPasswordModal(true)}
     ]
 
     setCourseId(userCourseId)
 
     return (
-        <tr className={cls.row}>
+        <tr className={cls.row} key={`mainMentorStudentsTable-${userCourseId}`}>
             <td>{index}</td>
             <td className={cls.row__name}>
                 <div className={cls.row__notification}>
@@ -43,7 +44,6 @@ const MainMentorStudentsTableRow = ({
                         src={avatar}
                         name={fullName}
                     />
-                    {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount}</span>}
                 </div>
                 <span title={fullName}>{fullName}</span>
             </td>

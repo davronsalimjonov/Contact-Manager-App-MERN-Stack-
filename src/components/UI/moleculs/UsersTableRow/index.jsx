@@ -24,7 +24,6 @@ const UsersTableRow = ({
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
-    
 
     return (
         <tr className={cls.row} onClick={() => navigate(`/users/user/${student}`)}>

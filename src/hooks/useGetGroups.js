@@ -1,18 +1,31 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { getMentorGroups, getMentorStudents } from "@/services/course";
 import { useGetUserId } from "./useGetUser";
-import { getSelectGroupStudents } from "@/services/groups";
+import { createGroups, getSelectGroupStudents } from "@/services/groups";
 
-const useGetGroups = (groupData = {}, groupId) => {
+const useGetGroups = () => {
     const mentorId = useGetUserId()
     const groups = useQuery(['groups', mentorId], () => getMentorGroups(mentorId), { cacheTime: Infinity, staleTime: Infinity })
-    const groupStudents = useQuery(['groupStudents', mentorId, {...groupData}], () => getMentorStudents(mentorId, {...groupData}))
-    const groupSelectStudents = useQuery(['groupSelectStundets', mentorId, groupId], () => getSelectGroupStudents(mentorId, groupId), { enabled: !!groupId, cacheTime: Infinity, staleTime: Infinity })
     
     return {
-        groups,
-        groupStudents,
-        groupSelectStudents
+        groups
+    }
+}
+
+export const useGroupMutations = () => {
+    const mentorId = useGetUserId()
+    const queryClient = useQueryClient()
+    const createGroupMutation = useMutation({
+        mutationFn: createGroups,
+        onSuccess: onCreateSucces
+    })
+
+    function onCreateSucces(newGroup) {
+        queryClient.setQueriesData(['groups', mentorId], (oldData) => ([...(oldData || []), newGroup]))
+    }
+
+    return {
+        createGroupMutation
     }
 }
 

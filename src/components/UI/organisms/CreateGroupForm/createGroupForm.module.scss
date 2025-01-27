@@ -1,0 +1,35 @@
+.MainMentorStudentsGroupTab__dialog {
+    width: 500px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__btns{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    // display: flex;
+    // flex-direction: column;
+    // background-color: #fff;
+    // padding: 12px;
+    // border-radius: 8px;
+    // width: 400px;
+    // gap: 10px;
+
+    // &__select {
+    //     display: flex;
+    //     flex-direction: column;
+    //     gap: 5px;
+    // }
+
+    // &__buttons {
+    //     display: grid;
+    //     grid-template-columns: repeat(2, minmax(0, 1fr));
+    //     gap: 10px;
+    // }
+}

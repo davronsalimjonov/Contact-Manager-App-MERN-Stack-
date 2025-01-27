@@ -6,20 +6,25 @@ import EmptyData from '@/components/UI/organisms/EmptyData';
 import cls from './UsersTable.module.scss';
 import UsersTableHeader from '@/components/UI/organisms/UsersTableHeader';
 import UsersTableRow from '@/components/UI/moleculs/UsersTableRow';
-import Dialog from '@/components/UI/moleculs/Dialog';
-import FormInput from '@/components/UI/moleculs/Form/FormInput';
-import Button from '@/components/UI/atoms/Buttons/Button';
+import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
+import { useState } from 'react';
+import { updateUserPassword } from '@/services/user';
+import { customToast } from '@/utils/toast';
 
 const UsersTable = ({
     students = [],
     triggerRef,
     isLoading,
-    isModal=false,
-    setIsModal,
-    setUserId,
-    handleChangePsw,
-    setPassword,
+    isModal = false,
+    setIsModal
 }) => {
+    const [userId, setUserId] = useState('')
+
+    const handleChangePsw = async (data) => {
+        await updateUserPassword(userId, { ...data })
+        customToast?.success("Password O'zgartirildi")
+        setIsModal(false)
+    }
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -55,28 +60,14 @@ const UsersTable = ({
                             <tr ref={triggerRef}></tr>
                         </tbody>
                     </table>
-                    <Dialog isOpen={isModal} onClose={setIsModal}>
-                        <div className={cls.change__psw}>
-                            <label htmlFor="select">Parol O'zgartirish</label>
-                            <FormInput
-                                placeholder='Yangi Parolni Kiriting'
-                                isClearable
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <Button 
-                                className={cls.change__psw__btn} 
-                                onClick={() => {
-                                    handleChangePsw()
-                                }}
-                                >
-                                Yangilash
-                            </Button>
-
-                        </div>
-                    </Dialog>
+                    <ChangePasswordForm
+                        isOpen={isModal}
+                        onClose={() =>  setIsModal(false)}
+                        onSubmit={handleChangePsw}
+                    />
                 </>
             ) : (
-                !isLoading && <EmptyData />  
+                !isLoading && <EmptyData />
             )}
             {isLoading && <Loader size={80} />}
         </div>
