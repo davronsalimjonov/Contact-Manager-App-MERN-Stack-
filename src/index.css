@@ -413,6 +413,11 @@ label {
 .rbc-timeslot-group {
   border-bottom: 1px solid var(--dark-gray-400-color);
   padding: 6px 0;
+  border-left: transparent;
+}
+
+.rbc-time-gutter{
+  margin-left: 1px;
 }
 
 .rbc-time-gutter,
@@ -451,4 +456,14 @@ label {
 
 .rbc-day-slot .rbc-label {
   display: none;
+}
+
+.rbc-events-container{
+  top: 6px !important;
+  border-left: transparent;
+}
+
+.rbc-time-column{
+  padding-top: 6px;
+  border-right: 1px solid var(--dark-gray-400-color);
 }

@@ -4,7 +4,7 @@ import format from "date-fns/format";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
 import getDay from "date-fns/getDay";
-import { ru } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const locales = {
@@ -44,15 +44,15 @@ const events = [
     color: "rgba(206, 242, 203, 1)",
   },
   {
-    title: "B1 level",  
-    start: new Date(currentYear, currentMonth, 28, 14, 0),
+    title: "B1 level",
+    start: new Date(currentYear, currentMonth, 28, 14, 30),
     end: new Date(currentYear, currentMonth, 28, 16, 15),
     color: "rgba(255, 189, 167, 1)",
   },
   {
     title: "B1 level",
-    start: new Date(currentYear, currentMonth, 30, 22, 0),
-    end: new Date(currentYear, currentMonth, 30, 23, 0),
+    start: new Date(currentYear, currentMonth, 30, 14, 30),
+    end: new Date(currentYear, currentMonth, 30, 16, 15),
     color: "rgba(255, 189, 167, 1)",
   },
   {
@@ -86,7 +86,7 @@ function MyCalendar() {
   const formats = {
     dayFormat: (date, culture, localizer) => {
       // Показываем только день недели
-      return format(date, "EEEE", { locale: ru });
+      return format(date, "EEEE", { locale: enUS });
     },
     timeGutterFormat: (date) => {
       const hours = date.getHours();
