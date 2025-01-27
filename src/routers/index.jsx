@@ -23,6 +23,7 @@ import SinglePageLayout from "@/components/templates/SinglePageLayout";
 import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
 import Materials from "@/components/pages/Materials";
 import SellerChecks from "@/components/pages/SellerChecks";
+import LessonsSchedule from "@/components/pages/LessonsSchedule";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -84,6 +85,10 @@ const mainMentorRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
+            {
+                path: '/lessons-schedule',
+                element: <LessonsSchedule />
+            },
             {
                 path: '/materials',
                 element: <Materials />
