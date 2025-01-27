@@ -14,6 +14,8 @@ import MainMentorAddStudentsForm from '@/components/UI/organisms/MainMentorAddSt
 import { useTransferMutations } from '@/hooks/useGetGroupStudents';
 import toast from 'react-hot-toast';
 import { addStudentsToGroup } from '@/services/groups';
+import { updateUserPassword } from '@/services/user';
+import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
 
 const MainMentorStudentsTable = ({
     students = [],
@@ -24,13 +26,14 @@ const MainMentorStudentsTable = ({
     isTransfer,
     setIsTransfer,
     refetch,
-    isOpen=false,
+    isOpen = false,
     setIsOpen
 }) => {
     const [courseId, setCourseId] = useState('')
+    const [passwordModal, setPasswordModal] = useState(false)
     const { createTransferMutation } = useTransferMutations()
     const [selectedStudents, setSelectedStudents] = useState([])
-
+    
     const handleStudentTransfer = async (data) => {
         data.id = courseId
         await createTransferMutation.mutateAsync(data, {
@@ -42,19 +45,19 @@ const MainMentorStudentsTable = ({
             onError: (err) => toast.error(err?.response?.data?.message || "Xatolik Yuz Berdi")
         })
     }
-    
+
     const handleAddStudentToGroup = async () => {
         try {
             if (!selectedStudents || selectedStudents.length === 0) {
                 customToast?.error("O'quvchilar Qo'shing")
                 return
             }
-            
+
             const response = await addStudentsToGroup({
                 group: groupId,
                 studentIds: selectedStudents,
             })
-            
+
             if (response?.status === 201) {
                 await refetch()
                 setSelectedStudents([])
@@ -68,6 +71,11 @@ const MainMentorStudentsTable = ({
         }
     }
 
+    const handleChangePsw = async (data) => {
+        await updateUserPassword(courseId, { ...data })
+        customToast?.success("Password O'zgartirildi")
+        setPasswordModal(false)
+    }
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -86,7 +94,11 @@ const MainMentorStudentsTable = ({
                 }}
                 AddStudentToGroup={handleAddStudentToGroup}
             />
-            
+            <ChangePasswordForm
+                isOpen={passwordModal}
+                onClose={() => setPasswordModal(false)}
+                onSubmit={handleChangePsw}
+            />
             {students?.length === 0 ? (
                 <div className={cls.mainMentorNoData}>
                     <p><span>"{activeGroup}"</span> guruh shakllantirildi. <br />
@@ -122,6 +134,7 @@ const MainMentorStudentsTable = ({
                                     phoneNumber={student?.phone}
                                     setIsTransfer={setIsTransfer}
                                     fullName={getUserFullName(student)}
+                                    setPasswordModal={setPasswordModal}
                                 />
                             )}
                         />

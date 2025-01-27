@@ -8,15 +8,16 @@ import Avatar from 'react-avatar';
 
 const MainMentorStudentsTableRow = ({
     index = 0,
+    group = '',
+    setIsModal,
     avatar = '',
     status = '',
+    setCourseId,
+    setIsTransfer,
     fullName = '',
+    setPasswordModal,
     phoneNumber = '',
     userCourseId = '',
-    group = '',
-    setIsTransfer,
-    setIsModal,
-    setCourseId
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -27,7 +28,7 @@ const MainMentorStudentsTableRow = ({
             setIsTransfer(true)
             setIsModal(true)
         }},
-        { label: "O'quvchi Parolini O'zgartirish"}
+        { label: "O'quvchi Parolini O'zgartirish", onClick: () => setPasswordModal(true)}
     ]
 
     setCourseId(userCourseId)

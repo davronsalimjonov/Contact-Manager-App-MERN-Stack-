@@ -10,7 +10,8 @@ import cls from './MainMentorStudentsGroupTab.module.scss'
 
 const MainMentorStudentsGroupTab = ({
   onGroupChange,
-  setGroupId
+  setGroupId,
+  setGroupLabel
 }) => {
   const userId = useGetUserId()
   const [isOpen, setIsOpen] = useState(false)
@@ -43,7 +44,10 @@ const MainMentorStudentsGroupTab = ({
           <Button
             key={tab.value}
             className={activeGroup === `${tab?.value}` ? cls.activeButton : ''}
-            onClick={() => handleGroupChange(tab?.value)}
+            onClick={() => {
+              handleGroupChange(tab?.value)
+              setGroupLabel(tab?.label === "Barchasi" ? "" : tab?.label)
+            }}
           >
             {tab?.label}
           </Button>

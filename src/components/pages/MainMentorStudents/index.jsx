@@ -5,13 +5,14 @@ import MainMentorStudentsSearchBar from '@/components/UI/organisms/MainMentorStu
 import MainMentorStudentsGroupTab from '@/components/UI/organisms/MainMentorStudentsGroupTab'
 import Loader from '@/components/UI/atoms/Loader'
 import Pagination from '@/components/UI/moleculs/Pagination'
-import { useGetGroupStudents} from '@/hooks/useGetGroupStudents'
+import { useGetGroupStudents } from '@/hooks/useGetGroupStudents'
 
 const MainMentorStudents = () => {
     const [filter, setFilter] = useState({})
     const [groupId, setGroupId] = useState('')
     const [isTransfer, setIsTransfer] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
+    const [activeGroup, setActiveGroup] = useState('')
     const [pagination, setPagination] = useState({
         page: 1,
         limit: 10,
@@ -28,15 +29,19 @@ const MainMentorStudents = () => {
     const {
         groupStudents: { data: groupStudents, isLoading: isGroupStudentsLoading, refetch },
         groupSelectStudents: { data: groupSelectStudents }
-    } = useGetGroupStudents({...filter, ...pagination }, groupId)
+    } = useGetGroupStudents({ ...filter, ...pagination }, groupId)
 
-    useEffect(() => {}, [groupStudents])
+    useEffect(() => { }, [groupStudents])
+
+    console.log(activeGroup);
+
 
     return (
         <div className={cls.page}>
-            <MainMentorStudentsGroupTab 
+            <MainMentorStudentsGroupTab
                 onGroupChange={id => setFilter(state => ({ ...state, group: id }))}
                 setGroupId={setGroupId}
+                setGroupLabel={setActiveGroup}
             />
             <MainMentorStudentsSearchBar
                 onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
@@ -59,6 +64,7 @@ const MainMentorStudents = () => {
                         refetch={refetch}
                         isOpen={isOpen}
                         setIsOpen={setIsOpen}
+                        activeGroup={activeGroup}
                     />
                     {groupStudents?.items?.length === 0 ? <></>
                         : <Pagination
@@ -67,7 +73,8 @@ const MainMentorStudents = () => {
                             setLimit={handleLimitChange}
                             page={pagination.page}
                             setPage={handlePageChange}
-                        />}
+                        />
+                    }
                 </>
             ) : (
                 <Loader />

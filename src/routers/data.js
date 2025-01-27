@@ -60,8 +60,8 @@ export const mainMentorSidebarLinks = [
     },
     {
         id: 4,
-        link: '/courses-iframe',
-        label: 'Kurslar',
+        link: '/platform',
+        label: 'Plaforma',
         icon: ListIcon()    
     }
 ]
