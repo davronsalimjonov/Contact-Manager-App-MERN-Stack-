@@ -50,7 +50,6 @@ import SellerChecks from "@/components/pages/SellerChecks";
 import SingleMentor from "@/components/pages/SingleMentor";
 import CoursesIFrame from "@/components/pages/CoursesIFrame";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
-import CoursesIFrame from "@/components/pages/CoursesIFrame";
 import ScheduleDetails from "@/components/pages/ScheduleDetails";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
