@@ -357,7 +357,7 @@ label {
 }
 
 
-.rbc-time-view{
+.rbc-time-view {
   border: none;
 }
 
@@ -365,46 +365,90 @@ label {
   background: var(--dark-gray-300-color);
   padding: 13px;
   border-bottom: none;
-  border-color: rgba(231, 232, 235, 1);
+  border-color: var(--dark-gray-400-color) !important;
 }
 
-
-.rbc-time-slot {
-  width: 80px;
-  min-height: 25px;
+.rbc-header span {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
 }
 
 .rbc-allday-cell {
   display: none;
 }
 
-
-.rbc-header span{
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 22px;
+.rbc-time-content {
+  border-top: 1px solid var(--dark-gray-400-color);
 }
 
-/* Настраиваем сетку */
+.rbc-time-header-content {
+  border: none;
+}
+
+.rbc-events-container {
+  border-color: var(--dark-gray-400-color) !important;
+  margin: 0 !important;
+}
+
+.rbc-day-slot {
+  background: white !important;
+}
+
+.rbc-events-container>div[role="button"] {
+  left: 6px !important;
+  width: calc(100% - 12px) !important;
+}
+
+.rbc-time-slot {
+  width: 80px;
+  min-height: 25px;
+  border-top: none !important;
+}
+
 .rbc-time-content {
   overflow: hidden;
 }
 
-/* Настраиваем ячейки времени */
 .rbc-timeslot-group {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--dark-gray-400-color);
+  padding: 6px 0;
 }
 
 .rbc-time-gutter,
-.rbc-label {
+.rbc-time-header-gutter {
   background: var(--dark-gray-300-color);
 }
 
-.rbc-day-slot {
-  background: white;
+.rbc-time-slot:first-child>.rbc-label {
+  font-weight: 800;
+  color: var(--black-color);
 }
 
-.rbc-time-slot {
-  border-top: none;
-  height: 60px !important;
+.rbc-time-slot>.rbc-label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18.78px;
+  color: var(--dark-gray-700-color);
+}
+
+.rbc-event-label {
+  display: none;
+}
+
+.rbc-event-content {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 23.48px;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.rbc-today {
+  /* background-color: white; */
+}
+
+.rbc-day-slot .rbc-label {
+  display: none;
 }
