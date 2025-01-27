@@ -11,13 +11,14 @@ const MainMentorStudentsTableRow = ({
     group = '',
     setIsModal,
     avatar = '',
-    status = '',
-    setCourseId,
+    status = '',    
     setIsTransfer,
     fullName = '',
     setPasswordModal,
     phoneNumber = '',
     userCourseId = '',
+    setCourseId,
+    userId
 }) => {
     const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -28,10 +29,11 @@ const MainMentorStudentsTableRow = ({
             setIsTransfer(true)
             setIsModal(true)
         }},
-        { label: "O'quvchi Parolini O'zgartirish", onClick: () => setPasswordModal(true)}
+        { label: "O'quvchi Parolini O'zgartirish", onClick: () => {
+            setPasswordModal(true) 
+            setCourseId(userId)
+        }}
     ]
-
-    setCourseId(userCourseId)
 
     return (
         <tr className={cls.row} key={`mainMentorStudentsTable-${userCourseId}`}>

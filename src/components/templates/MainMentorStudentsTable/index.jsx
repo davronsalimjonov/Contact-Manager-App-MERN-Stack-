@@ -33,7 +33,7 @@ const MainMentorStudentsTable = ({
     const [passwordModal, setPasswordModal] = useState(false)
     const { createTransferMutation } = useTransferMutations()
     const [selectedStudents, setSelectedStudents] = useState([])
-    
+
     const handleStudentTransfer = async (data) => {
         data.id = courseId
         await createTransferMutation.mutateAsync(data, {
@@ -131,6 +131,7 @@ const MainMentorStudentsTable = ({
                                     status={student?.status}
                                     userCourseId={student.id}
                                     setCourseId={setCourseId}
+                                    userId={student?.userId}
                                     phoneNumber={student?.phone}
                                     setIsTransfer={setIsTransfer}
                                     fullName={getUserFullName(student)}
