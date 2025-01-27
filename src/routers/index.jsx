@@ -122,16 +122,16 @@ const mainMentorRoutes = createBrowserRouter([
         element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
         children: [
             {
+                path: '',
+                element: <MainMentor />
+            },
+            {
                 path: '/lessons-schedule',
                 element: <LessonsSchedule />
             },
             {
                 path: '/materials',
                 element: <Materials />
-            },
-            {
-                path: '',
-                element: <MainMentor />
             },
             {
                 path: '/students',
@@ -141,10 +141,10 @@ const mainMentorRoutes = createBrowserRouter([
                 path: '/dictionary',
                 element: <Dictionary />
             },
-            {
-                path: '/lessons-schedule',
-                element: <Schedule />
-            },
+            // {
+            //     path: '/lessons-schedule',
+            //     element: <Schedule />
+            // },
             {
                 path: '/lessons-schedule/:scheduleId',
                 element: <SingleSchedule />
