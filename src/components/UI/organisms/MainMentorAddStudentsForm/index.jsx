@@ -24,15 +24,15 @@ const MainMentorAddStudentsForm = ({
     setIsOpen,
     AddStudentToGroup
 }) => {
-    const { control, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful } } = useForm()
-    const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentors()
+    const { control, handleSubmit, reset, formState: { isSubmitting, isSubmitSuccessful } } = useForm()
     const { courseForSelect: { data: courseForSelect }, } = useGetCourse()
+    const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentors()
 
     const callMentorOptions = callMentors?.map((item) => ({ value: `${item?.id}`, label: `${item?.firstName} ${item?.lastName}` }))
     const mainMentorOptions = mainMentors?.map((item) => ({ value: `${item?.id}`, label: `${item?.firstName} ${item?.lastName}` }))
     const statusOptions = STUDENT_STATUS_ENUMS?.map((status) => ({ value: status, label: <StudentStatus status={status} /> }))
-    const courseForSelectOptions = courseForSelect?.map((item) => ({ value: item?.id, label: item?.title }))
     const selectStudentOptions = groupSelectStudents?.map((student) => ({ value: student?.id, label: `${student?.user?.firstName} ${student?.user?.lastName}` }))
+    const courseForSelectOptions = courseForSelect?.map((item) => ({ value: item?.id, label: item?.title }))
 
     useEffect(() => {
         if (isSubmitSuccessful) reset()

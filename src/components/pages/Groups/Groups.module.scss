@@ -5,6 +5,13 @@
     overflow: hidden;
     height: 100%;
 
+    &__addGroup {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+    }
+
     &__tabs {
         padding: 4px;
         background: var(--dark-gray-300-color);

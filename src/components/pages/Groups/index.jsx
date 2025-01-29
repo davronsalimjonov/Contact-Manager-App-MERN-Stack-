@@ -1,20 +1,42 @@
 import { useState } from 'react';
 import { getUserFullName } from '@/utils/lib';
 import Tabs from '@/components/UI/moleculs/Tabs';
-import { useGetGroupsByLevel } from '@/hooks/useGroups';
+import { useCreateGroupMutation, useGetGroupsByLevel } from '@/hooks/useGroups';
 import GroupCard from '@/components/UI/moleculs/GroupCard';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import cls from './Groups.module.scss';
 import Pagination from '@/components/UI/moleculs/CustomPagination';
 import Loader from '@/components/UI/atoms/Loader';
+import Button from '@/components/UI/atoms/Buttons/Button';
+import { PlusIcon } from '@/components/UI/atoms/icons';
+import CreateGroupForGroupsForm from '@/components/UI/organisms/CreateGroupForGroupsForm';
+import toast from 'react-hot-toast';
 
 const Groups = () => {
     const [pagnination, setPagination] = useState({ page: 0, limit: 10 })
     const [activeLevel, setActiveLevel] = useState('A1')
     const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 1 })
+    const [isOpen, setIsOpen] = useState(false)
+    const { createGroupMutation } = useCreateGroupMutation()
+
+    const handleCreateGroup = async (data) => {
+        await createGroupMutation.mutateAsync(data, {
+            onSuccess: () => {
+                toast.success("Gurux Yaratildi!")
+                setIsOpen(false)
+            },
+            onError: (err) => toast.error(err?.response?.data?.message || "Xatolik Yuz Berdi!")
+        })
+    }
 
     return (
         <div className={cls.groups}>
+            <div className={cls.groups__addGroup}>
+                <Button onClick={() => setIsOpen(true)}>
+                    <PlusIcon />
+                    Qo'shish
+                </Button>
+            </div>
             <Tabs
                 className={cls.groups__tabs}
                 activeTabClassName={cls.groups__tabs__active}
@@ -57,6 +79,11 @@ const Groups = () => {
                     onPageChange={({ selected: page }) => setPagination({ ...pagnination, page })}
                 />
             )}
+            <CreateGroupForGroupsForm
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                onSubmit={handleCreateGroup}
+            />
         </div>
     );
 }
