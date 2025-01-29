@@ -175,7 +175,7 @@ export const managerSidebarLinks = [
     },
     {
         id: 9,
-        label: 'Gruhlar',
+        label: 'Guruhlar',
         link: '/groups',
         icon: PersonsIcon()
     }
