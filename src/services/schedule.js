@@ -17,3 +17,9 @@ export const addNewSchedule = async (data) => {
     const res = await api.post(`/lesson-schedule/`, data);
     return res.data
 }
+
+export const getMentorLessonsSchedule = async (mentorId) => {
+    if(!mentorId) return null
+    const res = await api.get(`/lesson-schedule/mentor/${mentorId}`)
+    return res.data
+}

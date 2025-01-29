@@ -21,6 +21,7 @@
   --dark-gray-300-color: #F3F4F5;
   --dark-gray-400-color: rgba(231, 232, 235, 1);
   --dark-gray-500-color: rgba(206, 210, 216, 1);
+  --dark-gray-600-color: rgba(158, 164, 176, 1);
   --dark-gray-700-color: #6D7789;
   --dark-gray-800-color: rgba(61, 73, 98, 1);
   --dark-gray-900-color: #0C1C3A;
@@ -470,4 +471,8 @@ label {
 .rbc-time-column{
   padding-top: 6px;
   border-right: 1px solid var(--dark-gray-400-color);
+}
+
+.rbc-current-time-indicator{
+  transform: translateY(6px);
 }

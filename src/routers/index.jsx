@@ -52,6 +52,7 @@ import SingleMentor from "@/components/pages/SingleMentor";
 import CoursesIFrame from "@/components/pages/CoursesIFrame";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 import ScheduleDetails from "@/components/pages/ScheduleDetails";
+import Groups from "@/components/pages/Groups";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -277,6 +278,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/mentors/add-mentor',
                 element: <SingleMentor />
+            },
+            {
+                path: '/groups',
+                element: <Groups />
             },
             {
                 path: '*',
