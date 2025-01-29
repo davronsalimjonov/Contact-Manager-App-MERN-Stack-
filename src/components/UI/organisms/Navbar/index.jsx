@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { USER_ROLES } from '@/constants';
 import useGetUser from '@/hooks/useGetUser';
 import { getUserFullName } from '@/utils/lib';
+import { changeAdaptationStatus } from '@/services/user';
+import Toogle from '../../atoms/Form/Toogle';
 import TimePeriodPicker from '../TimePeriodPicker';
 import NotificationButton from '../NotificationButton';
 import cls from './Navbar.module.scss';
@@ -12,6 +14,7 @@ const Navbar = ({ onPerionChange }) => {
     const navigate = useNavigate()
     const { data: user } = useGetUser()
     const timeperiodPickerPath = ['/', '/main-teachers', '/dashboard']
+    const adaptationAllowedRoles = [USER_ROLES.CALL_MENTOR, USER_ROLES.MAIN_MENTROR]
 
     const routeConfig = [
         { path: '/', title: 'Dashboard', roleTitles: { [USER_ROLES.SELLER]: 'Home' }, showBackButton: false },
@@ -55,6 +58,12 @@ const Navbar = ({ onPerionChange }) => {
                 <span className={cls.navbar__name}>{title}</span>
             )}
             <div className={cls.navbar__controls}>
+                {adaptationAllowedRoles.includes(user?.role) && (
+                    <Toogle
+                        defaultChecked={user?.isAdaptationActive}
+                        onChange={(e) => changeAdaptationStatus(user?.id, { isAdaptationActive: e.target.checked })}
+                    />
+                )}
                 {timeperiodPickerPath.includes(location.pathname) && <TimePeriodPicker onChange={onPerionChange} selectsRange={rangeTimepicker} />}
                 <NotificationButton />
                 <Avatar src={user?.url} name={getUserFullName(user)} size={56} round />
