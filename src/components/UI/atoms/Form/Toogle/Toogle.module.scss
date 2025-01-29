@@ -1,0 +1,34 @@
+
+.toogle{
+    padding: 3px;
+    width: 47px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 12px;
+    background-color: rgba(241, 241, 241, 1);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    & > input{
+        display: none;
+    }
+
+    input:checked + span{
+        transform: translateX(23px);
+        background-color: var(--blue-color);
+    }
+
+    &:has(input:checked){
+        background-color: var(--blue-400-color);
+    }
+
+    & > span{
+        height: 100%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: var(--dark-gray-600-color);
+        transition: all 0.2s;
+    }
+}

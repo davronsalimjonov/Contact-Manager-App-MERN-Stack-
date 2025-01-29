@@ -46,3 +46,8 @@ export const getUserCourseList = async (id) => {
     const res = await api.get(`/user-course/courses-web/${id}`)
     return res.data
 }
+
+export const changeAdaptationStatus = async (userId, data) => {
+    const res = await api.patch(`/employee/is-adaptation-active/${userId}`, data)
+    return res.data
+}
