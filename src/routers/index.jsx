@@ -48,6 +48,7 @@ import AllMentors from "@/components/pages/AllMentors";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 import CoursesIFrame from "@/components/pages/CoursesIFrame";
 import ScheduleDetails from "@/components/pages/ScheduleDetails";
+import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -136,6 +137,10 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '/schedule/lesson',
                 element: <ScheduleDetails />
+            },
+            {
+                path: '/schedule/table',
+                element: <ScheduleHomeWork />
             },
             {
                 path: '/settings',

@@ -3,10 +3,10 @@ const ScheduleTableHeader = () => {
     return (
         <thead className={cls.head}>
             <tr>
-                <th>Darajasi</th>
-                <th>Sanasi</th>
-                <th>Vaqti</th>
-                <th></th>
+                <th>№</th>
+                <th>Ism Familiya</th>
+                <th>O'quvchi Vazifasi</th>
+                <th>Davomati</th>
             </tr>
         </thead>
     );

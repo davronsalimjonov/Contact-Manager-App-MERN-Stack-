@@ -4,9 +4,9 @@ import { useState, useCallback, useEffect } from "react";
 
 const Pagination = (({
   metaData,
-  limit,
+  limit=10,
   setLimit,
-  page,
+  page=1,
   setPage
 }) => {
   const [paginationMeta, setPaginationMeta] = useState({

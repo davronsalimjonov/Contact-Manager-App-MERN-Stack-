@@ -2,9 +2,7 @@
     display: grid;
     border-collapse: collapse;
     min-width: 100%;
-    grid-template-columns:
-        minmax(150px, 1fr) minmax(150px, 1fr) minmax(150px, 1fr) 
-        minmax(50px, 50px);;
+    grid-template-columns: auto 1fr 1fr 1fr;
 
     & tbody {
         display: contents;

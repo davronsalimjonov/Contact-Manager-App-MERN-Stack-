@@ -4,22 +4,24 @@ import cls from "./ScheduleCards.module.scss"
 const ScheduleCards = ({
     level = "A2",
     lesson = "Present Simple",
-    date = "26.01.2025"
+    date = "26.01.2025",
+    time = "1 soat 36 min",
+    onClick
 }) => {
     return (
-        <div className={cls.ScheduleCards}>
+        <div className={cls.ScheduleCards} onClick={onClick}>
             <div className={cls.ScheduleCards__lvl}>
                 <p>{level} Level</p>
             </div>
             <div className={cls.ScheduleCards__details}>
                 <div className={cls.ScheduleCards__details__lesson}>
-                    <h1>{lesson}</h1>
+                    <p>{lesson}</p>
                 </div>
-                <div>
+                <div className={cls.ScheduleCards__details__date}>
                     <span><CalendarIcon fill='#5F6C86' /><p>{date}</p></span>
                 </div>
-                <div>
-                    <span><ClockIcon /><p>{date}</p></span>
+                <div className={cls.ScheduleCards__details__time}>
+                    <span><ClockIcon /><p>{time}</p></span>
                 </div>
             </div>
         </div>

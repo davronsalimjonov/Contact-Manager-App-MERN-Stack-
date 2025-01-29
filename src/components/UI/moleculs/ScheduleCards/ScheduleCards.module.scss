@@ -1,9 +1,14 @@
 .ScheduleCards {
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-direction: column;
     background-color: #fff;
-    width: fit-content;
     box-shadow: 0px 1px 4px 0px #0000000A, 0px -1px 4px 0px #0000000A;
     padding: 12px 12px 24px 12px;
     border-radius: 10px;
+    gap: 28px;
+    cursor: pointer;
 
     &__lvl {
         background-color: #CEF2CB;
@@ -15,6 +20,35 @@
             font-weight: 500;
             font-size: 16px;
             line-height: 24px;
+        }
+    }
+
+    &__details {
+        &__lesson {
+            & p {
+                font-weight: 600;
+                font-size: 24px;
+            }
+        }
+
+        &__date {
+            & span {
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                gap: 8px;
+                margin-top: 12px;
+            }
+        }
+
+        &__time {
+            & span {
+                display: flex;
+                align-items: center;
+                justify-content: start;
+                gap: 8px;
+                margin-top: 8px;
+            }
         }
     }
 }

@@ -1,24 +1,23 @@
 import { useNavigate } from 'react-router-dom';
-import TableActionButton from '../../moleculs/TableActionButton';
 import cls from './ScheduleTableRow.module.scss';
+import { SwitchComponent } from '../../atoms/Switch';
 
 const ScheduleTableRow = ({
-    scheduleId,
-    lvl,
-    date,
-    time
+    idx = 1,
+    fullName = "Davron Salimjonov",
+    homework = "Lorem ipsum dolor sit amet consecetur birbalo sirbalo"
 }) => {
-    const navigate = useNavigate();
-    const dropdownMenuItems = [
-        { label: 'Dars jadvali', onClick: () => navigate(scheduleId) },
-    ]
+    const navigate = useNavigate()
+
     return (
         <tr className={cls.row}>
-            <td>{lvl ? lvl : "Kiritilmagan"}</td>
-            <td>{date}</td>
-            <td>{time}</td>
+            <td>{idx}</td>
+            <td>{fullName}</td>
             <td>
-                <TableActionButton menuItems={dropdownMenuItems} />
+                <span className={cls.homeworkCell}>{homework}</span>
+            </td>
+            <td>
+                <SwitchComponent />
             </td>
         </tr>
     );
