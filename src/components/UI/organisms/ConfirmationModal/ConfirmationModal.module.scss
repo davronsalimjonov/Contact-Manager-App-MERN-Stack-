@@ -1,0 +1,27 @@
+.modal {
+    width: 100%;
+    max-width: 417px;
+    padding: 16px;
+    background-color: var(--base-white-color);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    &__title {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    &__buttons{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+
+        &__reject{
+            background-color: var(--red-color);
+        }
+    }
+}

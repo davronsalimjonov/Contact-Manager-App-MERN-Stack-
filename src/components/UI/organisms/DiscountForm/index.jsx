@@ -4,7 +4,6 @@ import { Controller, useForm } from "react-hook-form";
 import FormSelect from "../../moleculs/Form/FormSelect";
 import FormInput from "../../moleculs/Form/FormInput";
 import cls from './DiscountForm.module.scss';
-import Textarea from "../../atoms/Form/Textarea";
 import Button from "../../atoms/Buttons/Button";
 import { CalendarMonthIcon, ClockIcon } from "../../atoms/icons";
 import FormTimeInput from "../../moleculs/Form/FormTimeInput";
@@ -13,6 +12,7 @@ import DatePicker from "react-datepicker";
 import { formatPrice } from "@/utils/lib";
 import { cn } from '@/utils/lib';
 import { useEffect } from "react";
+import FormTextArea from "../../moleculs/Form/FormTextArea";
 
 const MONTH_OPTIONS = [
     {
@@ -147,7 +147,7 @@ const DiscountForm = ({
                         error={errors?.discountTime?.message}
                     />
                 </div>
-                <Textarea
+                <FormTextArea
                     className={cn(classNameElement, cls.form__input)}
                     label="Description"
                     register={{ ...register('description') }}

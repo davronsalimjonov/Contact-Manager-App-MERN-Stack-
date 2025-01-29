@@ -15,8 +15,8 @@ const MentorMetricCard = ({
         <div>
             <div><h2>{title}</h2></div>
             <div>
-                <h3>Free: <span>{free}</span></h3>
-                <h3>Pro: <span>{pro}</span></h3>
+                <h3>Free: <span>{free || 0}</span></h3>
+                <h3>Pro: <span>{pro || 0}</span></h3>
             </div>
         </div>
     </div>

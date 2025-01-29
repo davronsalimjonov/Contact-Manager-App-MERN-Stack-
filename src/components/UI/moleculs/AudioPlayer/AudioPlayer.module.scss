@@ -1,0 +1,59 @@
+.player {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: rgba(245, 248, 254, 1);
+    display: grid;
+    grid-template-areas:
+        'btn title'
+        'btn range'
+        'btn time';
+    grid-template-columns: 48px 1fr;
+    gap: 5px 12px;
+    align-items: center;
+
+    &__controls{
+        grid-area: btn;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+
+        & > svg{
+            position: absolute;
+            right: -2px;
+            bottom: -2px;
+            z-index: 10;
+        }
+    }
+
+    &__btn {
+        font-size: 40px;
+        width: 48px;
+        height: 48px;
+        background-color: var(--blue-500-color);    
+        background-image: url('/images/logo-octagon.svg');
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    &__title {
+        grid-area: title;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 18.78px;
+    }
+
+    &__range {
+        grid-area: range;
+        height: 2px;
+    }
+
+    &__time {
+        grid-area: time;
+        font-size: 14px;
+        line-height: 16.44px;
+        color: var(--dark-gray-700-color);
+    }
+}

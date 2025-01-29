@@ -1,21 +1,22 @@
 import { useEffect, useRef } from "react"
 
-const useClickOutside = ({ onClickOutside }) => {
+const useClickOutside = ({ onClickOutside, disable }) => {
     const ref = useRef()
+    
+    const handleOutSideClick = (event) => {
+        if(disable) return
+        if (!ref.current?.contains(event.target) && (typeof onClickOutside === 'function')) {
+            onClickOutside()
+        }
+    };
 
     useEffect(() => {
-        const handleOutSideClick = (event) => {
-            if (!ref.current?.contains(event.target) && (typeof onClickOutside === 'function')) {
-                onClickOutside()
-            }
-        };
-
         window.addEventListener("mousedown", handleOutSideClick);
 
         return () => {
             window.removeEventListener("mousedown", handleOutSideClick);
         };
-    }, [ref, onClickOutside]);
+    }, [ref, disable]);
 
     return ref
 }

@@ -1,0 +1,110 @@
+.card {
+    padding: 16px;
+    background-color: var(--base-white-color);
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+
+        &>span {
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 14.09px;
+        }
+        
+        &__group{
+            background-color: var(--blue-color);
+            font-weight: 500;
+            color: white;
+        }
+
+        &__students{
+            padding: 2px 8px !important;
+            font-weight: 600;
+            background-color: var(--blue-300-color);
+            color: var(--dark-gray-800-color);
+
+            & > svg{
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    &__times {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 12px;
+
+        &__item {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 14.09px;
+
+            &__day {
+                color: var(--blue-gray-600-color);
+            }
+
+            &__line {
+                flex-grow: 1;
+                border: 1px dashed var(--dark-gray-400-color);
+            }
+
+            &__time {
+                font-weight: 600;
+                color: var(--black-color) !important;
+            }
+        }
+    }
+
+    &__mentors {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        &__card {
+            display: grid;
+            grid-template-areas:
+                'role avatar'
+                'name avatar';
+            grid-template-columns: 1fr 28px;
+            gap: 2px 8px;
+
+            &__role {
+                grid-area: role;
+                font-size: 12px;
+                line-height: 14.09px;
+                color: var(--dark-gray-600-color);
+            }
+
+            &__name {
+                grid-area: name;
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 14.09px;
+            }
+
+            &__avatar {
+                grid-area: avatar;
+
+                &:first-child {
+                    border: 1px solid var(--dark-gray-400-color);
+                }
+            }
+        }
+    }
+}

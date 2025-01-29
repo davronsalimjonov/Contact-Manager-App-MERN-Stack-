@@ -40,7 +40,7 @@ export const getStudentsActivity = async (mentorId, params) => {
     return res.data
 };
 
-export const getAllStudentsCount = async (mentorId, params) => {
+export const getAllStudentsCount = async (mentorId, params = {}) => {
     const res = await api.get(`/user-course/teacher-panel/students-count/${mentorId}?${paramsToString(params)}`);
     return res.data
 }

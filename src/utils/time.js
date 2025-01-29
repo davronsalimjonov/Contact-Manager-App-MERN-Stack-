@@ -61,3 +61,16 @@ export function formatMessageDate(timestamp, { month = 'long' } = {}) {
     const formatPattern = date.getFullYear() === now.getFullYear() ? monthFormat : `${monthFormat} yyyy`;
     return format(date, formatPattern, { locale: uz });
 }
+
+export const getWeekDay = (day) => {
+    const days = ['Yakshanba', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Jume', 'Shanba'];
+    return days[day];
+}
+
+export const getTimeFromMinutes = (minutes = 0) => {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(remainingMinutes).padStart(2, '0');
+    return `${formattedHours}:${formattedMinutes}`;
+};

@@ -42,12 +42,17 @@ import SellerStatistics from "@/components/pages/SellerStatistics";
 import SellerStudents from "@/components/pages/SellerStudents";
 import { MessageTypes } from "@/constants/enum";
 import SalesForm from "@/components/pages/SalesForm";
-import SinglePageLayout from "@/components/templates/SinglePageLayout";
-import SingleMentor from "@/components/pages/SingleMentor";
 import AllMentors from "@/components/pages/AllMentors";
-import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
+import SinglePageLayout from "@/components/templates/SinglePageLayout";
+import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
+import Materials from "@/components/pages/Materials";
+import SellerChecks from "@/components/pages/SellerChecks";
+import LessonsSchedule from "@/components/pages/LessonsSchedule";
+import SingleMentor from "@/components/pages/SingleMentor";
 import CoursesIFrame from "@/components/pages/CoursesIFrame";
+import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
 import ScheduleDetails from "@/components/pages/ScheduleDetails";
+import Groups from "@/components/pages/Groups";
 import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
@@ -90,6 +95,10 @@ const callTecherRoutes = createBrowserRouter([
                 element: <Workspace />
             },
             {
+                path: '/adaptation-workspace',
+                element: <AdaptationWorkspace />
+            },
+            {
                 path: '/settings',
                 element: <Settings />
             },
@@ -119,6 +128,14 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <MainMentor />
             },
             {
+                path: '/lessons-schedule',
+                element: <LessonsSchedule />
+            },
+            {
+                path: '/materials',
+                element: <Materials />
+            },
+            {
                 path: '/students',
                 element: <MainMentorStudents />
             },
@@ -126,10 +143,10 @@ const mainMentorRoutes = createBrowserRouter([
                 path: '/dictionary',
                 element: <Dictionary />
             },
-            {
-                path: '/lessons-schedule',
-                element: <Schedule />
-            },
+            // {
+            //     path: '/lessons-schedule',
+            //     element: <Schedule />
+            // },
             {
                 path: '/lessons-schedule/:scheduleId',
                 element: <SingleSchedule />
@@ -268,6 +285,10 @@ const managerRoutes = createBrowserRouter([
                 element: <SingleMentor />
             },
             {
+                path: '/groups',
+                element: <Groups />
+            },
+            {
                 path: '*',
                 element: <PageNotFound />
             },
@@ -293,6 +314,10 @@ const sellerRoutes = createBrowserRouter([
                 element: <SellerStudents />
             },
             {
+                path: '/students/:courseId',
+                element: <SingleStudent />
+            },
+            {
                 path: '/students/chat/:userCourseId',
                 element: <Chat allowedMessagesTypes={sellerAllowedMessagesTypes} />
             },
@@ -311,12 +336,16 @@ const sellerRoutes = createBrowserRouter([
         ]
     },
     {
-        path: '/sales-form',
+        path: '',
         element: <SinglePageLayout />,
         children: [
             {
-                path: '',
+                path: '/sales-form',
                 element: <SalesForm />
+            },
+            {
+                path: '/checks',
+                element: <SellerChecks />
             }
         ]
     },

@@ -10,7 +10,7 @@ const Dialog = ({
     onClose
 }) => {
     const [isVisible, setIsVisible] = useState(true)
-    const ref = useClickOutside({ onClickOutside: onClose })
+    const ref = useClickOutside({ onClickOutside: onClose, disable: !isOpen })
 
     useEffect(() => { 
         if(!isOpen){
@@ -26,7 +26,7 @@ const Dialog = ({
                 {children}
             </div>
         </div>
-    ) : <></>, document.body);
+    ) : <></>, document.getElementById('app'));
 }
 
 export default Dialog;

@@ -1,4 +1,4 @@
-import { AutoStoriesIcon, CircleNotificationIcon, HouseIcon, LanIcon, LeaderboardIcon, ListIcon, ManageAccountsIcon, MenuBookIcon, MicrophoneIcon, PersonsIcon, SchoolIcon, TaskIcon, TranslateIcon } from "@/components/UI/atoms/icons";
+import { AutoStoriesIcon, BooksMoviesAndMusicIcon, CircleNotificationIcon, HouseIcon, LanIcon, LeaderboardIcon, ListIcon, ManageAccountsIcon, MenuBookIcon, MicrophoneIcon, PersonsIcon, SchoolIcon, TaskIcon, TranslateIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons";
 
 export const callMentorSidebarLinks = [
     {
@@ -30,6 +30,12 @@ export const callMentorSidebarLinks = [
         link: '/tasks',
         label: 'Tasks',
         icon: TaskIcon()
+    },
+    {
+        id: 6,
+        link: '/adaptation-workspace',
+        label: 'Adaptatsiya workspace',
+        icon: WorkHistoryIcon()
     }
 ]
 
@@ -63,6 +69,12 @@ export const mainMentorSidebarLinks = [
         link: '/platform',
         label: 'Plaforma',
         icon: ListIcon()    
+    },
+    {
+        id: 5,
+        link: '/materials',
+        label: 'Materials',
+        icon: BooksMoviesAndMusicIcon()
     }
 ]
 
@@ -160,6 +172,12 @@ export const managerSidebarLinks = [
         label: 'Recording',
         link: '/recordings',
         icon: MicrophoneIcon()
+    },
+    {
+        id: 9,
+        label: 'Guruhlar',
+        link: '/groups',
+        icon: PersonsIcon()
     }
 ]
 

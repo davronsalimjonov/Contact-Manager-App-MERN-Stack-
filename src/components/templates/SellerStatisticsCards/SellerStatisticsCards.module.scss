@@ -1,23 +1,39 @@
 .cards {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas: 'salary plan' 'salary time';
+    grid-template-columns: 300px 1fr;
     gap: 16px;
 
     &>div {
         display: grid;
         gap: 16px;
 
-        &:nth-child(odd) {
-            grid-template-columns: repeat(4, 1fr);
+        &:first-child{
+            grid-area: salary;
         }
 
-        &:nth-child(even) {
+        &:nth-child(2) {
+            grid-area: plan;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        &:nth-child(3) {
+            grid-area: time;
             grid-template-columns: repeat(3, 1fr);
         }
     }
 
     &__value {
-        &__additional {
+        &__btn {
+            padding: 6px 8px;
+            background-color: rgba(207, 183, 0, 1);
+            align-self: flex-start;
+        }
+
+        &__plan {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-size: 16px;
             font-weight: 600;
             line-height: 18.78px;
@@ -25,6 +41,16 @@
             
             &>span {
                 color: rgba(0, 212, 59, 1);
+            }
+
+            &>button{
+                width: 28px;
+                height: 28px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 6px;
+                background-color: rgba(230, 251, 236, 1);
             }
         }
 

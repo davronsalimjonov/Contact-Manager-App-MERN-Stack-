@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { endOfISOWeek, startOfISOWeek } from 'date-fns';
 import { cn } from '@/utils/lib';
 import useClickOutside from '@/hooks/useClickOutside';
@@ -11,44 +11,65 @@ import cls from './TimePeriodPicker.module.scss';
 let defaultDate = dayjs().startOf('month').format('YYYY-MM-DD')
 let defaultEndDate = dayjs().endOf('month').format('YYYY-MM-DD')
 
-const TimePeriodPicker = ({ onChange }) => {
+const TimePeriodPicker = ({ onChange, selectsRange = false }) => {
     const [timePeriod, setTimePeriod] = useState('month')
     const [isOpenPopover, setIsOpenPopover] = useState(false)
     const ref = useClickOutside({ onClickOutside: () => setIsOpenPopover(false) })
-    const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate })
+    const [date, setDate] = useState({ startDate: defaultDate, endDate: defaultEndDate, date: defaultDate, type: timePeriod })
 
-    const handleChangeDatepicker = (date) => {
-        date = new Date(date)
-        date.setHours(0, 0, 0, 0)
-        date = new Date(date.getTime() + 5 * 60 * 60000).toISOString()
-
+    const handleChangeDatepicker = (date, timePeriod) => {
         let startDate;
         let endDate;
 
-        if (timePeriod === 'day') {
-            let lastHours = new Date(date)
-            lastHours.setHours(23, 59, 59, 0)
-
-            startDate = date
-            endDate = new Date(lastHours.getTime() + 5 * 60 * 60000).toISOString()
-        } else if (timePeriod === 'week') {
-            startDate = new Date(startOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
-            endDate = new Date(endOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
-        } else if (timePeriod === 'month') {
-            startDate = dayjs(date).startOf('month').format('YYYY-MM-DD')
-            endDate = dayjs(date).endOf('month').format('YYYY-MM-DD')
+        if (selectsRange && timePeriod === 'day') {
+            startDate = new Date(date?.[0]).toISOString()
+            endDate = new Date(date?.[1] || date?.[0])
+            endDate.setHours(23, 59, 59, 0)
+            endDate = endDate.toISOString()
+            date =  new Date(date?.[0]).toISOString()
         } else {
-            startDate = date
-            endDate = date
+            date = new Date(date)
+            date.setHours(0, 0, 0, 0)
+            date = new Date(date.getTime() + 5 * 60 * 60000).toISOString()
+
+            if (timePeriod === 'day') {
+                let lastHours = new Date(date)
+                lastHours.setHours(23, 59, 59, 0)
+
+                startDate = date
+                endDate = new Date(lastHours.getTime() + 5 * 60 * 60000).toISOString()
+            } else if (timePeriod === 'week') {
+                startDate = new Date(startOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
+                endDate = new Date(endOfISOWeek(date) - (new Date(date).getTimezoneOffset() * 60000)).toISOString()
+            } else if (timePeriod === 'month') {
+                startDate = dayjs(date).startOf('month').format('YYYY-MM-DD')
+                endDate = dayjs(date).endOf('month').format('YYYY-MM-DD')
+            } else {
+                startDate = date
+                endDate = date
+            }
         }
 
-        setDate({ startDate, endDate, date })
-        typeof onChange === 'function' && onChange({ startDate, endDate, date })
+        setDate({ startDate, endDate, date, type: timePeriod })
+        typeof onChange === 'function' && onChange({ startDate, endDate, date, type: timePeriod })
     }
 
-    useEffect(() => {
-        handleChangeDatepicker(date?.date || new Date(Date.now()).toISOString())
-    }, [timePeriod])
+    // useEffect(() => {
+    //     handleChangeDatepicker((selectsRange && timePeriod === 'day') ? (
+    //         [date?.date, date?.date]
+    //      ) : (
+    //         date?.date || new Date(Date.now()).toISOString()
+    //      ))
+    // }, [timePeriod])
+
+    const handleChangePeriod = (period) => {
+        handleChangeDatepicker((selectsRange && period === 'day') ? (
+            [date?.date, date?.date]
+         ) : (
+            date?.date || new Date(Date.now()).toISOString()
+         ), period)
+        setTimePeriod(period)
+    }
 
     return (
         <div style={{ position: 'relative' }} ref={ref}>
@@ -59,18 +80,21 @@ const TimePeriodPicker = ({ onChange }) => {
             {isOpenPopover && (
                 <div className={cls.popover}>
                     <div className={cls.popover__btns}>
-                        <Button onClick={() => setTimePeriod('day')} className={cn(timePeriod === 'day' && cls.active)}>1 kun</Button>
-                        <Button onClick={() => setTimePeriod('week')} className={cn(timePeriod === 'week' && cls.active)}>1 hafta</Button>
-                        <Button onClick={() => setTimePeriod('month')} className={cn(timePeriod === 'month' && cls.active)}>1 oy</Button>
+                        <Button onClick={() => handleChangePeriod('day')} className={cn(timePeriod === 'day' && cls.active)}>1 kun</Button>
+                        <Button onClick={() => handleChangePeriod('week')} className={cn(timePeriod === 'week' && cls.active)}>1 hafta</Button>
+                        <Button onClick={() => handleChangePeriod('month')} className={cn(timePeriod === 'month' && cls.active)}>1 oy</Button>
                     </div>
                     <DatePicker
                         inline
                         selected={date?.date}
+                        selectedEndDate={date?.endDate}
+                        selectedStartDate={date?.startDate}
                         maxDate={new Date(Date.now())}
                         className={cls.popover__datepicker}
                         showWeekPicker={timePeriod === 'week'}
                         showMonthYearPicker={timePeriod === 'month'}
-                        onChange={handleChangeDatepicker}
+                        onChange={date => handleChangeDatepicker(date, timePeriod)}
+                        selectsRange={selectsRange && (timePeriod === 'day')}
                     />
                 </div>
             )}

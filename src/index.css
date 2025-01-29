@@ -6,20 +6,22 @@
 
   --light-green-color: rgba(214, 244, 222, 1);
   --green-color: rgba(24, 193, 57, 1);
-  
+
   --blue-color: #1256DB;
   --blue-200-color: #F6F9FD;
   --blue-300-color: #F3F7FD;
   --blue-400-color: rgba(231, 238, 251, 1);
-  
+  --blue-500-color: rgba(208, 221, 248, 1);
+
   --blue-gray-color: #0F172A;
   --blue-gray-400-color: #94A3B8;
   --blue-gray-600-color: #475569;
-  
+
   --dark-gray-200-color: #FAFAFA;
   --dark-gray-300-color: #F3F4F5;
   --dark-gray-400-color: rgba(231, 232, 235, 1);
   --dark-gray-500-color: rgba(206, 210, 216, 1);
+  --dark-gray-600-color: rgba(158, 164, 176, 1);
   --dark-gray-700-color: #6D7789;
   --dark-gray-800-color: rgba(61, 73, 98, 1);
   --dark-gray-900-color: #0C1C3A;
@@ -27,7 +29,7 @@
   --black-color:#000;
   --green-color:#27CD02;
   --dark-gray-900-color: rgba(12, 28, 58, 1);
-  
+
   --red-color: #FF0000;
   --violete-color: rgba(240, 230, 250, 1);
   --yellow-color: rgba(236, 182, 4, 1);
@@ -38,16 +40,16 @@
   padding: 0;
   box-sizing: border-box;
 
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     width: 4px;
     height: 4px;
   }
 
-  &::-webkit-scrollbar-track{
+  &::-webkit-scrollbar-track {
     background-color: transparent;
-  } 
+  }
 
-  &::-webkit-scrollbar-thumb{
+  &::-webkit-scrollbar-thumb {
     background-color: #D1CFD9;
     border-radius: 2px;
   }
@@ -77,12 +79,12 @@ button {
   cursor: pointer;
 }
 
-button:disabled{
+button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-button:focus{
+button:focus {
   outline: none;
 }
 
@@ -99,23 +101,24 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-img{
+img {
   object-fit: cover;
 }
 
-textarea{
+textarea {
   font-family: inherit;
   resize: none;
 }
 
-textarea:focus{
+textarea:focus {
   outline: none;
 }
 
 /* Container and header styles */
-.react-datepicker-popper > svg{
+.react-datepicker-popper>svg {
   display: none;
 }
+
 .react-datepicker {
   font-family: Arial, sans-serif;
   border: none;
@@ -125,7 +128,7 @@ textarea:focus{
   padding: 1rem;
 }
 
-.react-datepicker__monthPicker{
+.react-datepicker__monthPicker {
   display: flex;
   flex-shrink: 0;
 }
@@ -164,19 +167,26 @@ textarea:focus{
 }
 
 .react-datepicker__day--selected[aria-selected="true"],
-.react-datepicker__month-text--selected{
+.react-datepicker__month-text--selected {
   background-color: #1256DB !important;
   border-radius: 10px !important;
 }
 
-.react-datepicker__day--keyboard-selected{
+.react-datepicker__day--keyboard-selected {
   background-color: transparent;
 }
 
+.react-datepicker__day--in-range,
+.react-datepicker__day--in-selecting-range {
+  background-color: rgb(246 249 253) !important;
+}
+
 .react-datepicker__day--selected,
+.react-datepicker__day--range-end,
+.react-datepicker__day--range-start,
 .react-datepicker__day--keyboard-selected,
 .react-datepicker__month-text--selected,
-.react-datepicker__month-text--selected:hover{
+.react-datepicker__month-text--selected:hover {
   background-color: #0064e6 !important;
   color: #fff !important;
   border-radius: 10px;
@@ -205,7 +215,7 @@ textarea:focus{
   border-radius: 50%;
 }
 
-.react-datepicker__navigation > span::before{
+.react-datepicker__navigation>span::before {
   top: 50%;
   left: 50%;
   width: 6px;
@@ -214,15 +224,15 @@ textarea:focus{
   transform: translate(-40%, -40%) rotate(45deg);
 }
 
-.react-datepicker__navigation--previous{
+.react-datepicker__navigation--previous {
   left: 16px;
 }
 
-.react-datepicker__navigation--previous > span::before{
+.react-datepicker__navigation--previous>span::before {
   transform: translate(-50%, -40%) rotate(-135deg);
 }
 
-.react-datepicker__navigation--next{
+.react-datepicker__navigation--next {
   right: 16px;
 }
 
@@ -283,15 +293,186 @@ label {
 }
 
 .rc-dialog-mask,
-.rc-dialog-wrap{
+.rc-dialog-wrap {
   background-color: rgba(15, 23, 42, 0.25) !important;
   cursor: pointer;
 }
 
-.rc-dialog-body a:hover > svg{
+.rc-dialog-body a:hover>svg {
   color: white !important;
 }
 
-.rc-dialog-content{
+.rc-dialog-content {
   cursor: initial;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  list-style: none;
+}
+
+.pagination .page-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.page-link,
+.break>a,
+.next,
+.previous {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: 1px solid var(--dark-gray-400-color);
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.next,
+.previous {
+  padding: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.next path,
+.previous path {
+  fill: var(--blue-gray-600-color);
+}
+
+.break>a {
+  margin-right: 8px;
+}
+
+.pagination .page-link:hover {
+  background-color: #e5e7eb;
+}
+
+.pagination .page-item.active .page-link {
+  color: #fff;
+  background-color: var(--blue-color);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+
+.rbc-time-view {
+  border: none;
+}
+
+.rbc-header {
+  background: var(--dark-gray-300-color);
+  padding: 13px;
+  border-bottom: none;
+  border-color: var(--dark-gray-400-color) !important;
+}
+
+.rbc-header span {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.rbc-allday-cell {
+  display: none;
+}
+
+.rbc-time-content {
+  border-top: 1px solid var(--dark-gray-400-color);
+}
+
+.rbc-time-header-content {
+  border: none;
+}
+
+.rbc-events-container {
+  border-color: var(--dark-gray-400-color) !important;
+  margin: 0 !important;
+}
+
+.rbc-day-slot {
+  background: white !important;
+}
+
+.rbc-events-container>div[role="button"] {
+  left: 6px !important;
+  width: calc(100% - 12px) !important;
+}
+
+.rbc-time-slot {
+  width: 80px;
+  min-height: 25px;
+  border-top: none !important;
+}
+
+.rbc-time-content {
+  overflow: hidden;
+}
+
+.rbc-timeslot-group {
+  border-bottom: 1px solid var(--dark-gray-400-color);
+  padding: 6px 0;
+  border-left: transparent;
+}
+
+.rbc-time-gutter{
+  margin-left: 1px;
+}
+
+.rbc-time-gutter,
+.rbc-time-header-gutter {
+  background: var(--dark-gray-300-color);
+}
+
+.rbc-time-slot:first-child>.rbc-label {
+  font-weight: 800;
+  color: var(--black-color);
+}
+
+.rbc-time-slot>.rbc-label {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18.78px;
+  color: var(--dark-gray-700-color);
+}
+
+.rbc-event-label {
+  display: none;
+}
+
+.rbc-event-content {
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 23.48px;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.rbc-today {
+  /* background-color: white; */
+}
+
+.rbc-day-slot .rbc-label {
+  display: none;
+}
+
+.rbc-events-container{
+  top: 6px !important;
+  border-left: transparent;
+}
+
+.rbc-time-column{
+  padding-top: 6px;
+  border-right: 1px solid var(--dark-gray-400-color);
+}
+
+.rbc-current-time-indicator{
+  transform: translateY(6px);
 }

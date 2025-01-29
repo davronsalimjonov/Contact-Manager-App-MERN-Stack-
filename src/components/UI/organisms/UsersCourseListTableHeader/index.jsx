@@ -1,4 +1,3 @@
-import React from 'react'
 import cls from './UserCourseListTableHeader.module.scss'
 
 const UsersCourseListTableHeader = () => {
