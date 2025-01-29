@@ -166,6 +166,12 @@ export const managerSidebarLinks = [
         label: 'Recording',
         link: '/recordings',
         icon: MicrophoneIcon()
+    },
+    {
+        id: 9,
+        label: 'Gruhlar',
+        link: '/groups',
+        icon: PersonsIcon()
     }
 ]
 

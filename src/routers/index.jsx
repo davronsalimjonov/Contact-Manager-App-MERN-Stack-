@@ -24,6 +24,7 @@ import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace";
 import Materials from "@/components/pages/Materials";
 import SellerChecks from "@/components/pages/SellerChecks";
 import LessonsSchedule from "@/components/pages/LessonsSchedule";
+import Groups from "@/components/pages/Groups";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -106,6 +107,10 @@ const managerRoutes = createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={managerSidebarLinks} />,
         children: [
+            {
+                path: '/groups',
+                element: <Groups />
+            },
             {
                 path: '*',
                 element: <PageNotFound />
