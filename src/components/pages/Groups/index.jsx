@@ -13,7 +13,7 @@ import CreateGroupForGroupsForm from '@/components/UI/organisms/CreateGroupForGr
 import toast from 'react-hot-toast';
 
 const Groups = () => {
-    const [pagnination, setPagination] = useState({ page: 0, limit: 10 })
+    const [pagnination, setPagination] = useState({ page: 0, limit: 12 })
     const [activeLevel, setActiveLevel] = useState('A1')
     const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 12 })
     const [isOpen, setIsOpen] = useState(false)
@@ -63,6 +63,8 @@ const Groups = () => {
                                 mainMentorAvatar={group.academyMentor?.url}
                                 callMentorFullName={getUserFullName(group.callMentor)}
                                 callMentorAvatar={group.callMentor?.url}
+                                isCollecting={group.status === 'collecting'}
+                                isClosed={group.status === 'closed'}
                             />
                         ))}
                     </div>

@@ -108,3 +108,57 @@
         }
     }
 }
+
+.active{
+    background-color: rgba(66, 120, 226, 1);
+
+    .card{
+        &__header{
+            &__group{
+                background-color: white;
+                color: var(--blue-color);
+            }
+
+            &__students{
+                background-color: rgba(113, 154, 233, 1);
+                color: white;
+
+                & svg path{
+                    fill: white;
+                }
+            }
+        }
+
+        &__times{
+            &__item{
+                &__day, &__time{
+                    color: white !important;
+                }
+
+                &__line{
+                    border-color: white;
+                }
+            }
+        }    
+        
+        &__mentors{
+            &__card{
+                &__role{
+                    color: rgba(255, 255, 255, 0.6);
+                }
+
+                &__name{
+                    color: white;
+                }
+
+                &__avatar:first-child{
+                    border-color: rgba(113, 154, 233, 1);
+                }
+            }
+        }
+    }
+}
+
+.closed{
+    opacity: 0.4;
+}

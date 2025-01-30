@@ -1,6 +1,7 @@
 import Avatar from 'react-avatar';
-import { PersonsIcon } from '../../atoms/icons';
+import { cn } from '@/utils/lib';
 import { getTimeFromMinutes, getWeekDay } from '@/utils/time';
+import { PersonsIcon } from '../../atoms/icons';
 import cls from './GroupCard.module.scss';
 
 const GroupCard = ({
@@ -10,10 +11,12 @@ const GroupCard = ({
     mainMentorFullName = '',
     mainMentorAvatar = '',
     callMentorFullName = '',
-    callMentorAvatar = ''
+    callMentorAvatar = '',
+    isCollecting = false,
+    isClosed = false
 }) => {
     return (
-        <div className={cls.card}>
+        <div className={cn(cls.card, isCollecting && cls.active, isClosed && cls.closed)}>
             <div className={cls.card__header}>
                 <span className={cls.card__header__group}>{name} guruh</span>
                 <span className={cls.card__header__students}><PersonsIcon />{studentsCount || 0} nafar</span>
