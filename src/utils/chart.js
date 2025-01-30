@@ -4,22 +4,22 @@ export function fillMissingSalesData(data = [], type) {
         const dateSet = new Set(data.map(entry => entry.date));
 
         const now = new Date();
-        const startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+        const startDate = new Date(now.getFullYear(), now.getMonth(), 1, 5, 0);
         const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
         let currentDate = new Date(startDate);
 
         while (currentDate <= endDate) {
-            const day = currentDate.getDate() - 1;
+            const day = currentDate.getDate();
             const dateString = currentDate.toISOString().split('T')[0];
-            
+
             if (dateSet.has(dateString)) {
                 const existingEntry = data.find(entry => entry.date === dateString);
                 filledDaily.push({ label: String(day), sum: existingEntry.sum });
             } else {
                 filledDaily.push({ label: String(day), sum: 0 });
             }
-            
+
             currentDate.setDate(currentDate.getDate() + 1);
         }
 
