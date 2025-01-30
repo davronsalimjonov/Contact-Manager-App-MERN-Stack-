@@ -29,11 +29,10 @@
 
     
     &__cards {
-        flex-grow: 1;
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 16px;
         overflow-y: auto;
-        align-items: flex-start;
+        margin-bottom: auto;
     }
 }

@@ -9,9 +9,9 @@ import Pagination from '@/components/UI/moleculs/CustomPagination';
 import Loader from '@/components/UI/atoms/Loader';
 
 const Groups = () => {
-    const [pagnination, setPagination] = useState({ page: 0, limit: 10 })
+    const [pagnination, setPagination] = useState({ page: 0, limit: 12 })
     const [activeLevel, setActiveLevel] = useState('A1')
-    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 1 })
+    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 12 })
 
     return (
         <div className={cls.groups}>
@@ -41,6 +41,8 @@ const Groups = () => {
                                 mainMentorAvatar={group.academyMentor?.url}
                                 callMentorFullName={getUserFullName(group.callMentor)}
                                 callMentorAvatar={group.callMentor?.url}
+                                isCollecting={group.status === 'collecting'}
+                                isClosed={group.status === 'closed'}
                             />
                         ))}
                     </div>

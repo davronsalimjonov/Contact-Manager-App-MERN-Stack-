@@ -28,7 +28,8 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/sales-form', title: 'Sotuv formasi', showBackButton: true },
         { path: '/materials', title: 'Materials', showBackButton: false },
         { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [USER_ROLES.SELLER]: true }, showBackButton: false },
-        { path: '/checks', title: 'Checks', showBackButton: true }
+        { path: '/checks', title: 'Checks', showBackButton: true },
+        { path: '/groups', title: 'Guruhlar', showBackButton: false }
     ];
 
     const matchRoute = (pattern, pathname) => {
