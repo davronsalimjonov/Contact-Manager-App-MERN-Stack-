@@ -15,7 +15,7 @@ import toast from 'react-hot-toast';
 const Groups = () => {
     const [pagnination, setPagination] = useState({ page: 0, limit: 10 })
     const [activeLevel, setActiveLevel] = useState('A1')
-    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 1 })
+    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 12 })
     const [isOpen, setIsOpen] = useState(false)
     const { createGroupMutation } = useCreateGroupMutation()
 

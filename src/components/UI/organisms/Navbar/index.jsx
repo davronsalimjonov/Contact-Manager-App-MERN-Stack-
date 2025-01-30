@@ -30,7 +30,8 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/courses-iframe', title: 'Kurslar' },
         { path: '/materials', title: 'Materials', showBackButton: false },
         { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [USER_ROLES.SELLER]: true }, showBackButton: false },
-        { path: '/checks', title: 'Checks', showBackButton: true }
+        { path: '/checks', title: 'Checks', showBackButton: true },
+        { path: '/groups', title: 'Guruhlar', showBackButton: true }
     ];
 
     const matchRoute = (pattern, pathname) => {
