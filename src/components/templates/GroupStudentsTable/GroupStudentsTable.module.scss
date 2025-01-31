@@ -1,0 +1,35 @@
+.table {
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    grid-template-columns:
+        minmax(37px, 37px) minmax(150px, 1fr) minmax(150px, 1fr);
+    overflow: auto;
+    margin-bottom: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(241, 241, 241, 1);
+
+    & thead,
+    & tbody,
+    & tr {
+        display: contents;
+    }
+
+    & th {
+        position: sticky;
+        top: 0;
+        background-color: var(--dark-gray-300-color);
+        padding: 10px 12px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+    }
+
+    & td {
+        padding: 10px 12px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        display: flex;
+    }
+}

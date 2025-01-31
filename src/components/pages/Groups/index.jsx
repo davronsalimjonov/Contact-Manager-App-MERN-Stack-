@@ -1,18 +1,23 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
 import Tabs from '@/components/UI/moleculs/Tabs';
-import { useCreateGroupMutation, useGetGroupsByLevel } from '@/hooks/useGroups';
+import Loader from '@/components/UI/atoms/Loader';
+import Loader from '@/components/UI/atoms/Loader';
+import { PlusIcon } from '@/components/UI/atoms/icons';
+import { useGetGroupsByLevel } from '@/hooks/useGroups';
+import { ENGLISH_LEVEL_OPTIONS } from '@/constants/form';
+import Button from '@/components/UI/atoms/Buttons/Button';
 import GroupCard from '@/components/UI/moleculs/GroupCard';
 import EmptyData from '@/components/UI/organisms/EmptyData';
-import cls from './Groups.module.scss';
 import Pagination from '@/components/UI/moleculs/CustomPagination';
-import Loader from '@/components/UI/atoms/Loader';
-import Button from '@/components/UI/atoms/Buttons/Button';
-import { PlusIcon } from '@/components/UI/atoms/icons';
+import { useCreateGroupMutation, useGetGroupsByLevel } from '@/hooks/useGroups';
 import CreateGroupForGroupsForm from '@/components/UI/organisms/CreateGroupForGroupsForm';
-import toast from 'react-hot-toast';
+import cls from './Groups.module.scss';
 
 const Groups = () => {
+    const navigate = useNavigate()
     const [pagnination, setPagination] = useState({ page: 0, limit: 12 })
     const [activeLevel, setActiveLevel] = useState('A1')
     const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 12 })
@@ -41,14 +46,7 @@ const Groups = () => {
                 className={cls.groups__tabs}
                 activeTabClassName={cls.groups__tabs__active}
                 onChange={setActiveLevel}
-                options={[
-                    { value: 'A1', label: 'A1' },
-                    { value: 'A2', label: 'A2' },
-                    { value: 'B1', label: 'B1' },
-                    { value: 'B2', label: 'B2' },
-                    { value: 'C1', label: 'C1' },
-                    { value: 'C2', label: 'C2' },
-                ]}
+                options={ENGLISH_LEVEL_OPTIONS}
             />
             {!isLoading ? (
                 groups?.items?.length > 0 ? (
@@ -65,6 +63,7 @@ const Groups = () => {
                                 callMentorAvatar={group.callMentor?.url}
                                 isCollecting={group.status === 'collecting'}
                                 isClosed={group.status === 'closed'}
+                                onClick={() => navigate(group.id)}
                             />
                         ))}
                     </div>
