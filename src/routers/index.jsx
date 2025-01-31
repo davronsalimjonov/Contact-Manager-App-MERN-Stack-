@@ -25,6 +25,7 @@ import Materials from "@/components/pages/Materials";
 import SellerChecks from "@/components/pages/SellerChecks";
 import LessonsSchedule from "@/components/pages/LessonsSchedule";
 import Groups from "@/components/pages/Groups";
+import StudentCourseInfo from "@/components/pages/StudentCourseInfo";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -64,6 +65,10 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '/adaptation-workspace',
                 element: <AdaptationWorkspace />
+            },
+            {
+                path: '/adaptation-workspace/:courseId',
+                element: <StudentCourseInfo />
             },
             {
                 path: '/settings',

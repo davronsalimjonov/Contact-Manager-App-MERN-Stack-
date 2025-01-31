@@ -1,0 +1,19 @@
+.row {
+    & td {
+        padding: 10px 16px;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 18.78px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+.select{
+    width: 100%;
+    background-color: transparent;
+
+    & > div{
+        padding-left: 0 !important;
+    }
+}

@@ -40,6 +40,9 @@ const Select = ({
             onChange={onChange}
             isClearable={isClearable}
             isSearchable={isSearchable}
+            menuPortalTarget={document.body}
+            menuPosition={'fixed'} 
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
             {...otherProps}
         />
     );

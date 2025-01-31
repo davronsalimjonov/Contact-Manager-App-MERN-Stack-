@@ -1,0 +1,10 @@
+
+.modal{
+    width: 700px;
+    padding: 16px;
+    border-radius: 10px;
+    background-color: var(--base-white-color);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
