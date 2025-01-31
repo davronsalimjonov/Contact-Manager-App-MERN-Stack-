@@ -1,6 +1,4 @@
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-import { getUserFullName } from '@/utils/lib';
-import WorkspaceCallCard from '../../moleculs/WorkspaceCallCard';
 import cls from './WorkspaceColumn.module.scss';
 
 const WorkspaceColumn = ({
@@ -8,7 +6,7 @@ const WorkspaceColumn = ({
     color = '',
     items = [],
     status = '',
-    onClickCall
+    renderItem
 }) => {
     return (
         <div className={cls.column}>
@@ -34,13 +32,7 @@ const WorkspaceColumn = ({
                                         {...provided.dragHandleProps}
                                         style={{ ...provided.draggableProps.style, marginBottom: '16px' }}
                                     >
-                                        <WorkspaceCallCard 
-                                            fullName={getUserFullName(item?.student)}
-                                            time={item?.time}
-                                            status={status}
-                                            group={item?.group}
-                                            onClickCall={() => onClickCall(item)}
-                                        />
+                                        {renderItem?.(item, status)}
                                     </div>
                                 )}
                             </Draggable>

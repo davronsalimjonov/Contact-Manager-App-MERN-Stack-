@@ -4,7 +4,8 @@ import cls from './GroupPickerModal.module.scss';
 
 const GroupPickerModal = ({
     isOpen, 
-    onClose
+    onClose,
+    onChooseGroup
 }) => {
     return (
         <Dialog isOpen={isOpen} onClose={onClose}>
@@ -15,6 +16,7 @@ const GroupPickerModal = ({
                     mainMentorFullName='Mahliyo Sohibjonova'
                     callMentorFullName='Muhammadali Berdialiyev'
                     isCollecting
+                    onClick={() => onChooseGroup('A1/12')}
                 />
                 <GroupCard 
                     title='A1/12'
@@ -22,6 +24,7 @@ const GroupPickerModal = ({
                     mainMentorFullName='Mahliyo Sohibjonova'
                     callMentorFullName='Muhammadali Berdialiyev'
                     isCollecting
+                    onClick={() => onChooseGroup('A1/12')}
                 />
                 <GroupCard 
                     title='A1/12'
@@ -29,6 +32,7 @@ const GroupPickerModal = ({
                     mainMentorFullName='Mahliyo Sohibjonova'
                     callMentorFullName='Muhammadali Berdialiyev'
                     isCollecting
+                    onClick={() => onChooseGroup('A1/12')}
                 />
                 <GroupCard 
                     title='A1/12'
@@ -36,6 +40,7 @@ const GroupPickerModal = ({
                     mainMentorFullName='Mahliyo Sohibjonova'
                     callMentorFullName='Muhammadali Berdialiyev'
                     isCollecting
+                    onClick={() => onChooseGroup('A1/12')}
                 />
             </div>
         </Dialog>

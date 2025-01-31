@@ -1,19 +1,14 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { DragDropContext } from 'react-beautiful-dnd';
 import WorkspaceColumn from '@/components/UI/organisms/WorkspaceColumn';
 import cls from './WorkspaceTable.module.scss';
 
 const WorkspaceTable = ({
     columns = [],
-    onChange
+    onChange,
+    renderItem
 }) => {
-    const navigate = useNavigate()
     const [statuses, setStatuses] = useState(columns);
-
-    const handleClickCard = (item) => {
-        navigate('/students/chat/' + item?.courseId)
-    }
 
     const onDragEnd = (result) => {
         const { source, destination, draggableId } = result;
@@ -61,7 +56,7 @@ const WorkspaceTable = ({
                         color={status?.color}
                         items={status?.items}
                         status={status?.id}
-                        onClickCall={handleClickCard}
+                        renderItem={renderItem}
                     />
                 ))}
             </div>

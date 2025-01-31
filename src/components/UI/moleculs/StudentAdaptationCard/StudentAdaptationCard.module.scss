@@ -1,0 +1,35 @@
+.card {
+    padding: 8px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.04);
+    background-color: rgba(248, 249, 250, 1);
+
+    &__name {
+        grid-area: name;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 14.09px;
+        margin-bottom: 6px;
+    }
+
+    &>span {
+        font-size: 12px;
+        line-height: 14.09px;
+    }
+
+    &__phone {
+        grid-area: phone;
+        color: var(--blue-gray-600-color);
+        margin-bottom: 14px;
+    }
+
+    &__duration{
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: var(--blue-color);
+    }
+}
