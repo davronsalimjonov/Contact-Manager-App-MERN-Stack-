@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
 import Tabs from '@/components/UI/moleculs/Tabs';
 import Loader from '@/components/UI/atoms/Loader';
-import Loader from '@/components/UI/atoms/Loader';
 import { PlusIcon } from '@/components/UI/atoms/icons';
 import { useGetGroupsByLevel } from '@/hooks/useGroups';
 import { ENGLISH_LEVEL_OPTIONS } from '@/constants/form';
