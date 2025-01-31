@@ -1,53 +1,58 @@
 .ScheduleCards {
-    display: flex;
-    width: 100%;
-    height: fit-content;
-    flex-direction: column;
     background-color: #fff;
-    box-shadow: 0px 1px 4px 0px #0000000A, 0px -1px 4px 0px #0000000A;
-    padding: 12px 12px 24px 12px;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    height: fit-content;
+    padding: 12px;
     border-radius: 10px;
-    gap: 28px;
-    cursor: pointer;
+    gap: 26px;
 
-    &__lvl {
-        background-color: #CEF2CB;
-        width: fit-content;
-        padding: 6px 12px;
-        border-radius: 18px;
-
-        & p {
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 24px;
-        }
+    &__lesson {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 23.48px;
     }
 
     &__details {
-        &__lesson {
-            & p {
-                font-weight: 600;
-                font-size: 24px;
-            }
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 36px;
+
+        & div:first-child {
+            display: flex;
+            gap: 36px;
         }
 
-        &__date {
+        & div:first-child &__date span {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            gap: 8px;
+        }
+
+        & div:first-child &__time span {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            gap: 8px;
+        }
+
+        &__video {
+            cursor: pointer;
+
             & span {
                 display: flex;
                 align-items: center;
-                justify-content: start;
+                color: #1256db;
+                font-weight: 500;
+                font-size: 14px;
                 gap: 8px;
-                margin-top: 12px;
-            }
-        }
-
-        &__time {
-            & span {
-                display: flex;
-                align-items: center;
-                justify-content: start;
-                gap: 8px;
-                margin-top: 8px;
             }
         }
     }

@@ -156,7 +156,7 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <ScheduleDetails />
             },
             {
-                path: '/schedule/table',
+                path: '/schedule/homework',
                 element: <ScheduleHomeWork />
             },
             {
