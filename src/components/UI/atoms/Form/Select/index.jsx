@@ -45,6 +45,9 @@ const Select = ({
             isSearchable={isSearchable}
             isMulti={isMulti}
             {...register}
+            menuPortalTarget={document.body}
+            menuPosition={'fixed'} 
+            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
             {...otherProps}
         />
     );

@@ -1,0 +1,48 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 16px 24px;
+    border-radius: 16px;
+    background-color: var(--base-white-color);
+
+    &__title {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 30px;
+    }
+
+    &__table {
+        max-height: 100%;
+        overflow-y: auto;
+        display: grid;
+        border-collapse: collapse;
+        min-width: 100%;
+        grid-template-columns:
+            minmax(41px, 41px) 
+            minmax(150px, 1.35fr) 
+            minmax(150px, 1.09fr) 
+            minmax(150px, 0.95fr) 
+            minmax(150px, 0.77fr) 
+            minmax(150px, 0.82fr);
+
+        & tr,
+        & thead,
+        & tbody {
+            display: contents;
+        }
+
+        & th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            padding: 10px 16px;
+            background-color: var(--base-white-color);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 16.44px;
+            text-align: left;
+            color: var(--dark-gray-700-color);
+        }
+    }
+}

@@ -54,6 +54,7 @@ import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, se
 import ScheduleDetails from "@/components/pages/ScheduleDetails";
 import Groups from "@/components/pages/Groups";
 import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
+import StudentCourseInfo from "@/components/pages/StudentCourseInfo";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -97,6 +98,10 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '/adaptation-workspace',
                 element: <AdaptationWorkspace />
+            },
+            {
+                path: '/adaptation-workspace/:courseId',
+                element: <StudentCourseInfo />
             },
             {
                 path: '/settings',
