@@ -1,13 +1,17 @@
 import WorkspaceTable from '@/components/templates/WorkspaceTable';
 import cls from './AdaptationWorkspace.module.scss';
+import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
+import { useNavigate } from 'react-router-dom';
 
 const AdaptationWorkspace = () => {
+    const navigate = useNavigate()
+
     const workspaceColumns = [
         {
             id: '1',
             title: 'Yangi',
             color: 'rgba(18, 86, 219, 1)',
-            items: []
+            items: [{ id: '1', name: 'John Doe', phone: '123-456-7890' }]
         },
         {
             id: 's',
@@ -43,6 +47,12 @@ const AdaptationWorkspace = () => {
     return (
         <WorkspaceTable
             columns={workspaceColumns}
+            renderItem={(item) => (
+                <StudentAdaptationCard 
+                    key={item.id}
+                    onClick={() => navigate(item.id)} 
+                />
+            )}
         />
 
     );

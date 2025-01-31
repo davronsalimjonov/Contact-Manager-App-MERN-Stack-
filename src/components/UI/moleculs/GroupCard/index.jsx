@@ -13,10 +13,11 @@ const GroupCard = ({
     callMentorFullName = '',
     callMentorAvatar = '',
     isCollecting = false,
-    isClosed = false
+    isClosed = false,
+    onClick
 }) => {
     return (
-        <div className={cn(cls.card, isCollecting && cls.active, isClosed && cls.closed)}>
+        <div onClick={onClick} className={cn(cls.card, isCollecting && cls.active, isClosed && cls.closed)}>
             <div className={cls.card__header}>
                 <span className={cls.card__header__group}>{name} guruh</span>
                 <span className={cls.card__header__students}><PersonsIcon />{studentsCount || 0} nafar</span>

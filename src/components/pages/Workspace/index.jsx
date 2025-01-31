@@ -1,13 +1,18 @@
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { getUserFullName } from "@/utils/lib";
 import Loader from "@/components/UI/atoms/Loader";
 import { getStatusColor } from "@/utils/workspace";
 import { WORKSPACE_STATUS } from "@/constants/enum";
 import useGetWorkspace from "@/hooks/useGetWorkspace";
 import { updateWorkspaceStatus } from "@/services/workspace";
 import WorkspaceTable from "@/components/templates/WorkspaceTable";
+import WorkspaceCallCard from "@/components/UI/moleculs/WorkspaceCallCard";
 
 const Workspace = () => {
+    const navigate = useNavigate()
     const { data: workspace, isLoading: isLoadingWorkspace } = useGetWorkspace()
-    
+
     const workspaceColumns = [
         {
             id: WORKSPACE_STATUS.NOT_CONNECTED,
@@ -39,10 +44,26 @@ const Workspace = () => {
         updateWorkspaceStatus(draggableId, { status: destination.droppableId, index: destination.index })
     }
 
+    const handleClickCard = (courseId) => {
+        navigate('/students/chat/' + courseId)
+    }
+
+    const renderItem = useCallback((item, status) => (
+        <WorkspaceCallCard
+            key={item?.id}
+            fullName={getUserFullName(item?.student)}
+            time={item?.time}
+            status={status}
+            group={item?.group}
+            onClickCall={() => handleClickCard(item?.courseId)}
+        />
+    ), [])
+
     return !isLoadingWorkspace ? (
-        <WorkspaceTable 
-            onChange={handleChangeCard} 
-            columns={workspaceColumns} 
+        <WorkspaceTable
+            onChange={handleChangeCard}
+            columns={workspaceColumns}
+            renderItem={renderItem}
         />
     ) : (
         <Loader />

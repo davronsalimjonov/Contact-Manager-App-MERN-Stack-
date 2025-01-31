@@ -3,7 +3,9 @@ import Select from '../../atoms/Form/Select';
 import Button from '../../atoms/Buttons/Button';
 import cls from './UserCourseRow.module.scss';
 
-const UserCourseRow = () => {
+const UserCourseRow = ({
+    onClickAddCourse
+}) => {
     return (
         <tr className={cls.row}>
             <td>1</td>
@@ -17,7 +19,7 @@ const UserCourseRow = () => {
                     placeholder='Aniqlanmagan'
                 />
             </td>
-            <td><Button>Guruh biriktirish</Button></td>
+            <td><Button onClick={onClickAddCourse}>Guruh biriktirish</Button></td>
         </tr>
     );
 }
