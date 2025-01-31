@@ -5,7 +5,6 @@ import { getUserFullName } from '@/utils/lib';
 import Tabs from '@/components/UI/moleculs/Tabs';
 import Loader from '@/components/UI/atoms/Loader';
 import { PlusIcon } from '@/components/UI/atoms/icons';
-import { useGetGroupsByLevel } from '@/hooks/useGroups';
 import { ENGLISH_LEVEL_OPTIONS } from '@/constants/form';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import GroupCard from '@/components/UI/moleculs/GroupCard';
