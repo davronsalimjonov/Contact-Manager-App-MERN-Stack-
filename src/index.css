@@ -8,6 +8,7 @@
   --green-color: rgba(24, 193, 57, 1);
 
   --blue-color: #1256DB;
+  --blue-100-color: rgba(248, 251, 255, 1);
   --blue-200-color: #F6F9FD;
   --blue-300-color: #F3F7FD;
   --blue-400-color: rgba(231, 238, 251, 1);
@@ -108,6 +109,10 @@ textarea {
 
 textarea:focus {
   outline: none;
+}
+
+th{
+  text-align: left;
 }
 
 /* Container and header styles */

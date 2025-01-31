@@ -23,13 +23,15 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/dictionary', title: 'Lug’at', showBackButton: false },
         { path: '/workspace', title: 'Workspace', showBackButton: false },
         { path: '/adaptation-workspace', title: 'Workspace', showBackButton: false },
+        { path: '/adaptation-workspace/:id', title: 'O’quvchi ma’lumotlari', showBackButton: false },
         { path: '/tasks', title: 'Vazifalarim', showBackButton: false },
         { path: '/settings', title: 'Sozlamalar', showBackButton: true },
         { path: '/sales-form', title: 'Sotuv formasi', showBackButton: true },
         { path: '/materials', title: 'Materials', showBackButton: false },
         { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [USER_ROLES.SELLER]: true }, showBackButton: false },
         { path: '/checks', title: 'Checks', showBackButton: true },
-        { path: '/groups', title: 'Guruhlar', showBackButton: false }
+        { path: '/groups', title: 'Guruhlar', showBackButton: false },
+        { path: '/groups/:id', title: 'Guruhlar', showBackButton: true },
     ];
 
     const matchRoute = (pattern, pathname) => {

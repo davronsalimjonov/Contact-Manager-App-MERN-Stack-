@@ -21,7 +21,12 @@ const MyStudents = () => {
 
     return (
         <div className={cls.page}>
-            <Tabs options={tabOptions} onChange={group => setFilter(state => ({ ...state, group }))} />
+            <Tabs 
+                className={cls.page__tab} 
+                tabClassName={cls.page__tab__button} 
+                options={tabOptions} 
+                onChange={group => setFilter(state => ({ ...state, group }))} 
+            />
             <StudentsSearchBar
                 onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
                 onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}

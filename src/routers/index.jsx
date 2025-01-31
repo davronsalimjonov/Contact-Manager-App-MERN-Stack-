@@ -26,6 +26,7 @@ import SellerChecks from "@/components/pages/SellerChecks";
 import LessonsSchedule from "@/components/pages/LessonsSchedule";
 import Groups from "@/components/pages/Groups";
 import StudentCourseInfo from "@/components/pages/StudentCourseInfo";
+import SingleGroup from "@/components/pages/SingleGroup";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -115,6 +116,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/groups',
                 element: <Groups />
+            },
+            {
+                path: '/groups/:id',
+                element: <SingleGroup />
             },
             {
                 path: '*',
