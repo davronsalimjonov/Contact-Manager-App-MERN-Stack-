@@ -3,14 +3,16 @@ import Button from '../../atoms/Buttons/Button';
 import { PersonsGroupIcon } from '../../atoms/icons';
 import cls from './GroupInfoCard.module.scss';
 
-const GroupInfoCard = () => {
+const GroupInfoCard = ({
+    onClickCreateSchedule
+}) => {
     return (
         <div className={cls.card}>
             <div className={cls.card__header}>
                 <PersonsGroupIcon />
                 <span className={cls.card__header__title}>A1/11 guruh</span>
             </div>
-            <Button>Dars jadval yaratish</Button>
+            <Button onClick={onClickCreateSchedule}>Dars jadval yaratish</Button>
             <div className={cls.card__mentors}>
                 <div className={cls.card__mentors__item}>
                     <Avatar
