@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import { cn } from '@/utils/lib';
+import { useStopwatch } from '@/hooks/useTimer';
 import { BellIcon } from '../../atoms/icons';
 import cls from './StudentAdaptationCard.module.scss';
-import { useStopwatch } from '@/hooks/useTimer';
 
 const StudentAdaptationCard = ({
     fullName = '',
     phone = '',
     commingDate = '',
     showStatus = false,
+    showTimer = false,
     onClick,
 }) => {
     const [status, setStatus] = useState('low')
-    const { hours, minutes, seconds} = useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
+    const { days, hours, minutes} = useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
 
     useEffect(() => {
         if(hours == 1) setStatus('medium')
@@ -30,10 +31,10 @@ const StudentAdaptationCard = ({
         >
             <h3 className={cls.card__name}>{fullName}</h3>
             <span className={cls.card__phone}>{formatPhoneNumberIntl(phone)}</span>
-            <div className={cls.card__duration}>
+            {showTimer && <div className={cls.card__duration}>
                 <BellIcon />
-                <span>{hours} soat {minutes} minut</span>
-            </div>
+                <span>{days > 0 && `${days} kun `}{hours > 0 && `${hours} soat `}{minutes} minut</span>
+            </div>}
         </div>
     );
 }
