@@ -9,9 +9,9 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 const localizer = dateFnsLocalizer({
     format,
     parse,
-    startOfWeek,
+    startOfWeek: (date) => startOfWeek(date, { weekStartsOn: 1 }),
     getDay,
-    locales: {},
+    locales: { enUS },
 });
 
 const eventStyleGetter = (event) => {
@@ -32,8 +32,10 @@ const eventStyleGetter = (event) => {
     };
 };
 
-function LessonScheduleCalendar({ events = [] }) {
-
+function LessonScheduleCalendar({ 
+    events = [],
+    className = '' 
+}) {
     const formats = {
         dayFormat: (date) => {
             return format(date, "EEEE", { locale: enUS });
@@ -64,7 +66,7 @@ function LessonScheduleCalendar({ events = [] }) {
     };
 
     return (
-        <div>
+        <div className={className} style={{ width: '100%' }}>
             <Calendar
                 culture="ru"
                 step={15}
@@ -83,7 +85,6 @@ function LessonScheduleCalendar({ events = [] }) {
                 components={{
                     timeSlotWrapper: CustomTimeSlotWrapper
                 }}
-                dayPropGetter={(date) => date.getDay() === 0 ? { style: { display: "none" } } : {}}
             />
         </div>
     );

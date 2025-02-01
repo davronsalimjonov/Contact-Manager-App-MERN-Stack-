@@ -37,6 +37,12 @@ export const ENGLISH_LEVEL_OPTIONS = [
     {value: 'C2', label: 'C2'},
 ]
 
-export const MENTOR_TYPE_OPTIONS = [
-    {value: ''}
+export const WEEKDAY_OPTIONS = [
+    {value: 1, label: 'Dushanba'},
+    {value: 2, label: 'Seshanba'},
+    {value: 3, label: 'Chorshanba'},
+    {value: 4, label: 'Payshanba'},
+    {value: 5, label: 'Juma'},
+    {value: 6, label: 'Shanba'},
+    {value: 0, label: 'Yakshanba'},
 ]
