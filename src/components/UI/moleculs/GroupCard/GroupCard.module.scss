@@ -5,6 +5,8 @@
     box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.04);
     border-radius: 10px;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
 
     &__header {
         display: flex;
@@ -47,14 +49,18 @@
         flex-direction: column;
         gap: 8px;
         margin-bottom: 12px;
+        flex-grow: 1;
+
+        & span{
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 14.09px;
+        }
 
         &__item {
             display: flex;
             align-items: flex-end;
             gap: 8px;
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 14.09px;
 
             &__day {
                 color: var(--blue-gray-600-color);
@@ -70,9 +76,16 @@
                 color: var(--black-color) !important;
             }
         }
+
+        &__empty{
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
     }
 
     &__mentors {
+        // margin-top: auto;
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -116,7 +129,7 @@
     .card{
         &__header{
             &__group{
-                background-color: white;
+                background-color: white !important;
                 color: var(--blue-color);
             }
 
@@ -139,6 +152,10 @@
                 &__line{
                     border-color: white;
                 }
+            }
+
+            &__empty{
+                color: white;
             }
         }    
         

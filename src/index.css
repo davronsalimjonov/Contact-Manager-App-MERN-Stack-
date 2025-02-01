@@ -111,7 +111,7 @@ textarea:focus {
   outline: none;
 }
 
-th{
+th {
   text-align: left;
 }
 
@@ -422,8 +422,12 @@ label {
   border-left: transparent;
 }
 
-.rbc-time-gutter{
+.rbc-time-gutter {
   margin-left: 1px;
+}
+
+.rbc-time-header-gutter {
+  width: 81px;
 }
 
 .rbc-time-gutter,
@@ -464,16 +468,16 @@ label {
   display: none;
 }
 
-.rbc-events-container{
+.rbc-events-container {
   top: 6px !important;
   border-left: transparent;
 }
 
-.rbc-time-column{
+.rbc-time-column {
   padding-top: 6px;
   border-right: 1px solid var(--dark-gray-400-color);
 }
 
-.rbc-current-time-indicator{
+.rbc-current-time-indicator {
   transform: translateY(6px);
 }

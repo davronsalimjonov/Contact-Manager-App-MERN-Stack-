@@ -16,6 +16,6 @@ export const updateEmployee = async (mentorId, data, params) => {
 }
 
 export const changeAdaptationStatus = async (userId, data) => {
-    const res = await api.patch(`/employee/is-adaptation-active/${userId}`, data)
+    const res = await api.patch(`/adaptation/active/mentor/${userId}`, data)
     return res.data
 }

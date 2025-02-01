@@ -1,8 +1,14 @@
 import Avatar from 'react-avatar';
 import { cn } from '@/utils/lib';
-import { getTimeFromMinutes, getWeekDay } from '@/utils/time';
+import { getDayName, getTimeFromMinutes } from '@/utils/time';
 import { PersonsIcon } from '../../atoms/icons';
 import cls from './GroupCard.module.scss';
+
+const colors = ['rgba(30, 181, 58, 1)', 'rgba(255, 52, 219, 1)', 'rgba(236, 182, 4, 1)', 'rgba(0, 153, 181, 1)']
+
+function getRandomColor() {
+    return colors[Math.floor(Math.random() * colors.length)];
+}
 
 const GroupCard = ({
     name = '',
@@ -19,17 +25,21 @@ const GroupCard = ({
     return (
         <div onClick={onClick} className={cn(cls.card, isCollecting && cls.active, isClosed && cls.closed)}>
             <div className={cls.card__header}>
-                <span className={cls.card__header__group}>{name} guruh</span>
+                <span className={cls.card__header__group} style={{ backgroundColor: getRandomColor() }}>{name} guruh</span>
                 <span className={cls.card__header__students}><PersonsIcon />{studentsCount || 0} nafar</span>
             </div>
             <div className={cls.card__times}>
-                {schedules?.map((schedule) => (
-                    <div className={cls.card__times__item} key={schedule?.id}>
-                        <span className={cls.card__times__item__day}>{getWeekDay(schedule?.weekday)}</span>
-                        <span className={cls.card__times__item__line}></span>
-                        <span className={cls.card__times__item__time}>{getTimeFromMinutes(schedule?.startTime)} - {getTimeFromMinutes(schedule?.endTime)}</span>
-                    </div>
-                ))}
+                {schedules?.length > 0 ? (
+                    schedules?.map((schedule) => (
+                        <div className={cls.card__times__item} key={schedule?.id}>
+                            <span className={cls.card__times__item__day}>{getDayName(schedule?.weekday)}</span>
+                            <span className={cls.card__times__item__line}></span>
+                            <span className={cls.card__times__item__time}>{getTimeFromMinutes(schedule?.startTime)} - {getTimeFromMinutes(schedule?.endTime)}</span>
+                        </div>
+                    ))
+                ) : (
+                    <span className={cls.card__times__empty}>Dars jadval biriktirilmagan</span>
+                )}
             </div>
             <div className={cls.card__mentors}>
                 <div className={cls.card__mentors__card}>
