@@ -4,6 +4,7 @@ import { socket } from "@/services/socket";
 import { removeEmptyKeys } from "@/utils/lib";
 import { getCallMentorStudents } from "@/services/course";
 import { useGetUserId } from "./useGetUser";
+import { getStudentsForAdaptation } from "@/services/students";
 
 let soundTimer = null;
 
@@ -50,6 +51,11 @@ const useGetStudents = (params = {}) => {
         () => getCallMentorStudents(userId, params),
         { cacheTime: 5 * 60 * 1000, staleTime: 5 * 60 * 1000 }
     )
+}
+
+export const useGetStudentsForAdaptation = () => {
+    const mentorId = useGetUserId()
+    return useQuery(['students', mentorId], () => getStudentsForAdaptation(mentorId), { cacheTime: 5 * 60 * 1000, staleTime: 5 * 60 * 1000 })
 }
 
 export default useGetStudents;

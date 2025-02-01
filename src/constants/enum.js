@@ -28,3 +28,12 @@ export const WORKSPACE_STATUS = {
     NOT_ANSWERED: 'not-answered',
     CONNECTED: 'connected',
 }
+
+export const ADAPTATION_WORKSPACE_STATUS = {
+    NEW: 'new',
+    LEVEL_DETECTED: 'level-detected',
+    ADAPTATION_COMPLETED: 'adaptation-completed',
+    NOT_RESPONDED: 'not-responded',
+    ISSUE: 'issue',
+    PAUSED: 'paused'
+}

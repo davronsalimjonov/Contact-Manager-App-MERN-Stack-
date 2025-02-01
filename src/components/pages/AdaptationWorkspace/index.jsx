@@ -1,60 +1,93 @@
-import WorkspaceTable from '@/components/templates/WorkspaceTable';
-import cls from './AdaptationWorkspace.module.scss';
-import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
 import { useNavigate } from 'react-router-dom';
+import { getUserFullName } from '@/utils/lib';
+import Loader from '@/components/UI/atoms/Loader';
+import { ADAPTATION_WORKSPACE_STATUS } from '@/constants/enum';
+import WorkspaceTable from '@/components/templates/WorkspaceTable';
+import { useGetStudentsForAdaptation } from '@/hooks/useGetStudents';
+import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
+import { updateStudentAdaptationStatus } from '@/services/students';
+import cls from './AdaptationWorkspace.module.scss';
 
 const AdaptationWorkspace = () => {
     const navigate = useNavigate()
+    const { data: students, isLoading } = useGetStudentsForAdaptation()
+
+    const studentsByStatus = students?.reduce((acc, student) => {
+        const studentItem = { 
+            id: student?.id,
+            userCourseId: student?.userCourse?.id,
+            fullName: getUserFullName(student?.userCourse?.user), 
+            phone: student?.userCourse?.user?.phone, 
+            commingDate: student?.startDate
+        }
+
+        if (!acc[student?.status]) {
+            acc[student?.status] = []
+        }
+        acc[student?.status].push(studentItem)
+        return acc
+    }, {}) || {}
 
     const workspaceColumns = [
         {
-            id: '1',
+            id: ADAPTATION_WORKSPACE_STATUS.NEW,
             title: 'Yangi',
             color: 'rgba(18, 86, 219, 1)',
-            items: [{ id: '1', name: 'John Doe', phone: '123-456-7890' }]
+            items: studentsByStatus[ADAPTATION_WORKSPACE_STATUS.NEW] || []
         },
         {
-            id: 's',
+            id: ADAPTATION_WORKSPACE_STATUS.LEVEL_DETECTED,
             title: 'Darajasi aniqlangan',
             color: 'rgba(3, 221, 50, 1)',
-            items: []
+            items: studentsByStatus[ADAPTATION_WORKSPACE_STATUS.LEVEL_DETECTED] || []
         },
         {
-            id: 'w',
+            id: ADAPTATION_WORKSPACE_STATUS.ADAPTATION_COMPLETED,
             title: 'Adaptatsiya tugatildi',
             color: 'rgba(255, 196, 3, 1)',
-            items: []
+            items: studentsByStatus[ADAPTATION_WORKSPACE_STATUS.ADAPTATION_COMPLETED] || []
         },
         {
-            id: 'g',
+            id: ADAPTATION_WORKSPACE_STATUS.NOT_RESPONDED,
             title: 'Javob bermadi',
             color: 'rgba(255, 0, 0, 1)',
-            items: []
+            items: studentsByStatus[ADAPTATION_WORKSPACE_STATUS.NOT_RESPONDED] || []
         },
         {
-            id: '7',
+            id: ADAPTATION_WORKSPACE_STATUS.ISSUE,
             title: 'Muammoli',
             color: 'rgba(130, 128, 255, 1)',
-            items: [] 
+            items: studentsByStatus[ADAPTATION_WORKSPACE_STATUS.ISSUE] || []
         },
         {
-            id: '8',
+            id: ADAPTATION_WORKSPACE_STATUS.PAUSED,
             title: 'Pauza',
             color: 'rgba(255, 52, 219, 1)',
-            items: []
+            items: studentsByStatus[ADAPTATION_WORKSPACE_STATUS.PAUSED] || []
         }
     ]
-    return (
+
+    const handleStatusChange = ({ draggableId, destination: { droppableId, index } }) => {
+        updateStudentAdaptationStatus(draggableId, { status: droppableId, index })
+    }
+    
+    return !isLoading ? (
         <WorkspaceTable
             columns={workspaceColumns}
-            renderItem={(item) => (
-                <StudentAdaptationCard 
+            onChange={handleStatusChange}
+            renderItem={(item, status) => (
+                <StudentAdaptationCard
                     key={item.id}
-                    onClick={() => navigate(item.id)} 
+                    phone={item.phone}
+                    fullName={item.fullName}
+                    commingDate={item.commingDate}
+                    showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW}
+                    onClick={() => navigate(item.userCourseId)}
                 />
             )}
         />
-
+    ) : (
+        <Loader />
     );
 }
 

@@ -62,11 +62,6 @@ export function formatMessageDate(timestamp, { month = 'long' } = {}) {
     return format(date, formatPattern, { locale: uz });
 }
 
-export const getWeekDay = (day) => {
-    const days = ['Yakshanba', 'Dushanba', 'Seshanba', 'Chorshanba', 'Payshanba', 'Jume', 'Shanba'];
-    return days[day];
-}
-
 export const getTimeFromMinutes = (minutes = 0) => {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
