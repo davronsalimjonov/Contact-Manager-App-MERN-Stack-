@@ -42,7 +42,7 @@ const Select = ({
             isSearchable={isSearchable}
             menuPortalTarget={document.body}
             menuPosition={'fixed'} 
-            styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+            styles={{ menuPortal: base => ({ ...base, zIndex: 99999999999 }) }}
             {...otherProps}
         />
     );

@@ -371,7 +371,7 @@ label {
   background: var(--dark-gray-300-color);
   padding: 13px;
   border-bottom: none;
-  border-color: var(--dark-gray-400-color) !important;
+  border-left: 1px solid var(--dark-gray-400-color) !important;
 }
 
 .rbc-header span {
