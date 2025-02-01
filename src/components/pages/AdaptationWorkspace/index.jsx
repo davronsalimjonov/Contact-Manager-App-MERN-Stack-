@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
+import { socket } from '@/services/socket';
 import Loader from '@/components/UI/atoms/Loader';
 import { ADAPTATION_WORKSPACE_STATUS } from '@/constants/enum';
 import WorkspaceTable from '@/components/templates/WorkspaceTable';
@@ -70,6 +72,12 @@ const AdaptationWorkspace = () => {
     const handleStatusChange = ({ draggableId, destination: { droppableId, index } }) => {
         updateStudentAdaptationStatus(draggableId, { status: droppableId, index })
     }
+
+    useEffect(() => {
+        if(socket){
+            socket.on('new-adaptation', console.log)
+        }
+    }, [socket])
     
     return !isLoading ? (
         <WorkspaceTable
@@ -82,6 +90,7 @@ const AdaptationWorkspace = () => {
                     fullName={item.fullName}
                     commingDate={item.commingDate}
                     showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW}
+                    showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                     onClick={() => navigate(item.userCourseId)}
                 />
             )}
