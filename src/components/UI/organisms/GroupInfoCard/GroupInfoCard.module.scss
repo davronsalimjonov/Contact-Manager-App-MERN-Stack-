@@ -8,6 +8,13 @@
     align-items: flex-start;
     gap: 24px;
 
+    &__outline{
+        background-color: transparent;
+        padding: 3px 0;
+        font-weight: 500;
+        color: var(--blue-color);
+    }
+
     &__header {
         display: flex;
         align-items: center;

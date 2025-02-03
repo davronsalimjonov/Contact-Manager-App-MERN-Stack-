@@ -119,11 +119,11 @@ const managerRoutes = createBrowserRouter([
                 element: <Groups />
             },
             {
-                path: '/groups/:id',
+                path: '/groups/:groupId',
                 element: <SingleGroup />
             },
             {
-                path: '/groups/:id/lesson-schedule',
+                path: '/groups/:groupId/lesson-schedule',
                 element: <LessonPlan />
             },
             {
