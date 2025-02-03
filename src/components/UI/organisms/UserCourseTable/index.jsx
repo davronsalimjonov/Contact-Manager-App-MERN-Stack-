@@ -9,9 +9,11 @@ import UserCourseRow from '../../moleculs/UserCourseRow';
 import GroupPickerModal from '../GroupPickerModal';
 import ConfirmationModal from '../ConfirmationModal';
 import cls from './UserCourseTable.module.scss';
+import { useGetUserId } from '@/hooks/useGetUser';
 
 const UserCourseTable = ({ userId, userCourseId }) => {
     const queryClient = useQueryClient()
+    const mentorId = useGetUserId()
     const [groupPicker, setGroupPicker] = useState({ isOpen: false, level: '', userCourseId: null })
     const [confirmModal, setConfirmModal] = useState({ isOpen: false, groupId: null, groupName: null, userCourseId: null })
     const { data: courses, isLoading } = useGetUserCourses(userId)
@@ -38,6 +40,7 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                 return oldData?.map(course => course?.id === userCourseId ? { ...course, group } : course)
             })
             await addStudentToGroup({ group: groupId, student: userCourseId })
+            queryClient.invalidateQueries(['students', userId])
         } catch (error) {
             queryClient.setQueryData(['user-courses', userId], (oldData) => {
                 return oldData?.map(course => course?.id === userCourseId ? { ...course, group: null } : course)

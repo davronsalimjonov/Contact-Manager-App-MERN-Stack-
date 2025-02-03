@@ -1,10 +1,6 @@
-import { getGroupsByLevel } from "@/services/group";
-import { createGroups } from "@/services/groups";
-import { removeEmptyKeys } from "@/utils/lib";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { getActiveGroups, getGroupsByLevel } from "@/services/group"
-import { removeEmptyKeys } from "@/utils/lib"
-import { useQuery } from "react-query"
+import { removeEmptyKeys } from "@/utils/lib";
+import { getActiveGroups, getGroupsByLevel, createGroups } from "@/services/group"
 
 export const useGetGroupsByLevel = (level, params) => {
     return useQuery(
