@@ -29,11 +29,6 @@ const Schedule = () => {
                 onChangeWeekday={(weekday) => setFilter(state => ({ ...state, weekday: weekday?.value }))}
                 onAddLesson={handleOpen}
             />
-            {/* <ScheduleTable
-                triggerRef={ref}
-                schedule={schedule}
-                isLoading={isLoadingSchedule}
-            /> */}
             <AddSchedule 
                 refetch={refetch}
                 openModal={openModal} 

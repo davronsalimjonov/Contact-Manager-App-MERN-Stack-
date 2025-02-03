@@ -1,26 +1,11 @@
-.table {
-    display: grid;
-    border-collapse: collapse;
-    min-width: 100%;
-    grid-template-columns: auto 1fr 1fr 1fr;
-
-    & tbody {
-        display: contents;
-    }
+.tableWrapper {
+    border-radius: 8px;
+    overflow: hidden;  
+    border: 1px solid #F3F4F5;
 }
 
-.scheduleTableParent {
-    border-radius: 4px;
-    overflow: hidden;
-    
-    & .__caption {
-        grid-area: 1/1/span 1/span 4;
-        padding: 16px;
-        font-family: "Raleway";
-        font-size: 20px;
-        font-weight: 800;
-        line-height: 24px;
-        text-align: left;
-        background-color: var(--base-white-color);
-    }
+.ScheduleTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
 }

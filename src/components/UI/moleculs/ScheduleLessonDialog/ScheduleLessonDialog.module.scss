@@ -1,0 +1,26 @@
+.ScheduleHeader__dialog {
+        
+    &__close {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+
+        & button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        } 
+    }
+
+    &__src {
+        margin-top: 16px;
+
+        img {
+            width: 80vw;
+        }
+    }
+}

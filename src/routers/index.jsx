@@ -54,6 +54,7 @@ import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, se
 import ScheduleDetails from "@/components/pages/ScheduleDetails";
 import Groups from "@/components/pages/Groups";
 import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
+import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -143,14 +144,6 @@ const mainMentorRoutes = createBrowserRouter([
                 path: '/dictionary',
                 element: <Dictionary />
             },
-            // {
-            //     path: '/lessons-schedule',
-            //     element: <Schedule />
-            // },
-            {
-                path: '/lessons-schedule/:scheduleId',
-                element: <SingleSchedule />
-            },
             {
                 path: '/schedule/lesson',
                 element: <ScheduleDetails />
@@ -158,6 +151,10 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '/schedule/homework',
                 element: <ScheduleHomeWork />
+            },
+            {
+                path: '/schedule/homework/create',
+                element: <ScheduleHomeworkCreate />
             },
             {
                 path: '/settings',
