@@ -1,6 +1,10 @@
-import { useMutation, useQueryClient } from "react-query"
-import { updateUserCourse } from "@/services/course"
+import { useMutation, useQuery, useQueryClient } from "react-query"
+import { getUserCourses, updateUserCourse } from "@/services/course"
 import { useGetUserId } from "./useGetUser"
+
+export const useGetUserCourses = (userId) => {
+    return useQuery(['user-courses', userId], () => getUserCourses(userId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!userId })
+}
 
 export const useUserCourseMutations = (userCourseId) => {
     const userId = useGetUserId()

@@ -17,8 +17,8 @@ const StudentAdaptationCard = ({
     const { days, hours, minutes} = useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
 
     useEffect(() => {
-        if(hours == 1) setStatus('medium')
-        if(hours >= 2) setStatus('high')
+        if(hours == 1 && days == 0) setStatus('medium')
+        if(hours >= 2 || days > 0) setStatus('high')
     }, [hours])
 
     return (

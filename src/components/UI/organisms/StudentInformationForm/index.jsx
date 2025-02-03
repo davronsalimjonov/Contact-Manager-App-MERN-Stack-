@@ -1,15 +1,19 @@
+import dayjs from 'dayjs';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { cn } from '@/utils/lib';
 import { getDayName } from '@/utils/time';
+import { updateUser } from '@/services/user';
 import { useGetUserId } from '@/hooks/useGetUser';
 import { GENDER_OPTIONS } from '@/constants/form';
+import { cn, objectToFormData } from '@/utils/lib';
 import { updateUserCourse } from '@/services/course';
 import { studentInfoSchema } from '@/schemas/student';
+import useGetStudentCourseById from '@/hooks/useGetStudentCourseById';
+import Loader from '../../atoms/Loader';
 import Dialog from '../../moleculs/Dialog';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
@@ -22,34 +26,73 @@ import ConnectionTimeFormPopup from '../ConnectionTimeFormPopup';
 import { EditIcon, LeftArrowIcon, PlusIcon } from '../../atoms/icons';
 import cls from './StudentInformationForm.module.scss';
 
-const StudentInformationForm = ({
-    courseId = '',
-    connectionDays = [],
-    connectionTime = '',
-    defaultValues,
-    onSubmit
-}) => {
+const StudentInformationForm = ({ courseId = '' }) => {
     const userId = useGetUserId()
     const navigate = useNavigate()
     const queryClient = useQueryClient()
-    const [isOpenDialog, setIsOpenDialog] = useState(false)
     const [isEditable, setIsEditable] = useState(false)
-    const { register, control, reset, watch, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
-        defaultValues,
-        mode: 'onSubmit',
-        resolver: yupResolver(studentInfoSchema)
-    })
+    const [isOpenDialog, setIsOpenDialog] = useState(false)
+    const { data: course, isLoading: isLoadingStudent } = useGetStudentCourseById(courseId)
+    const { register, control, reset, watch, handleSubmit, setValue, formState: { isDirty, errors, isSubmitting } } = useForm({ mode: 'onSubmit', resolver: yupResolver(studentInfoSchema) })
     const avatar = watch('avatar')
+    const student = course?.user
+    const defaultValues = {
+        id: student?.id,
+        avatar: student?.url,
+        firstName: student?.firstName,
+        lastName: student?.lastName,
+        phone: student?.phone,
+        birthday: student?.birthday,
+        gender: String(student?.gender),
+        createdAt: student?.createdAt ? dayjs(student?.createdAt).format('DD.MM.YYYY') : ''
+    }
+    const connectionDays = course?.days
+    const connectionTime = course?.connectionTime
+    const defaultConnectionTimes = { days: connectionDays, connectionTime }
     const connectionTimesLabel = [
         `${connectionDays?.length > 0 ? `${connectionDays?.map(day => getDayName(day, 'short')).join(', ')} kunlari` : ''}`,
         `${connectionTime ? `${connectionTime} oralig’ida` : ''}`
     ].filter(text => text).join('; ')
 
     useEffect(() => {
-        if (isSubmitSuccessful) {
+        if (!isLoadingStudent) {
             reset(defaultValues)
         }
-    }, [isSubmitSuccessful])
+    }, [isLoadingStudent])
+
+    const handleUpdateUser = async (data) => {
+        try {
+            const updatedUserInfo = Object.assign({}, data)
+            const studentId = updatedUserInfo?.id
+            delete updatedUserInfo.id
+            delete updatedUserInfo.createdAt
+            updatedUserInfo.phone = updatedUserInfo.phone
+            updatedUserInfo.gender = String(updatedUserInfo.gender)
+
+            if (!updatedUserInfo?.birthday) delete updatedUserInfo.birthday
+            if (!(updatedUserInfo?.avatar instanceof File) && updatedUserInfo?.avatar !== null) delete updatedUserInfo.avatar
+
+            const fd = objectToFormData(updatedUserInfo)
+
+            const updatedUser = await updateUser(studentId, fd)
+            queryClient.setQueryData(['user-course', courseId], (oldData) => ({ ...oldData, user: updatedUser }))
+            queryClient.setQueriesData(['students'], oldData => {
+                return oldData?.map(item => {
+                    if (item?.id === courseId) {
+                        delete updatedUser.id
+                        item = { ...item, ...updatedUser }
+                    }
+                    return item
+                })
+            })
+            
+            setIsEditable(false)
+            toast.success("Malumotlar o'zgartirildi")
+        } catch (error) {
+            const res = error?.response?.data
+            toast.error(res?.message || error?.message || 'Xatolik yuz berdi')
+        }
+    }
 
     const handleUpdateConnectionTimes = async (data) => {
         try {
@@ -72,15 +115,17 @@ const StudentInformationForm = ({
         }
     }
 
-    return (
+    return isLoadingStudent ? (
+        <Loader className={cls.loader} />
+    ) : (
         <>
             <Dialog isOpen={isOpenDialog} onClose={() => setIsOpenDialog(false)}>
                 <ConnectionTimeFormPopup
                     onSubmit={handleUpdateConnectionTimes}
-                    defaultValues={{ days: connectionDays, connectionTime }}
+                    defaultValues={defaultConnectionTimes}
                 />
             </Dialog>
-            <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+            <form className={cls.form} onSubmit={handleSubmit(handleUpdateUser)}>
                 <div className={cls.form__header}>
                     <button
                         type='button'
@@ -149,14 +194,16 @@ const StudentInformationForm = ({
                     />
                     <FormInput
                         label='Bog’lanish kunlari'
+                        readOnly
                         placeholder='Bog’lanish kunlarini kiriting'
                         value={connectionTimesLabel}
-                        readOnly
+                        disabled={!isEditable}
                         preffix={(
                             <button
                                 type='button'
                                 className={cls.form__elements__btn}
                                 onClick={() => setIsOpenDialog(true)}
+                                disabled={!isEditable}
                             >
                                 {connectionTimesLabel ? <EditIcon /> : <PlusIcon fill='#5F6C86' />}
                             </button>
