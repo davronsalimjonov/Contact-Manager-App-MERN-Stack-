@@ -14,7 +14,7 @@ const Navbar = ({ onPerionChange }) => {
     const navigate = useNavigate()
     const { data: user } = useGetUser()
     const timeperiodPickerPath = ['/', '/main-teachers', '/dashboard']
-    const adaptationAllowedRoles = [USER_ROLES.CALL_MENTOR, USER_ROLES.MAIN_MENTROR]
+    const adaptationAllowedRoles = [USER_ROLES.CALL_MENTOR]
 
     const routeConfig = [
         { path: '/', title: 'Dashboard', roleTitles: { [USER_ROLES.SELLER]: 'Home' }, showBackButton: false },

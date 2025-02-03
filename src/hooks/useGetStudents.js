@@ -55,6 +55,16 @@ const useGetStudents = (params = {}) => {
 
 export const useGetStudentsForAdaptation = () => {
     const mentorId = useGetUserId()
+    const queryClient = useQueryClient()
+
+    useEffect(() => {
+        if(socket && !socket.hasListeners('new-adaptation')){
+            socket.on('new-adaptation', student => {
+                queryClient.setQueryData(['adaptation-students', mentorId], (students) => [...(students || []), student])
+            })
+        }
+    }, [socket])
+
     return useQuery(['adaptation-students', mentorId], () => getStudentsForAdaptation(mentorId), { cacheTime: 5 * 60 * 1000, staleTime: 5 * 60 * 1000 })
 }
 

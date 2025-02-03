@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
+import { useGetUserId } from '@/hooks/useGetUser';
 import { updateUserCourse } from '@/services/course';
 import { addStudentToGroup } from '@/services/group';
 import { useGetUserCourses } from '@/hooks/useUserCourse';
@@ -12,6 +13,7 @@ import cls from './UserCourseTable.module.scss';
 
 const UserCourseTable = ({ userId, userCourseId }) => {
     const queryClient = useQueryClient()
+    const mentorId = useGetUserId()
     const [groupPicker, setGroupPicker] = useState({ isOpen: false, level: '', userCourseId: null })
     const [confirmModal, setConfirmModal] = useState({ isOpen: false, groupId: null, groupName: null, userCourseId: null })
     const { data: courses, isLoading } = useGetUserCourses(userId)
@@ -38,6 +40,7 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                 return oldData?.map(course => course?.id === userCourseId ? { ...course, group } : course)
             })
             await addStudentToGroup({ group: groupId, student: userCourseId })
+            queryClient.invalidateQueries(['students', mentorId])
         } catch (error) {
             queryClient.setQueryData(['user-courses', userId], (oldData) => {
                 return oldData?.map(course => course?.id === userCourseId ? { ...course, group: null } : course)

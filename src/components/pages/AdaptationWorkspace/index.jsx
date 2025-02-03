@@ -73,15 +73,10 @@ const AdaptationWorkspace = () => {
     const handleStatusChange = ({ draggableId, destination: { droppableId, index } }) => {
         updateStudentAdaptationStatus(draggableId, { status: droppableId, index })
     }
-
-    useEffect(() => {
-        if(socket){
-            socket.on('new-adaptation', console.log)
-        }
-    }, [socket])
     
     return !isLoading ? (
         <WorkspaceTable
+            key={students?.length}
             columns={workspaceColumns}
             onChange={handleStatusChange}
             renderItem={(item, status) => (
