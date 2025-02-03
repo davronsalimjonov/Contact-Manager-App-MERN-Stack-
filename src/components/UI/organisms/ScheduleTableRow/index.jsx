@@ -1,16 +1,15 @@
-import { useNavigate } from 'react-router-dom';
 import cls from './ScheduleTableRow.module.scss';
 import { SwitchComponent } from '../../atoms/Switch';
 
 const ScheduleTableRow = ({
     idx = 1,
     fullName = "Davron Salimjonov",
-    homework = "Lorem ipsum dolor sit amet consecetur birbalo sirbalo"
+    homework = "Lorem ipsum dolor sit amet consecetur birbalo sirbalo",
+    onClick
 }) => {
-    const navigate = useNavigate()
 
     return (
-        <tr className={cls.row}>
+        <tr className={cls.row} onClick={onClick}>
             <td>{idx}</td>
             <td>{fullName}</td>
             <td>

@@ -55,6 +55,7 @@ import ScheduleDetails from "@/components/pages/ScheduleDetails";
 import Groups from "@/components/pages/Groups";
 import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
 import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
+import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -151,6 +152,10 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '/schedule/homework',
                 element: <ScheduleHomeWork />
+            },
+            {
+                path: '/schedule/homework/details',
+                element: <ScheduleHomeWorkDetails />
             },
             {
                 path: '/schedule/homework/create',
