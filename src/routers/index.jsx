@@ -102,7 +102,7 @@ const callTecherRoutes = createBrowserRouter([
                 element: <AdaptationWorkspace />
             },
             {
-                path: '/adaptation-workspace/:courseId',
+                path: '/adaptation-workspace/:courseId/:userId',
                 element: <StudentCourseInfo />
             },
             {

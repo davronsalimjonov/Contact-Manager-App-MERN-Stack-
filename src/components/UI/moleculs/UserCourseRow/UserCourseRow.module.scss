@@ -17,3 +17,8 @@
         padding-left: 0 !important;
     }
 }
+
+.disabled > td{
+    opacity: 0.4;
+    pointer-events: none;
+}

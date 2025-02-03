@@ -89,3 +89,8 @@ export const changeIsActiveCourseRate = async (commentId, isActive) => {
     const res = await api.put(`/course-rate/is-active/${commentId}`, { isActive: isActive });
     return res.data;
 }
+
+export const getUserCourses = async (userId) => {
+    const res = await api.get(`/user-course/for-adaptation/user/${userId}`)
+    return res.data
+}

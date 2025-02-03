@@ -18,6 +18,7 @@ const AdaptationWorkspace = () => {
         const studentItem = { 
             id: student?.id,
             userCourseId: student?.userCourse?.id,
+            userId: student?.userCourse?.user?.id,
             fullName: getUserFullName(student?.userCourse?.user), 
             phone: student?.userCourse?.user?.phone, 
             commingDate: student?.startDate
@@ -91,7 +92,7 @@ const AdaptationWorkspace = () => {
                     commingDate={item.commingDate}
                     showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                     showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
-                    onClick={() => navigate(item.userCourseId)}
+                    onClick={() => navigate(`${item.userCourseId}/${item.userId}`)}
                 />
             )}
         />
