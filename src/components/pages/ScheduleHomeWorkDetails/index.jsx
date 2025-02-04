@@ -4,9 +4,7 @@ import React from 'react'
 const ScheduleHomeWorkDetails = () => {
   return (
     <div>
-      <div>
-        <ScheduleLessonFiles />
-      </div>
+      <ScheduleLessonFiles />
     </div>
   )
 }

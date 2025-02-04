@@ -1,17 +1,15 @@
 import ScheduleLessonExercise from "../../moleculs/ScheduleLessonExercise"
 
 const ScheduleLessonFiles = ({
-    image='',
-    videos='',
-    files=[]
+    image = '',
+    videos = '',
+    files = []
 }) => {
-  return (
-    <div>
+    return (
         <div>
             <ScheduleLessonExercise />
         </div>
-    </div>
-  )
+    )
 }
 
 export default ScheduleLessonFiles
