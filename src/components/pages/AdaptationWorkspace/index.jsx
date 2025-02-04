@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
-import { socket } from '@/services/socket';
 import Loader from '@/components/UI/atoms/Loader';
 import { ADAPTATION_WORKSPACE_STATUS } from '@/constants/enum';
 import WorkspaceTable from '@/components/templates/WorkspaceTable';
@@ -9,10 +7,11 @@ import { useGetStudentsForAdaptation } from '@/hooks/useGetStudents';
 import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
 import { updateStudentAdaptationStatus } from '@/services/students';
 import cls from './AdaptationWorkspace.module.scss';
+import toast from 'react-hot-toast';
 
 const AdaptationWorkspace = () => {
     const navigate = useNavigate()
-    const { data: students, isLoading } = useGetStudentsForAdaptation()
+    const { data: students, isLoading, updateStudentAdaptation } = useGetStudentsForAdaptation()
 
     const studentsByStatus = students?.reduce((acc, student) => {
         const studentItem = { 
@@ -70,8 +69,13 @@ const AdaptationWorkspace = () => {
         }
     ]
 
-    const handleStatusChange = ({ draggableId, destination: { droppableId, index } }) => {
-        updateStudentAdaptationStatus(draggableId, { status: droppableId, index })
+    const handleStatusChange = async ({ draggableId, destination: { droppableId, index } }) => {
+        try {
+            await updateStudentAdaptationStatus(draggableId, { status: droppableId, index })
+            updateStudentAdaptation(draggableId, { status: droppableId, index })
+        } catch (error) {
+            toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')    
+        }
     }
     
     return !isLoading ? (
