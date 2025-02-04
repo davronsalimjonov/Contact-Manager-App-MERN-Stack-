@@ -3,7 +3,9 @@ import { useGetMentorLessonsSchedule } from "@/hooks/useLessonsSchedule";
 import LessonScheduleCalendar from "@/components/templates/LessonScheduleCalendar";
 
 function LessonsSchedule() {
-  const { data: lessons } = useGetMentorLessonsSchedule()
+  const {
+    mentorLessonSchedule: { data: lessons } 
+  } = useGetMentorLessonsSchedule()
 
   return (
     <LessonScheduleCalendar events={convertLessonScheduleToEvents(lessons)} />

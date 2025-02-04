@@ -146,7 +146,7 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <Dictionary />
             },
             {
-                path: '/schedule/lesson',
+                path: '/schedule/lesson/:groupId',
                 element: <ScheduleDetails />
             },
             {

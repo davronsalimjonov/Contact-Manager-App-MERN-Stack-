@@ -23,3 +23,14 @@ export const getMentorLessonsSchedule = async (mentorId) => {
     const res = await api.get(`/lesson-schedule/mentor/${mentorId}`)
     return res.data
 }
+
+export const getMentorGroupLesson = async (groupId) => {
+    if (!groupId) return null
+    const res = await api.get(`/lesson/group/${groupId}`)
+    return res.data
+}
+
+export const createGroupLesson = async (data) => {
+    const res = await api.post(`/lesson`, data)
+    return res?.data
+}

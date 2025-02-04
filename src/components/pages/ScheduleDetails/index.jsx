@@ -1,24 +1,35 @@
-import Button from '@/components/UI/atoms/Buttons/Button'
-import { PeopleGroupIcon, PlusIcon } from '@/components/UI/atoms/icons'
 import cls from "./SchduleDetails.module.scss"
 import ScheduleCards from '@/components/UI/moleculs/ScheduleCards'
-import Pagination from '@/components/UI/moleculs/Pagination'
 import { useNavigate } from 'react-router-dom'
-import WhiteButton from '@/components/UI/atoms/Buttons/WhiteButton'
 import ScheduleLessonsBtns from '@/components/UI/moleculs/ScheduleLessonsBtns'
+import { useGetMentorLessonsSchedule } from "@/hooks/useLessonsSchedule"
+import dayjs from "dayjs"
 
 const ScheduleLessons = () => {
     const navigate = useNavigate()
+    const { mentorGroupLesson: { data: groupLesson, refetch } } = useGetMentorLessonsSchedule()
 
     return (
         <div className={cls.ScheduleLessons}>
             <div className={cls.ScheduleLessons__btns}>
-                <ScheduleLessonsBtns />
+                <ScheduleLessonsBtns
+                    refetch={refetch}
+                />
             </div>
             <div className={cls.ScheduleLessons__cards} >
-                <ScheduleCards
-                    onClick={() => navigate('/schedule/table')}
-                />
+                {groupLesson && groupLesson?.map((lesson) => {
+                    return (
+                        <ScheduleCards
+                            key={lesson.id}  
+                            onClick={() => navigate('/schedule/table')}
+                            title={lesson?.title}
+                            description={lesson?.description}
+                            date={dayjs(lesson?.date).format('DD.MM.YYYY')}
+                            duration={lesson?.duration}
+                            video={lesson?.video}
+                        />
+                    );
+                })}
             </div>
         </div>
     )
