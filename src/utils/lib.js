@@ -314,3 +314,9 @@ export function getFileCategory(input) {
 
     return "any";
 }
+
+export const autoPlayAudio = (url) => {
+    if (!url) return;
+    const audio = new Audio(url);
+    audio.play();
+}
