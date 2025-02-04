@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { debounce } from '@/utils/lib';
-import { socket } from '@/services/socket';
-import { MessageTypes } from '@/constants/enum';
+import { autoPlayAudio, debounce } from '@/utils/lib';
+import { getMessageOwner } from '@/utils/chat';
 import { useGetUserId } from '@/hooks/useGetUser';
 import Loader from '@/components/UI/atoms/Loader';
+import EmptyData from '@/components/UI/organisms/EmptyData';
 import useGetChat, { useGetChatMessages } from '@/hooks/useGetChat';
 import ChatMessageEditProvider from '@/providers/ChatMessageEditProvider';
 import ConversationInput from '@/components/UI/organisms/ConversationInput';
@@ -11,7 +11,7 @@ import ConversationHeader from '@/components/UI/organisms/ConversationHeader';
 import ConversationMessages from '@/components/UI/organisms/ConversationMessages';
 import { getChatAboveMessages, getChatBellowMessages, sendViewedMessages } from '@/services/chat';
 import cls from './ChatConversation.module.scss';
-import { getMessageOwner } from '@/utils/chat';
+import { useSocket } from '@/providers/SocketProvider';
 
 let soundTimer = null
 
@@ -23,6 +23,7 @@ const ChatConversation = ({
     allowedMessagesTypes
 }) => {
     const userId = useGetUserId()
+    const {socket} = useSocket()
     const unreadedMessages = useRef({ ids: [], index: null })
     const { data: chatInfo, removeUnreadedMessagesCount, addUnreadedMessagesCount } = useGetChat(userCourseId)
     const { data, messages, isLoading: isLoadingMessages, addPrevMessages, addNextMessages, addNewMessage } = useGetChatMessages(conversationId)
@@ -78,8 +79,7 @@ const ChatConversation = ({
                 addUnreadedMessagesCount(1)
 
                 if (!soundTimer) {
-                    const audio = new Audio('/audio/new-message-came.mp3')
-                    audio.play();
+                    autoPlayAudio('/audio/new-message-came.mp3')
 
                     soundTimer = setTimeout(() => {
                         soundTimer = null;
@@ -109,21 +109,25 @@ const ChatConversation = ({
                         <Loader />
                     </div>
                 ) : (
-                    <ConversationMessages
-                        userCourseId={userCourseId}
-                        messages={messages}
-                        onTopReach={handleTopReach}
-                        onBottomReach={handleBottomReach}
-                        onMessageVisible={handleMessageVisible}
-                        initialMessageIndex={data?.[0]?.index}
-                        hasAboveMessages={typeof data?.[0]?.above === 'boolean' ? data?.[0]?.above : undefined}
-                        hasBelowMessages={typeof data?.[0]?.bellow === 'boolean' ? data?.[0]?.bellow : undefined}
-                        unreadedMessagesCount={chatInfo?.count || 0}
-                    />
+                    messages?.length > 0 ? (
+                        <ConversationMessages
+                            userCourseId={userCourseId}
+                            messages={messages}
+                            onTopReach={handleTopReach}
+                            onBottomReach={handleBottomReach}
+                            onMessageVisible={handleMessageVisible}
+                            initialMessageIndex={data?.[0]?.index}
+                            hasAboveMessages={typeof data?.[0]?.above === 'boolean' ? data?.[0]?.above : undefined}
+                            hasBelowMessages={typeof data?.[0]?.bellow === 'boolean' ? data?.[0]?.bellow : undefined}
+                            unreadedMessagesCount={chatInfo?.count || 0}
+                        />
+                    ) : (
+                        <EmptyData text='Hozirda hech qanday xabar mavjud emas' />
+                    )
                 )}
-                <ConversationInput 
+                <ConversationInput
                     userCourseId={userCourseId}
-                    allowedMessagesTypes={allowedMessagesTypes} 
+                    allowedMessagesTypes={allowedMessagesTypes}
                 />
             </div>
         </ChatMessageEditProvider>

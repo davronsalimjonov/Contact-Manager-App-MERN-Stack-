@@ -1,7 +1,6 @@
 import toast from 'react-hot-toast';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { socket } from '@/services/socket';
 import { MessageTypes } from '@/constants/enum';
 import { useGetUserId } from '@/hooks/useGetUser';
 import useClickOutside from '@/hooks/useClickOutside';
@@ -15,6 +14,7 @@ import ChatLessonTaskForm from '../ChatLessonTaskForm';
 import LessonTaskDatepicker from '../LessonTaskDatepicker';
 import FileAttachment from '../../moleculs/FileAttachment';
 import cls from './ConversationInput.module.scss';
+import { useSocket } from '@/providers/SocketProvider';
 
 const getTextAreaPlaceholder = (messageType) => {
     switch (messageType) {
@@ -33,13 +33,14 @@ const getTextAreaPlaceholder = (messageType) => {
 
 const defaultAllowedMessagesTypes = [MessageTypes.MESSAGE, MessageTypes.LESSON_TASK, MessageTypes.SMS, MessageTypes.COMMENT]
 
-const ConversationInput = ({ 
+const ConversationInput = ({
     userCourseId,
-    allowedMessagesTypes = defaultAllowedMessagesTypes 
+    allowedMessagesTypes = defaultAllowedMessagesTypes
 }) => {
     const formRef = useRef()
     const methods = useForm()
     const userId = useGetUserId()
+    const { socket } = useSocket()
     const { editMessage, onEditComplete } = useContext(ChatMessageEditContext)
     const { conversationId, data: { user: { id: studentId } } } = useGetChat(userCourseId)
     const { generateMessage } = useMessage(userCourseId)
@@ -49,7 +50,7 @@ const ConversationInput = ({
     const selectedFile = watch('file')
     const [isOpenDatepicker, setIsOpenDatepicker] = useState(false)
     const taskDatepickerRef = useClickOutside({ onClickOutside: () => setIsOpenDatepicker(false) })
-    
+
     useEffect(() => {
         if (editMessage) {
             setMessageType(editMessage.type)

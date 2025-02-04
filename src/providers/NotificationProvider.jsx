@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { socket } from "@/services/socket";
+import { useSocket } from "./SocketProvider";
 import NotificationToast from "@/components/UI/moleculs/NotificationToast";
 import cls from './NotificationProvider.module.scss';
 
@@ -7,6 +7,7 @@ const NOTIFICATION_VISIBLE_TIME = 5000
 const NOTIFICATION_HIDE_TIME = 300
 
 const NotificationProvider = ({ children }) => {
+    const { socket } = useSocket()
     const [notifications, setNotifications] = useState([]);
 
     const removeNotification = (id) => {

@@ -1,8 +1,8 @@
 import { usePopper } from 'react-popper';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/lib';
-import { socket } from '@/services/socket';
 import useClickOutside from '@/hooks/useClickOutside';
+import { useSocket } from '@/providers/SocketProvider';
 import { setIsViewedNotifications } from '@/services/notification';
 import { useGetNotificationCount, useGetNotifications } from '@/hooks/useNotification';
 import { NotificationIcon } from '../../atoms/icons';
@@ -10,6 +10,7 @@ import NotificationsPopup from '../NotificationsPopup';
 import cls from './NotificationButton.module.scss';
 
 const NotificationButton = () => {
+    const {socket} = useSocket()
     const viewedNotifications = useRef([]);
     const [isVisible, setIsVisible] = useState(false);
     const [isOpenPopup, setIsOpenPopup] = useState(false);

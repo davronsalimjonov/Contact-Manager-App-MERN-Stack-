@@ -9,27 +9,25 @@ import { persistor, store } from "./store"
 import useGetUser from "./hooks/useGetUser"
 import { connectSocket } from "./services/socket"
 import NotificationProvider from "./providers/NotificationProvider"
+import SocketEventsProvider from "./providers/SocketEventsProvider"
+import { SocketProvider } from "./providers/SocketProvider"
 
 Chart.register(ArcElement, Tooltip, CategoryScale, LinearScale, PointElement, LineElement, ChartDataLabels);
 
 function App() {
-  const { data: user } = useGetUser()
-
-  useEffect(() => {
-    if (user) {
-      connectSocket({ userId: user?.id, role: user?.role })
-    }
-  }, [user])
 
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <NotificationProvider>
-          <div id="app">
-            <Routers />
-          </div>
-          <Toaster containerStyle={{ zIndex: 100000 }} />
-        </NotificationProvider>
+        <SocketProvider>
+          <NotificationProvider>
+            <SocketEventsProvider />
+            <div id="app">
+              <Routers />
+            </div>
+            <Toaster containerStyle={{ zIndex: 100000 }} />
+          </NotificationProvider>
+        </SocketProvider>
       </PersistGate>
     </Provider>
   )

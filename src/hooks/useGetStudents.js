@@ -1,15 +1,16 @@
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
-import { socket } from "@/services/socket";
-import { removeEmptyKeys } from "@/utils/lib";
+import { useSocket } from "@/providers/SocketProvider";
 import { getCallMentorStudents } from "@/services/course";
-import { useGetUserId } from "./useGetUser";
+import { autoPlayAudio, removeEmptyKeys } from "@/utils/lib";
 import { getStudentsForAdaptation } from "@/services/students";
+import { useGetUserId } from "./useGetUser";
 
 let soundTimer = null;
 
 const useGetStudents = (params = {}) => {
     const userId = useGetUserId()
+    const { socket } = useSocket()
     const queryClient = useQueryClient()
 
     const addNewMessage = (userCourseId) => {
@@ -35,9 +36,7 @@ const useGetStudents = (params = {}) => {
             socket.on('new-message', userCourseId => {
                 addNewMessage(userCourseId)
                 if (!soundTimer) {
-                    const audio = new Audio('/audio/new-message-came.mp3')
-                    audio.play()
-
+                    autoPlayAudio('/audio/new-message-came.mp3')
                     soundTimer = setTimeout(() => {
                         soundTimer = null;
                     }, 300);
@@ -63,16 +62,6 @@ export const useGetStudentsForAdaptation = () => {
             return students?.map(adaptation => adaptation.id === adaptationId ? { ...adaptation, ...data } : adaptation)
         })
     }
-
-    useEffect(() => {
-        if (socket && !socket.hasListeners('new-adaptation')) {
-            socket.on('new-adaptation', student => {
-                const audio = new Audio('/audio/new-adaptation-sound.mp3')
-                audio.play()
-                queryClient.setQueryData(['adaptation-students', mentorId], (students) => [...(students || []), student])
-            })
-        }
-    }, [socket])
 
     return { ...data, updateStudentAdaptation }
 }
