@@ -8,8 +8,8 @@ import { getFileCategory } from '@/utils/lib'
 import AudioPlayer from '../AudioPlayer'
 
 const ScheduleLessonExercise = ({
-    fileUrl = '/images/indila.mp3',
-    fileName = "Indila - Tourner Dans Le Vide"
+    fileUrl = '',
+    fileName = ""
 }) => {
     const [isOpen, setIsOpen] = useState(false)
     const fileType = getFileCategory(fileUrl)
