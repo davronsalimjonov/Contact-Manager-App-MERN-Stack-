@@ -31,7 +31,7 @@ const useGetStudents = (params = {}) => {
     }
 
     useEffect(() => {
-        if (socket && !socket.hasListeners('new-message')) {            
+        if (socket && !socket.hasListeners('new-message')) {
             socket.on('new-message', userCourseId => {
                 addNewMessage(userCourseId)
                 if (!soundTimer) {
@@ -56,16 +56,25 @@ const useGetStudents = (params = {}) => {
 export const useGetStudentsForAdaptation = () => {
     const mentorId = useGetUserId()
     const queryClient = useQueryClient()
+    const data = useQuery(['adaptation-students', mentorId], () => getStudentsForAdaptation(mentorId), { cacheTime: 5 * 60 * 1000, staleTime: 5 * 60 * 1000 })
+
+    const updateStudentAdaptation = async (adaptationId, data) => {
+        queryClient.setQueryData(['adaptation-students', mentorId], (students) => {
+            return students?.map(adaptation => adaptation.id === adaptationId ? { ...adaptation, ...data } : adaptation)
+        })
+    }
 
     useEffect(() => {
-        if(socket && !socket.hasListeners('new-adaptation')){
+        if (socket && !socket.hasListeners('new-adaptation')) {
             socket.on('new-adaptation', student => {
+                const audio = new Audio('/audio/new-adaptation-sound.mp3')
+                audio.play()
                 queryClient.setQueryData(['adaptation-students', mentorId], (students) => [...(students || []), student])
             })
         }
     }, [socket])
 
-    return useQuery(['adaptation-students', mentorId], () => getStudentsForAdaptation(mentorId), { cacheTime: 5 * 60 * 1000, staleTime: 5 * 60 * 1000 })
+    return { ...data, updateStudentAdaptation }
 }
 
 export default useGetStudents;

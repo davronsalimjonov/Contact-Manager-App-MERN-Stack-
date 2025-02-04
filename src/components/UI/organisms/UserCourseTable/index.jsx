@@ -41,6 +41,7 @@ const UserCourseTable = ({ userId, userCourseId }) => {
             })
             await addStudentToGroup({ group: groupId, student: userCourseId })
             queryClient.invalidateQueries(['students', mentorId])
+            queryClient.setQueriesData(['active-groups'], (oldData) => oldData?.map(group => group?.id === groupId ? { ...group, studentsCount: group?.studentsCount + 1 } : group))
         } catch (error) {
             queryClient.setQueryData(['user-courses', userId], (oldData) => {
                 return oldData?.map(course => course?.id === userCourseId ? { ...course, group: null } : course)
@@ -71,35 +72,35 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                 <h3 className={cls.card__title}>Kurs</h3>
                 {!isLoading ? (
                     <table className={cls.card__table}>
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Kurs nomi</th>
-                            <th>Sotib olgan sana</th>
-                            <th>Tugash sanasi</th>
-                            <th>Darajasi</th>
-                            <th>Guruh</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {courses?.map((course, index) => (
-                            <UserCourseRow
-                                key={course?.id}
-                                disabled={course?.id !== userCourseId}
-                                index={index + 1}
-                                level={course?.level}
-                                endDate={course?.endDate}
-                                hasGroup={!!course?.group}
-                                group={course?.group?.title}
-                                startDate={course?.startDate}
-                                courseName={course?.course?.title}
-                                onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
-                                onLevelChange={({ value: level }) => handleUpdateUserLevel(course?.id, level)}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-                ): (
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Kurs nomi</th>
+                                <th>Sotib olgan sana</th>
+                                <th>Tugash sanasi</th>
+                                <th>Darajasi</th>
+                                <th>Guruh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {courses?.map((course, index) => (
+                                <UserCourseRow
+                                    key={course?.id}
+                                    disabled={course?.id !== userCourseId}
+                                    index={index + 1}
+                                    level={course?.level}
+                                    endDate={course?.endDate}
+                                    hasGroup={!!course?.group}
+                                    group={course?.group?.title}
+                                    startDate={course?.startDate}
+                                    courseName={course?.course?.title}
+                                    onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
+                                    onLevelChange={({ value: level }) => handleUpdateUserLevel(course?.id, level)}
+                                />
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
                     <Loader size={40} />
                 )}
             </div>
