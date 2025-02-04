@@ -8,8 +8,7 @@ export function convertLessonScheduleToEvents(data = []) {
     const currentWeekday = currentDate.getDay();
 
     return data.map(({ id, weekday, startTime, endTime, group }) => {
-        const daysToAdd = (weekday - currentWeekday + 7) % 7;
-        const targetDate = new Date(currentYear, currentMonth, currentDay + daysToAdd);
+        const targetDate = new Date(currentYear, currentMonth, currentDay - currentWeekday + weekday);
 
         const createDateTime = (time) => {
             const hours = Math.floor(time / 60);
