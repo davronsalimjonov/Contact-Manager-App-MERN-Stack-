@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserFullName } from "@/utils/lib";
@@ -11,7 +12,7 @@ import WorkspaceCallCard from "@/components/UI/moleculs/WorkspaceCallCard";
 
 const Workspace = () => {
     const navigate = useNavigate()
-    const { data: workspace, isLoading: isLoadingWorkspace } = useGetWorkspace()
+    const { data: workspace, isLoading: isLoadingWorkspace, updateWorkspaceState } = useGetWorkspace()
 
     const workspaceColumns = [
         {
@@ -41,7 +42,12 @@ const Workspace = () => {
     ]
 
     const handleChangeCard = ({ destination, draggableId }) => {
-        updateWorkspaceStatus(draggableId, { status: destination.droppableId, index: destination.index })
+        try {
+            updateWorkspaceStatus(draggableId, { status: destination.droppableId, index: destination.index })
+            updateWorkspaceState(draggableId, { status: destination.droppableId, index: destination.index })
+        } catch (error) {
+            toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
+        }
     }
 
     const handleClickCard = (courseId) => {
