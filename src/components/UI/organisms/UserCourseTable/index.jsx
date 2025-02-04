@@ -10,7 +10,6 @@ import UserCourseRow from '../../moleculs/UserCourseRow';
 import GroupPickerModal from '../GroupPickerModal';
 import ConfirmationModal from '../ConfirmationModal';
 import cls from './UserCourseTable.module.scss';
-import { useGetUserId } from '@/hooks/useGetUser';
 
 const UserCourseTable = ({ userId, userCourseId }) => {
     const queryClient = useQueryClient()
