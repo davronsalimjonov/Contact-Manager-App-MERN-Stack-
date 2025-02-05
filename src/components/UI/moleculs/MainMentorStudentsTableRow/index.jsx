@@ -7,11 +7,15 @@ import cls from './MainMentorStudentsTableRow.module.scss';
 
 const MainMentorStudentsTableRow = ({
     index = 0,
+    userCourseId = '',
     group = '',
     avatar = '',
     status = '',
     fullName = '',
     phoneNumber = '',
+    checkbox = false,
+    checked = false,
+    onChangeCheckbox,
     onClickTransfer,
     onClickChangePassword,
     onClickStudentInfo
@@ -26,6 +30,16 @@ const MainMentorStudentsTableRow = ({
 
     return (
         <tr className={cls.row}>
+            {checkbox && (
+                <td>
+                    <input
+                        type="checkbox"
+                        checked={checked}
+                        value={userCourseId}
+                        onChange={onChangeCheckbox}
+                    />
+                </td>
+            )}
             <td>{index}</td>
             <td className={cls.row__name}>
                 <div className={cls.row__notification}>

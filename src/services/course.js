@@ -94,3 +94,8 @@ export const getUserCourses = async (userId) => {
     const res = await api.get(`/user-course/for-adaptation/user/${userId}`)
     return res.data
 }
+
+export const getStudentIds = async (params = {}) => {
+    const res = await api.get(`/user-course/for-transfer-all?${paramsToString(params)}`)
+    return res.data
+}

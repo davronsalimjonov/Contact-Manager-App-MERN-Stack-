@@ -43,12 +43,7 @@ export const useTransferMutation = () => {
         const from = data?.from
         const to = data?.to
         
-        queryClient.setQueriesData(['students', mentorId, from], (oldData) => {
-            return {
-                ...oldData,
-                items: oldData.items.filter(item => !data?.studentIds?.includes(item?.id))
-            }
-        })
+        queryClient.invalidateQueries(['students', mentorId, from])
         queryClient.invalidateQueries(['students', mentorId, to])
     }
 

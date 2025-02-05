@@ -4,12 +4,14 @@ import { LeftArrowIcon, RightArrowIcon } from '../../atoms/icons';
 const Pagination = ({
     initialPage = 0,
     pageCount = 0,
-    onPageChange
+    onPageChange,
+    page
 }) => {
     return (
         <div>
             <ReactPaginate
                 initialPage={initialPage}
+                forcePage={page}
                 pageCount={pageCount}
                 onPageChange={onPageChange}
                 previousLabel={<LeftArrowIcon />}
