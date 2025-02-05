@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { removeEmptyKeys } from "@/utils/lib";
 import { createGroups } from "@/services/groups";
-import { getActiveGroups, getGroupInfo, getGroupsByLevel, getGroupStudents } from "@/services/group"
+import { getActiveGroups, getGroupInfo, getGroupsByLevel, getGroupStudents, transferStudent } from "@/services/group"
+import { useGetUserId } from "./useGetUser";
 
 export const useGetGroupsByLevel = (level, params) => {
     return useQuery(
@@ -13,7 +14,6 @@ export const useGetGroupsByLevel = (level, params) => {
 
 export const useCreateGroupMutation = () => {
     const queryClient = useQueryClient();
-
     const createGroupMutation = useMutation({
         mutationFn: (data) => {
             createGroups(data);
@@ -31,7 +31,31 @@ export const useCreateGroupMutation = () => {
     };
 };
 
-export const useGetActiveGroups = (params, enabled = true) => {
+export const useTransferMutation = () => {
+    const mentorId = useGetUserId()
+    const queryClient = useQueryClient();
+    const transferMutation = useMutation({
+        mutationFn: transferStudent,
+        onSuccess: onSuccessTransfer
+    });
+
+    function onSuccessTransfer(_, data) {
+        const from = data?.from
+        const to = data?.to
+        
+        queryClient.setQueriesData(['students', mentorId, from], (oldData) => {
+            return {
+                ...oldData,
+                items: oldData.items.filter(item => !data?.studentIds?.includes(item?.id))
+            }
+        })
+        queryClient.invalidateQueries(['students', mentorId, to])
+    }
+
+    return transferMutation
+}
+
+export const useGetActiveGroups = (params = {}, enabled = true) => {
     return useQuery(['active-groups', ...Object.values(removeEmptyKeys(params))], () => getActiveGroups(params), { cacheTime: Infinity, staleTime: Infinity, enabled })
 }
 

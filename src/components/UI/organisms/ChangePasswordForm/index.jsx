@@ -1,28 +1,32 @@
-import React, { useEffect } from 'react'
-import Dialog from '../../moleculs/Dialog'
-import cls from "./ChangePasswordForm.module.scss"
-import FormInput from '../../moleculs/Form/FormInput'
-import Button from '../../atoms/Buttons/Button'
+import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
+import { updateUserPassword } from '@/services/user'
+import Dialog from '../../moleculs/Dialog'
+import Button from '../../atoms/Buttons/Button'
+import FormInput from '../../moleculs/Form/FormInput'
+import cls from "./ChangePasswordForm.module.scss"
 
 const ChangePasswordForm = ({
     isOpen = false,
+    userId = '',
     onClose,
-    onSubmit
 }) => {
+    const { register, handleSubmit, reset, formState: { errors, isDirty, isSubmitting } } = useForm()
 
-    const { register, handleSubmit, reset, formState: { errors, isSubmitSuccessful, isDirty, isSubmitting } } = useForm()
-
-    useEffect (() => {
-        if (isSubmitSuccessful) reset()
-    }, [isSubmitSuccessful])
+    const handleSubmitForm = async (data) => {
+        try {
+            await updateUserPassword(userId, data)
+            toast.success('Parol muvaffaqiyatli o`zgartirildi')
+            reset()
+            onClose()
+        } catch (error) {
+            toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
+        }
+    }
 
     return (
         <Dialog isOpen={isOpen} onClose={onClose}>
-            <form
-                className={cls.change__psw}
-                onSubmit={handleSubmit(onSubmit)}
-            >
+            <form className={cls.form} onSubmit={handleSubmit(handleSubmitForm)}>
                 <FormInput
                     label="Parol O'zgartirish"
                     placeholder='Yangi Parolni Kiriting'
@@ -31,7 +35,6 @@ const ChangePasswordForm = ({
                     isClearable
                 />
                 <Button
-                    className={cls.change__psw__btn}
                     type='submit'
                     disabled={!isDirty}
                     isLoading={isSubmitting}

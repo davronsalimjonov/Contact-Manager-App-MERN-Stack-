@@ -1,83 +1,58 @@
-import { useEffect, useState } from 'react'
-import cls from './MainMentorStudents.module.scss'
-import MainMentorStudentsTable from '@/components/templates/MainMentorStudentsTable'
-import MainMentorStudentsSearchBar from '@/components/UI/organisms/MainMentorStudentsSearchBar/indsx'
-import MainMentorStudentsGroupTab from '@/components/UI/organisms/MainMentorStudentsGroupTab'
+import { useState } from 'react'
+import Tabs from '@/components/UI/moleculs/Tabs'
 import Loader from '@/components/UI/atoms/Loader'
-import Pagination from '@/components/UI/moleculs/Pagination'
-import { useGetGroupStudents } from '@/hooks/useGetGroupStudents'
+import { useGetMyGroups } from '@/hooks/useGetGroups'
+import { useGetMainMentorStudents } from '@/hooks/useGetStudents'
+import Pagination from '@/components/UI/moleculs/CustomPagination'
+import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar'
+import MainMentorStudentsTable from '@/components/templates/MainMentorStudentsTable'
+import cls from './MainMentorStudents.module.scss'
 
 const MainMentorStudents = () => {
     const [filter, setFilter] = useState({})
-    const [groupId, setGroupId] = useState('')
-    const [isTransfer, setIsTransfer] = useState(false)
-    const [isOpen, setIsOpen] = useState(false)
-    const [activeGroup, setActiveGroup] = useState('')
-    const [pagination, setPagination] = useState({
-        page: 1,
-        limit: 10,
-    })
+    const [pagination, setPagination] = useState({ page: 0, limit: 10 })
+    const { data: groups, isLoading: isLoadingGroups } = useGetMyGroups()
+    const { data: students, isLoading: isLoadingStudents } = useGetMainMentorStudents({ ...filter, page: pagination.page + 1, limit: pagination.limit })
+    const hasPagination = students?.meta?.totalPages > 0
 
-    const handlePageChange = (page) => {
-        setPagination((prev) => ({ ...prev, page }));
-    };
+    function getGroupOptions() {
+        const options = [{ value: '', label: 'Barchasi' }]
 
-    const handleLimitChange = (limit) => {
-        setPagination((prev) => ({ ...prev, limit }));
-    };
+        groups?.forEach(group => {
+            options.push({ value: group.id, label: group.title })
+        })
 
-    const {
-        groupStudents: { data: groupStudents, isLoading: isGroupStudentsLoading, refetch },
-        groupSelectStudents: { data: groupSelectStudents }
-    } = useGetGroupStudents({ ...filter, ...pagination }, groupId)
-
-    useEffect(() => { }, [groupStudents])
-
-    console.log(activeGroup);
-
+        return options
+    }
 
     return (
         <div className={cls.page}>
-            <MainMentorStudentsGroupTab
-                onGroupChange={id => setFilter(state => ({ ...state, group: id }))}
-                setGroupId={setGroupId}
-                setGroupLabel={setActiveGroup}
+            <Tabs
+                options={getGroupOptions()}
+                className={cls.page__tab}
+                tabClassName={cls.page__tab__button}
+                onChange={group => (setFilter(state => ({ ...state, group })), setPagination(state => ({ ...state, page: 0 })))}
             />
-            <MainMentorStudentsSearchBar
+            <StudentsSearchBar
+                onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
                 onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
                 onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
                 onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
-                onChangeGroup={group => setFilter(state => ({ ...state, group: group?.value }))}
-                onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
-                setIsOpen={setIsOpen}
-                groupId={groupId}
             />
-            {!isGroupStudentsLoading ? (
-                <>
-                    <MainMentorStudentsTable
-                        students={groupStudents?.items}
-                        isLoading={isGroupStudentsLoading}
-                        groupSelectStudents={groupSelectStudents}
-                        groupId={groupId}
-                        isTransfer={isTransfer}
-                        setIsTransfer={setIsTransfer}
-                        refetch={refetch}
-                        isOpen={isOpen}
-                        setIsOpen={setIsOpen}
-                        activeGroup={activeGroup}
-                    />
-                    {groupStudents?.items?.length === 0 ? <></>
-                        : <Pagination
-                            metaData={groupStudents?.meta}
-                            limit={pagination.limit}
-                            setLimit={handleLimitChange}
-                            page={pagination.page}
-                            setPage={handlePageChange}
-                        />
-                    }
-                </>
+            {!isLoadingStudents ? (
+                <MainMentorStudentsTable
+                    students={students?.items}
+                    startIndex={(pagination.page) * pagination.limit}
+                />
             ) : (
                 <Loader />
+            )}
+            {hasPagination && (
+                <Pagination
+                    pageCount={students?.meta?.totalPages}
+                    onPageChange={({ selected: page }) => setPagination({ ...pagination, page })}
+                    initialPage={pagination.page}
+                />
             )}
         </div>
     )

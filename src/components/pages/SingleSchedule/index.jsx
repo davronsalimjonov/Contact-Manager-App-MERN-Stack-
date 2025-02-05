@@ -10,7 +10,7 @@ import { updateSchedule } from '@/services/schedule';
 import { useGetUserId } from '@/hooks/useGetUser';
 import { LeftArrowIcon } from '@/components/UI/atoms/icons';
 import Button from '@/components/UI/atoms/Buttons/Button';
-import useGetGroups from '@/hooks/useGetGroups';
+import { useGetMyGroups } from '@/hooks/useGetGroups';
 
 
 const SingleSchedule = () => {
@@ -19,17 +19,17 @@ const SingleSchedule = () => {
     const userId = useGetUserId()
     const queryClient = useQueryClient()
     const { data: schedule, isLoading: isLoadingSchedule } = useGetScheduleById(scheduleId)
-    const { groups: {data: groups, isLoading: isLoadingGroups}} = useGetGroups({}, '')
+    const { data: groups, isLoading: isLoadingGroups } = useGetMyGroups()
 
     const groupOptions = !isLoadingGroups && groups.map((group) => ({ value: group?.id, label: group?.title }))
-    
+
     const defaultValues = {
         degree: schedule?.degree,
         weekday: schedule?.weekday,
         time: schedule?.time,
         endTime: schedule?.endTime,
     }
-   
+
     const handleUpdateSchedule = async (data) => {
         try {
             const updatedSchedule = await updateSchedule(scheduleId, data)
@@ -59,10 +59,10 @@ const SingleSchedule = () => {
         <div className={cls.page}>
             {!isLoadingSchedule ? (
                 <div className={cls.schedule}>
-                         <Button className={cls.schedule__btn} type='button' onClick={()=>navigate(-1)}><LeftArrowIcon/></Button>
+                    <Button className={cls.schedule__btn} type='button' onClick={() => navigate(-1)}><LeftArrowIcon /></Button>
                     <h2 className={cls.schedule__header}>Dars jadvali</h2>
-                    <SingleScheduleForm 
-                        defaultValues={defaultValues} 
+                    <SingleScheduleForm
+                        defaultValues={defaultValues}
                         onSubmit={handleUpdateSchedule}
                         groupOptions={groupOptions}
                     />

@@ -1,18 +1,17 @@
-import ScheduleTable from '@/components/templates/ScheduleTable';
-import useGetSchedule from '@/hooks/useGetSchedule';
-import AddSchedule from '../../UI/organisms/AddSchedule';
 import { useState } from 'react';
-import cls from './Schedule.module.scss';
-import useGetGroups from '@/hooks/useGetGroups';
+import { useGetMyGroups } from '@/hooks/useGetGroups';
+import useGetSchedule from '@/hooks/useGetSchedule';
 import ScheduleSearchBar from '@/components/UI/organisms/ScheduleSearchBar';
+import AddSchedule from '../../UI/organisms/AddSchedule';
+import cls from './Schedule.module.scss';
 
 const Schedule = () => {
     const [openModal, setOpenModal] = useState(false);
     const [filter, setFilter] = useState({})
     const { ref, data: schedule, isLoading: isLoadingSchedule, refetch } = useGetSchedule(filter);
-    const { groups: {data: groups, isLoading: isLoadingGroups}} = useGetGroups({}, '')
+    const { data: groups, isLoading: isLoadingGroups } = useGetMyGroups()
     const groupOptions = !isLoadingGroups && groups.map((group) => ({ value: group?.id, label: group?.title }))
-    
+
 
     const handleOpen = () => {
         setOpenModal(true);
@@ -34,12 +33,12 @@ const Schedule = () => {
                 schedule={schedule}
                 isLoading={isLoadingSchedule}
             /> */}
-            <AddSchedule 
+            <AddSchedule
                 refetch={refetch}
-                openModal={openModal} 
-                closeModal={handleClose} 
-                groupOptions={groupOptions} 
-                isLoading={isLoadingGroups} 
+                openModal={openModal}
+                closeModal={handleClose}
+                groupOptions={groupOptions}
+                isLoading={isLoadingGroups}
             />
         </div>
     );

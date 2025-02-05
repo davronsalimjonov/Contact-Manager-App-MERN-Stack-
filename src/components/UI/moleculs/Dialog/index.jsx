@@ -12,8 +12,8 @@ const Dialog = ({
     const [isVisible, setIsVisible] = useState(true)
     const ref = useClickOutside({ onClickOutside: onClose, disable: !isOpen })
 
-    useEffect(() => { 
-        if(!isOpen){
+    useEffect(() => {
+        if (!isOpen) {
             setTimeout(() => setIsVisible(false), 300)
         } else {
             setIsVisible(true)

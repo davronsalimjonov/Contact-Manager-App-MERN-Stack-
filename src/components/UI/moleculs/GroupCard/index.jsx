@@ -1,7 +1,8 @@
+import { useRef } from 'react';
 import Avatar from 'react-avatar';
 import { cn } from '@/utils/lib';
 import { getDayName, getTimeFromMinutes } from '@/utils/time';
-import { PersonsIcon } from '../../atoms/icons';
+import { CheckIcon, PersonsIcon } from '../../atoms/icons';
 import cls from './GroupCard.module.scss';
 
 const colors = ['rgba(30, 181, 58, 1)', 'rgba(255, 52, 219, 1)', 'rgba(236, 182, 4, 1)', 'rgba(0, 153, 181, 1)']
@@ -20,12 +21,15 @@ const GroupCard = ({
     callMentorAvatar = '',
     isCollecting = false,
     isClosed = false,
+    isSelected = false,
     onClick
 }) => {
+    const color = useRef(getRandomColor());
     return (
-        <div onClick={onClick} className={cn(cls.card, isCollecting && cls.active, isClosed && cls.closed)}>
+        <div onClick={onClick} className={cn(cls.card, isCollecting && cls.active, isClosed && cls.closed, isSelected && cls.selected__card)}>
+            {isSelected && <div className={cls.selected}><CheckIcon width={41} height={29} fill='var(--blue-color)' /></div>}
             <div className={cls.card__header}>
-                <span className={cls.card__header__group} style={{ backgroundColor: getRandomColor() }}>{name} guruh</span>
+                <span className={cls.card__header__group} style={{ backgroundColor: color.current }}>{name} guruh</span>
                 <span className={cls.card__header__students}><PersonsIcon />{studentsCount || 0} nafar</span>
             </div>
             <div className={cls.card__times}>

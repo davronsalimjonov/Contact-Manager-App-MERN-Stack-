@@ -1,13 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetGroupInfo, useGetGroupStudents } from '@/hooks/useGroups';
-import Pagination from '@/components/UI/moleculs/CustomPagination';
-import GroupInfoCard from '@/components/UI/organisms/GroupInfoCard';
-import GroupStudentsTable from '@/components/templates/GroupStudentsTable';
-import cls from './SingleGroup.module.scss';
-import { getUserFullName } from '@/utils/lib';
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getUserFullName } from '@/utils/lib';
 import Loader from '@/components/UI/atoms/Loader';
 import EmptyData from '@/components/UI/organisms/EmptyData';
+import Pagination from '@/components/UI/moleculs/CustomPagination';
+import GroupInfoCard from '@/components/UI/organisms/GroupInfoCard';
+import { useGetGroupInfo, useGetGroupStudents } from '@/hooks/useGroups';
+import GroupStudentsTable from '@/components/templates/GroupStudentsTable';
+import cls from './SingleGroup.module.scss';
 
 const SingleGroup = () => {
     const navigate = useNavigate()

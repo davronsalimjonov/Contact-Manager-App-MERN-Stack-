@@ -1,149 +1,82 @@
-
-
-import { getDayName } from '@/utils/time';
-import { getUserFullName } from '@/utils/lib';
-import Mapper from '@/components/UI/atoms/Mapper';
-import Loader from '@/components/UI/atoms/Loader';
-import cls from './MainMentorStudentsTable.module.scss';
-import MainMentorStudentsTableRow from '@/components/UI/moleculs/MainMentorStudentsTableRow';
-import MainMentorStudentsTableHeader from '@/components/UI/organisms/MainMentorsStudentsTableHeader';
-import Button from '@/components/UI/atoms/Buttons/Button';
-import { customToast } from '@/utils/toast';
 import { useState } from 'react';
-import MainMentorAddStudentsForm from '@/components/UI/organisms/MainMentorAddStudentsForm';
-import { useTransferMutations } from '@/hooks/useGetGroupStudents';
 import toast from 'react-hot-toast';
-import { addStudentsToGroup } from '@/services/groups';
-import { updateUserPassword } from '@/services/user';
+import { useNavigate } from 'react-router-dom';
+import { getUserFullName } from '@/utils/lib';
+import { useTransferMutation } from '@/hooks/useGroups';
+import EmptyData from '@/components/UI/organisms/EmptyData';
+import ConfirmationModal from '@/components/UI/organisms/ConfirmationModal';
 import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
+import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
+import MainMentorStudentsTableRow from '@/components/UI/moleculs/MainMentorStudentsTableRow';
+import cls from './MainMentorStudentsTable.module.scss';
 
-const MainMentorStudentsTable = ({
-    students = [],
-    isLoading,
-    groupSelectStudents,
-    activeGroup = '',
-    groupId = '',
-    isTransfer,
-    setIsTransfer,
-    refetch,
-    isOpen = false,
-    setIsOpen
-}) => {
-    const [courseId, setCourseId] = useState('')
-    const [passwordModal, setPasswordModal] = useState(false)
-    const { createTransferMutation } = useTransferMutations()
-    const [selectedStudents, setSelectedStudents] = useState([])
+const MainMentorStudentsTable = ({ students = [], startIndex = 1 }) => {
+    const navigate = useNavigate()
+    const transferStudentMutation = useTransferMutation()
+    const [passwordModal, setPasswordModal] = useState({ isOpen: false, userId: '' })
+    const [transferModal, setTransferModal] = useState({ isOpen: false, userId: '', groupId: '' })
+    const [confirmModal, setConfirmModal] = useState({ isOpen: false, userId: '', from: '', to: '' })
 
-    const handleStudentTransfer = async (data) => {
-        data.id = courseId
-        await createTransferMutation.mutateAsync(data, {
-            onSuccess: () => {
-                toast.success("Transfer Amalga Oshirildi")
-                setIsOpen(false)
-                setCourseId('')
-            },
-            onError: (err) => toast.error(err?.response?.data?.message || "Xatolik Yuz Berdi")
+    const handleTransferStudent = async () => {
+        const transferData = { from: confirmModal?.from, to: confirmModal?.to, studentIds: [confirmModal?.userId] }
+        await transferStudentMutation.mutateAsync(transferData, {
+            onSuccess: () => toast.success('O\'quvchi transfer qilindi'),
+            onError: (err) => toast.error(err?.response?.data?.message || 'Xatolik yuz berdi')
         })
-    }
-
-    const handleAddStudentToGroup = async () => {
-        try {
-            if (!selectedStudents || selectedStudents.length === 0) {
-                customToast?.error("O'quvchilar Qo'shing")
-                return
-            }
-
-            const response = await addStudentsToGroup({
-                group: groupId,
-                studentIds: selectedStudents,
-            })
-
-            if (response?.status === 201) {
-                await refetch()
-                setSelectedStudents([])
-                setIsOpen(false)
-                customToast?.success("O'quvchilar Guruxga Qo'shildi")
-            } else {
-                customToast?.error(`Xatolik: ${response?.statusText || "Unknown Error"}`)
-            }
-        } catch (error) {
-            customToast?.error("Xatolik Yuz Berdi")
-        }
-    }
-
-    const handleChangePsw = async (data) => {
-        await updateUserPassword(courseId, { ...data })
-        customToast?.success("Password O'zgartirildi")
-        setPasswordModal(false)
     }
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            <MainMentorAddStudentsForm
-                isTransfer={isTransfer}
-                isOpen={isOpen}
-                onSubmit={isTransfer && handleStudentTransfer}
-                groupSelectStudents={groupSelectStudents}
-                selectedStudents={selectedStudents}
-                setSelectedStudents={setSelectedStudents}
-                setIsOpen={setIsOpen}
-                onClose={() => {
-                    setIsOpen(false)
-                    setIsTransfer(false)
-                    setSelectedStudents([])
-                }}
-                AddStudentToGroup={handleAddStudentToGroup}
-            />
             <ChangePasswordForm
-                isOpen={passwordModal}
-                onClose={() => setPasswordModal(false)}
-                onSubmit={handleChangePsw}
+                isOpen={passwordModal?.isOpen}
+                userId={passwordModal?.userId}
+                onClose={() => setPasswordModal({ isOpen: false, userId: '' })}
             />
-            {students?.length === 0 ? (
-                <div className={cls.mainMentorNoData}>
-                    <p><span>"{activeGroup}"</span> guruh shakllantirildi. <br />
-                        Guruhingizga o’quvchi biriktirsangiz bo’ladi.</p>
-                    <div>
-                        <Button className={cls.bar__form__button} onClick={
-                            () => {
-                                setIsOpen(true)
-                            }
-                        }>
-                            O'quvchi Qo'shish
-                            <span>+</span>
-                        </Button>
-                    </div>
-                </div>
-            ) : (
+            <TransferStudentModal
+                initialGroupId={transferModal?.groupId}
+                isOpen={transferModal?.isOpen}
+                onClose={() => setTransferModal(state => ({ ...state, isOpen: false }))}
+                onSubmit={(groupId) => setConfirmModal({ isOpen: true, userId: transferModal?.userId, to: groupId, from: transferModal?.groupId })}
+            />
+            <ConfirmationModal
+                title='Rostan ham o’quvchini shu guruhga transfer qilmoqchimisiz?'
+                isOpen={confirmModal?.isOpen}
+                onClose={() => setConfirmModal({ isOpen: false, userId: '', from: '', to: '' })}
+                onCancel={() => setConfirmModal({ isOpen: false, userId: '', from: '', to: '' })}
+                onConfirm={handleTransferStudent}
+            />
+            {students?.length > 0 ? (
                 <table className={cls.table}>
-                    <MainMentorStudentsTableHeader />
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Ism,familiya</th>
+                            <th>Telefon raqami</th>
+                            <th>Guruhi</th>
+                            <th>Statusi</th>
+                            <th></th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <Mapper
-                            data={students}
-                            isInfinityQuery
-                            isLoading={isLoading}
-                            renderItem={(student, index) => (
-                                <MainMentorStudentsTableRow
-                                    index={index + 1}
-                                    avatar={student?.url}
-                                    setIsModal={setIsOpen}
-                                    group={student?.group}
-                                    status={student?.status}
-                                    userCourseId={student.id}
-                                    setCourseId={setCourseId}
-                                    userId={student?.userId}
-                                    phoneNumber={student?.phone}
-                                    setIsTransfer={setIsTransfer}
-                                    fullName={getUserFullName(student)}
-                                    setPasswordModal={setPasswordModal}
-                                />
-                            )}
-                        />
+                        {students?.map((student, index) => (
+                            <MainMentorStudentsTableRow
+                                key={student?.id}
+                                index={startIndex + index + 1}
+                                avatar={student?.url}
+                                group={student?.group}
+                                status={student?.status}
+                                phoneNumber={student?.phone}
+                                fullName={getUserFullName(student)}
+                                onClickStudentInfo={() => navigate(student?.id)}
+                                onClickChangePassword={() => setPasswordModal({ isOpen: true, userId: student?.userId })}
+                                onClickTransfer={() => setTransferModal({ isOpen: true, userId: student?.id, groupId: student?.groupId })}
+                            />
+                        ))}
                     </tbody>
                 </table>
-            )
-            }
-            {isLoading && <Loader size={80} />}
+            ) : (
+                <EmptyData text="Hech qanday o'quvchilar mavjud emas" />
+            )}
         </div>
     );
 }

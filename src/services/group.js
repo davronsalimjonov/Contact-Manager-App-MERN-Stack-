@@ -24,3 +24,8 @@ export const getGroupStudents = async (groupId, params = {}) => {
     const res = await api.get(`/lesson/students/group/${groupId}?${paramsToString(params)}`)
     return res.data
 }
+
+export const transferStudent = async (data) => {
+    const res = await api.post('/group/transfer-student', data)
+    return res.data
+}

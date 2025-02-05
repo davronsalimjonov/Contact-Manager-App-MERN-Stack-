@@ -20,7 +20,6 @@ const StudentsSearchBar = ({
                 placeholder='Status user'
                 options={statusOptions}
                 onChange={onChangeStatus}
-                
                 isClearable
             />
             <Input 
@@ -38,14 +37,6 @@ const StudentsSearchBar = ({
                 placeholder='Telefon raqam' 
                 onChange={debounce(onChangePhone)}
             />
-            {/* <form className={cls.bar__form}>
-                <Input
-                    className={cls.bar__form__input}
-                    placeholder='Status ID'
-                />
-                <Button className={cls.bar__form__btn}>Qidirish <SearchIcon /></Button>
-            </form>
-            <Button>Guruh qo’shish <PlusIcon /></Button> */}
         </div>
     );
 }
