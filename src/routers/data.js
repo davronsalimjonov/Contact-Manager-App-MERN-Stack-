@@ -174,7 +174,7 @@ export const managerSidebarLinks = [
         icon: MicrophoneIcon()
     },
     {
-        id: 9,
+        id: 10,
         label: 'Guruhlar',
         link: '/groups',
         icon: PersonsIcon()

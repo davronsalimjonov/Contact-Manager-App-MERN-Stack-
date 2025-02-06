@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { removeEmptyKeys } from "@/utils/lib";
 import { createGroups } from "@/services/groups";
-import { getActiveGroups, getGroupInfo, getGroupsByLevel, getGroupStudents, transferStudent } from "@/services/group"
+import { getActiveGroups, getGroupInfo, getGroupsByLevel, getGroupStudents, transferStudent, updateGroup } from "@/services/group"
 import { useGetUserId } from "./useGetUser";
 
 export const useGetGroupsByLevel = (level, params) => {
@@ -15,20 +15,30 @@ export const useGetGroupsByLevel = (level, params) => {
 export const useCreateGroupMutation = () => {
     const queryClient = useQueryClient();
     const createGroupMutation = useMutation({
-        mutationFn: (data) => {
-            createGroups(data);
-        },
+        mutationFn: createGroups,
         onSuccess: (data) => {
-            queryClient.setQueriesData(["create-groups", data], () => data)
-            queryClient.invalidateQueries({
-                queryKey: ["groups"], exact: false
-            })
+            queryClient.invalidateQueries({ queryKey: ["groups"], exact: false })
         },
     });
 
-    return {
-        createGroupMutation,
-    };
+    return createGroupMutation
+};
+
+export const useUpdateGroupMutation = () => {
+    const queryClient = useQueryClient();
+    const updateGroupMutation = useMutation({
+        mutationFn: async (data) => {
+            const groupId = data?.id
+            delete data?.id
+            await updateGroup(groupId, data)
+        },
+        onSuccess: (data) => {
+            console.log(data);
+            queryClient.invalidateQueries({ queryKey: ["groups"], exact: false })
+        },
+    });
+
+    return updateGroupMutation
 };
 
 export const useTransferMutation = () => {
@@ -42,7 +52,7 @@ export const useTransferMutation = () => {
     function onSuccessTransfer(_, data) {
         const from = data?.from
         const to = data?.to
-        
+
         queryClient.invalidateQueries(['students', mentorId, from])
         queryClient.invalidateQueries(['students', mentorId, to])
     }

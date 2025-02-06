@@ -1,5 +1,6 @@
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
+import { copyToClipboard } from '@/utils/lib'
 import { updateUserPassword } from '@/services/user'
 import Dialog from '../../moleculs/Dialog'
 import Button from '../../atoms/Buttons/Button'
@@ -16,7 +17,8 @@ const ChangePasswordForm = ({
     const handleSubmitForm = async (data) => {
         try {
             await updateUserPassword(userId, data)
-            toast.success('Parol muvaffaqiyatli o`zgartirildi')
+            copyToClipboard(data?.password)
+            toast.success('Parol muvaffaqiyatli oʼzgartirildi va buferga kopiyalandi!')
             reset()
             onClose()
         } catch (error) {

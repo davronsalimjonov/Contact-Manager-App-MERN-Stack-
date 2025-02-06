@@ -10,8 +10,8 @@ import Button from '@/components/UI/atoms/Buttons/Button';
 import GroupCard from '@/components/UI/moleculs/GroupCard';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import Pagination from '@/components/UI/moleculs/CustomPagination';
+import GroupFormModal from '@/components/UI/organisms/GroupFormModal';
 import { useCreateGroupMutation, useGetGroupsByLevel } from '@/hooks/useGroups';
-import CreateGroupForGroupsForm from '@/components/UI/organisms/CreateGroupForGroupsForm';
 import cls from './Groups.module.scss';
 
 const Groups = () => {
@@ -20,7 +20,7 @@ const Groups = () => {
     const [activeLevel, setActiveLevel] = useState('A1')
     const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 12 })
     const [isOpen, setIsOpen] = useState(false)
-    const { createGroupMutation } = useCreateGroupMutation()
+    const createGroupMutation = useCreateGroupMutation()
 
     const handleCreateGroup = async (data) => {
         await createGroupMutation.mutateAsync(data, {
@@ -78,7 +78,7 @@ const Groups = () => {
                     onPageChange={({ selected: page }) => setPagination({ ...pagnination, page })}
                 />
             )}
-            <CreateGroupForGroupsForm
+            <GroupFormModal
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
                 onSubmit={handleCreateGroup}

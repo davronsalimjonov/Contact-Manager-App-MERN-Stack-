@@ -1,14 +1,16 @@
 .card {
     width: 100%;
+    min-height: 172px;
     padding: 12px;
     border-radius: 12px;
     background-color: var(--blue-100-color);
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 24px;
 
-    &__outline{
+    &__outline {
         background-color: transparent;
         padding: 3px 0;
         font-weight: 500;
@@ -16,16 +18,39 @@
     }
 
     &__header {
+        width: 100%;
         display: flex;
         align-items: center;
         gap: 12px;
+        justify-content: space-between;
 
         &__title {
-            font-size: 22px;
-            font-weight: 600;
-            line-height: 25.83px;
-            color: var(--blue-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            &>span {
+                font-size: 22px;
+                font-weight: 600;
+                line-height: 25.83px;
+                color: var(--blue-color);
+            }
         }
+
+        &__button{
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    &__info {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between
     }
 
     &__mentors {

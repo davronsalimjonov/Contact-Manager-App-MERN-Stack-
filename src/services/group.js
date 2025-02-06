@@ -29,3 +29,8 @@ export const transferStudent = async (data) => {
     const res = await api.post('/group/transfer-student', data)
     return res.data
 }
+
+export const updateGroup = async (groupId, data) => {
+    const res = await api.put(`/group/${groupId}`, data)
+    return res.data
+}

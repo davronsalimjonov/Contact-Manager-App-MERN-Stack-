@@ -28,6 +28,9 @@ const MainMentorStudentsTable = ({
     const [transferModal, setTransferModal] = useState({ isOpen: false, userIds: [], groupId: '' })
     const [confirmModal, setConfirmModal] = useState({ isOpen: false, userIds: [], from: '', to: '' })
 
+    const singleTransferConfirmTitle = `Rostan ham o\'quvchini shu guruhga transfer qilmoqchimisiz?`
+    const multipleTransferConfirmTitle = `Rostan ham o\'quvchilarni shu guruhga transfer qilmoqchimisiz?`
+
     const handleTransferStudent = async () => {
         const transferData = { from: confirmModal?.from, to: confirmModal?.to, studentIds: confirmModal?.userIds }
         await transferStudentMutation.mutateAsync(transferData, {
@@ -62,16 +65,17 @@ const MainMentorStudentsTable = ({
                 onClose={() => setTransferModal(state => ({ ...state, isOpen: false }))}
                 onSubmit={(groupId) => setConfirmModal({ 
                     isOpen: true, 
+                    title: transferModal?.userIds?.length > 1 ? multipleTransferConfirmTitle : singleTransferConfirmTitle,
                     userIds: transferModal?.userIds, 
                     to: groupId, 
                     from: transferModal?.groupId 
                 })}
             />
             <ConfirmationModal
-                title="Rostan ham o'quvchini shu guruhga transfer qilmoqchimisiz?"
+                title={confirmModal?.title || singleTransferConfirmTitle}
                 isOpen={confirmModal?.isOpen}
-                onClose={() => setConfirmModal({ isOpen: false, userIds: '', from: '', to: '' })}
-                onCancel={() => setConfirmModal({ isOpen: false, userIds: '', from: '', to: '' })}
+                onClose={() => setConfirmModal({ isOpen: false, userIds: '', from: '', to: '', title: '' })}
+                onCancel={() => setConfirmModal({ isOpen: false, userIds: '', from: '', to: '', title: '' })}
                 onConfirm={handleTransferStudent}
             />
             {students?.length > 0 ? (

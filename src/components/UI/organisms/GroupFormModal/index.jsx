@@ -1,54 +1,55 @@
-import React, { useEffect } from 'react'
-import Dialog from '../../moleculs/Dialog'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { getUserFullName } from '@/utils/lib'
+import useGetMentors from '@/hooks/useGetMentors'
+import { ENGLISH_LEVEL_OPTIONS } from '@/constants/form'
+import Dialog from '../../moleculs/Dialog'
+import { CloseIcon } from '../../atoms/icons'
 import Button from '../../atoms/Buttons/Button'
-import cls from "./CreateGroupForGroupsForm.module.scss"
 import FormInput from '../../moleculs/Form/FormInput'
 import FormSelect from '../../moleculs/Form/FormSelect'
-import useGetMentors from '@/hooks/useGetMentors'
+import cls from "./GroupFormModal.module.scss"
 
-const CreateGroupForGroupsForm = ({
-    onSubmit,
+const GroupFormModal = ({
+    defaultValues = {},
     isOpen = false,
-    onClose
+    isEdit,
+    onClose,
+    onSubmit,
 }) => {
-    const { control, register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful } } = useForm()
+    const { control, register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful } } = useForm({defaultValues})
     const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentors()
 
-    const callMentorOptions = callMentors?.map((item) => ({ value: `${item?.id}`, label: `${item?.firstName} ${item?.lastName}` }))
-    const mainMentorOptions = mainMentors?.map((item) => ({ value: `${item?.id}`, label: `${item?.firstName} ${item?.lastName}` }))
+    const callMentorOptions = callMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
+    const mainMentorOptions = mainMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
 
     useEffect(() => {
-        if (isSubmitSuccessful) reset()
-
+        if (isSubmitSuccessful) setTimeout(reset, 300)
     }, [isSubmitSuccessful])
 
     return (
         <Dialog isOpen={isOpen} onClose={onClose}>
-            <form className={cls.MainMentorStudentsGroupTab__dialog} onSubmit={handleSubmit(onSubmit)}>
+            <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+                <div className={cls.form__header}>
+                    <h2 className={cls.form__header__title}>{isEdit ? "Guruh tahrirlash" : "Guruh qo’shish"}</h2>
+                    <button type='button' onClick={onClose}><CloseIcon /></button>
+                </div>
                 <FormInput
                     label='Guruh Nomi'
                     placeholder='Guruh Nomini Kiriting'
                     register={register('title', { required: 'Guruh Nomini Kiriting!' })}
                     error={errors?.title?.message}
                 />
-                <FormSelect
-                    label='Status Tanlang'
-                    placeholder="Levelni Kiriting"
-                    options={[
-                        { value: 'A1', label: 'A1' },
-                        { value: 'A2', label: 'A2' },
-                        { value: 'B1', label: 'B1' },
-                        { value: 'B2', label: 'B2' },
-                        { value: 'C1', label: 'C1' },
-                        { value: 'C2', label: 'C2' },
-                    ]}
+                {!isEdit && <FormSelect
+                    label='Level'
+                    placeholder="Levelni tanlang"
+                    options={ENGLISH_LEVEL_OPTIONS}
                     isClearable
                     isSearchable={true}
                     control={control}
                     name='level'
-                    rules={{ required: "Status Tanlang" }}
-                />
+                    rules={{ required: "Levelni tanlang" }}
+                />}
                 <FormSelect
                     label='Asosiy Mentor'
                     placeholder="Asosiy Mentorni Tanlang"
@@ -69,16 +70,12 @@ const CreateGroupForGroupsForm = ({
                     name='callMentor'
                     rules={{ required: "Nazoratchi Mentor Tanlang" }}
                 />
-                <Button
-                    type='submit'
-                    isLoading={isSubmitting}
-                    className={cls.MainMentorStudentsGroupTab__dialog__btn}
-                >
-                    Qo'shish
+                <Button type='submit' isLoading={isSubmitting}>
+                    {isEdit ? "O'zgartirish" : "Qo'shish"}
                 </Button>
             </form>
         </Dialog>
     )
 }
 
-export default CreateGroupForGroupsForm
+export default GroupFormModal
