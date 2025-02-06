@@ -18,7 +18,7 @@ const SingleGroup = () => {
         <div className={cls.page}>
             <GroupInfoCard
                 groupId={groupId}
-                onClickCreateSchedule={() => navigate('lesson-schedule')}
+                onClickCreateSchedule={() => navigate(`lesson-schedule`)}
             />
             {isLoadingStudents ? (
                 <Loader />
