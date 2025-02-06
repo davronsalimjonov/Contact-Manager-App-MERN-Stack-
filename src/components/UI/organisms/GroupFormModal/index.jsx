@@ -61,7 +61,7 @@ const GroupFormModal = ({
                     rules={{ required: "Asosiy Mentor Tanlang" }}
                 />
                 <FormSelect
-                    label='Call Mentorni Tanlang'
+                    label='Nazoratchi Mentor'
                     placeholder="Nazoratchi Mentorni Tanlang"
                     options={callMentorOptions}
                     isClearable
