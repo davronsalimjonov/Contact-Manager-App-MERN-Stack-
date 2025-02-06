@@ -7,6 +7,7 @@ import Button from '../../atoms/Buttons/Button';
 import GroupFormModal from '../GroupFormModal';
 import { ArrowRightIcon, EditIcon, PersonsGroupIcon } from '../../atoms/icons';
 import cls from './GroupInfoCard.module.scss';
+import toast from 'react-hot-toast';
 
 const GroupInfoCard = ({
     groupId,

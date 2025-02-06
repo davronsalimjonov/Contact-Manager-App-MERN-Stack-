@@ -25,7 +25,10 @@ const SingleGroup = () => {
             ) : (
                 groupStudents?.items?.length > 0 ? (
                     <>
-                        <GroupStudentsTable students={groupStudents?.items} />
+                        <GroupStudentsTable
+                            students={groupStudents?.items}
+                            startIndex={pagination.page * pagination.limit}
+                        />
                         <Pagination
                             initialPage={pagination.page}
                             pageCount={groupStudents?.meta?.totalPages}

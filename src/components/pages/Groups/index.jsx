@@ -18,7 +18,7 @@ const Groups = () => {
     const navigate = useNavigate()
     const [pagnination, setPagination] = useState({ page: 0, limit: 12 })
     const [activeLevel, setActiveLevel] = useState('A1')
-    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 12 })
+    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 3 })
     const [isOpen, setIsOpen] = useState(false)
     const createGroupMutation = useCreateGroupMutation()
 

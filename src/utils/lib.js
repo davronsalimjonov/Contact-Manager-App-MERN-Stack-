@@ -26,7 +26,7 @@ export const getUserFullName = (user) => {
     return `${firstName || ''} ${lastName || ''}`
 }
 
-export function removeEmptyKeys(obj) {
+export function removeEmptyKeys(obj = {}) {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
 }
 

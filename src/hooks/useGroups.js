@@ -16,7 +16,7 @@ export const useCreateGroupMutation = () => {
     const queryClient = useQueryClient();
     const createGroupMutation = useMutation({
         mutationFn: createGroups,
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["groups"], exact: false })
         },
     });
@@ -30,11 +30,21 @@ export const useUpdateGroupMutation = () => {
         mutationFn: async (data) => {
             const groupId = data?.id
             delete data?.id
-            await updateGroup(groupId, data)
+            return await updateGroup(groupId, data)
         },
         onSuccess: (data) => {
-            console.log(data);
-            queryClient.invalidateQueries({ queryKey: ["groups"], exact: false })
+            queryClient.setQueryData(['group-info', data?.id], data)
+            queryClient.setQueriesData(['groups', data?.level], (oldData) => {
+                return {
+                    ...oldData,
+                    items: oldData?.items?.map(group => {
+                        if (group?.id === data?.id) {
+                            group = { ...group, ...data }
+                        }
+                        return group
+                    })
+                }
+            })
         },
     });
 

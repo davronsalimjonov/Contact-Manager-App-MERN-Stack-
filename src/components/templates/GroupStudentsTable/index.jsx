@@ -3,7 +3,8 @@ import StudentStatus from '@/components/UI/atoms/StudentStatus';
 import cls from './GroupStudentsTable.module.scss';
 
 const GroupStudentsTable = ({
-    students = []
+    students = [],
+    startIndex = 1
 }) => {
     return (
         <table className={cls.table}>
@@ -15,9 +16,9 @@ const GroupStudentsTable = ({
                 </tr>
             </thead>
             <tbody>
-                {students?.map(student => (
+                {students?.map((student, index) => (
                     <tr key={student?.id}>
-                        <td>1</td>
+                        <td>{startIndex + index + 1}</td>
                         <td>{getUserFullName(student?.user)}</td>
                         <td><StudentStatus status={student?.status} /></td>
                     </tr>
