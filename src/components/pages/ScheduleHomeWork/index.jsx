@@ -3,7 +3,6 @@ import cls from "./ScheduleHomeWork.module.scss"
 import Pagination from "@/components/UI/moleculs/Pagination"
 import ScheduleHeader from "@/components/UI/organisms/ScheduleHeader"
 
-
 const ScheduleHomeWork = () => {
 
     return (

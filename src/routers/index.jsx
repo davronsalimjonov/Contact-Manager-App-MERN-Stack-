@@ -150,7 +150,7 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <ScheduleDetails />
             },
             {
-                path: '/schedule/homework',
+                path: '/schedule/homework/:homeWorkId',
                 element: <ScheduleHomeWork />
             },
             {
@@ -158,7 +158,7 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <ScheduleHomeWorkDetails />
             },
             {
-                path: '/schedule/homework/create',
+                path: '/schedule/homework/create/:homeWorkId',
                 element: <ScheduleHomeworkCreate />
             },
             {

@@ -50,7 +50,6 @@ const MaterialFormModal = ({
                     accept='image/*, application/pdf, video/*, audio/*, .doc, .docx'
                     onChange={(file) => setValue('file', file, { shouldDirty: true, shouldValidate: true })}
                     defaultFile={getValues('file')}
-                    isMulti={false}
                     error={errors.file?.message}
                 />
                 <FormTextArea

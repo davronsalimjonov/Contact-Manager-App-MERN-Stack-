@@ -6,16 +6,14 @@ import cls from "./ScheduleLessonsBtns.module.scss"
 import CreateNewLessonForm from '../CreateNewLessonForm'
 import { useLessonMutations } from '@/hooks/useLessonsSchedule'
 import toast from 'react-hot-toast'
-import { useParams } from 'react-router-dom'
 
 const ScheduleLessonsBtns = ({
     lvl = "A2",
+    groupId = "",
     refetch
 }) => {
     const [isOpen, setIsOpen] = useState(false)
     const { createLessonMutation } = useLessonMutations()
-    const { groupId } = useParams()
-
 
     const handleCreateLesson = async (data) => {
         data = { ...data, group: groupId }
@@ -24,7 +22,8 @@ const ScheduleLessonsBtns = ({
                 toast.success("Dars Yaratildi")
                 setIsOpen(false)
                 refetch()
-            }
+            },
+            onError: (err) => toast.error(err?.response?.data?.message || "Xatolik Yuz Berdi!")
         })
     }
 

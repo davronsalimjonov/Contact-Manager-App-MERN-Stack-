@@ -1,9 +1,15 @@
 .ScheduleHeader__dialog {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
         
     &__close {
         display: flex;
         align-items: center;
         justify-content: end;
+        width: 75%;
 
         & button {
             display: flex;
@@ -18,10 +24,11 @@
 
     &__src {
         margin-top: 16px;
+        width: 75%;
+    }
 
-        img {
-            width: 80vw;
-            cursor: pointer;
-        }
+    &__fullScreen {
+        margin-top: 20px;
+        width: 95%;
     }
 }

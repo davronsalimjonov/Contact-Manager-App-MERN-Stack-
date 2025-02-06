@@ -3,36 +3,37 @@ import { ArrowFullIcon, CloseIcon, PlusIcon, ScheduleHeaderIcon } from "../../at
 import cls from "./ScheduleHeader.module.scss"
 import ScheduleLessonDialog from "../../moleculs/ScheduleLessonDialog"
 import Button from "../../atoms/Buttons/Button"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import { useGetMentorLessonsSchedule } from "@/hooks/useLessonsSchedule"
 
-const ScheduleHeader = ({
-    lessonName = "Present Simple",
-    isEmpty=true
-}) => {
+const ScheduleHeader = () => {
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
-
+    const { mentorSingleLesson: { data: singleLesson } } = useGetMentorLessonsSchedule()
+    const { homeWorkId } = useParams()
+    
     return (
         <div className={cls.ScheduleHeader}>
             <div className={cls.ScheduleHeader__lesson}>
                 <ScheduleHeaderIcon height="36" width="36" />
-                <p>{lessonName}</p>
+                <p>{singleLesson?.title}. {singleLesson?.description}</p>
             </div>
             <div className={cls.ScheduleHeader__details}>
                 <div className={cls.ScheduleHeader__details__video} onClick={() => setIsOpen(true)}>
                     <span>Videoni Ko'rish <ArrowFullIcon /></span>
                 </div>
                 <div className={cls.ScheduleHeader__details__homework}>
-                    {isEmpty ? 
-                        <Button onClick={() => navigate('create')}>Vazifa Yaratish <PlusIcon height={18} width={18} /></Button>
+                    {/* {singleLesson?.lessonHomeTask === null || singleLesson?.lessonHomeTask === undefined ?
                         :
                         <span>Vazifa <ArrowFullIcon /></span>
-                    }
+                    } */}
+                    <Button onClick={() => navigate(`/schedule/homework/create/${homeWorkId}`)}>Vazifa Yaratish <PlusIcon height={18} width={18} /></Button>
                 </div>
             </div>
-            <ScheduleLessonDialog 
+            <ScheduleLessonDialog
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                video={singleLesson?.video}
             />
         </div>
     )
