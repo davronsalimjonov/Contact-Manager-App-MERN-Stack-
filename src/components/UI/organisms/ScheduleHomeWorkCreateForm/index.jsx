@@ -44,7 +44,7 @@ const ScheduleHomeWorkCreateForm = ({
             <FormTextArea
                 label={'Description'}
                 placeholder={'Description Kiriting'}
-                register={register('description')}
+                register={register('description', { required: "Darsga ta'rif kiriting!"})}
                 error={errors?.description?.message}
             />
             <div className={cls.ScheduleHomeWorkCreateForm__submit}>
