@@ -85,7 +85,7 @@ function LessonScheduleCalendar({
         if (event?.isRescheduled) return false
         return events.some(
             (existingEvent) =>
-                existingEvent?.id !== event?.lessonScheduleId &&
+                // existingEvent?.id !== event?.lessonScheduleId &&
                 existingEvent?.id !== event?.id &&
                 event.start < existingEvent.end &&
                 event.end > existingEvent.start
@@ -139,7 +139,7 @@ function LessonScheduleCalendar({
 
         const newEvent = {
             ...event.event,
-            id: '',
+            id: isTransfered ? event?.event?.id : '',
             end: event?.end,
             start: event?.start,
             fromDate: isTransfered ? event?.event?.fromDate : event?.event?.start,

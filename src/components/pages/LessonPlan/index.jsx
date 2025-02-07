@@ -23,7 +23,7 @@ const LessonPlan = () => {
 
     const handleEventDrop = (event) => {
         setMovedEvent(event)
-        setEvents(prev => prev.map(e => e.id === event.lessonScheduleId ? { ...e, isRescheduled: true } : e))
+        setEvents(prev => prev.map(e => e.id === event.lessonScheduleId ? { ...e, isRescheduled: true, isNewReschedule: e.isRescheduled } : e))
     }
 
     const handleCreateScheduleMove = async () => {
@@ -50,7 +50,11 @@ const LessonPlan = () => {
     }
 
     const handleCancel = () => {
-        setEvents(prev => prev.map(e => e.id === movedEvent?.lessonScheduleId ? { ...e, isRescheduled: false } : e))
+        setEvents(prev => prev.map(e => {
+            if (e.id === movedEvent?.lessonScheduleId && !e?.isNewReschedule) {
+                return { ...e, isRescheduled: false }
+            } else return e
+        }))
         setMovedEvent(null)
     }
 
@@ -73,7 +77,7 @@ const LessonPlan = () => {
     return (
         !isLoadingLessons ? (
             <div className={cls.page}>
-                <ConfirmationModal 
+                <ConfirmationModal
                     title='Rostdan ham ushbu darsni o’chirishni xohlaysizmi?'
                     isOpen={!!deletedEvent}
                     onCancel={() => setDeletedEvent(null)}
