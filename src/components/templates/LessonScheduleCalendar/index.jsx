@@ -1,11 +1,15 @@
+import { useState } from "react";
 import parse from "date-fns/parse";
 import getDay from "date-fns/getDay";
 import format from "date-fns/format";
-import { enUS } from "date-fns/locale";
+import { enUS, uz } from "date-fns/locale";
 import startOfWeek from "date-fns/startOfWeek";
+import { LEVEL_COLORS } from "@/constants/colors";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import cls from './LessonScheduleCalendar.module.scss';
+import toast from "react-hot-toast";
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -46,26 +50,49 @@ const CustomTimeSlotWrapper = ({ value }) => {
     );
 };
 
+const CustomWeekEventComponent = ({ event }) => {
+    const title = (event?.isBusy && !event?.isTransfered) ? '' : event?.title;
+
+    return (
+        <div className={cls.event}>
+            <span className={cls.event__title}>{title}</span>
+            {event?.isTransfered && (
+                <span className={cls.event__transfered}>
+                    <span>Ko'chirilgan:</span>
+                    <span>
+                        {format(event?.fromDate, 'd MMM', { locale: uz })} dan - {format(event?.start, 'd MMM', { locale: uz })} ga
+                    </span>
+                </span>
+            )}
+        </div>
+    );
+};
+
 function LessonScheduleCalendar({
     events = [],
     className = '',
-    dnd = false
+    dragAndDrop = false,
+    onEventDrop
 }) {
+    const [draggingEventId, setDraggingEventId] = useState(null);
+
     const isEventOverlapping = (event) => {
         return events.some(
             (existingEvent) =>
-                existingEvent.id !== event.id &&
+                existingEvent?.id !== event?.id &&
                 event.start < existingEvent.end &&
                 event.end > existingEvent.start
         );
     };
 
     const eventStyleGetter = (event) => {
-        const isOverlapping = isEventOverlapping(event);
+        const isOverlapping = event.id !== draggingEventId ? false : isEventOverlapping(event);
+        let backgroundColor = event?.isBusy ? LEVEL_COLORS.BUSY_COLOR : event?.color;
+        backgroundColor = isOverlapping ? "red" : backgroundColor;
 
         return {
             style: {
-                backgroundColor: isOverlapping ? "red" : event.color,
+                backgroundColor: backgroundColor,
                 color: "#1b1b1b",
                 borderRadius: "6px",
                 padding: "10px",
@@ -76,15 +103,55 @@ function LessonScheduleCalendar({
                 alignItems: "center",
                 justifyContent: "center",
                 textAlign: "center",
-                opacity: event?.isMoved ? 0.4 : 1,
+                opacity: (event?.isRescheduled && !event?.isBusy) ? 0.4 : 1,
                 transition: "background-color 0.2s ease",
             },
         };
     };
 
+    const handleDragStart = (props) => {
+        setDraggingEventId(props?.event.id);
+    };
+
+    const handleDragEnd = () => {
+        setDraggingEventId(null);
+    };
+
+    const handleDraggableAccessor = (event) => {
+        return !event?.isBusy && !event?.isRescheduled && !isDatePassed(event?.start);
+    }
+
+    const isDatePassed = (date) => date < new Date();
+
+    const handleDrop = (event) => {
+        const isTransfered = event?.event?.isTransfered;
+        const newStartDate = event?.start;
+
+        if (isDatePassed(newStartDate)) {
+            toast.error('Bu kunga kochirish mumkin emas!');
+            return;
+        }
+
+        const newEvent = {
+            ...event.event,
+            id: '',
+            end: event?.end,
+            start: event?.start,
+            fromDate: isTransfered ? event?.event?.fromDate : event?.event?.start,
+            lessonScheduleId: isTransfered ? event?.event?.lessonScheduleId : event?.event?.id,
+            isTransfered: true,
+        };
+        const scheduleStartTime = event?.event?.start?.getTime();
+        const transferedEventStartTime = event?.start?.getTime();
+
+        if (!isEventOverlapping(newEvent) && scheduleStartTime !== transferedEventStartTime) {
+            onEventDrop?.(newEvent);
+        }
+    };
+
     return (
         <div className={className} style={{ width: '100%' }}>
-            {dnd ? (
+            {dragAndDrop ? (
                 <DnDCalendar
                     culture="ru"
                     step={15}
@@ -99,11 +166,17 @@ function LessonScheduleCalendar({
                     localizer={localizer}
                     min={new Date(2024, 0, 1, 10, 0)}
                     max={new Date(2024, 0, 1, 23, 0)}
-                    onEventDrop={console.log}
+                    onEventDrop={handleDrop}
+                    draggableAccessor={handleDraggableAccessor}
                     eventPropGetter={eventStyleGetter}
                     components={{
-                        timeSlotWrapper: CustomTimeSlotWrapper
+                        timeSlotWrapper: CustomTimeSlotWrapper,
+                        week: {
+                            event: CustomWeekEventComponent
+                        }
                     }}
+                    onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd}
                 />
             ) : (
                 <Calendar

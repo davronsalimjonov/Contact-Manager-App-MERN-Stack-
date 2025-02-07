@@ -1,7 +1,7 @@
 import { LEVEL_COLORS } from "@/constants/colors";
 import { isSameDay } from "./time";
 
-export function convertLessonScheduleToEvents(data = []) {
+export function convertLessonScheduleToEvents(data = [], { groupId } = {}) {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
@@ -18,25 +18,32 @@ export function convertLessonScheduleToEvents(data = []) {
             return new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), hours, minutes);
         };
 
-        const isMoved = lessonScheduleMoves ? isSameDay(new Date(lessonScheduleMoves?.fromDate), createDateTime(startTime)) : false;
+        const isRescheduled = lessonScheduleMoves ? isSameDay(new Date(lessonScheduleMoves?.fromDate), createDateTime(startTime)) : false;
+        const isBusy = groupId && groupId !== group?.id;
+        const color = groupId ? LEVEL_COLORS?.ACTIVE_COLOR : LEVEL_COLORS[group?.level] || LEVEL_COLORS.DEFAULT_COLOR;
 
         const baseEvent = {
             id,
             title: group?.title,
             start: createDateTime(startTime),
             end: createDateTime(endTime),
-            color: LEVEL_COLORS[group?.level] || LEVEL_COLORS.DEFAULT_COLOR,
-            isMoved
+            isTransfered: false,
+            color,
+            isRescheduled,
+            isBusy
         };
 
-        if (isMoved) {
+        if (isRescheduled) {
             const movedDate = new Date(lessonScheduleMoves.date);
 
             const movedEvent = {
                 ...baseEvent,
+                lessonScheduleId: id,
+                fromDate: createDateTime(startTime),
                 start: createDateTime(lessonScheduleMoves.startTime, movedDate),
                 end: createDateTime(lessonScheduleMoves.endTime, movedDate),
-                isMoved: false
+                isRescheduled: false,
+                isTransfered: true,
             };
             return [baseEvent, movedEvent];
         }

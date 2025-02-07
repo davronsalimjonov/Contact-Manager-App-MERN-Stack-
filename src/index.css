@@ -485,3 +485,12 @@ label {
 .rbc-current-time-indicator {
   transform: translateY(6px);
 }
+
+.rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event:focus{
+  outline: none !important;
+}
+
+.rbc-addons-dnd-resizable{
+  width: 100%;
+  height: 100%;
+}
