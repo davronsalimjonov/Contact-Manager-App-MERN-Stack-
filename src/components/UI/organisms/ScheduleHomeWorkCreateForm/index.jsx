@@ -17,7 +17,7 @@ const ScheduleHomeWorkCreateForm = ({
     }, [register])
 
     useEffect(() => {
-        if (isSubmitSuccessful && !isEditing) reset()
+        if (isSubmitSuccessful) reset()
     }, [isSubmitSuccessful])
 
     return (
