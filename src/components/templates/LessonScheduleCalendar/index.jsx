@@ -181,7 +181,7 @@ function LessonScheduleCalendar({
                                 <CustomWeekEventComponent
                                     event={event}
                                     onClickDelete={onDeleteEvent}
-                                    withDeleteButton={event?.isTransfered}
+                                    withDeleteButton={event?.isTransfered && !event?.isBusy}
                                 />
                             ),
                         },
