@@ -38,6 +38,7 @@ export function convertLessonScheduleToEvents(data = [], { groupId } = {}) {
 
             const movedEvent = {
                 ...baseEvent,
+                id: lessonScheduleMoves.id,
                 lessonScheduleId: id,
                 fromDate: createDateTime(startTime),
                 start: createDateTime(lessonScheduleMoves.startTime, movedDate),

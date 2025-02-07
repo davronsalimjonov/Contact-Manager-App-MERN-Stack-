@@ -1,15 +1,16 @@
 import { useState } from "react";
 import parse from "date-fns/parse";
+import toast from "react-hot-toast";
 import getDay from "date-fns/getDay";
 import format from "date-fns/format";
 import { enUS, uz } from "date-fns/locale";
 import startOfWeek from "date-fns/startOfWeek";
 import { LEVEL_COLORS } from "@/constants/colors";
+import { CloseIcon } from "@/components/UI/atoms/icons";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import cls from './LessonScheduleCalendar.module.scss';
-import toast from "react-hot-toast";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
@@ -50,11 +51,12 @@ const CustomTimeSlotWrapper = ({ value }) => {
     );
 };
 
-const CustomWeekEventComponent = ({ event }) => {
+const CustomWeekEventComponent = ({ event, onClickDelete, withDeleteButton = false }) => {
     const title = (event?.isBusy && !event?.isTransfered) ? '' : event?.title;
 
     return (
         <div className={cls.event}>
+            {withDeleteButton && <button onClick={() => onClickDelete?.(event)}><CloseIcon /></button>}
             <span className={cls.event__title}>{title}</span>
             {event?.isTransfered && (
                 <span className={cls.event__transfered}>
@@ -68,17 +70,22 @@ const CustomWeekEventComponent = ({ event }) => {
     );
 };
 
+const isDatePassed = (date) => date < new Date();
+
 function LessonScheduleCalendar({
     events = [],
     className = '',
     dragAndDrop = false,
-    onEventDrop
+    onEventDrop,
+    onDeleteEvent
 }) {
     const [draggingEventId, setDraggingEventId] = useState(null);
 
     const isEventOverlapping = (event) => {
+        if (event?.isRescheduled) return false
         return events.some(
             (existingEvent) =>
+                existingEvent?.id !== event?.lessonScheduleId &&
                 existingEvent?.id !== event?.id &&
                 event.start < existingEvent.end &&
                 event.end > existingEvent.start
@@ -86,7 +93,7 @@ function LessonScheduleCalendar({
     };
 
     const eventStyleGetter = (event) => {
-        const isOverlapping = event.id !== draggingEventId ? false : isEventOverlapping(event);
+        const isOverlapping = (event.id !== draggingEventId || event?.lessonScheduleId == draggingEventId) ? false : isEventOverlapping(event);
         let backgroundColor = event?.isBusy ? LEVEL_COLORS.BUSY_COLOR : event?.color;
         backgroundColor = isOverlapping ? "red" : backgroundColor;
 
@@ -121,8 +128,6 @@ function LessonScheduleCalendar({
         return !event?.isBusy && !event?.isRescheduled && !isDatePassed(event?.start);
     }
 
-    const isDatePassed = (date) => date < new Date();
-
     const handleDrop = (event) => {
         const isTransfered = event?.event?.isTransfered;
         const newStartDate = event?.start;
@@ -144,7 +149,7 @@ function LessonScheduleCalendar({
         const scheduleStartTime = event?.event?.start?.getTime();
         const transferedEventStartTime = event?.start?.getTime();
 
-        if (!isEventOverlapping(newEvent) && scheduleStartTime !== transferedEventStartTime) {
+        if (!isEventOverlapping({ ...newEvent, id: event?.event?.id }) && scheduleStartTime !== transferedEventStartTime) {
             onEventDrop?.(newEvent);
         }
     };
@@ -172,8 +177,14 @@ function LessonScheduleCalendar({
                     components={{
                         timeSlotWrapper: CustomTimeSlotWrapper,
                         week: {
-                            event: CustomWeekEventComponent
-                        }
+                            event: ({ event }) => (
+                                <CustomWeekEventComponent
+                                    event={event}
+                                    onClickDelete={onDeleteEvent}
+                                    withDeleteButton={event?.isTransfered}
+                                />
+                            ),
+                        },
                     }}
                     onDragStart={handleDragStart}
                     onDragEnd={handleDragEnd}
@@ -195,7 +206,10 @@ function LessonScheduleCalendar({
                     max={new Date(2024, 0, 1, 23, 0)}
                     eventPropGetter={eventStyleGetter}
                     components={{
-                        timeSlotWrapper: CustomTimeSlotWrapper
+                        timeSlotWrapper: CustomTimeSlotWrapper,
+                        week: {
+                            event: ({ event }) => <CustomWeekEventComponent event={event} />
+                        }
                     }}
                 />
             )}

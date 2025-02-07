@@ -38,3 +38,8 @@ export const createScheduleMove = async (data) => {
     const res = await api.post('/lesson-schedule/move', data)
     return res.data
 }
+
+export const deleteMovedSchedule = async (scheduleId) => {
+    const res = await api.delete(`/lesson-schedule/move/${scheduleId}`)
+    return res.data
+}

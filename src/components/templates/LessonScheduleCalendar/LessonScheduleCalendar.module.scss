@@ -7,6 +7,14 @@
     justify-content: center;
     position: relative;
 
+    & > button{
+        align-self: flex-end;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        z-index: 100;
+    }
+
     &__transfered{
         width: 100%;
         position: absolute;

@@ -8,7 +8,7 @@ import { convertLessonScheduleToEvents } from '@/utils/calendar';
 import ConfirmationModal from '@/components/UI/organisms/ConfirmationModal';
 import LessonScheduleCalendar from '@/components/templates/LessonScheduleCalendar';
 import CreateScheduleFormModal from '@/components/UI/organisms/CreateScheduleFormModal';
-import { useGetGroupLessonsSchedule, useScheduleMoveMutation } from '@/hooks/useLessonsSchedule';
+import { useGetGroupLessonsSchedule, useScheduleMoveDeleteMutation, useScheduleMoveMutation } from '@/hooks/useLessonsSchedule';
 import cls from './LessonPlan.module.scss';
 
 const LessonPlan = () => {
@@ -16,7 +16,9 @@ const LessonPlan = () => {
     const [events, setEvents] = useState([])
     const [isOpen, setIsOpen] = useState(false)
     const [movedEvent, setMovedEvent] = useState(null)
+    const [deletedEvent, setDeletedEvent] = useState(null)
     const moveMutation = useScheduleMoveMutation()
+    const deleteMutation = useScheduleMoveDeleteMutation()
     const { data: lessons, isLoading: isLoadingLessons } = useGetGroupLessonsSchedule(groupId)
 
     const handleEventDrop = (event) => {
@@ -52,6 +54,16 @@ const LessonPlan = () => {
         setMovedEvent(null)
     }
 
+    const handleDeleteEvent = async (event) => {
+        await deleteMutation.mutateAsync(event?.id, {
+            onSuccess: () => {
+                toast.success('Dars o’chirildi')
+                setDeletedEvent(null)
+            },
+            onError: (error) => toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
+        })
+    }
+
     useEffect(() => {
         if (lessons) {
             setEvents(convertLessonScheduleToEvents(lessons, { groupId }))
@@ -61,6 +73,12 @@ const LessonPlan = () => {
     return (
         !isLoadingLessons ? (
             <div className={cls.page}>
+                <ConfirmationModal 
+                    title='Rostdan ham ushbu darsni o’chirishni xohlaysizmi?'
+                    isOpen={!!deletedEvent}
+                    onCancel={() => setDeletedEvent(null)}
+                    onConfirm={() => handleDeleteEvent(deletedEvent)}
+                />
                 <ConfirmationModal
                     title='Rostdan ham ushbu darsni o’chirishni xohlaysizmi?'
                     isOpen={!!movedEvent}
@@ -77,6 +95,7 @@ const LessonPlan = () => {
                     dragAndDrop
                     events={[...events, movedEvent ? movedEvent : {}]}
                     onEventDrop={handleEventDrop}
+                    onDeleteEvent={event => setDeletedEvent(event)}
                 />
             </div>
         ) : (

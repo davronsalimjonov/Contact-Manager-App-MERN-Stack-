@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSchedule, createScheduleMove, getGroupLessonsSchedule, getMentorLessonsSchedule } from "@/services/schedule"
+import { createSchedule, createScheduleMove, deleteMovedSchedule, getGroupLessonsSchedule, getMentorLessonsSchedule } from "@/services/schedule"
 import { useGetUserId } from "./useGetUser"
 
 export const useGetMentorLessonsSchedule = () => {
@@ -35,4 +35,18 @@ export const useScheduleMoveMutation = () => {
     }
 
     return moveMutation
+}
+
+export const useScheduleMoveDeleteMutation = () => {
+    const queryClient = useQueryClient()
+    const moveDeleteMutation = useMutation({
+        mutationFn: deleteMovedSchedule,
+        onSuccess: onDeleteSuccess
+    })
+
+    function onDeleteSuccess(data) {
+        queryClient.setQueryData(['lessons-schedule', 'group', data?.group?.id], oldData => oldData?.map(lesson => lesson?.id === data?.id ? data : lesson))
+    }
+
+    return moveDeleteMutation
 }
