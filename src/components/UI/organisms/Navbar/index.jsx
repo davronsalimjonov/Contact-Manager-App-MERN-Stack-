@@ -25,7 +25,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/workspace', title: 'Workspace', showBackButton: false },
         { path: '/adaptation-workspace', title: 'Workspace', showBackButton: false },
         { path: '/tasks', title: 'Vazifalarim', showBackButton: false },
-        { path: '/settings', title: 'Sozlamalar', showBackButton: true },
+        { path: '/settings', title: 'Sozlamalar', showBackButton: false },
         { path: '/sales-form', title: 'Sotuv formasi', showBackButton: true },
         { path: '/lessons-schedule', title: 'Dars Jadvali' },
         { path: '/courses-iframe', title: 'Kurslar' },

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { GENDER_OPTIONS } from '@/constants/form';
 import { saleFormSchema } from '@/schemas/seller';
-import { useGetCourse } from '@/hooks/useGetCourse';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
@@ -10,9 +9,10 @@ import FormSelect from '../../moleculs/Form/FormSelect';
 import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
 import cls from './SaleForm.module.scss';
+import { useGetCourses } from '@/hooks/useUserCourse';
 
 const SaleForm = ({ onSubmit }) => {
-    const { data: courseForSelect } = useGetCourse()
+    const { data: courseForSelect } = useGetCourses()
     const { register, formState: { errors, isSubmitting, isSubmitSuccessful }, control, handleSubmit, watch, setError, clearErrors, reset } = useForm({ mode: 'onSubmit', resolver: yupResolver(saleFormSchema) })
 
     const phone = watch('phone');
