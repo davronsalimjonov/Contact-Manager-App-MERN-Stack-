@@ -1,11 +1,19 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
 import react from '@vitejs/plugin-react'
 import compression from 'vite-plugin-compression';
+import manifest from './manifest'
 
-// https://vite.dev/config/
+const manifestForPwa = {
+  registerType: 'autoUpdate',
+  strategies: 'generateSW',
+  includeAssests: ['/favicon/favicon.ico', "/favicon/apple-touc-icon.png",],
+  manifest,
+}
+
 export default defineConfig({
-  plugins: [react(), compression()],
+  plugins: [react(), compression(), VitePWA(manifestForPwa)],
   server: { host: true },
   build: {
     rollupOptions: {
@@ -43,9 +51,9 @@ export default defineConfig({
         find: '@',
         replacement: resolve(__dirname, 'src'),
       },
-      { 
-        find: 'path', 
-        replacement: 'path-browserify' 
+      {
+        find: 'path',
+        replacement: 'path-browserify'
       },
       {
         find: /^core-js-pure\/stable\/(.*)/,
