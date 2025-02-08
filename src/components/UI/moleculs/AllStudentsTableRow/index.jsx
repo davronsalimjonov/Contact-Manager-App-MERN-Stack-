@@ -5,9 +5,6 @@ import { formatDate } from '@/utils/formatDate';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import { useNavigate } from 'react-router-dom';
 
-
-
-
 const AllStudentsTableRow = ({
     index,
     fullName,
@@ -18,14 +15,15 @@ const AllStudentsTableRow = ({
     secondTeacher,
     level,
     course,
-    studentId,
-    startDate
+    userId,
+    startDate,
+    userCourseId
 }) => {
     const navigate = useNavigate();
 
     return (
 
-        <tr className={cls.row} onClick={() => navigate(`/students/${studentId}`)}>
+        <tr className={cls.row} onClick={() => navigate(`/students/${userCourseId}/${userId}`)}>
 
             <td>{index}</td>
             <td className={cls.row__avatar}>

@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
 import Loader from '@/components/UI/atoms/Loader';
@@ -6,8 +7,6 @@ import WorkspaceTable from '@/components/templates/WorkspaceTable';
 import { useGetStudentsForAdaptation } from '@/hooks/useGetStudents';
 import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
 import { updateStudentAdaptationStatus } from '@/services/students';
-import cls from './AdaptationWorkspace.module.scss';
-import toast from 'react-hot-toast';
 
 const AdaptationWorkspace = () => {
     const navigate = useNavigate()
@@ -91,7 +90,7 @@ const AdaptationWorkspace = () => {
                     commingDate={item.commingDate}
                     showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                     showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
-                    onClick={() => navigate(`${item.userCourseId}/${item.userId}`)}
+                    onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
                 />
             )}
         />

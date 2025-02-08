@@ -27,7 +27,7 @@ const AllStudentsTable = ({
                             isLoading={isLoading}
                             renderItem={(student, index) => (
                                 <AllStudentsTableRow
-                                    key={student?.user?.id}
+                                    key={student?.id}
                                     index={(currenPage - 1) * limit + index + 1}
                                     fullName={getUserFullName(student?.user)}
                                     url={student?.user?.url}
@@ -39,6 +39,8 @@ const AllStudentsTable = ({
                                     level={student?.level}
                                     studentId={student?.id}
                                     startDate={student?.startDate}
+                                    userId={student?.user?.id}
+                                    userCourseId={student?.id}
                                 />
                             )}
                         />

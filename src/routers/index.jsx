@@ -54,7 +54,6 @@ import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, se
 import ScheduleDetails from "@/components/pages/ScheduleDetails";
 import Groups from "@/components/pages/Groups";
 import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
-import StudentCourseInfo from "@/components/pages/StudentCourseInfo";
 import SingleGroup from "@/components/pages/SingleGroup";
 import LessonPlan from "@/components/pages/LessonPlan";
 
@@ -86,7 +85,7 @@ const callTecherRoutes = createBrowserRouter([
                 element: <MyStudents />
             },
             {
-                path: '/students/:courseId',
+                path: '/students/:courseId/:userId',
                 element: <SingleStudent />
             },
             {
@@ -100,10 +99,6 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '/adaptation-workspace',
                 element: <AdaptationWorkspace />
-            },
-            {
-                path: '/adaptation-workspace/:courseId/:userId',
-                element: <StudentCourseInfo />
             },
             {
                 path: '/settings',
@@ -147,6 +142,10 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <MainMentorStudents />
             },
             {
+                path: '/students/:courseId/:userId',
+                element: <SingleStudent />
+            },
+            {
                 path: '/dictionary',
                 element: <Dictionary />
             },
@@ -169,10 +168,6 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '/settings',
                 element: <Settings />
-            },
-            {
-                path: '/students/:courseId',
-                element: <SingleStudent />
             },
             {
                 path: '/platform',
@@ -216,8 +211,8 @@ const managerRoutes = createBrowserRouter([
                 element: <AllStudents />
             },
             {
-                path: '/students/:courseId',
-                element: <SingleStudent courseList />
+                path: '/students/:courseId/:userId',
+                element: <SingleStudent />
             },
             {
                 path: '/add-student',

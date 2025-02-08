@@ -1,5 +1,4 @@
 import Avatar from 'react-avatar';
-import { useNavigate } from 'react-router-dom';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
@@ -20,21 +19,22 @@ const StudentsTableRow = ({
     hidden = false,
     checked = false,
     unreadedMessagesCount = 0,
+    onClick,
+    onClickUserInfo,
     onClickChangePassword,
     onClickTransfer,
     onChangeCheckbox
 }) => {
-    const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const dropdownMenuItems = [
-        { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(userCourseId) },
+        { label: 'O’quvchi ma’lumotlari', onClick: onClickUserInfo },
         { label: 'Parol o’zgartirish', onClick: onClickChangePassword },
         { label: 'Transfer qilish', onClick: onClickTransfer },
     ]
 
     return (
-        <tr className={cls.row} onClick={() => navigate(`/students/chat/${chatId}`)}>
+        <tr className={cls.row} onClick={onClick}>
             {withCheckbox && <td><input type="checkbox" onClick={e => e.stopPropagation()} value={userCourseId} checked={checked} onChange={onChangeCheckbox} /></td>}
             <td>{index}</td>
             <td className={cls.row__name}>

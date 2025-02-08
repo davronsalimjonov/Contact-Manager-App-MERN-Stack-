@@ -80,6 +80,7 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                                 <th>Tugash sanasi</th>
                                 <th>Darajasi</th>
                                 <th>Guruh</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -94,8 +95,8 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                                     group={course?.group?.title}
                                     startDate={course?.startDate}
                                     courseName={course?.course?.title}
-                                    onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
                                     onLevelChange={({ value: level }) => handleUpdateUserLevel(course?.id, level)}
+                                    onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
                                 />
                             ))}
                         </tbody>

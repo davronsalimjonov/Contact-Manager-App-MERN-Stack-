@@ -8,7 +8,6 @@ import RedButton from '@/components/UI/atoms/Buttons/RedButton'
 import FormSelect from '@/components/UI/moleculs/Form/FormSelect'
 import FormDatepicker from '@/components/UI/moleculs/Form/FormDatepicker'
 import dayjs from 'dayjs'
-import PageNotFound from '@/components/pages/PageNotFound'
 
 const UserCourseListTable = ({
     courses = [] || '',

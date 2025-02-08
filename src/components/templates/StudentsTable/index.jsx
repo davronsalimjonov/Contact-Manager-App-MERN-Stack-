@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getDayName } from '@/utils/time';
 import { cn, getUserFullName } from '@/utils/lib';
 import Mapper from '@/components/UI/atoms/Mapper';
 import Loader from '@/components/UI/atoms/Loader';
+import Button from '@/components/UI/atoms/Buttons/Button';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
 import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
 import StudentsTableRow from '../../UI/moleculs/StudentsTableRow';
 import cls from './StudentsTable.module.scss';
-import Button from '@/components/UI/atoms/Buttons/Button';
 
 const StudentsTable = ({
     groupId = '',
     students = [],
     isLoading
 }) => {
+    const navigate = useNavigate()
     const [checkedStudents, setCheckedStudents] = useState([])
     const [changePassword, setChangePassword] = useState({ isOpen: false, userId: '' })
     const [transfer, setTransfer] = useState({ isOpen: false, userIds: [], groupId: '' })
@@ -88,8 +90,10 @@ const StudentsTable = ({
                                     days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
                                     checked={checkedStudents.includes(student?.id)}
                                     onChangeCheckbox={handleCheckboxChange}
+                                    onClick={() => navigate(`/students/chat/${student?.id}`)}
                                     onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.userId })}
                                     onClickTransfer={() => setTransfer({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
+                                    onClickUserInfo={() => navigate(`/students/${student?.id}/${student?.userId}`)}
                                 />
                             )}
                         />

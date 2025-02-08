@@ -8,8 +8,8 @@ import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal
 import MainMentorStudentsTableRow from '@/components/UI/moleculs/MainMentorStudentsTableRow';
 import cls from './MainMentorStudentsTable.module.scss';
 
-const MainMentorStudentsTable = ({ 
-    students = [], 
+const MainMentorStudentsTable = ({
+    students = [],
     startIndex = 1,
     withCheckbox = false,
     groupId,
@@ -55,7 +55,7 @@ const MainMentorStudentsTable = ({
                         <tr>
                             {withCheckbox && (
                                 <th>
-                                    <input 
+                                    <input
                                         type="checkbox"
                                         checked={isAllSelected}
                                         onChange={handleSelectAll}
@@ -82,13 +82,9 @@ const MainMentorStudentsTable = ({
                                 status={student?.status}
                                 phoneNumber={student?.phone}
                                 fullName={getUserFullName(student)}
-                                onClickStudentInfo={() => navigate(student?.id)}
+                                onClickStudentInfo={() => navigate(`${student?.id}/${student?.userId}`)}
                                 onClickChangePassword={() => setPasswordModal({ isOpen: true, userId: student?.userId })}
-                                onClickTransfer={() => setTransferModal({ 
-                                    isOpen: true, 
-                                    userIds: [student?.id], 
-                                    groupId: student?.groupId 
-                                })}
+                                onClickTransfer={() => setTransferModal({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
                                 checkbox={withCheckbox}
                                 checked={selectedStudents.has(student?.id)}
                                 onChangeCheckbox={handleCheckboxChange}
