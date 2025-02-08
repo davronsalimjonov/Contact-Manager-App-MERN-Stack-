@@ -56,6 +56,7 @@ import Groups from "@/components/pages/Groups";
 import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
 import SingleGroup from "@/components/pages/SingleGroup";
 import LessonPlan from "@/components/pages/LessonPlan";
+import UserCourseUpdate from "@/components/pages/UserCourseUpdate";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -73,18 +74,6 @@ const callTecherRoutes = createBrowserRouter([
                 element: <MyStudents />
             },
             {
-                path: '/workspace',
-                element: <Workspace />
-            },
-            {
-                path: '/dictionary',
-                element: <Dictionary />
-            },
-            {
-                path: '/students',
-                element: <MyStudents />
-            },
-            {
                 path: '/students/:courseId/:userId',
                 element: <SingleStudent />
             },
@@ -93,8 +82,16 @@ const callTecherRoutes = createBrowserRouter([
                 element: <Chat />
             },
             {
+                path: '/user-course/:userCourseId',
+                element: <UserCourseUpdate />
+            },
+            {
                 path: '/workspace',
                 element: <Workspace />
+            },
+            {
+                path: '/dictionary',
+                element: <Dictionary />
             },
             {
                 path: '/adaptation-workspace',
@@ -107,10 +104,6 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '/tasks',
                 element: <MentorTasks />
-            },
-            {
-                path: 'mentor',
-                element: <MainMentors />
             },
             {
                 path: '*',
@@ -144,6 +137,10 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '/students/:courseId/:userId',
                 element: <SingleStudent />
+            },
+            {
+                path: '/user-course/:userCourseId',
+                element: <UserCourseUpdate />
             },
             {
                 path: '/dictionary',
@@ -213,6 +210,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/students/:courseId/:userId',
                 element: <SingleStudent />
+            },
+            {
+                path: '/user-course/:userCourseId',
+                element: <UserCourseUpdate />
             },
             {
                 path: '/add-student',

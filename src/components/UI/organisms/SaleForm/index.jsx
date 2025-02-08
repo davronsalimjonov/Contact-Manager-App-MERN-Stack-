@@ -12,7 +12,7 @@ import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
 import cls from './SaleForm.module.scss';
 
 const SaleForm = ({ onSubmit }) => {
-    const { courseForSelect: { data: courseForSelect } } = useGetCourse()
+    const { data: courseForSelect } = useGetCourse()
     const { register, formState: { errors, isSubmitting, isSubmitSuccessful }, control, handleSubmit, watch, setError, clearErrors, reset } = useForm({ mode: 'onSubmit', resolver: yupResolver(saleFormSchema) })
 
     const phone = watch('phone');

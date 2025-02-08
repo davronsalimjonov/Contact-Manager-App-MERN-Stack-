@@ -1,13 +1,13 @@
 import { debounce } from '@/utils/lib';
-import { DEGREEOPTIONS, STUDENT_STATUS_ENUMS, STUDENTS_STATUS_OPTION } from '@/constants';
+import { DEGREEOPTIONS, STUDENTS_STATUS_OPTIONS } from '@/constants';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import cls from './AllStudentsSearchBar.module.scss';
-import useGetCourses from '@/hooks/useGetCourses';
 import Button from '../../atoms/Buttons/Button';
 import { PlusIcon } from '../../atoms/icons';
 import PhoneInput from '../../atoms/Form/PhoneInput';
 import { useNavigate } from 'react-router-dom';
+import { useGetCourses } from '@/hooks/useUserCourse';
 
 const AllStudentsSearchBar = ({
     onChangeStatus,
@@ -30,7 +30,7 @@ const navigate = useNavigate();
             <Select
                 className={cls.bar__form__select}
                 placeholder='Status user'
-                options={STUDENTS_STATUS_OPTION}
+                options={STUDENTS_STATUS_OPTIONS}
                 onChange={onChangeStatus}
                 isClearable
             />

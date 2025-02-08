@@ -1,9 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { getUserCourses, updateUserCourse } from "@/services/course"
+import { getCourses, getUserCourseById, getUserCourses, updateUserCourse } from "@/services/course"
 import { useGetUserId } from "./useGetUser"
 
 export const useGetUserCourses = (userId) => {
     return useQuery(['user-courses', userId], () => getUserCourses(userId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!userId })
+}
+
+export const useGetUserCourseById = (userCourseId) => {
+    return useQuery(['user-course', 'single', userCourseId], () => getUserCourseById(userCourseId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!userCourseId })
+}
+
+export const useGetCourses = () => {
+    return useQuery(['courses'], () => getCourses(), { cacheTime: Infinity, staleTime: Infinity });
 }
 
 export const useUserCourseMutations = (userCourseId) => {
@@ -19,9 +27,10 @@ export const useUserCourseMutations = (userCourseId) => {
     })
 
     function updateUserCourseState(data) {
+        queryClient.setQueriesData(['user-course', 'single', userCourseId], () => data)
         queryClient.setQueryData(['chat', 'info', userCourseId], (oldData) => ({ 
             ...oldData, 
-            userCourse: { ...oldData.userCourse, ...data } 
+            userCourse: { ...oldData?.userCourse, ...data } 
         }))
     }
 

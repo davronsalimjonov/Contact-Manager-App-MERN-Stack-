@@ -45,7 +45,7 @@ export const WEEKDAYOPTIONS = daysOfWeekFull.map((day) => ({ value: day, label: 
 
 export const DEGREEOPTIONS = DEGREE.map((level) => ({ value: level, label: level }));
 
-export const STUDENTS_STATUS_OPTION = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }));
+export const STUDENTS_STATUS_OPTIONS = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }));
 
 export const STATUS_COLOR = [
     {

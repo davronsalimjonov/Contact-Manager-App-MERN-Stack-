@@ -1,0 +1,23 @@
+
+.page{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    &__form{
+        width: 100%;
+        padding: 16px;
+        border-radius: 8px;
+        background-color: var(--base-white-color);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        &__elements,
+        &__buttons{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+    }
+}

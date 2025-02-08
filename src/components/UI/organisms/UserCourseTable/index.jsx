@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { useGetUserId } from '@/hooks/useGetUser';
 import { updateUserCourse } from '@/services/course';
 import { addStudentToGroup } from '@/services/group';
@@ -12,6 +13,7 @@ import ConfirmationModal from '../ConfirmationModal';
 import cls from './UserCourseTable.module.scss';
 
 const UserCourseTable = ({ userId, userCourseId }) => {
+    const navigate = useNavigate()
     const queryClient = useQueryClient()
     const mentorId = useGetUserId()
     const [groupPicker, setGroupPicker] = useState({ isOpen: false, level: '', userCourseId: null })
@@ -97,6 +99,7 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                                     courseName={course?.course?.title}
                                     onLevelChange={({ value: level }) => handleUpdateUserLevel(course?.id, level)}
                                     onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
+                                    onClickEdit={() => navigate(`/user-course/${course?.id}`)}
                                 />
                             ))}
                         </tbody>

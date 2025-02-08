@@ -17,6 +17,7 @@ const UserCourseRow = ({
     hasGroup = false,
     onClickAddCourse,
     onLevelChange,
+    onClickEdit
 }) => {
     return (
         <tr className={cn(cls.row, disabled && cls.disabled)}>
@@ -35,7 +36,7 @@ const UserCourseRow = ({
                 />
             </td>
             <td>{hasGroup ? group : <Button disabled={!level || disabled} onClick={onClickAddCourse}>Guruh biriktirish</Button>}</td>
-            <td><button><EditIcon /></button></td>
+            <td><button onClick={onClickEdit}><EditIcon /></button></td>
         </tr>
     );
 }

@@ -1,12 +1,11 @@
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import cls from './AddNotification.module.scss';
-import useGetCourses from '@/hooks/useGetCourses';
 import FormInput from '@/components/UI/moleculs/Form/FormInput';
 import { ClockIcon, CloseIcon } from '@/components/UI/atoms/icons';
 import FormTimeInput from '@/components/UI/moleculs/Form/FormTimeInput';
 import Button from '@/components/UI/atoms/Buttons/Button';
-import { STUDENTS_STATUS_OPTION } from '@/constants';
+import { STUDENTS_STATUS_OPTIONS } from '@/constants';
 import FormSelect from '@/components/UI/moleculs/Form/FormSelect';
 import FormDatepicker from '@/components/UI/moleculs/Form/FormDatepicker';
 import { addNotification } from '@/services/notification';
@@ -16,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { customToast } from '@/utils/toast';
 import { queryClient } from '@/services/api';
 import FormTextArea from '@/components/UI/moleculs/Form/FormTextArea';
+import { useGetCourses } from '@/hooks/useUserCourse';
 
 const AddNotification = () => {
     const { data: courses } = useGetCourses();
@@ -167,7 +167,7 @@ const AddNotification = () => {
                             label='Statusi'
                             control={control}
                             name='status'
-                            options={STUDENTS_STATUS_OPTION}
+                            options={STUDENTS_STATUS_OPTIONS}
                             isClearable={true}
                             placeholder='Status user'
                         />

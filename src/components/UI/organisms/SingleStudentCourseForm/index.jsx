@@ -1,4 +1,4 @@
-import { DEGREEOPTIONS, STUDENTS_STATUS_OPTION } from "@/constants";
+import { DEGREEOPTIONS, STUDENTS_STATUS_OPTIONS } from "@/constants";
 import cls from './SingleStudentCourseForm.module.scss';
 import { useForm } from "react-hook-form";
 import FormInput from "../../moleculs/Form/FormInput";
@@ -104,7 +104,7 @@ const SingleStudentCourseForm = ({
                     name="status"
                     isClearable={true}
                     control={control}
-                    options={STUDENTS_STATUS_OPTION}
+                    options={STUDENTS_STATUS_OPTIONS}
                     placeholder="Tanlang"
                     label="Foydalanuvchi statusi"
                     error={errors?.status?.message}
