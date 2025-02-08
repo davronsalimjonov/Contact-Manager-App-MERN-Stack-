@@ -10,6 +10,9 @@ const manifestForPwa = {
   strategies: 'generateSW',
   includeAssests: ['/favicon/favicon.ico', "/favicon/apple-touc-icon.png",],
   manifest,
+  workbox: {
+    maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // 4 MiB
+  }
 }
 
 export default defineConfig({
