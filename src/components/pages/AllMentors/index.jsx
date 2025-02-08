@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import cls from './AllMentors.module.scss'
+import { useState } from 'react'
 import useGetMentors from '@/hooks/useGetMentors'
 import MentorsSearchBar from '@/components/UI/organisms/MentorsSearchbar'
 import Loader from '@/components/UI/atoms/Loader'
 import MentorsTable from '@/components/templates/MentorsTable'
 import Pagination from '@/components/UI/moleculs/Pagination'
+import cls from './AllMentors.module.scss'
 
 const AllMentors = () => {
   const [filter, setFilter] = useState({})

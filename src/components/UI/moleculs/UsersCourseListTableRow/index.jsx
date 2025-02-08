@@ -1,7 +1,6 @@
-import React from 'react'
-import cls from './UsersCourseListTableRow.module.scss'
 import dayjs from 'dayjs'
 import { EditMentorIcon } from '../../atoms/icons'
+import cls from './UsersCourseListTableRow.module.scss'
 
 const UsersCourseListTableRow = ({
     key='',
