@@ -47,7 +47,7 @@ const CreateScheduleFormModal = ({
     isOpen,
     onClose
 }) => {
-    const { control, handleSubmit, watch, formState: { isSubmitting, isValid, isDirty } } = useForm()
+    const { control, handleSubmit, watch, reset, formState: { isSubmitting, isValid, isDirty } } = useForm()
     const { data: lessons } = useGetGroupLessonsSchedule(groupId)
     const createScheduleMutation = useCreateLessonScheduleMutation()
     const selectedWeekday = watch('weekday')
@@ -58,6 +58,7 @@ const CreateScheduleFormModal = ({
         await createScheduleMutation.mutateAsync(data, {
             onSuccess: () => {
                 toast.success('Dars jadval muvaffaqiyatli qo’shildi')
+                reset({})
                 onClose()
             },
             onError: (err) => toast.error(err?.response?.data?.message || 'Xatolik yuz berdi')

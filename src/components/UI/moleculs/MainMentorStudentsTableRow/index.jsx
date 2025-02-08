@@ -32,12 +32,7 @@ const MainMentorStudentsTableRow = ({
         <tr className={cls.row}>
             {checkbox && (
                 <td>
-                    <input
-                        type="checkbox"
-                        checked={checked}
-                        value={userCourseId}
-                        onChange={onChangeCheckbox}
-                    />
+                    <input type="checkbox" checked={checked} value={userCourseId} onChange={onChangeCheckbox}/>
                 </td>
             )}
             <td>{index}</td>

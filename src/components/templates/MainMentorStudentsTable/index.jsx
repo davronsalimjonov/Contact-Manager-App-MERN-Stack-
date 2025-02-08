@@ -1,11 +1,8 @@
 import { useState } from 'react';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { cn, getUserFullName } from '@/utils/lib';
-import { useTransferMutation } from '@/hooks/useGroups';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import EmptyData from '@/components/UI/organisms/EmptyData';
-import ConfirmationModal from '@/components/UI/organisms/ConfirmationModal';
 import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
 import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
 import MainMentorStudentsTableRow from '@/components/UI/moleculs/MainMentorStudentsTableRow';
@@ -23,21 +20,8 @@ const MainMentorStudentsTable = ({
     isAllStudentsLoading
 }) => {
     const navigate = useNavigate()
-    const transferStudentMutation = useTransferMutation()
     const [passwordModal, setPasswordModal] = useState({ isOpen: false, userId: '' })
     const [transferModal, setTransferModal] = useState({ isOpen: false, userIds: [], groupId: '' })
-    const [confirmModal, setConfirmModal] = useState({ isOpen: false, userIds: [], from: '', to: '' })
-
-    const singleTransferConfirmTitle = `Rostan ham o\'quvchini shu guruhga transfer qilmoqchimisiz?`
-    const multipleTransferConfirmTitle = `Rostan ham o\'quvchilarni shu guruhga transfer qilmoqchimisiz?`
-
-    const handleTransferStudent = async () => {
-        const transferData = { from: confirmModal?.from, to: confirmModal?.to, studentIds: confirmModal?.userIds }
-        await transferStudentMutation.mutateAsync(transferData, {
-            onSuccess: () => toast.success('O\'quvchi transfer qilindi'),
-            onError: (err) => toast.error(err?.response?.data?.message || 'Xatolik yuz berdi')
-        })
-    }
 
     const handleTransferAllStudents = () => {
         setTransferModal({ isOpen: true, userIds: Array.from(selectedStudents), groupId })
@@ -60,23 +44,10 @@ const MainMentorStudentsTable = ({
                 onClose={() => setPasswordModal({ isOpen: false, userId: '' })}
             />
             <TransferStudentModal
-                initialGroupId={transferModal?.groupId}
                 isOpen={transferModal?.isOpen}
+                groupId={transferModal?.groupId}
+                userIds={transferModal?.userIds}
                 onClose={() => setTransferModal(state => ({ ...state, isOpen: false }))}
-                onSubmit={(groupId) => setConfirmModal({ 
-                    isOpen: true, 
-                    title: transferModal?.userIds?.length > 1 ? multipleTransferConfirmTitle : singleTransferConfirmTitle,
-                    userIds: transferModal?.userIds, 
-                    to: groupId, 
-                    from: transferModal?.groupId 
-                })}
-            />
-            <ConfirmationModal
-                title={confirmModal?.title || singleTransferConfirmTitle}
-                isOpen={confirmModal?.isOpen}
-                onClose={() => setConfirmModal({ isOpen: false, userIds: '', from: '', to: '', title: '' })}
-                onCancel={() => setConfirmModal({ isOpen: false, userIds: '', from: '', to: '', title: '' })}
-                onConfirm={handleTransferStudent}
             />
             {students?.length > 0 ? (
                 <table className={cn(cls.table, withCheckbox && cls.withCheckbox)}>
@@ -112,10 +83,7 @@ const MainMentorStudentsTable = ({
                                 phoneNumber={student?.phone}
                                 fullName={getUserFullName(student)}
                                 onClickStudentInfo={() => navigate(student?.id)}
-                                onClickChangePassword={() => setPasswordModal({ 
-                                    isOpen: true, 
-                                    userId: student?.userId 
-                                })}
+                                onClickChangePassword={() => setPasswordModal({ isOpen: true, userId: student?.userId })}
                                 onClickTransfer={() => setTransferModal({ 
                                     isOpen: true, 
                                     userIds: [student?.id], 

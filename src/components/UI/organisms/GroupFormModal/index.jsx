@@ -17,19 +17,28 @@ const GroupFormModal = ({
     onClose,
     onSubmit,
 }) => {
-    const { control, register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful } } = useForm({defaultValues})
+    const { control, register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful, dirtyFields, isDirty } } = useForm({defaultValues})
     const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentors()
 
     const callMentorOptions = callMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
     const mainMentorOptions = mainMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
 
     useEffect(() => {
-        if (isSubmitSuccessful) setTimeout(reset, 300)
+        if (isSubmitSuccessful) setTimeout(() => reset(defaultValues), 300)
     }, [isSubmitSuccessful])
+
+    const handleSubmitForm = async (data) => {
+        const updatedData = Object.keys(dirtyFields).reduce((acc, key) => {
+            if (dirtyFields[key]) acc[key] = data[key];
+            return acc;
+        }, {})
+
+        await onSubmit?.(updatedData)
+    }
 
     return (
         <Dialog isOpen={isOpen} onClose={onClose}>
-            <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+            <form className={cls.form} onSubmit={handleSubmit(handleSubmitForm)}>
                 <div className={cls.form__header}>
                     <h2 className={cls.form__header__title}>{isEdit ? "Guruh tahrirlash" : "Guruh qo’shish"}</h2>
                     <button type='button' onClick={onClose}><CloseIcon /></button>
@@ -49,28 +58,35 @@ const GroupFormModal = ({
                     control={control}
                     name='level'
                     rules={{ required: "Levelni tanlang" }}
+                    error={errors?.level?.message}
                 />}
                 <FormSelect
                     label='Asosiy Mentor'
                     placeholder="Asosiy Mentorni Tanlang"
-                    isClearable
+                    isClearable={!isEdit}
                     isSearchable={true}
                     options={mainMentorOptions}
                     control={control}
                     name='academyMentor'
                     rules={{ required: "Asosiy Mentor Tanlang" }}
+                    error={errors?.academyMentor?.message}
                 />
                 <FormSelect
                     label='Nazoratchi Mentor'
                     placeholder="Nazoratchi Mentorni Tanlang"
                     options={callMentorOptions}
-                    isClearable
+                    isClearable={!isEdit}
                     isSearchable={true}
                     control={control}
                     name='callMentor'
                     rules={{ required: "Nazoratchi Mentor Tanlang" }}
+                    error={errors?.callMentor?.message}
                 />
-                <Button type='submit' isLoading={isSubmitting}>
+                <Button 
+                    type='submit' 
+                    isLoading={isSubmitting}
+                    disabled={!isDirty}
+                >
                     {isEdit ? "O'zgartirish" : "Qo'shish"}
                 </Button>
             </form>

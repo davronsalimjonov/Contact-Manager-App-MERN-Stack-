@@ -9,8 +9,7 @@ import cls from './MyStudents.module.scss';
 const MyStudents = () => {
     const [filter, setFilter] = useState({})
     const { data: groups } = useGetMyGroups()
-    const { ref, data: students, isLoading: isLoadingStudents } = useGetCallMentorStudents(filter)
-
+    const { data: students, isLoading: isLoadingStudents } = useGetCallMentorStudents(filter)
 
     function getGroupOptions() {
         const options = [{ value: '', label: 'Barchasi' } ]
@@ -37,7 +36,7 @@ const MyStudents = () => {
                 onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
             />
             <StudentsTable
-                triggerRef={ref}
+                groupId={filter.group}
                 students={students}
                 isLoading={isLoadingStudents}
             />
