@@ -24,6 +24,7 @@ export function convertLessonScheduleToEvents(data = [], { groupId } = {}) {
 
         const baseEvent = {
             id,
+            groupId: group?.id,
             title: group?.title,
             start: createDateTime(startTime),
             end: createDateTime(endTime),

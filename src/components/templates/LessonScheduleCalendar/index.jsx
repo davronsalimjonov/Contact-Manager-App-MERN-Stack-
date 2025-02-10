@@ -51,11 +51,11 @@ const CustomTimeSlotWrapper = ({ value }) => {
     );
 };
 
-const CustomWeekEventComponent = ({ event, onClickDelete, withDeleteButton = false }) => {
+const CustomWeekEventComponent = ({ onClick, event, onClickDelete, withDeleteButton = false }) => {
     const title = (event?.isBusy && !event?.isTransfered) ? '' : event?.title;
 
     return (
-        <div className={cls.event}>
+        <div className={cls.event} onClick={onClick}>
             {withDeleteButton && <button onClick={() => onClickDelete?.(event)}><CloseIcon /></button>}
             <span className={cls.event__title}>{title}</span>
             {event?.isTransfered && (
@@ -77,7 +77,8 @@ function LessonScheduleCalendar({
     className = '',
     dragAndDrop = false,
     onEventDrop,
-    onDeleteEvent
+    onDeleteEvent,
+    onClickEvent
 }) {
     const [draggingEventId, setDraggingEventId] = useState(null);
 
@@ -181,6 +182,7 @@ function LessonScheduleCalendar({
                                 <CustomWeekEventComponent
                                     event={event}
                                     onClickDelete={onDeleteEvent}
+                                    onClick={() => onClickEvent?.(event)}
                                     withDeleteButton={event?.isTransfered && !event?.isBusy}
                                 />
                             ),
@@ -208,7 +210,7 @@ function LessonScheduleCalendar({
                     components={{
                         timeSlotWrapper: CustomTimeSlotWrapper,
                         week: {
-                            event: ({ event }) => <CustomWeekEventComponent event={event} />
+                            event: ({ event }) => <CustomWeekEventComponent event={event} onClick={() => onClickEvent?.(event)} />
                         }
                     }}
                 />

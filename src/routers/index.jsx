@@ -12,7 +12,7 @@ import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import Schedule from "@/components/pages/Schedule";
+// import Schedule from "@/components/pages/Schedule";
 import SingleSchedule from "@/components/pages/SingleSchedule";
 import MainMentor from "@/components/pages/MainMentorDashboard";
 import MainMentorStudents from "@/components/pages/MainMentorStudents";
@@ -33,8 +33,8 @@ import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
 import Dictionary from "@/components/pages/Dictionary";
 import Moderation from "@/components/pages/Moderation";
 import MentorsStatistic from "@/components/pages/MentorsStatistic";
-import Notification from "@/components/pages/Notification";
-import AddNotification from "@/components/pages/AddNotification";
+// import Notification from "@/components/pages/Notification";
+// import AddNotification from "@/components/pages/AddNotification";
 import AcademicManager from "@/components/pages/AcademicManager";
 import SellersDashboard from "@/components/pages/SellersDashboard";
 import SellerWorkspace from "@/components/pages/SellerWorkspace";
@@ -123,10 +123,6 @@ const mainMentorRoutes = createBrowserRouter([
                 element: <MainMentor />
             },
             {
-                path: '/lessons-schedule',
-                element: <LessonsSchedule />
-            },
-            {
                 path: '/materials',
                 element: <Materials />
             },
@@ -146,29 +142,33 @@ const mainMentorRoutes = createBrowserRouter([
                 path: '/dictionary',
                 element: <Dictionary />
             },
+            {
+                path: '/lessons-schedule',
+                element: <LessonsSchedule />
+            },
             // {
             //     path: '/lessons-schedule',
             //     element: <Schedule />
             // },
+            // {
+            //     path: '/lessons-schedule/:scheduleId',
+            //     element: <SingleSchedule />
+            // },
+            // {
+            //     path: '/schedule/lesson',
+            //     element: <ScheduleDetails />
+            // },
+            // {
+            //     path: '/schedule/table',
+            //     element: <ScheduleHomeWork />
+            // },
             {
-                path: '/lessons-schedule/:scheduleId',
-                element: <SingleSchedule />
-            },
-            {
-                path: '/schedule/lesson',
-                element: <ScheduleDetails />
-            },
-            {
-                path: '/schedule/table',
-                element: <ScheduleHomeWork />
+                path: '/platform',
+                element: <CoursesIFrame />
             },
             {
                 path: '/settings',
                 element: <Settings />
-            },
-            {
-                path: '/platform',
-                element: <CoursesIFrame />
             },
             {
                 path: '*',
@@ -231,14 +231,14 @@ const managerRoutes = createBrowserRouter([
                 path: '/courses/:courseId',
                 element: <UpdateCourse />
             },
-            {
-                path:'/notifications',
-                element: <Notification/>
-            },
-            {
-                path:'/notifications/add',
-                element: <AddNotification/>
-            },
+            // {
+            //     path:'/notifications',
+            //     element: <Notification/>
+            // },
+            // {
+            //     path:'/notifications/add',
+            //     element: <AddNotification/>
+            // },
             {
                 path: '/settings',
                 element: <Settings />
@@ -255,10 +255,10 @@ const managerRoutes = createBrowserRouter([
                 path: '/service-statistics/call-rate/:teacherId',
                 element: <StudentsRateForCallMentor />
             },
-            {
-                path: '/dictionary',
-                element: <Dictionary />
-            },
+            // {
+            //     path: '/dictionary',
+            //     element: <Dictionary />
+            // },
             {
                 path: '/moderation/:courseId',
                 element: <Moderation />

@@ -143,36 +143,36 @@ export const managerSidebarLinks = [
         link: '/service-statistics',
         icon: LanIcon(),
     },
-    {
-        id: 5,
-        label: 'Dictionary',
-        link: '/dictionary',
-        icon: TranslateIcon()
-    },
+    // {
+    //     id: 5,
+    //     label: 'Dictionary',
+    //     link: '/dictionary',
+    //     icon: TranslateIcon()
+    // },
     {
         id: 6,
         label: 'Kurslar',
         link: '/courses',
         icon: AutoStoriesIcon()
     },
-    {
-        id: 7,
-        label: 'Eslatmalar',
-        link: '/notifications',
-        icon: CircleNotificationIcon()
-    },
-    {
-        id: 8,
-        label: 'Xabarnoma',
-        link: '/note',
-        icon: CircleNotificationIcon()
-    },
-    {
-        id: 9,
-        label: 'Recording',
-        link: '/recordings',
-        icon: MicrophoneIcon()
-    },
+    // {
+    //     id: 7,
+    //     label: 'Eslatmalar',
+    //     link: '/notifications',
+    //     icon: CircleNotificationIcon()
+    // },
+    // {
+    //     id: 8,
+    //     label: 'Xabarnoma',
+    //     link: '/note',
+    //     icon: CircleNotificationIcon()
+    // },
+    // {
+    //     id: 9,
+    //     label: 'Recording',
+    //     link: '/recordings',
+    //     icon: MicrophoneIcon()
+    // },
     {
         id: 10,
         label: 'Guruhlar',
