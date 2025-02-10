@@ -1,28 +1,14 @@
-.SchduleDetails {
+.ScheduleLessons {
     display: flex;
     flex-direction: column; 
     height: 100%;
 
-    &__btn {
-        display: flex;
-        align-items: center;
-        justify-content: end;
-
-        & div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            width: 168px;
-            background-color: #1256db;
-        } 
-    }
-
     &__cards {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        display: flex;
+        flex-direction: column;
         gap: 24px;
         margin-top: 24px;
         flex: 1;
+        overflow: auto;
     }
 }

@@ -43,3 +43,24 @@ export const deleteMovedSchedule = async (scheduleId) => {
     const res = await api.delete(`/lesson-schedule/move/${scheduleId}`)
     return res.data
 }
+
+export const getMentorGroupLesson = async (groupId) => {
+    if (!groupId) return null
+    const res = await api.get(`/lesson/group/${groupId}`)
+    return res.data
+}
+
+export const createGroupLesson = async (data) => {
+    const res = await api.post(`/lesson`, data)
+    return res?.data
+}
+
+export const getSingleLesson = async (lessonId) => {
+    const res = await api.get(`/lesson/${lessonId}`)
+    return res?.data
+}
+
+export const createHomeWork = async (data) => {
+    const res = await api.post(`/lesson-home-task`, data)
+    return res?.data
+}

@@ -1,0 +1,13 @@
+.ScheduleHomeworkCreate {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    gap: 24px;
+    padding: 12px;
+    border-radius: 12px;
+
+    & h1 {
+        font-size: 20px;
+        font-weight: 600;
+    }
+}

@@ -3,15 +3,20 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 1px 4px 0px #0000000A, 0px -1px 4px 0px #0000000A;
     
-    & div:first-child {
-      flex: 9; 
+    &__table {
+      flex: 1; 
       min-height: 0; 
-      overflow: auto; 
+      overflow: auto;
+      margin-top: 28px; 
     }
 
 
-    & div:last-child {
+    &__pagination {
       display: flex;
       align-items: center;
       justify-content: center;

@@ -13,7 +13,7 @@ import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 // import Schedule from "@/components/pages/Schedule";
-import SingleSchedule from "@/components/pages/SingleSchedule";
+// import SingleSchedule from "@/components/pages/SingleSchedule";
 import MainMentor from "@/components/pages/MainMentorDashboard";
 import MainMentorStudents from "@/components/pages/MainMentorStudents";
 import Users from "@/components/pages/Users";
@@ -57,6 +57,8 @@ import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
 import SingleGroup from "@/components/pages/SingleGroup";
 import LessonPlan from "@/components/pages/LessonPlan";
 import UserCourseUpdate from "@/components/pages/UserCourseUpdate";
+import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
+import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -146,6 +148,22 @@ const mainMentorRoutes = createBrowserRouter([
                 path: '/lessons-schedule',
                 element: <LessonsSchedule />
             },
+            {
+                path: '/lessons-schedule/:groupId',
+                element: <ScheduleDetails />
+            },
+            {
+                path: '/lessons-schedule/:groupId/:lessonId',
+                element: <ScheduleHomeWork />
+            },
+            {
+                path: '/lessons-schedule/:groupId/:lessonId/create-homework',
+                element: <ScheduleHomeworkCreate />
+            },
+            {
+                path: '/lessons-schedule/:groupId/:lessonId/homework/:homeworkId',
+                element: <ScheduleHomeWorkDetails />
+            },
             // {
             //     path: '/lessons-schedule',
             //     element: <Schedule />
@@ -153,10 +171,6 @@ const mainMentorRoutes = createBrowserRouter([
             // {
             //     path: '/lessons-schedule/:scheduleId',
             //     element: <SingleSchedule />
-            // },
-            // {
-            //     path: '/schedule/lesson',
-            //     element: <ScheduleDetails />
             // },
             // {
             //     path: '/schedule/table',
@@ -405,10 +419,10 @@ const Routers = () => {
             default: return emptyRoute;
         }
     }
- 
+
     return (isUserLoading ? (
         <RouterProvider router={loadingRoute} />
-    ) : ( 
+    ) : (
         <RouterProvider router={isAuth ? getRoutesByRole(user?.role) : authRoutes} />
     ))
 }

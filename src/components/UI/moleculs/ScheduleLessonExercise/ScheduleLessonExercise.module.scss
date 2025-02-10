@@ -1,0 +1,52 @@
+.ScheduleLessonExercise {
+
+    &__header {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        & h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #0C1C3A;
+        }
+
+        & p {
+            font-weight: 500;
+            font-size: 16px;
+            color: #3D4962;
+        }
+    }
+
+    &__textArea {
+        background-color: #F3F4F5;
+        margin-top: 24px;
+    }
+
+    &__rating {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 12px;
+
+        & span {
+            font-weight: 600;
+            font-size: 24px;
+            color: #0C1C3A;
+        }
+    }
+
+    &__btn {
+        margin-top: 24px;
+        width: 168px;
+        margin-left: auto;
+    }
+
+    &__materials {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+        cursor: pointer;
+    }
+}

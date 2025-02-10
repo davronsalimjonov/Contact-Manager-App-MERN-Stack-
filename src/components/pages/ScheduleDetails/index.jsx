@@ -1,30 +1,41 @@
-import Button from '@/components/UI/atoms/Buttons/Button'
-import { PlusIcon } from '@/components/UI/atoms/icons'
-import cls from "./SchduleDetails.module.scss"
+import dayjs from "dayjs"
+import { useNavigate, useParams } from 'react-router-dom'
+import Loader from "@/components/UI/atoms/Loader"
+import { useGetGroupLessons } from "@/hooks/useLessonsSchedule"
 import ScheduleCards from '@/components/UI/moleculs/ScheduleCards'
-import Pagination from '@/components/UI/moleculs/Pagination'
-import { useNavigate } from 'react-router-dom'
+import ScheduleLessonsBtns from '@/components/UI/moleculs/ScheduleLessonsBtns'
+import cls from "./SchduleDetails.module.scss"
 
-const SchduleDetails = () => {
+const ScheduleLessons = () => {
     const navigate = useNavigate()
+    const { groupId } = useParams()
+    const { data: groupLesson, refetch, isLoading: isGroupLessonLoading } = useGetGroupLessons()
 
     return (
-        <div className={cls.SchduleDetails}>
-            <div className={cls.SchduleDetails__btn}>
-                <div>
-                    <Button><PlusIcon height={20} />Qo'shish</Button>
-                </div>
-            </div>
-            <div className={cls.SchduleDetails__cards} >
-                <ScheduleCards
-                    onClick={() => navigate('/schedule/table')}
+        <div className={cls.ScheduleLessons}>
+            <div className={cls.ScheduleLessons__btns}>
+                <ScheduleLessonsBtns
+                    refetch={refetch}   
+                    groupId={groupId}
                 />
             </div>
-            <div>
-                <Pagination />
+            <div className={cls.ScheduleLessons__cards} >
+                {!isGroupLessonLoading ? groupLesson?.map((lesson) => {
+                    return (
+                        <ScheduleCards
+                            key={lesson.id}
+                            onClick={() => navigate(lesson?.id)}
+                            title={lesson?.title}
+                            description={lesson?.description}
+                            date={dayjs(lesson?.date).format('DD.MM.YYYY')}
+                            duration={lesson?.duration}
+                            video={lesson?.video}
+                        />
+                    );
+                }) : <Loader />}
             </div>
         </div>
     )
 }
 
-export default SchduleDetails
+export default ScheduleLessons
