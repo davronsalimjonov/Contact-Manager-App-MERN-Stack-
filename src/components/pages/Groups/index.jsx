@@ -2,6 +2,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
+import { GROUP_STATUS } from '@/constants/enum';
 import Tabs from '@/components/UI/moleculs/Tabs';
 import Loader from '@/components/UI/atoms/Loader';
 import { PlusIcon } from '@/components/UI/atoms/icons';
@@ -11,31 +12,52 @@ import GroupCard from '@/components/UI/moleculs/GroupCard';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import Pagination from '@/components/UI/moleculs/CustomPagination';
 import GroupFormModal from '@/components/UI/organisms/GroupFormModal';
-import { useCreateGroupMutation, useGetGroupsByLevel } from '@/hooks/useGroups';
+import ConfirmationModal from '@/components/UI/organisms/ConfirmationModal';
+import { useCreateGroupMutation, useGetGroupsByLevel, useUpdateGroupMutation } from '@/hooks/useGroups';
 import cls from './Groups.module.scss';
 
 const Groups = () => {
     const navigate = useNavigate()
-    const [pagnination, setPagination] = useState({ page: 0, limit: 12 })
     const [activeLevel, setActiveLevel] = useState('A1')
+    const [isOpenCreateGroup, setIsOpenCreateGroup] = useState(false)
+    const [confirmStartGroup, setConfirmStartGroup] = useState({ isOpen: false, groupId: null })
+    const [pagnination, setPagination] = useState({ page: 0, limit: 12 })
     const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 3 })
-    const [isOpen, setIsOpen] = useState(false)
     const createGroupMutation = useCreateGroupMutation()
+    const updateGroupMutation = useUpdateGroupMutation()
 
     const handleCreateGroup = async (data) => {
         await createGroupMutation.mutateAsync(data, {
             onSuccess: () => {
                 toast.success("Gurux Yaratildi!")
-                setIsOpen(false)
+                setIsOpenCreateGroup(false)
             },
+            onError: (err) => toast.error(err?.response?.data?.message || "Xatolik Yuz Berdi!")
+        })
+    }
+
+    const handleStartGroup = async (groupId) => {
+        await updateGroupMutation.mutateAsync({ id: groupId, status: GROUP_STATUS.ACTIVE }, {
+            onSuccess: () => toast.success("Gurux active holatga o’tildi!"),
             onError: (err) => toast.error(err?.response?.data?.message || "Xatolik Yuz Berdi!")
         })
     }
 
     return (
         <div className={cls.groups}>
+            <ConfirmationModal
+                isOpen={confirmStartGroup.isOpen}
+                title='Ushbu guruhni active holatga o’tkazmoqchimisiz?'
+                onClose={() => setConfirmStartGroup({ isOpen: false, groupId: null })}
+                onConfirm={() => handleStartGroup(confirmStartGroup.groupId)}
+            />
+            <GroupFormModal
+                isOpen={isOpenCreateGroup}
+                onClose={() => setIsOpenCreateGroup(false)}
+                onSubmit={handleCreateGroup}
+            />
             <div className={cls.groups__addGroup}>
-                <Button onClick={() => setIsOpen(true)}>
+                <Button onClick={() => setIsOpenCreateGroup(true)}>
                     <PlusIcon />
                     Qo'shish
                 </Button>
@@ -61,6 +83,8 @@ const Groups = () => {
                                 callMentorAvatar={group.callMentor?.url}
                                 isCollecting={group.status === 'collecting'}
                                 isClosed={group.status === 'closed'}
+                                showStartButton
+                                onClickStart={() => setConfirmStartGroup({ isOpen: true, groupId: group.id })}
                                 onClick={() => navigate(group.id)}
                             />
                         ))}
@@ -78,11 +102,6 @@ const Groups = () => {
                     onPageChange={({ selected: page }) => setPagination({ ...pagnination, page })}
                 />
             )}
-            <GroupFormModal
-                isOpen={isOpen}
-                onClose={() => setIsOpen(false)}
-                onSubmit={handleCreateGroup}
-            />
         </div>
     );
 }

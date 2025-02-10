@@ -65,7 +65,6 @@ const TransferStudentModal = ({
             <ConfirmationModal
                 title={confirmationModal?.title || singleTransferConfirmTitle}
                 isOpen={confirmationModal?.isOpen}
-                onCancel={() => setConfirmationModal({ isOpen: false, userIds: '', from: '', to: '', title: '' })}
                 onClose={() => setConfirmationModal({ isOpen: false, userIds: '', from: '', to: '', title: '' })}
                 onConfirm={handleTransferStudent}
             />

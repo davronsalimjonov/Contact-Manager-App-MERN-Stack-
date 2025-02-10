@@ -37,3 +37,9 @@ export const ADAPTATION_WORKSPACE_STATUS = {
     ISSUE: 'issue',
     PAUSED: 'paused'
 }
+
+export const GROUP_STATUS = {
+    ACTIVE: 'active',
+    COLLECTING: 'collecting',
+    CLOSED: 'closed'
+}

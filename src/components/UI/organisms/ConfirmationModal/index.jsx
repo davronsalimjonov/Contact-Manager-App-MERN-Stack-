@@ -28,7 +28,7 @@ const ConfirmationModal = ({
                 <h3 className={cls.modal__title}>{title}</h3>
                 <div className={cls.modal__buttons}>
                     <Button onClick={handleConfirm} isLoading={isLoading}>Ha</Button>
-                    <Button className={cls.modal__buttons__reject} onClick={onCancel}>Yo’q</Button>
+                    <Button className={cls.modal__buttons__reject} onClick={onCancel || onClose}>Yo’q</Button>
                 </div>
             </div>
         </Dialog>

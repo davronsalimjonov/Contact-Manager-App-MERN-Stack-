@@ -72,7 +72,6 @@ const Materials = () => {
                 isOpen={Boolean(deleteMaterialId)}
                 onClose={() => setDeleteMaterialId(null)}
                 onConfirm={() => handleDeleteMaterial(deleteMaterialId)}
-                onCancel={() => setDeleteMaterialId(null)}
             />
             <MaterialFormModal
                 isOpen={isOpenModal}

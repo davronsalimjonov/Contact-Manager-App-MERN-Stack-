@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import Avatar from 'react-avatar';
 import { cn } from '@/utils/lib';
 import { getDayName, getTimeFromMinutes } from '@/utils/time';
-import { CheckIcon, PersonsIcon } from '../../atoms/icons';
+import { CheckIcon, PersonsIcon, PlayArrowIcon } from '../../atoms/icons';
 import cls from './GroupCard.module.scss';
 
 const colors = ['rgba(30, 181, 58, 1)', 'rgba(255, 52, 219, 1)', 'rgba(236, 182, 4, 1)', 'rgba(0, 153, 181, 1)']
@@ -22,6 +22,8 @@ const GroupCard = ({
     isCollecting = false,
     isClosed = false,
     isSelected = false,
+    showStartButton = false,
+    onClickStart,
     onClick
 }) => {
     const color = useRef(getRandomColor());
@@ -31,6 +33,11 @@ const GroupCard = ({
             <div className={cls.card__header}>
                 <span className={cls.card__header__group} style={{ backgroundColor: color.current }}>{name} guruh</span>
                 <span className={cls.card__header__students}><PersonsIcon />{studentsCount || 0} nafar</span>
+                {isCollecting && showStartButton && (
+                    <button className={cls.card__header__play} onClick={e => (e.stopPropagation(), onClickStart?.())} type='button'>
+                        <PlayArrowIcon />
+                    </button>
+                )}
             </div>
             <div className={cls.card__times}>
                 {schedules?.length > 0 ? (

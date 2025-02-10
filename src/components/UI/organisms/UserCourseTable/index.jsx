@@ -58,7 +58,6 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                 title={`Rostan ${confirmModal?.groupName} guruhga biriktirmoqchimisiz?`}
                 isOpen={confirmModal?.isOpen}
                 onClose={() => setConfirmModal(state => ({ ...state, isOpen: false }))}
-                onCancel={() => setConfirmModal(state => ({ ...state, isOpen: false }))}
                 onConfirm={() => handleAddToGroup(confirmModal?.groupId, confirmModal?.userCourseId)}
             />
             <GroupPickerModal

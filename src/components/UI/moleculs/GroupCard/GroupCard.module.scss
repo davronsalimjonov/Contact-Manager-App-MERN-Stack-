@@ -15,7 +15,8 @@
     &__header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
+        gap: 6px;
         margin-bottom: 24px;
 
         &>span {
@@ -33,6 +34,7 @@
             background-color: var(--blue-color);
             font-weight: 500;
             color: white;
+            margin-right: auto;
         }
 
         &__students{
@@ -45,6 +47,19 @@
                 width: 20px;
                 height: 20px;
             }
+        }
+
+        &__play{
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgb(113 154 233);
+            & > svg{
+                transform: translateX(10%)
+            };
         }
     }
 
