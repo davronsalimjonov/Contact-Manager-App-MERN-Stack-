@@ -4,12 +4,12 @@ import { GENDER_OPTIONS } from '@/constants/form';
 import { saleFormSchema } from '@/schemas/seller';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Button from '../../atoms/Buttons/Button';
+import { useGetCourses } from '@/hooks/useUserCourse';
 import FormInput from '../../moleculs/Form/FormInput';
 import FormSelect from '../../moleculs/Form/FormSelect';
 import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
 import cls from './SaleForm.module.scss';
-import { useGetCourses } from '@/hooks/useUserCourse';
 
 const SaleForm = ({ onSubmit }) => {
     const { data: courseForSelect } = useGetCourses()

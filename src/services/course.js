@@ -33,11 +33,6 @@ export const addUserCourse = async (data) => {
     return res
 }
 
-export const getCourseForSelect = async () => {
-    const res = await api.get(`/course/for-select`)
-    return res.data
-}
-
 export const getCourses = async () => {
     const res = await api.get(`/course/for-select`);
     return res.data
