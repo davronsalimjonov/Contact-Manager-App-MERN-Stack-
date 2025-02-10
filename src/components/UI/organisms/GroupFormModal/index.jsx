@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { getUserFullName } from '@/utils/lib'
-import useGetMentors from '@/hooks/useGetMentors'
+import { useGetMentorsForOptions } from '@/hooks/useMentor'
 import { ENGLISH_LEVEL_OPTIONS } from '@/constants/form'
 import Dialog from '../../moleculs/Dialog'
 import { CloseIcon } from '../../atoms/icons'
@@ -17,8 +17,8 @@ const GroupFormModal = ({
     onClose,
     onSubmit,
 }) => {
-    const { control, register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful, dirtyFields, isDirty } } = useForm({defaultValues})
-    const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentors({}, {enabled: isOpen})
+    const { control, register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful, dirtyFields, isDirty } } = useForm({ defaultValues })
+    const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentorsForOptions({ enabled: isOpen })
 
     const callMentorOptions = callMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
     const mainMentorOptions = mainMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
@@ -82,8 +82,8 @@ const GroupFormModal = ({
                     rules={{ required: "Nazoratchi Mentor Tanlang" }}
                     error={errors?.callMentor?.message}
                 />
-                <Button 
-                    type='submit' 
+                <Button
+                    type='submit'
                     isLoading={isSubmitting}
                     disabled={!isDirty}
                 >

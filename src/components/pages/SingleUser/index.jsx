@@ -11,9 +11,9 @@ import useGetUserById from '@/hooks/useGetUserById';
 import UserInformationForm from '@/components/UI/organisms/UserInformationForm';
 import UserCourseListTable from '@/components/templates/UserCourseListTable';
 import { useState } from 'react';
-import useGetMentors from '@/hooks/useGetMentors';
 import { addUserCourse, updateUserCourse } from '@/services/course';
 import { useGetCourses } from '@/hooks/useUserCourse';
+import { useGetMentorsForOptions } from '@/hooks/useMentor';
 
 const SingleUser = () => {
     const { userId } = useParams()
@@ -37,7 +37,7 @@ const SingleUser = () => {
     const {
         callMentors: { data: callMentors, isLoading: isLoadingCallMentors },
         mainMentors: { data: mainMentors, isLoading: isLoadingMainMentors }
-    } = useGetMentors()
+    } = useGetMentorsForOptions()
 
     const { data: courseForSelect } = useGetCourses()
 

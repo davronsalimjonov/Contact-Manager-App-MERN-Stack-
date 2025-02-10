@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { cn } from '@/utils/lib';
 import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS } from '@/constants/form';

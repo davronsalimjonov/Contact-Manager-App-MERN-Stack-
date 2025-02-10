@@ -59,6 +59,7 @@ import LessonPlan from "@/components/pages/LessonPlan";
 import UserCourseUpdate from "@/components/pages/UserCourseUpdate";
 import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
 import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
+import { USER_ROLES } from "@/constants";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -412,19 +413,19 @@ const Routers = () => {
 
     const getRoutesByRole = (role) => {
         switch (role) {
-            case 2: return mainMentorRoutes;
-            case 4: return callTecherRoutes;
-            case 6: return managerRoutes;
-            case 5: return sellerRoutes;
+            case USER_ROLES.MAIN_MENTOR: return mainMentorRoutes;
+            case USER_ROLES.CALL_MENTOR: return callTecherRoutes;
+            case USER_ROLES.ACADEMY_MANAGER: return managerRoutes;
+            case USER_ROLES.SELLER: return sellerRoutes;
             default: return emptyRoute;
         }
     }
 
-    return (isUserLoading ? (
+    return isUserLoading ? (
         <RouterProvider router={loadingRoute} />
     ) : (
         <RouterProvider router={isAuth ? getRoutesByRole(user?.role) : authRoutes} />
-    ))
+    )
 }
 
 export default Routers;
