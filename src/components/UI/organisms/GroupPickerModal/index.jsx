@@ -12,7 +12,7 @@ const GroupPickerModal = ({
     onClose,
     onChooseGroup
 }) => {
-    const { data: groups, isLoadingGroups } = useGetActiveGroups({ level }, !!level)
+    const { data: groups, isLoadingGroups } = useGetActiveGroups({ level }, {enabled: !!level})
 
     return (
         <Dialog isOpen={isOpen} onClose={onClose}>

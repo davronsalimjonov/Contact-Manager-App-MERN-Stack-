@@ -18,7 +18,7 @@ const GroupFormModal = ({
     onSubmit,
 }) => {
     const { control, register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful, dirtyFields, isDirty } } = useForm({defaultValues})
-    const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentors()
+    const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentors({}, {enabled: isOpen})
 
     const callMentorOptions = callMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
     const mainMentorOptions = mainMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))

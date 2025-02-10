@@ -19,11 +19,11 @@ const TransferStudentModal = ({
     isOpen = true,
     onClose,
 }) => {
-    const [filter, setFilter] = useState({ title: '', level: '' })
     const [selectedGroup, setSelectedGroup] = useState(null)
+    const [filter, setFilter] = useState({ title: '', level: '' })
     const [confirmationModal, setConfirmationModal] = useState({ isOpen: false, title: '', from: '', to: '', userIds: [] })
+    const { data: groups, isLoading: isLoadingGroups } = useGetActiveGroups(filter, { enabled: isOpen });
     const transferStudentMutation = useTransferMutation()
-    const { data: groups, isLoading: isLoadingGroups } = useGetActiveGroups(filter);
     const filteredGroups = groups?.filter(group => group.id !== groupId);
 
     const singleTransferConfirmTitle = `Rostan ham o\'quvchini shu guruhga transfer qilmoqchimisiz?`

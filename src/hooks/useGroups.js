@@ -70,8 +70,8 @@ export const useTransferMutation = () => {
     return transferMutation
 }
 
-export const useGetActiveGroups = (params = {}, enabled = true) => {
-    return useQuery(['active-groups', ...Object.values(removeEmptyKeys(params))], () => getActiveGroups(params), { cacheTime: Infinity, staleTime: Infinity, enabled })
+export const useGetActiveGroups = (params = {}, options = {}) => {
+    return useQuery(['active-groups', ...Object.values(removeEmptyKeys(params))], () => getActiveGroups(params), { cacheTime: Infinity, staleTime: Infinity, ...options })
 }
 
 export const useGetGroupInfo = (groupId) => {
