@@ -60,6 +60,7 @@ import UserCourseUpdate from "@/components/pages/UserCourseUpdate";
 import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
 import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
 import { USER_ROLES } from "@/constants";
+import { useMemo } from "react";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -408,8 +409,8 @@ const emptyRoute = createBrowserRouter([
 ])
 
 const Routers = () => {
-    const { isAuth } = useSelector(state => state.auth)
-    const { data: user, isLoading: isUserLoading } = useGetUser()
+    const { isAuth } = useSelector(state => state.auth);
+    const { data: user, isLoading: isUserLoading } = useGetUser();
 
     const getRoutesByRole = (role) => {
         switch (role) {
@@ -419,13 +420,22 @@ const Routers = () => {
             case USER_ROLES.SELLER: return sellerRoutes;
             default: return emptyRoute;
         }
-    }
+    };
 
-    return isUserLoading ? (
-        <RouterProvider router={loadingRoute} />
-    ) : (
-        <RouterProvider router={isAuth ? getRoutesByRole(user?.role) : authRoutes} />
-    )
-}
+    const router = useMemo(() => {
+        if (isUserLoading) {
+            return loadingRoute;
+        }
+        return isAuth ? getRoutesByRole(user?.role) : authRoutes;
+    }, [isUserLoading, isAuth, user?.role]);
+
+    return (
+        <RouterProvider
+            key={isUserLoading ? "loading" : user?.role || "unauthenticated"}
+            router={router}
+            // future={{ v7_startTransition: true }}
+        />
+    );
+};
 
 export default Routers;
