@@ -32,7 +32,7 @@ const navigate = useNavigate();
                 placeholder='Status user'
                 options={STUDENTS_STATUS_OPTIONS}
                 onChange={onChangeStatus}
-                isClearable
+                isclearable
             />
 
             <PhoneInput
@@ -47,14 +47,14 @@ const navigate = useNavigate();
                 placeholder='Darajasi'
                 options={DEGREEOPTIONS}
                 onChange={onChangeDegree}
-                isClearable
+                isclearable
             />
             <Select
                 className={cls.bar__form__select}
                 placeholder='Kurslar bo’yicha'
                 options={courses?.map(course => ({ value: course.id, label: course.title }))}
                 onChange={onChangeCourse}
-                isClearable
+                isclearable
             />
 
             <Button type='button' onClick={()=>navigate('/add-student')}>O'quvchi qo'shish <PlusIcon /></Button>

@@ -82,7 +82,7 @@ const TransferStudentModal = ({
                             placeholder='Level tanlang'
                             options={ENGLISH_LEVEL_OPTIONS}
                             onChange={(level) => setFilter(state => ({ ...state, level: level?.value }))}
-                            isClearable
+                            isclearable
                         />
                         <div className={cls.form__content__groups}>
                             {isLoadingGroups ? (

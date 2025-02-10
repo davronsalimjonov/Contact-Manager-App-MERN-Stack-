@@ -8,7 +8,7 @@ const FormSelect = ({
     error = '',
     options = [],
     placeholder = '',
-    isClearable = false,
+    isclearable = false,
     isSearchable = false,
     defaultValue,
     control,
@@ -33,7 +33,7 @@ const FormSelect = ({
                             options={options}
                             placeholder={placeholder}
                             isSearchable={isSearchable}
-                            isClearable={isClearable}
+                            isclearable={isclearable}
                             isMulti={isMulti}
                             error={error}
                             className={className}
@@ -47,7 +47,7 @@ const FormSelect = ({
                     placeholder={placeholder}
                     onChange={onChange}
                     isSearchable={isSearchable}
-                    isClearable={isClearable}
+                    isclearable={isclearable}
                     error={error}
                 />
             )}

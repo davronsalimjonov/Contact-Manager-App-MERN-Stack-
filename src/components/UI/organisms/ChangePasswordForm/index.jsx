@@ -34,7 +34,7 @@ const ChangePasswordForm = ({
                     placeholder='Yangi Parolni Kiriting'
                     register={register('password', {required: "Parol Kiriting"})}
                     error={errors?.title?.message}
-                    isClearable
+                    isclearable
                 />
                 <Button
                     type='submit'

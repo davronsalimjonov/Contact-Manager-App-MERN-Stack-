@@ -50,7 +50,7 @@ const UsersSearchBar = ({
                 placeholder='Status user'
                 options={statusOptions}
                 onChange={onChangeStatus}
-                isClearable
+                isclearable
             />
             <Input 
                 placeholder='Unique ID'

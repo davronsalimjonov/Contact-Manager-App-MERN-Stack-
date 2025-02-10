@@ -131,6 +131,7 @@ const MentorInformationForm = ({
                         control={control}
                         name='degree'
                         defaultValue={"A1"}
+                        isclearable
                     />
                     <span></span>
                     <Button

@@ -41,7 +41,7 @@ const SingleStudentCourseForm = ({
                 <FormSelect
                     className={cls.form__input}
                     name="course"
-                    isClearable={true}
+                    isclearable={true}
                     control={control}
                     options={courses?.map(course => ({ value: course.id, label: course.title }))}
                     placeholder="Kursni tanlang"
@@ -79,7 +79,7 @@ const SingleStudentCourseForm = ({
                 <FormSelect
                     className={cls.form__input}
                     name="teacher"
-                    isClearable={true}
+                    isclearable={true}
                     control={control}
                     options={teachers?.map(teacher => ({ value: teacher.id, label: getUserFullName(teacher) }))}
                     placeholder="Tanlang"
@@ -90,7 +90,7 @@ const SingleStudentCourseForm = ({
                 <FormSelect
                     className={cls.form__input}
                     name="secondTeacher"
-                    isClearable={true}
+                    isclearable={true}
                     control={control}
                     options={secondTeachers?.map(secondTeacher => ({ value: secondTeacher.id, label: getUserFullName(secondTeacher) }))}
                     placeholder="Tanlang"
@@ -102,7 +102,7 @@ const SingleStudentCourseForm = ({
                 <FormSelect
                     className={cls.form__input}
                     name="status"
-                    isClearable={true}
+                    isclearable={true}
                     control={control}
                     options={STUDENTS_STATUS_OPTIONS}
                     placeholder="Tanlang"
@@ -114,7 +114,7 @@ const SingleStudentCourseForm = ({
                 <FormSelect
                     className={cls.form__input}
                     name="level"
-                    isClearable={true}
+                    isclearable={true}
                     control={control}
                     options={DEGREEOPTIONS}
                     placeholder="Tanlang"

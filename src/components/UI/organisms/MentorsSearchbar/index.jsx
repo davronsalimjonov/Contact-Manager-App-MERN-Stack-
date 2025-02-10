@@ -41,7 +41,7 @@ const MentorsSearchBar = ({
                 placeholder='Statusi'
                 options={mentorStatusOptions}
                 onChange={onChangeStatus}
-                isClearable
+                isclearable
             />
             <Button
                 isSpaced={true}

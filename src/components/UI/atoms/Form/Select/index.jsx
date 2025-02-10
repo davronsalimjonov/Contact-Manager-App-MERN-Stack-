@@ -27,7 +27,7 @@ const DropdownIndicator = (props) => {
 const Select = ({
     onChange,
     options = [],
-    isClearable,
+    isclearable,
     placeholder = '',
     className = '',
     isSearchable = true,
@@ -48,7 +48,7 @@ const Select = ({
             options={options}
             placeholder={placeholder}
             onChange={onChange}
-            isClearable={isClearable}
+            isClearable={isclearable}
             isSearchable={isSearchable}
             isMulti={isMulti}
             {...register}

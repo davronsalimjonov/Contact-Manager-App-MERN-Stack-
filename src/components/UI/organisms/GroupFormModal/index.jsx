@@ -53,7 +53,7 @@ const GroupFormModal = ({
                     label='Level'
                     placeholder="Levelni tanlang"
                     options={ENGLISH_LEVEL_OPTIONS}
-                    isClearable
+                    isclearable
                     isSearchable={true}
                     control={control}
                     name='level'
@@ -63,7 +63,7 @@ const GroupFormModal = ({
                 <FormSelect
                     label='Asosiy Mentor'
                     placeholder="Asosiy Mentorni Tanlang"
-                    isClearable={!isEdit}
+                    isclearable={!isEdit}
                     isSearchable={true}
                     options={mainMentorOptions}
                     control={control}
@@ -75,7 +75,7 @@ const GroupFormModal = ({
                     label='Nazoratchi Mentor'
                     placeholder="Nazoratchi Mentorni Tanlang"
                     options={callMentorOptions}
-                    isClearable={!isEdit}
+                    isclearable={!isEdit}
                     isSearchable={true}
                     control={control}
                     name='callMentor'
