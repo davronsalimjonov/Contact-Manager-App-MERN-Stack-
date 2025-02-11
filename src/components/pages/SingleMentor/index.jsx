@@ -21,7 +21,7 @@ const SingleMentor = () => {
         avatar: mentor?.url ?? '',
         role: (mentor?.role) ?? '',
         degree: (mentor?.degree) ?? '',
-        sip: mentor?.sip ?? '',
+        sip: mentor?.sip,
     }
 
     const handleUpdateMentor = async (values) => {

@@ -1,3 +1,4 @@
+import * as Yup from 'yup'
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,8 +18,13 @@ const MentorInformationForm = ({
     defaultValues,
     onSubmit
 }) => {
-    const { register, control, reset, watch, handleSubmit, setValue, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({ defaultValues, mode: 'onSubmit', resolver: yupResolver(mentorSchema) })
+    const { register, control, reset, watch, handleSubmit, setValue, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
+        defaultValues,
+        mode: 'onSubmit',
+        resolver: yupResolver(mentorSchema.shape({ sip: Yup.number().transform((value) => isNaN(value) ? null : value).required('SIP raqami kiritilishi shart') }))
+    })
     const avatar = watch('avatar')
+console.log(watch());
 
     useEffect(() => {
         if (isSubmitSuccessful) {
