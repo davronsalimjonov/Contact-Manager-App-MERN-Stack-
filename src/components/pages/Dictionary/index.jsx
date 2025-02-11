@@ -77,7 +77,7 @@ const Dictionary = () => {
                     control={control}
                     name='unit'
                     options={UNITS}
-                    isClearable={true}
+                    isclearable={true}
                     placeholder='Mavzular'
                 />
 
@@ -86,7 +86,7 @@ const Dictionary = () => {
                     name="lvl"
                     control={control}
                     options={DEGREEOPTIONS}
-                    isClearable={true}
+                    isclearable={true}
                     placeholder='Darajasi'
                 />
                 <Button type='submit' className={cls.button}>Qidirish <SearchIcon /></Button>

@@ -102,7 +102,7 @@ const UserCourseListTable = ({
                                 label='Kurs Tanlang'
                                 placeholder='Kurs Tanlang'
                                 options={courseForSelectOptions}
-                                isClearable
+                                isclearable
                                 isSearchable
                                 onChange={(option) => handleSelectChange('course', option?.value)}
                                 defaultValue={{}}
@@ -130,7 +130,7 @@ const UserCourseListTable = ({
                             label='Asosiy Mentor Tanlang'
                             placeholder='Asosiy Mentorni Tanlang'
                             options={mainMentorOptions}
-                            isClearable
+                            isclearable
                             isSearchable
                             onChange={(option) => handleSelectChange('teacher', option?.value)}
                         />
@@ -140,7 +140,7 @@ const UserCourseListTable = ({
                             label='Nazoratchi Mentor Tanlang'
                             placeholder='Nazoratchi Mentorni Tanlang'
                             options={callMentorOptions}
-                            isClearable
+                            isclearable
                             isSearchable
                             onChange={(option) => handleSelectChange('secondTeacher', option?.value)}
                         />

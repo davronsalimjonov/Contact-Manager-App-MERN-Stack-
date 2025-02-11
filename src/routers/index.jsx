@@ -422,20 +422,11 @@ const Routers = () => {
         }
     };
 
-    const router = useMemo(() => {
-        if (isUserLoading) {
-            return loadingRoute;
-        }
-        return isAuth ? getRoutesByRole(user?.role) : authRoutes;
-    }, [isUserLoading, isAuth, user?.role]);
-
-    return (
-        <RouterProvider
-            key={isUserLoading ? "loading" : user?.role || "unauthenticated"}
-            router={router}
-            // future={{ v7_startTransition: true }}
-        />
-    );
+    return (isUserLoading ? (
+        <RouterProvider router={loadingRoute} />
+    ) : ( 
+        <RouterProvider router={isAuth ? getRoutesByRole(user?.role) : authRoutes} />
+    ))
 };
 
 export default Routers;

@@ -19,14 +19,14 @@ const ScheduleSearchBar = ({
                     placeholder='Hafta kuni'
                     options={WEEKDAYOPTIONS}
                     onChange={onChangeWeekday}
-                    isClearable
+                    isclearable
                 />
                 <Select
                     className={cls.bar__form__select}
                     placeholder='Darajasi'
                     options={DEGREEOPTIONS}
                     onChange={onChangeDegree}
-                    isClearable
+                    isclearable
                 /> */}
 
             </div>
