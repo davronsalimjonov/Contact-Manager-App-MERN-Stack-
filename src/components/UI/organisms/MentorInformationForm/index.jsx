@@ -1,10 +1,8 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { cn } from '@/utils/lib';
-import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS } from '@/constants/form';
-import { studentInfoSchema } from '@/schemas/student';
+import { mentorSchema } from '@/schemas/employee';
+import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS, MENTOR_TYPES } from '@/constants/form';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
 import RedButton from '../../atoms/Buttons/RedButton';
@@ -12,77 +10,42 @@ import AvatarUpload from '../../moleculs/AvatarUpload';
 import FormDatepicker from '../../moleculs/Form/FormDatepicker';
 import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
-import { EditIcon, LeftArrowIcon } from '../../atoms/icons';
-import cls from './MentorInformationForm.module.scss';
 import FormSelect from '../../moleculs/Form/FormSelect';
-import { USER_TYPE } from '@/constants';
+import cls from './MentorInformationForm.module.scss';
 
 const MentorInformationForm = ({
     defaultValues,
-    onSubmit,
-    isUpdateMode
+    onSubmit
 }) => {
-    const navigate = useNavigate()
-    const [isEditable, setIsEditable] = useState(false)
-    const { register, control, reset, watch, handleSubmit, setValue, getValues, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
-        defaultValues,
-        mode: 'onSubmit',
-        resolver: yupResolver(studentInfoSchema)
-    })
+    const { register, control, reset, watch, handleSubmit, setValue, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({ defaultValues, mode: 'onSubmit', resolver: yupResolver(mentorSchema) })
     const avatar = watch('avatar')
-    
+
     useEffect(() => {
         if (isSubmitSuccessful) {
             reset(defaultValues)
         }
-
-        if (!isUpdateMode) {
-            setIsEditable(true); 
-        }
-    }, [isSubmitSuccessful, isUpdateMode])
+    }, [isSubmitSuccessful])
 
     return (
-        <>
-            <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
+            <div className={cls.form__container}>
                 <div className={cls.form__header}>
-                    <button
-                        type='button'
-                        onClick={() => navigate(-1)}
-                        className={cls.form__header__btn}
-                    >
-                        <LeftArrowIcon />
-                    </button>
                     <AvatarUpload
                         value={avatar instanceof File ? URL.createObjectURL(avatar) : avatar}
-                        disabled={!isEditable}
                         onChange={file => setValue('avatar', file, { shouldDirty: true, shouldValidate: true })}
-                        onDelete={() => setValue('avatar', null, { shouldDirty: true })}
+                        onDelete={() => setValue('avatar', null, { shouldDirty: true, shouldValidate: true })}
                     />
-                    {isUpdateMode ? (
-                        <button
-                            type='button'
-                            className={cn(cls.form__header__btn, isEditable && cls.form__header__btn__edit)}
-                            onClick={() => setIsEditable(state => !state)}
-                        >
-                            <EditIcon />
-                        </button>
-                    ) : 
-                        <span></span>
-                    }
-                    
                 </div>
                 <div className={cls.form__elements}>
                     <FormInput
                         label='Ismi'
                         placeholder='Ismi'
-                        disabled={!isEditable}
                         register={{ ...register('firstName') }}
                         error={errors?.firstName?.message}
                     />
                     <FormInput
                         label='Familyasi'
                         placeholder='Familyasi'
-                        disabled={!isEditable}
                         register={{ ...register('lastName') }}
                         error={errors?.lastName?.message}
                     />
@@ -90,7 +53,6 @@ const MentorInformationForm = ({
                         name='phone'
                         placeholder='+998'
                         label='Telefon nomer'
-                        disabled={!isEditable}
                         control={control}
                         error={errors?.phone?.message}
                     />
@@ -98,58 +60,58 @@ const MentorInformationForm = ({
                         name='birthday'
                         label='Tug’ilgan sanasi'
                         placeholder='Tug’ilgan sanasi'
-                        disabled={!isEditable}
                         control={control}
                         error={errors?.birthday?.message}
                     />
                     <FormRadioGroup
                         label='Jinsi'
-                        disabled={!isEditable}
                         options={GENDER_OPTIONS}
                         register={{ ...register('gender') }}
                         error={errors?.gender?.message}
                     />
-                    { isUpdateMode ?
-                        <FormInput
-                            label='Ro’yxatdan o’tgan sanasi'
-                            placeholder='Ro’yxatdan o’tgan sanasi'
-                            disabled
-                            register={{ ...register('createdAt') }}
-                        /> : <FormSelect
-                            label='Mentor'
-                            placeholder="Mentorni Tanlang"
-                            options={USER_TYPE}
-                            control={control}
-                            name='role'
-                            defaultValue={"A1"}
-                        />
-                    }
                     <FormSelect
                         label='Til bilish darajasi'
-                        placeholder="A1"
+                        placeholder="Darajani tanlang"
                         options={ENGLISH_LEVEL_OPTIONS}
                         control={control}
                         name='degree'
-                        defaultValue={"A1"}
                         isclearable
+                        error={errors?.degree?.message}
                     />
-                    <span></span>
+                    <FormInput
+                        label='SIP raqami'
+                        placeholder='SIP raqami'
+                        type='number'
+                        register={register('sip')}
+                        error={errors?.sip?.message}
+                    />
+                    <FormSelect
+                        label='Mentor'
+                        placeholder="Mentorni Tanlang"
+                        options={MENTOR_TYPES}
+                        control={control}
+                        name='role'
+                        error={errors?.role?.message}
+                    />
+                </div>
+                <div className={cls.form__buttons}>
                     <Button
                         type='submit'
                         isLoading={isSubmitting}
-                        disabled={!isEditable || !isDirty}
+                        disabled={!isDirty}
                     >
-                        {isUpdateMode ? "Tahrirlash" : "Mentor Qo'shish"}
+                        Tahrirlash
                     </Button>
                     <RedButton
-                        disabled={!isDirty || !isEditable}
-                        onClick={() => reset(defaultValues)}
+                        disabled={!isDirty}
+                        type='button'
+                        onClick={reset}
                     >
                         Bekor qilish
                     </RedButton>
                 </div>
-            </form>
-        </>
+            </div>
+        </form>
     );
 }
 

@@ -296,7 +296,7 @@ const managerRoutes = createBrowserRouter([
                 element: <AllMentors />
             },
             {
-                path: '/mentors/mentor/:mentorId',
+                path: '/mentors/:mentorId',
                 element: <SingleMentor />
             },
             {

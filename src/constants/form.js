@@ -1,3 +1,5 @@
+import { USER_ROLES } from ".";
+
 export const GENDER_OPTIONS = [
     { value: '1', label: 'Erkak' },
     { value: '0', label: 'Ayol' },
@@ -193,4 +195,9 @@ export const LESSON_TIME_OPTIONS = [
     { value: 1310, label: '21:50' },
     { value: 1315, label: '21:55' },
     { value: 1320, label: '22:00' },
+]
+
+export const MENTOR_TYPES = [
+    { label: 'Nazoratchi Mentor', value: USER_ROLES.CALL_MENTOR },
+    { label: 'Asosiy Mentor', value: USER_ROLES.MAIN_MENTOR },
 ]

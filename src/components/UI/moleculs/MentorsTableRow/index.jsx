@@ -43,7 +43,7 @@ const MentorsTableRow = ({
             <td><span>{student}</span></td>
             <td onClick={(e) => {
                 (e.stopPropagation())
-                navigate(`/mentors/mentor/${mentorId}?role=${mentorRole}`)
+                navigate(`${mentorId}?role=${mentorRole}`)
             }}>
                 <div>
                     <EditMentorIcon />

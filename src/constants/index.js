@@ -20,12 +20,6 @@ export const USER_ROLES = {
     SELLER: 5
 }
 
-export const USER_TYPE = [
-    {label: 'Nazoratchi Mentor', value: USER_ROLES.CALL_MENTOR},
-    {label: 'Asosiy Mentor', value: USER_ROLES.MAIN_MENTOR},
-    {label: 'Akademik Manager', value: USER_ROLES.ACADEMY_MANAGER},
-]
-
 export const CALL_RECORD_DEFAULT_PEAKS = Array(300).fill(0)
 
 export const UNITS = Array.from(Array(12)).map((_, index) => ({ value: 5 * (index + 1), label: `Unit ${5 * (index + 1)}` }));

@@ -37,6 +37,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/groups/:id/lesson-schedule', title: 'Jadval', showBackButton: true },
         { path: '/user-course/:id', title: 'O’quvchi ma’lumotlari', showBackButton: true },
         { path: '/platform', title: 'Platforma', showBackButton: false },
+        { path: '/mentors/:mentorId', title: 'Mentor ma’lumotlari', showBackButton: false }
     ];
 
     const matchRoute = (pattern, pathname) => {
