@@ -133,7 +133,7 @@ const AddNotification = () => {
                             control={control}
                             name='course'
                             options={courses?.map(course => ({ value: course.id, label: course.title }))}
-                            isClearable={true}
+                            isclearable={true}
                             placeholder='Kurslar bo’yicha'
                         />
                         <FormTimeInput
@@ -168,7 +168,7 @@ const AddNotification = () => {
                             control={control}
                             name='status'
                             options={STUDENTS_STATUS_OPTIONS}
-                            isClearable={true}
+                            isclearable={true}
                             placeholder='Status user'
                         />
 
@@ -178,7 +178,7 @@ const AddNotification = () => {
                             control={control}
                             name='isPro'
                             options={USER__TYPE}
-                            isClearable={true}
+                            isclearable={true}
                             placeholder='User turi'
                         />
 
@@ -188,7 +188,7 @@ const AddNotification = () => {
                             control={control}
                             name='login'
                             options={LOGIN__TYPE}
-                            isClearable={true}
+                            isclearable={true}
                             placeholder='Tanlang'
                         />
 
