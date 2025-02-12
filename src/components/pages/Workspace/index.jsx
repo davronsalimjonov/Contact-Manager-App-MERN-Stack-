@@ -57,11 +57,11 @@ const Workspace = () => {
     const renderItem = useCallback((item, status) => (
         <WorkspaceCallCard
             key={item?.id}
-            fullName={getUserFullName(item?.student)}
+            fullName={getUserFullName(item?.student?.user)}
             time={item?.time}
             status={status}
             group={item?.group}
-            onClickCall={() => handleClickCard(item?.courseId)}
+            onClickCall={() => handleClickCard(item?.student?.user?.id)}
         />
     ), [])
 

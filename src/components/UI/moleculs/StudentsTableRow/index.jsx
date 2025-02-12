@@ -12,7 +12,6 @@ const StudentsTableRow = ({
     days = '',
     time = '',
     status = '',
-    chatId = '',
     fullName = '',
     phoneNumber = '',
     userCourseId = '',
@@ -23,15 +22,17 @@ const StudentsTableRow = ({
     onClickUserInfo,
     onClickChangePassword,
     onClickTransfer,
-    onChangeCheckbox
+    onChangeCheckbox,
+    enableChangePassword = true,
+    enableTransfer = true
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const dropdownMenuItems = [
         { label: 'O’quvchi ma’lumotlari', onClick: onClickUserInfo },
-        { label: 'Parol o’zgartirish', onClick: onClickChangePassword },
-        { label: 'Transfer qilish', onClick: onClickTransfer },
-    ]
+        (enableChangePassword && { label: 'Parol o’zgartirish', onClick: onClickChangePassword }),
+        (enableTransfer && { label: 'Transfer qilish', onClick: onClickTransfer }),
+    ].filter(Boolean)
 
     return (
         <tr className={cls.row} onClick={onClick}>
@@ -49,8 +50,8 @@ const StudentsTableRow = ({
                 </div>
                 <span title={fullName}>{fullName}</span>
             </td>
-            <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={days}>{days ? days : <EmptyDataText />}</span></td>
-            <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={time}>{time ? time : <EmptyDataText />}</span></td>
+            <td><span title={days}>{days ? days : <EmptyDataText />}</span></td>
+            <td><span title={time}>{time ? time : <EmptyDataText />}</span></td>
             <td>
                 <span title={formatedPhoneNumber}>{formatedPhoneNumber ? formatedPhoneNumber : <EmptyDataText />}</span>
             </td>

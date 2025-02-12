@@ -14,7 +14,9 @@ import cls from './StudentsTable.module.scss';
 const StudentsTable = ({
     groupId = '',
     students = [],
-    isLoading
+    isLoading,
+    enableChangePassword = true,
+    enableTransfer = true
 }) => {
     const navigate = useNavigate()
     const [checkedStudents, setCheckedStudents] = useState([])
@@ -30,7 +32,7 @@ const StudentsTable = ({
     }
 
     const handleSelectAll = (e) => {
-        const { checked } = e.target    
+        const { checked } = e.target
         setCheckedStudents(checked ? students.map(student => student.id) : [])
     }
 
@@ -38,23 +40,27 @@ const StudentsTable = ({
         setTransfer({ isOpen: true, userIds: checkedStudents, groupId })
     }
 
-    useEffect(() =>{ 
+    useEffect(() => {
         setCheckedStudents([])
     }, [groupId])
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            <ChangePasswordForm
-                isOpen={changePassword.isOpen}
-                userId={changePassword.userId}
-                onClose={() => setChangePassword({ isOpen: false, userId: '' })}
-            />
-            <TransferStudentModal
-                isOpen={transfer.isOpen}
-                groupId={transfer.groupId}
-                userIds={transfer.userIds}
-                onClose={() => setTransfer({ isOpen: false, userIds: [], groupId: '' })}
-            />
+            {enableChangePassword && (
+                <ChangePasswordForm
+                    isOpen={changePassword.isOpen}
+                    userId={changePassword.userId}
+                    onClose={() => setChangePassword({ isOpen: false, userId: '' })}
+                />
+            )}
+            {enableTransfer && (
+                <TransferStudentModal
+                    isOpen={transfer.isOpen}
+                    groupId={transfer.groupId}
+                    userIds={transfer.userIds}
+                    onClose={() => setTransfer({ isOpen: false, userIds: [], groupId: '' })}
+                />
+            )}
             {students?.length > 0 ? (
                 <table className={cn(cls.table, groupId && cls.table__withCheckbox)}>
                     <thead>
@@ -94,6 +100,8 @@ const StudentsTable = ({
                                     onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.userId })}
                                     onClickTransfer={() => setTransfer({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
                                     onClickUserInfo={() => navigate(`/students/${student?.id}/${student?.userId}`)}
+                                    enableChangePassword={enableChangePassword}
+                                    enableTransfer={enableTransfer}
                                 />
                             )}
                         />
