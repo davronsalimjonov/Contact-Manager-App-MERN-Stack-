@@ -5,8 +5,8 @@ export const getUserById = async (userId) => {
     return res.data
 }
 
-export const getAllUsers = async (mentorId, params) => {
-    const res = await api.get(`/user/all-students?teacher=${mentorId}&${paramsToString(params)}`)
+export const getAllUsers = async (params) => {
+    const res = await api.get(`/user/all-students?${paramsToString(params)}`)
     return res.data
 }
 

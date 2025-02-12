@@ -1,59 +1,34 @@
-import { useNavigate } from 'react-router-dom';
-import { formatPhoneNumberIntl } from 'react-phone-number-input';
-import StudentStatus from '../../atoms/StudentStatus';
-import EmptyDataText from '../../atoms/EmptyDataText';
-import cls from './UsersTableRow.module.scss';
-import Avatar from 'react-avatar';
 import dayjs from 'dayjs';
-import { PasswordLockIcon } from '../../atoms/icons';
+import Avatar from 'react-avatar';
+import { formatPhoneNumberIntl } from 'react-phone-number-input';
+import EmptyDataText from '../../atoms/EmptyDataText';
+import UserStatusBadge from '../../atoms/UserStatusBadge';
+import cls from './UsersTableRow.module.scss';
 
 const UsersTableRow = ({
     index = 0,
     avatar = '',
-    status = '',
-    student = '',
     fullName = '',
     phoneNumber = '',
+    status = '',
     uniqueId = '',
     createdAt = '',
-    hidden = false,
-    unreadedMessagesCount = 0,
-    setIsModal,
-    userCourseId,
-    setUserId
 }) => {
-    const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     return (
-        <tr className={cls.row} onClick={() => navigate(`/users/user/${student}`)}>
+        <tr className={cls.row}>
             <td>{index}</td>
             <td className={cls.row__name}>
-                <div className={cls.row__notification}>
-                    <Avatar
-                        round
-                        size={32}
-                        src={`${avatar}`}
-                        name={fullName}
-                    />
-                    {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount}</span>}
-                </div>
+                <Avatar round size={32} src={avatar} name={fullName} />
                 <span title={fullName}>{fullName}</span>
             </td>
             <td>
-                <span title={formatedPhoneNumber}>{formatedPhoneNumber ? formatedPhoneNumber : <EmptyDataText />}</span>
+                <span title={formatedPhoneNumber}>{formatedPhoneNumber}</span>
             </td>
-            <td><StudentStatus status={status} /></td>
-            <td><StudentStatus status={uniqueId} /></td>
-            <td className={`${hidden ? cls.hidden : ""} ${cls.someOtherClass}`.trim()}><span title={createdAt}>{createdAt ? dayjs(createdAt).format('DD.MM.YYYY HH:mm') : <EmptyDataText />}</span></td>
-            <td onClick={(e) => (e.stopPropagation())}>
-                <div onClick={() => {
-                    setIsModal(true)
-                    setUserId(userCourseId)
-                }} >
-                    <PasswordLockIcon />
-                </div>
-            </td>
+            <td className={cls.row__status}><UserStatusBadge status={status} /></td>
+            <td>{uniqueId}</td>
+            <td><span title={createdAt}>{createdAt ? dayjs(createdAt).format('DD.MM.YYYY HH:mm') : <EmptyDataText />}</span></td>
         </tr>
     );
 }

@@ -1,4 +1,5 @@
 import { USER_ROLES } from ".";
+import { USER_TYPE_ENUMS } from "./enum";
 
 export const GENDER_OPTIONS = [
     { value: '1', label: 'Erkak' },
@@ -200,4 +201,9 @@ export const LESSON_TIME_OPTIONS = [
 export const MENTOR_TYPES = [
     { label: 'Nazoratchi Mentor', value: USER_ROLES.CALL_MENTOR },
     { label: 'Asosiy Mentor', value: USER_ROLES.MAIN_MENTOR },
+]
+
+export const USER_TYPE_OPTIONS = [
+    { label: 'O\'quvchi', value: USER_TYPE_ENUMS.STUDENT },
+    { label: 'Free', value: USER_TYPE_ENUMS.FREE },
 ]

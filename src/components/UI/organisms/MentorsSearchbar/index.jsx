@@ -5,7 +5,7 @@ import Select from '../../atoms/Form/Select';
 import PhoneInput from '../../atoms/Form/PhoneInput';
 import cls from './MentorsSearchbar.module.scss';
 import Button from '../../atoms/Buttons/Button';
-import { Arrow } from '../../atoms/icons';
+import { ArrowDown } from '../../atoms/icons';
 import { useNavigate } from 'react-router-dom';
 
 const MentorsSearchBar = ({
@@ -49,7 +49,7 @@ const MentorsSearchBar = ({
             >
                 Mentor Qo'shish
                 <span className='arrowIconClr'>
-                    <Arrow />
+                    <ArrowDown />
                 </span>
             </Button>
         </div>

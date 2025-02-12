@@ -43,3 +43,8 @@ export const GROUP_STATUS = {
     COLLECTING: 'collecting',
     CLOSED: 'closed'
 }
+
+export const USER_TYPE_ENUMS = {
+    FREE: 'Free',
+    STUDENT: 'O\'quvchi'
+}

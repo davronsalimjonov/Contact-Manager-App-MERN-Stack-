@@ -1,6 +1,6 @@
 import { cn } from '@/utils/lib';
+import { ArrowDown } from '../../atoms/icons';
 import cls from './ChatScrollButton.module.scss';
-import { Arrow } from '../../atoms/icons';
 
 const ChatScrollButton = ({
     isOpened = false,
@@ -14,7 +14,7 @@ const ChatScrollButton = ({
         >
             <div>
                 {count > 0 && <span className={cls.btn__badge}>{count}</span>}
-                <Arrow />
+                <ArrowDown />
             </div>
         </button>
     );

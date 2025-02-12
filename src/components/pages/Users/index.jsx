@@ -1,63 +1,44 @@
 import { useState } from 'react';
-import cls from './Users.module.scss';
+import { useGetUsers } from '@/hooks/useUsers';
+import Loader from '@/components/UI/atoms/Loader';
+import { USER_TYPE_ENUMS } from '@/constants/enum';
 import UsersTable from '@/components/templates/UsersTable';
 import UsersSearchBar from '@/components/UI/organisms/UsersSearchBar';
-import { useGetUsers } from '@/hooks/useGetUsers';
-import Loader from '@/components/UI/atoms/Loader';
-import Pagination from '@/components/UI/moleculs/Pagination';
+import Pagination from '@/components/UI/moleculs/CustomPagination';
+import cls from './Users.module.scss';
 
 const Users = () => {
     const [filter, setFilter] = useState({})
-    const [modal, setModal] = useState(false)
-    const [pagination, setPagination] = useState({
-        page: 1,
-        limit: 10,
-    });
+    const [pagination, setPagination] = useState({ page: 0, limit: 10 });
+    const { data: allUsers, isLoading: isLoadingAllUsers } = useGetUsers({ ...filter, page: pagination.page + 1, limit: pagination.limit })
 
-    const handlePageChange = (page) => {
-        setPagination((prev) => ({...prev, page }));
-    };
-
-    const handleLimitChange = (limit) => {
-        setPagination((prev) => ({...prev, limit }));
-    };
-
-    const { ref, data: allUsers, isLoading: isLoadingAllUsers } = useGetUsers({...filter, ...pagination})
+    const handleChangeFilter = (key, value) => {
+        setFilter(state => ({ ...state, [key]: value }));
+        setPagination(state => ({ ...state, page: 0 }));
+    }
 
     return (
-            <div className={cls.page}>
-                <UsersSearchBar
-                    onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
-                    onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
-                    onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
-                    onChangeStatus={(isPro) => setFilter(state => ({ ...state, isPro: isPro?.value === "Pro" ? true : false  }))}
-                    onChangeUniqueId={e => setFilter(state => ({ ...state, uniqueId: e.target.value?.trim()}))}
-                    onChangeDate={createdAt => setFilter(state => ({ ... state, createdAt}))}
+        <div className={cls.page}>
+            <UsersSearchBar
+                onChangeFirstName={e => handleChangeFilter('firstName', e.target.value?.trim())}
+                onChangeLastName={e => handleChangeFilter('lastName', e.target.value?.trim())}
+                onChangePhone={phone => handleChangeFilter('phone', phone)}
+                onChangeStatus={type => handleChangeFilter('isPro', type?.value ? type?.value === USER_TYPE_ENUMS.STUDENT : '')}
+            />
+            {!isLoadingAllUsers ? (
+                <UsersTable
+                    students={allUsers?.items}
+                    startIndex={pagination.page * pagination.limit}
                 />
-            {(
-                !isLoadingAllUsers
-                ) ? (
-                    <>
-                        <UsersTable
-                            triggerRef={ref}
-                            students={allUsers?.items}
-                            isLoading={isLoadingAllUsers}
-                            isModal={modal}
-                            setIsModal={setModal}
-                        />
-                        <Pagination
-                            metaData={allUsers?.meta}
-                            limit={pagination.limit}
-                            setLimit={handleLimitChange}
-                            page={pagination.page}
-                            setPage={handlePageChange}
-                        />
-                        
-                    </>
-                ) : (
-                    <Loader />
+            ) : (
+                <Loader />
             )}
-            </div>
+            <Pagination
+                pageCount={allUsers?.meta?.totalPages}
+                page={pagination.page}
+                onPageChange={({ selected: page }) => setPagination({ ...pagination, page })}
+            />
+        </div>
     );
 }
 

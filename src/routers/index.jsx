@@ -60,7 +60,6 @@ import UserCourseUpdate from "@/components/pages/UserCourseUpdate";
 import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
 import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
 import { USER_ROLES } from "@/constants";
-import { useMemo } from "react";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 

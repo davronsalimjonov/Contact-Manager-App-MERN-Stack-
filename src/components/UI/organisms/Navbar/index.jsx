@@ -32,12 +32,14 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/materials', title: 'Materials', showBackButton: false },
         { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [USER_ROLES.SELLER]: true }, showBackButton: false },
         { path: '/checks', title: 'Checks', showBackButton: true },
+        { path: '/user-course/:id', title: 'O’quvchi ma’lumotlari', showBackButton: true },
+        { path: '/platform', title: 'Platforma', showBackButton: false },
+        // Academic manager
+        { path: '/users', title: 'Foydalanuvchilar', showBackButton: false },
         { path: '/groups', title: 'Guruhlar', showBackButton: false },
         { path: '/groups/:id', title: 'Guruhlar', showBackButton: true },
         { path: '/groups/:id/lesson-schedule', title: 'Jadval', showBackButton: true },
-        { path: '/user-course/:id', title: 'O’quvchi ma’lumotlari', showBackButton: true },
-        { path: '/platform', title: 'Platforma', showBackButton: false },
-        { path: '/mentors/:mentorId', title: 'Mentor ma’lumotlari', showBackButton: false }
+        { path: '/mentors/:mentorId', title: 'Mentor ma’lumotlari', showBackButton: false },
     ];
 
     const matchRoute = (pattern, pathname) => {
