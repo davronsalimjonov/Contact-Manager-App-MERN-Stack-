@@ -35,11 +35,6 @@ export const updateUserPassword = async (id, params) => {
     return res.data
 }
 
-export const getUserCourseList = async (id) => {
-    const res = await api.get(`/user-course/courses-web/${id}`)
-    return res.data
-}
-
 export const changeAdaptationStatus = async (userId, data) => {
     const res = await api.patch(`/adaptation/active/mentor/${userId}`, data)
     return res.data

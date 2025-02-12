@@ -1,6 +1,10 @@
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { addStudent } from '@/services/user';
+import { customToast } from '@/utils/toast';
+import { queryClient } from '@/services/api';
 import { GENDER_OPTIONS } from '@/constants/form';
 import { studentInfoSchema } from '@/schemas/student';
 import Button from '@/components/UI/atoms/Buttons/Button';
@@ -12,11 +16,6 @@ import FormPhoneInput from '@/components/UI/moleculs/Form/FormPhoneInput';
 import FormRadioGroup from '@/components/UI/moleculs/Form/FormRadioGroup';
 import { LeftArrowIcon } from '@/components/UI/atoms/icons';
 import cls from './AddStudent.module.scss';
-import { customToast } from '@/utils/toast';
-import { objectToFormData } from '@/utils/lib';
-import { addStudent } from '@/services/user';
-import { useNavigate } from 'react-router-dom';
-import { queryClient } from '@/services/api';
 
 const AddStudent = ({ }) => {
 

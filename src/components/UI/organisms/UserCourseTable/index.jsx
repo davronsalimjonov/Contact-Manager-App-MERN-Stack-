@@ -7,12 +7,12 @@ import { updateUserCourse } from '@/services/course';
 import { addStudentToGroup } from '@/services/group';
 import { useGetUserCourses } from '@/hooks/useUserCourse';
 import Loader from '../../atoms/Loader';
-import UserCourseRow from '../../moleculs/UserCourseRow';
 import GroupPickerModal from '../GroupPickerModal';
 import ConfirmationModal from '../ConfirmationModal';
+import UserCourseRow from '../../moleculs/UserCourseRow';
 import cls from './UserCourseTable.module.scss';
 
-const UserCourseTable = ({ userId, userCourseId }) => {
+const UserCourseTable = ({ userId, userCourseId, disabled = true }) => {
     const navigate = useNavigate()
     const queryClient = useQueryClient()
     const mentorId = useGetUserId()
@@ -88,7 +88,7 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                             {courses?.map((course, index) => (
                                 <UserCourseRow
                                     key={course?.id}
-                                    disabled={course?.id !== userCourseId}
+                                    disabled={disabled ? course?.id !== userCourseId : false}
                                     index={index + 1}
                                     level={course?.level}
                                     endDate={course?.endDate}
