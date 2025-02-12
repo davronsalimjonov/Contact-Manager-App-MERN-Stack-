@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import UsersTableRow from '@/components/UI/moleculs/UsersTableRow';
@@ -7,6 +8,8 @@ const UsersTable = ({
     students = [],
     startIndex = 0,
 }) => {
+    const navigate = useNavigate()
+
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             {students?.length > 0 ? (
@@ -19,6 +22,7 @@ const UsersTable = ({
                             <th>Status</th>
                             <th>ID</th>
                             <th>Ro'yxatdan O'tdi</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,6 +36,7 @@ const UsersTable = ({
                                 status={student?.status}
                                 uniqueId={student?.uniqueId}
                                 createdAt={student?.createdAt}
+                                onClickUserInfo={() => navigate(student?.id)}
                             />
                         ))}
                     </tbody>

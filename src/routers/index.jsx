@@ -287,7 +287,7 @@ const managerRoutes = createBrowserRouter([
                 element: <Users />
             },
             {
-                path: '/users/user/:userId',
+                path: '/users/:userId',
                 element: <SingleUser />
             },
             {

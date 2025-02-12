@@ -3,6 +3,7 @@ import Avatar from 'react-avatar';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import UserStatusBadge from '../../atoms/UserStatusBadge';
+import TableActionButton from '../TableActionButton';
 import cls from './UsersTableRow.module.scss';
 
 const UsersTableRow = ({
@@ -13,8 +14,13 @@ const UsersTableRow = ({
     status = '',
     uniqueId = '',
     createdAt = '',
+    onClickUserInfo
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
+
+    const actionButtons = [
+        {label: 'Foydalanuvchi ma\'lumotlari', onClick: onClickUserInfo}
+    ]
 
     return (
         <tr className={cls.row}>
@@ -29,6 +35,7 @@ const UsersTableRow = ({
             <td className={cls.row__status}><UserStatusBadge status={status} /></td>
             <td>{uniqueId}</td>
             <td><span title={createdAt}>{createdAt ? dayjs(createdAt).format('DD.MM.YYYY HH:mm') : <EmptyDataText />}</span></td>
+            <td><TableActionButton menuItems={actionButtons} /></td>
         </tr>
     );
 }

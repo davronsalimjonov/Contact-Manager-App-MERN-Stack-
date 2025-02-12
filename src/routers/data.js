@@ -116,16 +116,11 @@ export const managerSidebarLinks = [
             },
             {
                 id: '2.2',
-                label: 'Sotuv',
-                link: '/sales-users'
-            },
-            {
-                id: '2.3',
-                label: 'Student',
+                label: 'O’quvchilarim',
                 link: '/students'
             },
             {
-                id: '2.4',
+                id: '2.3',
                 label: 'Mentor',
                 link: '/mentors'
             }
