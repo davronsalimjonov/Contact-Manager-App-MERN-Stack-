@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { useSocket } from "@/providers/SocketProvider";
-import { getCallMentorStudents, getMainMentorStudents, getStudentIds } from "@/services/course";
 import { autoPlayAudio, removeEmptyKeys } from "@/utils/lib";
-import { getStudentsForAdaptation } from "@/services/students";
+import { getAllStudents, getStudentsForAdaptation } from "@/services/students";
+import { getCallMentorStudents, getMainMentorStudents, getStudentIds } from "@/services/course";
 import { useGetUserId } from "./useGetUser";
 
 let soundTimer = null;
@@ -77,4 +77,8 @@ export const useGetMainMentorStudents = (params = {}) => {
 
 export const useGetMainMentorStudentsIds = (params = {}, options = {}) => {
     return useQuery(['student-ids', ...Object.values(params)], () => getStudentIds(params), { cacheTime: 0, staleTime: 0, ...options })
+}
+
+export function useGetAllStudents(params) {
+    return useQuery(['students', 'all', params], () => getAllStudents(params), { staleTime: Infinity, cacheTime: Infinity })
 }

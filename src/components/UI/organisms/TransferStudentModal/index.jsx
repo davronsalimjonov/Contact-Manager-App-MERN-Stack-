@@ -16,7 +16,7 @@ import cls from './TransferStudentModal.module.scss';
 const TransferStudentModal = ({
     userIds,
     groupId,
-    isOpen = true,
+    isOpen = false,
     onClose,
 }) => {
     const [selectedGroup, setSelectedGroup] = useState(null)

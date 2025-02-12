@@ -34,3 +34,8 @@ export const updateGroup = async (groupId, data) => {
     const res = await api.put(`/group/${groupId}`, data)
     return res.data
 }
+
+export const getGroupsForOptions = async () => {
+    const res = await api.get(`/group/all-for-select`)
+    return res.data
+}

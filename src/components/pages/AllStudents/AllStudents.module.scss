@@ -1,6 +1,8 @@
-.pagination{
-    margin-top: 36px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
+
+.page{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    overflow: hidden;
+    height: 100%;
 }

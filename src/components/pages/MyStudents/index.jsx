@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Tabs from '@/components/UI/moleculs/Tabs';
-import { useGetCallMentorStudents } from '@/hooks/useGetStudents';
+import { useGetCallMentorStudents } from '@/hooks/useStudents';
 import { useGetMyGroups } from '@/hooks/useGetGroups';
 import StudentsTable from '@/components/templates/StudentsTable';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';

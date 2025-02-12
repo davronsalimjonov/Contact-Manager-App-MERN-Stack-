@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { removeEmptyKeys } from "@/utils/lib";
 import { createGroups } from "@/services/groups";
-import { getActiveGroups, getGroupInfo, getGroupsByLevel, getGroupStudents, transferStudent, updateGroup } from "@/services/group"
+import { getActiveGroups, getGroupInfo, getGroupsByLevel, getGroupsForOptions, getGroupStudents, transferStudent, updateGroup } from "@/services/group"
 import { useGetUserId } from "./useGetUser";
 
 export const useGetGroupsByLevel = (level, params) => {
@@ -11,6 +11,22 @@ export const useGetGroupsByLevel = (level, params) => {
         { cacheTime: Infinity, staleTime: Infinity }
     );
 };
+
+export const useGetActiveGroups = (params = {}, options = {}) => {
+    return useQuery(['active-groups', ...Object.values(removeEmptyKeys(params))], () => getActiveGroups(params), { cacheTime: Infinity, staleTime: Infinity, ...options })
+}
+
+export const useGetGroupInfo = (groupId) => {
+    return useQuery(['group-info', groupId], () => getGroupInfo(groupId), { cacheTime: Infinity, staleTime: Infinity })
+}
+
+export const useGetGroupStudents = (groupId, params = {}) => {
+    return useQuery(['group-students', groupId, ...Object.values(removeEmptyKeys(params))], () => getGroupStudents(groupId, params), { cacheTime: Infinity, staleTime: Infinity })
+}
+
+export const useGetGroupsForOptions = () => {
+    return useQuery(['groups-for-options'], getGroupsForOptions, { cacheTime: Infinity, staleTime: Infinity })
+}
 
 export const useCreateGroupMutation = () => {
     const queryClient = useQueryClient();
@@ -59,25 +75,25 @@ export const useTransferMutation = () => {
         onSuccess: onSuccessTransfer
     });
 
-    function onSuccessTransfer(_, data) {
+    function onSuccessTransfer(response, data) {
         const from = data?.from
         const to = data?.to
+        const studentIds = data?.studentIds || []
 
         queryClient.invalidateQueries(['students', mentorId, from])
         queryClient.invalidateQueries(['students', mentorId, to])
+        queryClient.setQueriesData(['students', 'all'], (oldData) => ({
+            ...oldData,
+            items: oldData?.items?.map(student => {
+                if(studentIds.includes(student?.id)) {
+                    student.group = {id: response?.id, title: response?.title}
+                    student.teacher = response?.academyMentor
+                    student.secondTeacher = response?.callMentor
+                }
+                return student
+            })
+        }))
     }
 
     return transferMutation
-}
-
-export const useGetActiveGroups = (params = {}, options = {}) => {
-    return useQuery(['active-groups', ...Object.values(removeEmptyKeys(params))], () => getActiveGroups(params), { cacheTime: Infinity, staleTime: Infinity, ...options })
-}
-
-export const useGetGroupInfo = (groupId) => {
-    return useQuery(['group-info', groupId], () => getGroupInfo(groupId), { cacheTime: Infinity, staleTime: Infinity })
-}
-
-export const useGetGroupStudents = (groupId, params = {}) => {
-    return useQuery(['group-students', groupId, ...Object.values(removeEmptyKeys(params))], () => getGroupStudents(groupId, params), { cacheTime: Infinity, staleTime: Infinity })
 }

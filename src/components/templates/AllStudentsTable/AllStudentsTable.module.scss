@@ -3,16 +3,38 @@
     border-collapse: collapse;
     min-width: 100%;
     grid-template-columns: 
-        minmax(54px, 54px)
+        minmax(44px, 44px)
         minmax(184px, 1fr)
         minmax(154px, 1fr)
         minmax(120px, 120px)
         minmax(199px, 1fr)
-        minmax(90px, 90px)
-        minmax(144px, 1fr)
-        minmax(174px, 1fr);
+        minmax(100px, 130px)
+        minmax(114px, 1fr)
+        minmax(114px, 1fr)
+        minmax(112px, 112px)
+        minmax(44px, 44px);
 
-    & tbody{
+    & tbody, & thead, & tr{
       display: contents;
+    }
+
+    & th{
+      position: sticky;
+      top: 0;
+      background-color: var(--base-white-color);
+      padding: 10px 12px;
+      text-align: left;
+      
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 24px;
+      color: var(--dark-gray-700-color);
+      margin-bottom: 8px;
+      
+      &:not(:first-child){
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
     }
 }

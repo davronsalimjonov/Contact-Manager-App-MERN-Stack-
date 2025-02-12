@@ -1,4 +1,4 @@
-import { api } from "./api"
+import { api, paramsToString } from "./api"
 
 export const getStudentsForAdaptation = async (mentorId) => {
     const res = await api.get(`/adaptation/mentor/${mentorId}`)
@@ -7,5 +7,10 @@ export const getStudentsForAdaptation = async (mentorId) => {
 
 export const updateStudentAdaptationStatus = async (userId, data) => {
     const res = await api.put(`/adaptation/status/${userId}`, data)
+    return res.data
+}
+
+export const getAllStudents = async (params) => {
+    const res = await api.get(`/user-course/users-statistic?${paramsToString(params)}`);
     return res.data
 }

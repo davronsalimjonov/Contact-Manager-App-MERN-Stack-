@@ -1,56 +1,74 @@
-import Mapper from '@/components/UI/atoms/Mapper';
-import Loader from '@/components/UI/atoms/Loader';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
-import cls from './AllStudentsTable.module.scss';
+import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
 import AllStudentsTableRow from '@/components/UI/moleculs/AllStudentsTableRow';
-import AllStudentsTableHeader from '@/components/UI/organisms/AllStudentsTableHeader';
+import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
+import cls from './AllStudentsTable.module.scss';
 
 const AllStudentsTable = ({
     students = [],
-    triggerRef,
-    isLoading
+    startIndex = 0
 }) => {
-
-    const currenPage = students?.meta?.currentPage;
-    const limit = students?.meta?.itemsPerPage;
+    const navigate = useNavigate()
+    const [changePassword, setChangePassword] = useState({ isOpen: false, userId: null })
+    const [transferStudent, setTransferStudent] = useState({ isOpen: false, userIds: null, groupId: null })
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {students?.items?.length > 0 ? (
+            <ChangePasswordForm
+                isOpen={changePassword.isOpen}
+                userId={changePassword.userId}
+                onClose={() => setChangePassword({ isOpen: false, userId: null })}
+            />
+            <TransferStudentModal 
+                isOpen={transferStudent.isOpen}
+                userIds={transferStudent.userIds}
+                groupId={transferStudent.groupId}
+                onClose={() => setTransferStudent({ isOpen: false, userIds: null, groupId: null })}
+            />
+            {students?.length > 0 ? (
                 <table className={cls.table}>
-                    <AllStudentsTableHeader />
+                    <thead className={cls.head}>
+                        <tr >
+                            <th>№</th>
+                            <th>Ism familyasi</th>
+                            <th>Telefon nomer</th>
+                            <th>Status</th>
+                            <th>Mentor</th>
+                            <th>Darajasi</th>
+                            <th>Kursi</th>
+                            <th>Guruh</th>
+                            <th>Tugash sanasi</th>
+                            <th></th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        <Mapper
-                            data={students?.items}
-                            isInfinityQuery
-                            isLoading={isLoading}
-                            renderItem={(student, index) => (
-                                <AllStudentsTableRow
-                                    key={student?.id}
-                                    index={(currenPage - 1) * limit + index + 1}
-                                    fullName={getUserFullName(student?.user)}
-                                    url={student?.user?.url}
-                                    phoneNumber={student?.user?.phone}
-                                    status={student?.status}
-                                    teacher={getUserFullName(student?.teacher)}
-                                    secondTeacher={getUserFullName(student?.secondTeacher)}
-                                    course={student?.course?.title}
-                                    level={student?.level}
-                                    studentId={student?.id}
-                                    startDate={student?.startDate}
-                                    userId={student?.user?.id}
-                                    userCourseId={student?.id}
-                                />
-                            )}
-                        />
-                        <tr ref={triggerRef}></tr>
+                        {students.map((student, index) => (
+                            <AllStudentsTableRow
+                                key={student?.id}
+                                index={startIndex + index + 1}
+                                avatar={student?.user?.url}
+                                fullName={getUserFullName(student?.user)}
+                                phoneNumber={student?.user?.phone}
+                                status={student?.status}
+                                mainTeacher={getUserFullName(student?.teacher)}
+                                secondTeacher={getUserFullName(student?.secondTeacher)}
+                                level={student?.level}
+                                course={student?.course?.title}
+                                group={student?.group?.title}
+                                courseEndDate={student?.endDate}
+                                onClickUserInfo={() => navigate(`${student?.id}/${student?.user?.id}`)}
+                                onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.user?.id })}
+                                onClickTransfer={() => setTransferStudent({ isOpen: true, userIds: [student?.id], groupId: student?.group?.id })}
+                            />
+                        ))}
                     </tbody>
                 </table>
             ) : (
-                !isLoading && <EmptyData text="Sizda hozirda bunday o'quvchi mavjud emas." />
+                <EmptyData text="Sizda hozirda bunday o'quvchi mavjud emas." />
             )}
-            {isLoading && <Loader size={80} />}
         </div>
     );
 }

@@ -25,13 +25,6 @@ export const getEmployeeById = async (mentorId, role) => {
     return res.data
 }
 
-export const getAllStudents = async (params) => {
-    const filter = `/user-course/users-statistic?${paramsToString(params)}`
-    const res = await api.get(filter);
-
-    return res.data
-}
-
 export const addStudent= async (data)=>{
     const res = await api.post('/user/student',data);
     return res.data;

@@ -1,44 +1,52 @@
-import cls from './AllStudentsTableRow.module.scss';
 import Avatar from 'react-avatar';
-import getStyleByStatus from '@/utils/getStyleByStatus';
-import { formatDate } from '@/utils/formatDate';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
-import { useNavigate } from 'react-router-dom';
+import { formatDate } from '@/utils/formatDate';
+import StudentStatus from '../../atoms/StudentStatus';
+import EmptyDataText from '../../atoms/EmptyDataText';
+import TableActionButton from '../TableActionButton';
+import cls from './AllStudentsTableRow.module.scss';
 
 const AllStudentsTableRow = ({
     index,
+    avatar,
     fullName,
-    url,
     phoneNumber,
     status,
-    teacher,
+    mainTeacher,
     secondTeacher,
     level,
     course,
-    userId,
-    startDate,
-    userCourseId
+    group,
+    courseEndDate,
+    onClickUserInfo,
+    onClickChangePassword,
+    onClickTransfer
 }) => {
-    const navigate = useNavigate();
+    
+    const menuButtons = [
+        { label: 'Oquvchi malumotlari', onClick: onClickUserInfo },
+        { label: 'Parol ozgartirish', onClick: onClickChangePassword },
+        { label: 'Transfer', onClick: onClickTransfer }
+    ]
 
     return (
-
-        <tr className={cls.row} onClick={() => navigate(`/students/${userCourseId}/${userId}`)}>
-
+        <tr className={cls.row}>
             <td>{index}</td>
             <td className={cls.row__avatar}>
-                <Avatar src={url} name={fullName} size={24} round />
+                <Avatar src={avatar} name={fullName} size={24} round />
                 {fullName}
             </td>
             <td>{formatPhoneNumberIntl(phoneNumber)}</td>
-            <td ><span className={cls.row__status} style={getStyleByStatus(status)}>{status}</span></td>
+            <td ><StudentStatus status={status} /></td>
             <td className={cls.row__teachers}>
-                <p className={cls.row__teacher}>{teacher}</p>
-                <p className={cls.row__second__teacher}>{secondTeacher}</p>
+                <p className={cls.row__teacher}>{mainTeacher || <EmptyDataText />}</p>
+                <p className={cls.row__second__teacher}>{secondTeacher || <EmptyDataText />}</p>
             </td>
-            <td>{level}</td>
-            <td>{course}</td>
-            <td>{formatDate(startDate)}</td>
+            <td>{level || <EmptyDataText />}</td>
+            <td className={cls.row__course}>{course || <EmptyDataText />}</td>
+            <td>{group || <EmptyDataText />}</td>
+            <td>{formatDate(courseEndDate)}</td>
+            <td><TableActionButton menuItems={menuButtons} /></td>
         </tr>
 
     )

@@ -1,79 +1,47 @@
-
-import cls from './AllStudents.module.scss';
 import { useState } from 'react';
-import { Pagination } from 'antd';
+import Loader from '@/components/UI/atoms/Loader';
+import { useGetAllStudents } from '@/hooks/useStudents';
+import Pagination from '@/components/UI/moleculs/CustomPagination';
 import AllStudentsTable from '@/components/templates/AllStudentsTable';
-import { useGetAllStudents } from '@/hooks/useGetAllStudents';
 import AllStudentsSearchBar from '@/components/UI/organisms/AllStudentsSearchBar';
+import cls from './AllStudents.module.scss';
 
 const AllStudents = () => {
-    const [filter, setFilter] = useState({
-        page: 1,
-        limit: 10,
+    const [filter, setFilter] = useState({});
+    const [pagination, setPagination] = useState({ page: 0, limit: 10 });
+    const { data: students, isLoading: isLoadingStudents } = useGetAllStudents({ ...filter, page: pagination.page + 1, limit: pagination.limit });
+
+    const handleFilterChange = (key, value) => {
+        setFilter(state => ({ ...state, [key]: value }))
+        setPagination(state => ({ ...state, page: 0 }))
     }
-    );
-
-    const { ref, data: students, isLoading: isLoadingStudents } = useGetAllStudents(filter);
-
-    const onShowSizeChange = (current, pageSize) => {
-        setFilter((prev) => {
-            return {
-                ...prev,
-                page: current,
-                limit: pageSize,
-            }
-        })
-    };
 
     return (
-        <>
+        <div className={cls.page}>
             <AllStudentsSearchBar
-                onChangeStatus={(status) => setFilter(state => ({
-                    ...state, status: status?.value, page: 1,
-                    limit: 10,
-                }))}
-                onChangeName={e => setFilter(state => ({
-                    ...state, firstName: e.target.value?.trim(), page: 1,
-                    limit: 10,
-                }))}
-                onChangeDegree={degree => setFilter(state => ({
-                    ...state, level: degree?.value, page: 1,
-                    limit: 10,
-                }))}
-                onChangeCourse={course => setFilter(state => ({
-                    ...state, course: course?.value, page: 1,
-                    limit: 10,
-                }))}
-                onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
-
+                onChangeFirstName={e => handleFilterChange('firstName', e.target.value?.trim())}
+                onChangeLastName={e => handleFilterChange('lastName', e.target.value?.trim())}
+                onChangePhone={phone => handleFilterChange('phone', phone)}
+                onChangeMentor={mentor => handleFilterChange('teacher', mentor?.value)}
+                onChangeStatus={status => handleFilterChange('status', status?.value)}
+                onChangeDegree={degree => handleFilterChange('level', degree?.value)}
+                onChangeCourse={course => handleFilterChange('course', course?.value)}
+                onChangeGroup={group => handleFilterChange('group', group?.value)}
             />
-            <AllStudentsTable
-                triggerRef={ref}
-                students={students}
-                isLoading={isLoadingStudents}
+            {!isLoadingStudents ? (
+                <AllStudentsTable
+                    students={students?.items}
+                    startIndex={pagination.page * pagination.limit}
+                />
+            ) : (
+                <Loader />
+            )}
+            <Pagination
+                page={pagination.page}
+                pageCount={students?.meta?.totalPages}
+                onPageChange={({ selected: page }) => setPagination({ ...pagination, page })}
             />
-
-            {
-                (students?.meta?.totalItems > filter.limit) && <div className={cls.pagination}>
-                    <Pagination
-                        showSizeChanger
-                        onShowSizeChange={onShowSizeChange}
-                        defaultCurrent={filter.page}
-                        defaultPageSize={filter.limit}
-                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} students`}
-                        onChange={(page) => {
-                            setFilter((prev) => {
-                                return {
-                                    ...prev,
-                                    page: page,
-                                }
-                            })
-                        }}
-                        total={students?.meta?.totalItems}
-                    />
-                </div>
-            }
-        </>
+        </div>
     )
 }
 

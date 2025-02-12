@@ -4,7 +4,7 @@ import { getUserFullName } from '@/utils/lib';
 import Loader from '@/components/UI/atoms/Loader';
 import { ADAPTATION_WORKSPACE_STATUS } from '@/constants/enum';
 import WorkspaceTable from '@/components/templates/WorkspaceTable';
-import { useGetStudentsForAdaptation } from '@/hooks/useGetStudents';
+import { useGetStudentsForAdaptation } from '@/hooks/useStudents';
 import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
 import { updateStudentAdaptationStatus } from '@/services/students';
 
