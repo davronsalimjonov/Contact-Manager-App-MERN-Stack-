@@ -1,59 +1,114 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../../atoms/Buttons/Button'
 import Rater from '../../atoms/Rater'
 import FormTextArea from '../Form/FormTextArea'
 import cls from "./ScheduleLessonExercise.module.scss"
 import ScheduleLessonDialog from '../ScheduleLessonDialog'
+import MaterialPreviewModal from '../../organisms/MaterialPreviewModal'
+import Loader from '../../atoms/Loader'
+import FilePreviewItem from '../FilePreviewItem'
+import VideoPlayer from '../../atoms/VideoPlayer'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { getFileCategory } from '@/utils/lib'
-import AudioPlayer from '../AudioPlayer'
 
 const ScheduleLessonExercise = ({
-    fileUrl = '',
-    fileName = ""
+    description,
+    files = [],
+    isLoading,
+    onSubmit,
+    mark = "",
+    details = {}
 }) => {
     const [isOpen, setIsOpen] = useState(false)
-    const fileType = getFileCategory(fileUrl)
+    const [previewMaterial, setPreviewMaterial] = useState({ isFileOpen: false, material: null })
+    const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting, isSubmitSuccessful, isDirty } } = useForm()
+    const ratingValue = watch("mark", 0);
+    const navigate = useNavigate()
+    const videoTypes = ["mp4", "mkv", "mov", "avi", "wmv", "flv", "webm"]
+    const [video, setVideo] = useState("")
+
+    useEffect(() => {
+        if (isSubmitSuccessful) navigate(-1)
+    }, [isSubmitSuccessful])
 
     return (
-        <form className={cls.ScheduleLessonExercise}>
-            <div className={cls.ScheduleLessonExercise__materials}>
-                <img src="/images/bg.svg" alt="" onClick={() => setIsOpen(true)} />
-                <div>
-                    <div>
-                        {fileType === 'image' && <img className={cls.modal__image} src={fileUrl} alt="" />}
-                        {fileType === 'video' && <video className={cls.modal__video} src={fileUrl} controls />}
-                        {fileType === 'docs' && <iframe className={cls.modal__iframe} src={'https://view.officeapps.live.com/op/embed.aspx?src=' + encodeURIComponent(fileUrl)} frameBorder="0" />}
-                        {fileType === 'pdf' && <iframe className={cls.modal__iframe} src={'https://docs.google.com/gview?&embedded=true&url=' + encodeURIComponent(fileUrl)} frameBorder="0" />}
-                        {fileType === 'audio' && <AudioPlayer title={fileName} url={fileUrl} />}
-                    </div>
-                </div>
-            </div>
-            <div className={cls.ScheduleLessonExercise__header}>
-                <h1>Vazifa nomi</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis ex ullam ad aspernatur eos perferendis quidem dolorum recusandae iure in cumque unde quas error magnam repellendus voluptatum delectus facere, eligendi tempora ratione placeat! Animi dicta labore excepturi ea illum, unde modi, molestias exercitationem nihil voluptas saepe ullam esse corporis dignissimos fugit. Ex, earum nostrum odio dignissimos corrupti fuga ipsum nihil sit molestiae natus, ut at aspernatur voluptate, odit ullam doloremque deleniti minus? Quos at aspernatur error aperiam incidunt hic praesentium.</p>
-            </div>
-            <FormTextArea
-                placeholder={`Izoh yozing...`}
-                className={cls.ScheduleLessonExercise__textArea}
-            />
-            <div className={cls.ScheduleLessonExercise__rating}>
-                <span>Baholang: </span>
-                <div className={cls.ScheduleLessonExercise__rating__StarContainer}>
-                    <Rater
-                        count={4}
-                        width='32px'
-                        height='32px'
+        isLoading ? <Loader /> :
+            <form className={cls.ScheduleLessonExercise} onSubmit={handleSubmit(onSubmit)}>
+                <div className={cls.ScheduleLessonExercise__materials}>
+                    {files?.map((file, idx) => (
+                        <div key={idx}>
+                            {videoTypes.some(videoType =>
+                                file?.url?.toLowerCase().endsWith(videoType.toLowerCase())
+                            ) ? (
+                                <div onClick={() => {
+                                    setIsOpen(true);
+                                    setVideo(file?.url);
+                                }}>
+                                    <VideoPlayer
+                                        videoUrl={file?.url}
+                                        controls={false}
+                                        disabled={true}
+                                    />
+                                </div>
+                            ) : (
+                                <FilePreviewItem
+                                    name={file.fileName}
+                                    size={(file.size || 0) / 1024}
+                                    type={getFileCategory(file?.url) || getFileCategory(file)}
+                                    onClick={() => setPreviewMaterial({ isFileOpen: true, material: file })}
+                                    className={cls.preview}
+                                />
+                            )}
+                        </div>
+                    ))}
+                    <MaterialPreviewModal
+                        isOpen={previewMaterial.isFileOpen}
+                        onClose={() => setPreviewMaterial(state => ({ ...state, isFileOpen: false }))}
+                        title={previewMaterial?.material?.fileName}
+                        fileName={previewMaterial?.material?.fileName}
+                        description={previewMaterial?.material?.fileName}
+                        fileUrl={previewMaterial?.material?.url}
                     />
                 </div>
-            </div>
-            <Button type='submit' disabled={true} className={cls.ScheduleLessonExercise__btn}>
-                Yuborish
-            </Button>
-            <ScheduleLessonDialog
-                isOpen={isOpen}
-                setIsOpen={setIsOpen}
-            />
-        </form>
+                <div className={cls.ScheduleLessonExercise__header} >
+                    <h1>{details?.title}</h1>
+                    <p>{details?.description}</p>
+                </div>
+                <FormTextArea
+                    placeholder={`Izoh yozing...`}
+                    className={cls.ScheduleLessonExercise__textArea}
+                    register={register('description', { required: "Darsga ta'rif kiriting!" })}
+                    error={errors?.description?.message}
+                    defaultValue={description}
+                />
+                <div className={cls.ScheduleLessonExercise__rating}>
+                    <span>Baholang: </span>
+                    <div className={cls.ScheduleLessonExercise__rating__StarContainer}>
+                        <Rater
+                            count={4}
+                            width='32px'
+                            height='32px'
+                            onRate={(val) => setValue("mark", val)}
+                            defaultValue={mark}
+                        />
+                    </div>
+                </div>
+                {description && mark && <Button
+                    type='submit'
+                    disabled={!isDirty}
+                    isLoading={isSubmitting}
+                    className={cls.ScheduleLessonExercise__btn}>
+                    Yuborish
+                </Button>
+                }
+                <ScheduleLessonDialog
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    video={video}
+                    setVideo={setVideo}
+                />
+            </form>
     )
 }
 

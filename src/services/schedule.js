@@ -44,3 +44,30 @@ export const createHomeWork = async (data) => {
     const res = await api.post(`/lesson-home-task`, data)
     return res?.data
 }
+
+export const updateHomeWork = async ({id, data}) => {
+    const res = await api.put(`/lesson-home-task/${id}`, data)
+    return res?.data
+}
+
+export const getLessonStudents = async (lessonId, params) => {
+    const res = await api.get(`/lesson/lesson-students-list/${lessonId}?${paramsToString(params)}`)
+    return res?.data
+}
+
+export const getSingleHomeTask = async (lessonHomeTaskId) => {
+    const res = await api.get(`/lesson-home-task/${lessonHomeTaskId}`)
+    return res?.data
+}
+
+export const getStudentSubmit = async (lessonStudentId) => {
+    const res = await api.get(`/lesson-home-task/for-check/${lessonStudentId}`)
+    return res?.data
+}
+
+export const rateStudentSubmit = async (data) => {
+    const lessonHomeWorkId = data?.id
+    delete data?.id
+    const res = await api.put(`/lesson-home-task/rate-lesson-home-work/${lessonHomeWorkId}`, data)
+    return res?.data
+}

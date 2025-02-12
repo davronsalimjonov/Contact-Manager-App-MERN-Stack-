@@ -8,7 +8,8 @@ import Loader from '../../atoms/Loader'
 const ScheduleLessonDialog = ({
     isOpen = false,
     setIsOpen,
-    video = null
+    video = null,
+    setVideo
 }) => {
     const [isLarge, setIsLarge] = useState(false)
 
@@ -17,7 +18,10 @@ const ScheduleLessonDialog = ({
             <div className={cls.ScheduleHeader__dialog}>
                 {!isLarge &&
                     <div className={cls.ScheduleHeader__dialog__close}>
-                        <button onClick={() => setIsOpen(false)}>
+                        <button onClick={() => {
+                            setIsOpen(false)
+                            setVideo(false)
+                        }}>
                             <CloseIcon />
                         </button>
                     </div>

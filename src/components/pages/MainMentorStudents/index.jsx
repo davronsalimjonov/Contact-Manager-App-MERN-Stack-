@@ -33,9 +33,6 @@ const MainMentorStudents = () => {
 
     useEffect(() => { }, [groupStudents])
 
-    console.log(activeGroup);
-
-
     return (
         <div className={cls.page}>
             <MainMentorStudentsGroupTab

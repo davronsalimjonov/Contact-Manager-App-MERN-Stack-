@@ -3,8 +3,9 @@ import { SwitchComponent } from '../../atoms/Switch';
 
 const ScheduleTableRow = ({
     idx = 1,
-    fullName = "Davron Salimjonov",
-    homework = "Lorem ipsum dolor sit amet consecetur birbalo sirbalo",
+    fullName = "Kiritilmagan",
+    homework = "Kiritilmagan",
+    attendance = "",
     onClick
 }) => {
 
@@ -16,7 +17,9 @@ const ScheduleTableRow = ({
                 <span className={cls.homeworkCell}>{homework}</span>
             </td>
             <td>
-                <SwitchComponent />
+                <SwitchComponent
+                    checked={attendance}
+                />
             </td>
         </tr>
     );
