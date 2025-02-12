@@ -1,54 +1,65 @@
-import { useNavigate } from 'react-router-dom';
-import { formatPhoneNumberIntl } from 'react-phone-number-input';
-import StudentStatus from '../../atoms/StudentStatus';
-import EmptyDataText from '../../atoms/EmptyDataText';
-import cls from './MentorsTableRow.module.scss';
+import { Fragment } from 'react';
 import Avatar from 'react-avatar';
-import { EditMentorIcon } from '../../atoms/icons';
+import { formatPhoneNumberIntl } from 'react-phone-number-input';
+import { USER_ROLES } from '@/constants';
+import { CARDS_TYPE } from '@/constants/enum';
+import TableActionButton from '../TableActionButton';
+import EmptyDataText from '../../atoms/EmptyDataText';
+import { GreenCardIcon, RedCardIcon, YellowCardIcon } from '../../atoms/icons';
+import cls from './MentorsTableRow.module.scss';
 
 const MentorsTableRow = ({
     index = 0,
+    role = '',
     avatar = '',
-    status = '',
-    student = '',
-    mentorId = '',
     fullName = '',
-    mentorRole = '',
     phoneNumber = '',
-    degree = 'Kiritlmagan'
+    degree = '',
+    status = '',
+    studentCount = 0,
+    onClickMentorInfo,
+    onClickAdjusment,
+    cards = []
 }) => {
-    const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
-    
+
+    const menuItems = [
+        { label: 'Mentor ma’lumotlari', onClick: onClickMentorInfo },
+        { label: 'Bonus/jarima', onClick: onClickAdjusment },
+    ]
+
     return (
         <tr className={cls.row} >
             <td>{index}</td>
             <td className={cls.row__name}>
-                <div className={cls.row__notification}>
-                    <Avatar
-                        round
-                        size={32}
-                        src={`${avatar}`}
-                        name={fullName}
-                    />
+                <Avatar
+                    round
+                    size={32}
+                    src={`${avatar}`}
+                    name={fullName}
+                />
+                <span title={fullName}>
+                    {fullName} 
+                    {role === USER_ROLES.MAIN_MENTOR && '👨‍🏫'}
+                    {role === USER_ROLES.CALL_MENTOR && '📞'}
+                </span>
+            </td>
+            <td>{formatedPhoneNumber || <EmptyDataText />}</td>
+            <td>{degree || <EmptyDataText />}</td>
+            <td>{status || <EmptyDataText />}</td>
+            <td className={cls.row__studentCount}>
+                {studentCount} 
+                <div className={cls.row__cards}>
+                    {cards?.length > 0 && cards?.map((card, index) => (
+                        <Fragment key={index}>
+                        {card?.type === CARDS_TYPE.GREEN && <GreenCardIcon />}
+                        {card?.type === CARDS_TYPE.YELLOW && <YellowCardIcon />}
+                        {card?.type === CARDS_TYPE.RED && <RedCardIcon />}
+                        </Fragment>
+                    ))}
                 </div>
-                <span title={fullName}>{fullName}</span>
             </td>
-
-            <td>
-                <span title={formatedPhoneNumber}>{formatedPhoneNumber ? formatedPhoneNumber : <EmptyDataText />}</span>
-            </td>
-            <td><StudentStatus status={degree} /></td>
-            <td><StudentStatus status={status} /></td>
-            <td><span>{student}</span></td>
-            <td onClick={(e) => {
-                (e.stopPropagation())
-                navigate(`${mentorId}?role=${mentorRole}`)
-            }}>
-                <div>
-                    <EditMentorIcon />
-                </div>
-            </td>
+            <td><TableActionButton menuItems={menuItems} /></td>
         </tr>
     );
 }

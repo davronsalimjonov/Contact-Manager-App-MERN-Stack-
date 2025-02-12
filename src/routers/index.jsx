@@ -219,6 +219,18 @@ const managerRoutes = createBrowserRouter([
                 element: <CallMentorStatistic />
             },
             {
+                path: '/mentor-statistics',
+                element: <MentorsStatistic />
+            },
+            {
+                path: '/users',
+                element: <Users />
+            },
+            {
+                path: '/users/:userId',
+                element: <SingleUser />
+            },
+            {
                 path: '/students',
                 element: <AllStudents />
             },
@@ -227,16 +239,28 @@ const managerRoutes = createBrowserRouter([
                 element: <SingleStudent />
             },
             {
+                path: '/update-course/:courseId',
+                element: <UpdateSingleStudentCourse />
+            },
+            {
+                path: '/mentors',
+                element: <AllMentors />
+            },
+            {
+                path: '/mentors/:mentorId',
+                element: <SingleMentor />
+            },
+            {
+                path: '/mentors/add-mentor',
+                element: <SingleMentor />
+            },
+            {
                 path: '/user-course/:userCourseId',
                 element: <UserCourseUpdate />
             },
             {
                 path: '/add-student',
                 element: <AddStudent />
-            },
-            {
-                path: '/update-course/:courseId',
-                element: <UpdateSingleStudentCourse />
             },
             {
                 path: '/courses',
@@ -255,10 +279,6 @@ const managerRoutes = createBrowserRouter([
             //     element: <AddNotification/>
             // },
             {
-                path: '/settings',
-                element: <Settings />
-            },
-            {
                 path: '/service-statistics',
                 element: <ServisStatistic />
             },
@@ -270,37 +290,9 @@ const managerRoutes = createBrowserRouter([
                 path: '/service-statistics/call-rate/:teacherId',
                 element: <StudentsRateForCallMentor />
             },
-            // {
-            //     path: '/dictionary',
-            //     element: <Dictionary />
-            // },
             {
                 path: '/moderation/:courseId',
                 element: <Moderation />
-            },
-            {
-                path: '/mentor-statistics',
-                element: <MentorsStatistic />
-            },
-            {
-                path: '/users',
-                element: <Users />
-            },
-            {
-                path: '/users/:userId',
-                element: <SingleUser />
-            },
-            {
-                path: '/mentors',
-                element: <AllMentors />
-            },
-            {
-                path: '/mentors/:mentorId',
-                element: <SingleMentor />
-            },
-            {
-                path: '/mentors/add-mentor',
-                element: <SingleMentor />
             },
             {
                 path: '/groups',
@@ -313,6 +305,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/groups/:groupId/lesson-schedule',
                 element: <LessonPlan />
+            },
+            {
+                path: '/settings',
+                element: <Settings />
             },
             {
                 path: '*',

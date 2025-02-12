@@ -39,8 +39,8 @@ const AllStudentsTableRow = ({
             <td>{formatPhoneNumberIntl(phoneNumber)}</td>
             <td ><StudentStatus status={status} /></td>
             <td className={cls.row__teachers}>
-                <p className={cls.row__teacher}>{mainTeacher || <EmptyDataText />}</p>
-                <p className={cls.row__second__teacher}>{secondTeacher || <EmptyDataText />}</p>
+                <p className={cls.row__teachers__main}>{mainTeacher || <EmptyDataText />}</p>
+                <p className={cls.row__teachers__second}>{secondTeacher || <EmptyDataText />}</p>
             </td>
             <td>{level || <EmptyDataText />}</td>
             <td className={cls.row__course}>{course || <EmptyDataText />}</td>

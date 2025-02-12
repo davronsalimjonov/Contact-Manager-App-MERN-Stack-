@@ -48,3 +48,16 @@ export const USER_TYPE_ENUMS = {
     FREE: 'Free',
     STUDENT: 'O\'quvchi'
 }
+
+export const MENTOR_STATUS_ENUM = {
+    TRIAL_PERIOD: 'Sinovda',
+    ACTIVE: 'Ishlayapti',
+    PAUSED: 'Vaqtincha Ta`tilda',
+    QUIT: 'Ishdan Ketdi'
+}
+
+export const CARDS_TYPE ={
+    RED: 'red',
+    YELLOW: 'yellow',
+    GREEN: 'green'
+}

@@ -1,53 +1,44 @@
 import { useState } from 'react'
+import Loader from '@/components/UI/atoms/Loader'
 import { useGetMentors } from '@/hooks/useMentor'
 import MentorsSearchBar from '@/components/UI/organisms/MentorsSearchbar'
-import Loader from '@/components/UI/atoms/Loader'
 import MentorsTable from '@/components/templates/MentorsTable'
-import Pagination from '@/components/UI/moleculs/Pagination'
+import Pagination from '@/components/UI/moleculs/CustomPagination'
 import cls from './AllMentors.module.scss'
 
 const AllMentors = () => {
-  const [filter, setFilter] = useState({})
-  const [pagination, setPagination] = useState({
-    page: 1,
-    limit: 10,
-  });
+    const [filter, setFilter] = useState({})
+    const [pagination, setPagination] = useState({ page: 0, limit: 10 });
+    const { data: allMentors, isLoading: isLoadingAllMentors } = useGetMentors({ ...filter, page: pagination.page + 1, limit: pagination.limit });
 
-  const handlePageChange = (page) => {
-    setPagination((prev) => ({ ...prev, page }));
-  };
+    const handleFilterChange = (key, value) => {
+        setFilter(state => ({ ...state, [key]: value }))
+        setPagination(state => ({ ...state, page: 0 }))
+    }
 
-  const handleLimitChange = (limit) => {
-    setPagination((prev) => ({ ...prev, limit }));
-  };
-
-  const { data: allMentors, isLoading: isLoadingAllMentors } = useGetMentors({ ...filter, ...pagination })
-
-
-  return (
-    <div className={cls.AllMentors}>
-      <MentorsSearchBar
-        onChangeFirstName={(e) => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
-        onChangeLastName={(e) => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
-        onChangePhone={(phone) => setFilter(state => ({ ...state, phone }))}
-        onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
-      />
-      {(!isLoadingAllMentors) ? (
-        <div className={cls.AllMentors__Table}>
-          <MentorsTable
-            mentors={allMentors?.items}
-            isLoading={isLoadingAllMentors}
+    return (
+      <div className={cls.AllMentors}>
+          <MentorsSearchBar
+              onChangeFirstName={(e) => handleFilterChange('firstName', e.target.value?.trim())}
+              onChangeLastName={(e) => handleFilterChange('lastName', e.target.value?.trim())}
+              onChangePhone={(phone) => handleFilterChange('phone', phone)}
+              onChangeStatus={(status) => handleFilterChange('status', status?.value)}
+              onChangeDegree={(degree) => handleFilterChange('degree', degree?.value)}
           />
+          {!isLoadingAllMentors ? (
+              <MentorsTable
+                  mentors={allMentors?.items}
+                  startIndex={pagination.page * pagination.limit}
+              />
+          ) : (
+              <Loader />
+          )}
           <Pagination
-            metaData={allMentors?.meta}
-            limit={pagination.limit}
-            setLimit={handleLimitChange}
-            page={pagination.page}
-            setPage={handlePageChange}
+              page={pagination.page}
+              pageCount={allMentors?.meta?.totalPages}
+              onPageChange={({ selected: page }) => setPagination({ ...pagination, page })}
           />
-        </div>
-      ) : (<Loader />)}
-    </div>
+      </div>
   )
 }
 

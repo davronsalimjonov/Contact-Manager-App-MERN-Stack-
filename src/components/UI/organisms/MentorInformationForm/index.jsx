@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { mentorSchema } from '@/schemas/employee';
-import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS, MENTOR_TYPES } from '@/constants/form';
+import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS, MENTOR_STATUS_OPTIONS, MENTOR_TYPES } from '@/constants/form';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
 import RedButton from '../../atoms/Buttons/RedButton';
@@ -24,7 +24,6 @@ const MentorInformationForm = ({
         resolver: yupResolver(mentorSchema.shape({ sip: Yup.number().transform((value) => isNaN(value) ? null : value).required('SIP raqami kiritilishi shart') }))
     })
     const avatar = watch('avatar')
-console.log(watch());
 
     useEffect(() => {
         if (isSubmitSuccessful) {
@@ -99,6 +98,14 @@ console.log(watch());
                         name='role'
                         error={errors?.role?.message}
                     />
+                    <FormSelect 
+                        label='Status'
+                        placeholder="Statusni Tanlang"
+                        options={MENTOR_STATUS_OPTIONS}
+                        control={control}
+                        name='status'
+                        error={errors?.status?.message}
+                    />
                 </div>
                 <div className={cls.form__buttons}>
                     <Button
@@ -111,7 +118,7 @@ console.log(watch());
                     <RedButton
                         disabled={!isDirty}
                         type='button'
-                        onClick={reset}
+                        onClick={() => reset(defaultValues)}
                     >
                         Bekor qilish
                     </RedButton>

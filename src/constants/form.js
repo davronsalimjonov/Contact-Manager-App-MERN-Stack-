@@ -1,5 +1,5 @@
 import { USER_ROLES } from ".";
-import { USER_TYPE_ENUMS } from "./enum";
+import { MENTOR_STATUS_ENUM, USER_TYPE_ENUMS } from "./enum";
 
 export const GENDER_OPTIONS = [
     { value: '1', label: 'Erkak' },
@@ -206,4 +206,11 @@ export const MENTOR_TYPES = [
 export const USER_TYPE_OPTIONS = [
     { label: 'O\'quvchi', value: USER_TYPE_ENUMS.STUDENT },
     { label: 'Free', value: USER_TYPE_ENUMS.FREE },
+]
+
+export const MENTOR_STATUS_OPTIONS = [
+    { label: 'Sinovda', value: MENTOR_STATUS_ENUM.TRIAL_PERIOD },
+    { label: 'Ishlayapti', value: MENTOR_STATUS_ENUM.ACTIVE },
+    { label: 'Vaqtincha Ta`tilda', value: MENTOR_STATUS_ENUM.PAUSED },
+    { label: 'Ishdan Ketdi', value: MENTOR_STATUS_ENUM.QUIT },
 ]

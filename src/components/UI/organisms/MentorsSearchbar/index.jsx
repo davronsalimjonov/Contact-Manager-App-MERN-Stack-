@@ -1,12 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import { debounce } from '@/utils/lib';
-import { GROUPS, MENTORS_STATUS_ENUMS } from '@/constants';
+import { ENGLISH_LEVEL_OPTIONS, MENTOR_STATUS_OPTIONS } from '@/constants/form';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
+import { ArrowDown } from '../../atoms/icons';
+import Button from '../../atoms/Buttons/Button';
 import PhoneInput from '../../atoms/Form/PhoneInput';
 import cls from './MentorsSearchbar.module.scss';
-import Button from '../../atoms/Buttons/Button';
-import { ArrowDown } from '../../atoms/icons';
-import { useNavigate } from 'react-router-dom';
 
 const MentorsSearchBar = ({
     onChangeStatus,
@@ -15,8 +15,6 @@ const MentorsSearchBar = ({
     onChangePhone,
     onChangeDegree
 }) => {
-    const languageLevelOptions = GROUPS.map((status) => ({ value: status, label: status }))
-    const mentorStatusOptions = MENTORS_STATUS_ENUMS.map((status) => ({ value: status, label: status}))
     const navigate = useNavigate()
 
     return (
@@ -39,18 +37,19 @@ const MentorsSearchBar = ({
             <Select
                 className={cls.bar__form__select}
                 placeholder='Statusi'
-                options={mentorStatusOptions}
+                options={MENTOR_STATUS_OPTIONS}
                 onChange={onChangeStatus}
                 isclearable
             />
-            <Button
-                isSpaced={true}
-                onClick={() => navigate(`/mentors/add-mentor`)}
-            >
-                Mentor Qo'shish
-                <span className='arrowIconClr'>
-                    <ArrowDown />
-                </span>
+            <Select
+                placeholder='Darajasi'
+                className={cls.bar__form__select}
+                options={ENGLISH_LEVEL_OPTIONS}
+                onChange={onChangeDegree}
+                isclearable
+            />
+            <Button onClick={() => navigate(`/mentors/add-mentor`)}>
+                Mentor Qo'shish <ArrowDown fill='white' />
             </Button>
         </div>
     );
