@@ -4,6 +4,7 @@ import { USER_ROLES } from '@/constants';
 import useGetUser from '@/hooks/useGetUser';
 import { getUserFullName } from '@/utils/lib';
 import { changeAdaptationStatus } from '@/services/user';
+import MentorCards from '../MentorCards';
 import Toogle from '../../atoms/Form/Toogle';
 import TimePeriodPicker from '../TimePeriodPicker';
 import NotificationButton from '../NotificationButton';
@@ -15,6 +16,7 @@ const Navbar = ({ onPerionChange }) => {
     const { data: user } = useGetUser()
     const timeperiodPickerPath = ['/', '/main-teachers', '/dashboard']
     const adaptationAllowedRoles = [USER_ROLES.CALL_MENTOR]
+    const isMentor = user?.role === USER_ROLES.CALL_MENTOR || user?.role === USER_ROLES.MAIN_MENTOR
 
     const routeConfig = [
         { path: '/', title: 'Dashboard', roleTitles: { [USER_ROLES.SELLER]: 'Home' }, showBackButton: false },
@@ -70,6 +72,7 @@ const Navbar = ({ onPerionChange }) => {
                 <span className={cls.navbar__name}>{title}</span>
             )}
             <div className={cls.navbar__controls}>
+                {isMentor && <MentorCards cards={user?.cards} />}
                 {adaptationAllowedRoles.includes(user?.role) && (
                     <Toogle
                         defaultChecked={user?.isAdaptationActive}

@@ -59,6 +59,7 @@ import LessonPlan from "@/components/pages/LessonPlan";
 import UserCourseUpdate from "@/components/pages/UserCourseUpdate";
 import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
 import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
+import MentorCardsProvider from "@/providers/MentorCardsProvider";
 import { USER_ROLES } from "@/constants";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
@@ -66,7 +67,11 @@ const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 const callTecherRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout sidebarLinks={callMentorSidebarLinks} />,
+        element: (
+            <MentorCardsProvider>
+                <MainLayout sidebarLinks={callMentorSidebarLinks} />
+            </MentorCardsProvider>
+        ),
         children: [
             {
                 path: '',
@@ -119,7 +124,11 @@ const callTecherRoutes = createBrowserRouter([
 const mainMentorRoutes = createBrowserRouter([
     {
         path: '/',
-        element: <MainLayout sidebarLinks={mainMentorSidebarLinks} />,
+        element: (
+            <MentorCardsProvider>
+                <MainLayout sidebarLinks={mainMentorSidebarLinks} />
+            </MentorCardsProvider>
+        ),
         children: [
             {
                 path: '',
@@ -419,7 +428,7 @@ const Routers = () => {
 
     return (isUserLoading ? (
         <RouterProvider router={loadingRoute} />
-    ) : ( 
+    ) : (
         <RouterProvider router={isAuth ? getRoutesByRole(user?.role) : authRoutes} />
     ))
 };

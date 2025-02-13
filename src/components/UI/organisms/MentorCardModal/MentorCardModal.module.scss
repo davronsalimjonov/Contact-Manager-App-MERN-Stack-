@@ -1,0 +1,54 @@
+.modal {
+    width: 500px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--base-white-color);
+    border-radius: 10px;
+
+    &__icon {
+        width: 72px;
+        height: 72px;
+        margin-bottom: 32px;
+    }
+
+    &__type {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 31px;
+        letter-spacing: 0px;
+        text-align: center;
+        margin-bottom: 16px;
+    }
+
+    &__sum {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 8px;
+
+        &__label {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 16.44px;
+            letter-spacing: 0px;
+            color: var(--dark-gray-600-color);
+        }
+
+        &__value {
+            font-size: 20px;
+            font-weight: 600;
+            line-height: 23.48px;
+            letter-spacing: 0px;
+            color: var(--green-color);
+        }
+    }
+
+    &__description{
+        font-size: 14px;
+        line-height: 19px;
+        letter-spacing: 0%;
+        text-align: center;
+    }
+}

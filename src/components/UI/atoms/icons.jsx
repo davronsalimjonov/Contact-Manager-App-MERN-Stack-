@@ -1192,48 +1192,48 @@ export const FullScreenBtn = () => {
     )
 }
 
-export const GreenCardIcon = () => {
+export const GreenCardIcon = ({ width = 24, height = 24 }) => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_6872_64319)">
                 <path d="M7.42857 5.25014C7.14309 5.25014 6.88236 5.41222 6.75601 5.66823L1.32744 16.6682C1.21272 16.9007 1.22618 17.1759 1.36304 17.3961C1.49991 17.6162 1.74076 17.7501 2 17.7501H15.5714C15.8569 17.7501 16.1176 17.588 16.244 17.332L21.6726 6.33203C21.7873 6.09956 21.7738 5.82433 21.637 5.60416C21.5001 5.384 21.2592 5.25012 21 5.25012L7.42857 5.25014Z" fill="#27CD02" />
                 <path fillRule="evenodd" clipRule="evenodd" d="M19.3688 11.0001H4.12468L1.32744 16.6682C1.21272 16.9007 1.22618 17.1759 1.36304 17.3961C1.49991 17.6162 1.74076 17.7501 2 17.7501H15.5714C15.8569 17.7501 16.1176 17.588 16.244 17.332L19.3688 11.0001Z" fill="#1EB53A" />
             </g>
             <defs>
                 <clipPath id="clip0_6872_64319">
-                    <rect width="24" height="24" fill="white" />
+                    <rect width={width} height={height} fill="white" />
                 </clipPath>
             </defs>
         </svg>
     )
 }
 
-export const RedCardIcon = () => {
+export const RedCardIcon = ({ width = 24, height = 24 }) => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_6872_66792)">
                 <path d="M7.42857 5.25002C7.14309 5.25002 6.88236 5.4121 6.75601 5.66811L1.32744 16.6681C1.21272 16.9006 1.22618 17.1758 1.36304 17.396C1.49991 17.6161 1.74076 17.75 2 17.75H15.5714C15.8569 17.75 16.1176 17.5879 16.244 17.3319L21.6726 6.33191C21.7873 6.09944 21.7738 5.82421 21.637 5.60404C21.5001 5.38388 21.2592 5.25 21 5.25L7.42857 5.25002Z" fill="#FF3333" />
                 <path fillRule="evenodd" clipRule="evenodd" d="M19.3688 11H4.12468L1.32744 16.6681C1.21272 16.9006 1.22618 17.1758 1.36304 17.396C1.49991 17.6161 1.74076 17.75 2 17.75H15.5714C15.8569 17.75 16.1176 17.5879 16.244 17.3319L19.3688 11Z" fill="#FF0000" />
             </g>
             <defs>
                 <clipPath id="clip0_6872_66792">
-                    <rect width="24" height="24" fill="white" />
+                    <rect width={width} height={height} fill="white" />
                 </clipPath>
             </defs>
         </svg>
     )
 }
 
-export const YellowCardIcon = () => {
+export const YellowCardIcon = ({ width = 24, height = 24 }) => {
     return (
-        <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={width} height={height} viewBox={`0 0 32 32`} fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_6872_65354)">
                 <path d="M9.90478 7.00003C9.52414 7.00003 9.1765 7.21613 9.00803 7.55748L1.76994 22.2241C1.61698 22.5341 1.63493 22.9011 1.81741 23.1947C1.9999 23.4881 2.32103 23.6667 2.66669 23.6667H20.7619C21.1426 23.6667 21.4902 23.4505 21.6587 23.1092L28.8968 8.44255C29.0498 8.13259 29.0318 7.76561 28.8494 7.47205C28.6668 7.17851 28.3456 7 28 7L9.90478 7.00003Z" fill="#FFD600" />
                 <path fillRule="evenodd" clipRule="evenodd" d="M25.8251 14.6665H5.49959L1.76994 22.224C1.61698 22.534 1.63493 22.9009 1.81741 23.1945C1.9999 23.488 2.32103 23.6665 2.66669 23.6665H20.7619C21.1425 23.6665 21.4902 23.4504 21.6587 23.109L25.8251 14.6665Z" fill="#E4BF00" />
             </g>
             <defs>
                 <clipPath id="clip0_6872_65354">
-                    <rect width="32" height="32" fill="white" />
+                    <rect width={32} height={32} fill="white" />
                 </clipPath>
             </defs>
         </svg>
