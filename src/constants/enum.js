@@ -56,8 +56,8 @@ export const MENTOR_STATUS_ENUM = {
     QUIT: 'Ishdan Ketdi'
 }
 
-export const CARDS_TYPE ={
-    RED: 'red',
-    YELLOW: 'yellow',
-    GREEN: 'green'
+export const MENTOR_CARDS_ENUM ={
+    FINE: 'red',
+    WARNING: 'yellow',
+    BONUS: 'green'
 }

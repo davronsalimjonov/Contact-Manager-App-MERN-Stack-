@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import Avatar from 'react-avatar';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
-import { CARDS_TYPE } from '@/constants/enum';
+import { MENTOR_CARDS_ENUM } from '@/constants/enum';
 import TableActionButton from '../TableActionButton';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import MentorStatusBadge from '../../atoms/MentorStatusBadge';
@@ -47,9 +47,9 @@ const MentorsTableRow = ({
                 <div className={cls.row__cards}>
                     {cards?.length > 0 && cards?.map((card, index) => (
                         <Fragment key={index}>
-                        {card?.type === CARDS_TYPE.GREEN && <GreenCardIcon />}
-                        {card?.type === CARDS_TYPE.YELLOW && <YellowCardIcon />}
-                        {card?.type === CARDS_TYPE.RED && <RedCardIcon />}
+                        {card?.type === MENTOR_CARDS_ENUM.BONUS && <GreenCardIcon />}
+                        {card?.type === MENTOR_CARDS_ENUM.WARNING && <YellowCardIcon />}
+                        {card?.type === MENTOR_CARDS_ENUM.FINE && <RedCardIcon />}
                         </Fragment>
                     ))}
                 </div>
