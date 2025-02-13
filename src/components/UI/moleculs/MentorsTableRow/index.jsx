@@ -10,7 +10,6 @@ import cls from './MentorsTableRow.module.scss';
 
 const MentorsTableRow = ({
     index = 0,
-    role = '',
     avatar = '',
     fullName = '',
     phoneNumber = '',
@@ -38,11 +37,7 @@ const MentorsTableRow = ({
                     src={`${avatar}`}
                     name={fullName}
                 />
-                <span title={fullName}>
-                    {fullName} 
-                    {role === USER_ROLES.MAIN_MENTOR && '👨‍🏫'}
-                    {role === USER_ROLES.CALL_MENTOR && '📞'}
-                </span>
+                <span title={fullName}>{fullName}</span>
             </td>
             <td>{formatedPhoneNumber || <EmptyDataText />}</td>
             <td>{degree || <EmptyDataText />}</td>

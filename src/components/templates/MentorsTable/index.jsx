@@ -28,7 +28,6 @@ const MentorsTable = ({
                         {mentors?.map((mentor, index) => (
                             <MentorsTableRow
                                 key={mentor?.id}
-                                role={mentor?.role}
                                 index={startIndex + index + 1}
                                 avatar={mentor?.url}
                                 fullName={getUserFullName(mentor)}
