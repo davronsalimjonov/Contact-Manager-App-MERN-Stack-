@@ -58,7 +58,7 @@ const UserInformationForm = ({
         if (!(updatedUserInfo?.avatar instanceof File) && updatedUserInfo?.avatar !== null) delete updatedUserInfo.avatar
 
         const fd = objectToFormData(removeEmptyKeys({ ...updatedUserInfo, id: userId }))
-        
+
         await updateUserMutation.mutateAsync(fd, {
             onSuccess: () => {
                 toast.success('Malumotlar saqlandi')

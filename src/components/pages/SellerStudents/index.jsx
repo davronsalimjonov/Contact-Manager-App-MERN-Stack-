@@ -26,8 +26,7 @@ const SellerStudents = () => {
             <StudentsTable
                 students={students}
                 isLoading={isLoadingStudents}
-                enableChangePassword={false}
-                enableTransfer={false}
+                menuButtons={false}
             />
         </div>
     );

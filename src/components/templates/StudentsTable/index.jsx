@@ -15,8 +15,7 @@ const StudentsTable = ({
     groupId = '',
     students = [],
     isLoading,
-    enableChangePassword = true,
-    enableTransfer = true
+    menuButtons = true
 }) => {
     const navigate = useNavigate()
     const [checkedStudents, setCheckedStudents] = useState([])
@@ -46,14 +45,14 @@ const StudentsTable = ({
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {enableChangePassword && (
+            {menuButtons && (
                 <ChangePasswordForm
                     isOpen={changePassword.isOpen}
                     userId={changePassword.userId}
                     onClose={() => setChangePassword({ isOpen: false, userId: '' })}
                 />
             )}
-            {enableTransfer && (
+            {menuButtons && (
                 <TransferStudentModal
                     isOpen={transfer.isOpen}
                     groupId={transfer.groupId}
@@ -100,8 +99,7 @@ const StudentsTable = ({
                                     onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.userId })}
                                     onClickTransfer={() => setTransfer({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
                                     onClickUserInfo={() => navigate(`/students/${student?.id}/${student?.userId}`)}
-                                    enableChangePassword={enableChangePassword}
-                                    enableTransfer={enableTransfer}
+                                    menuButtons={menuButtons}
                                 />
                             )}
                         />

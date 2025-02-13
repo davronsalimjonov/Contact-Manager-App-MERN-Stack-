@@ -15,7 +15,6 @@ const StudentsTableRow = ({
     fullName = '',
     phoneNumber = '',
     userCourseId = '',
-    hidden = false,
     checked = false,
     unreadedMessagesCount = 0,
     onClick,
@@ -23,16 +22,15 @@ const StudentsTableRow = ({
     onClickChangePassword,
     onClickTransfer,
     onChangeCheckbox,
-    enableChangePassword = true,
-    enableTransfer = true
+    menuButtons = true
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const dropdownMenuItems = [
         { label: 'O’quvchi ma’lumotlari', onClick: onClickUserInfo },
-        (enableChangePassword && { label: 'Parol o’zgartirish', onClick: onClickChangePassword }),
-        (enableTransfer && { label: 'Transfer qilish', onClick: onClickTransfer }),
-    ].filter(Boolean)
+        { label: 'Parol o’zgartirish', onClick: onClickChangePassword },
+        { label: 'Transfer qilish', onClick: onClickTransfer },
+    ]
 
     return (
         <tr className={cls.row} onClick={onClick}>
@@ -57,7 +55,7 @@ const StudentsTableRow = ({
             </td>
             <td><StudentStatus status={status} /></td>
             <td onClick={(e) => (e.stopPropagation())}>
-                <TableActionButton menuItems={dropdownMenuItems} />
+                {menuButtons && <TableActionButton menuItems={dropdownMenuItems} />}
             </td>
         </tr>
     );
