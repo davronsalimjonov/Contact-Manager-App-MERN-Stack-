@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 import Avatar from 'react-avatar';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
-import { USER_ROLES } from '@/constants';
 import { CARDS_TYPE } from '@/constants/enum';
 import TableActionButton from '../TableActionButton';
 import EmptyDataText from '../../atoms/EmptyDataText';
+import MentorStatusBadge from '../../atoms/MentorStatusBadge';
 import { GreenCardIcon, RedCardIcon, YellowCardIcon } from '../../atoms/icons';
 import cls from './MentorsTableRow.module.scss';
 
@@ -41,7 +41,7 @@ const MentorsTableRow = ({
             </td>
             <td>{formatedPhoneNumber || <EmptyDataText />}</td>
             <td>{degree || <EmptyDataText />}</td>
-            <td>{status || <EmptyDataText />}</td>
+            <td><MentorStatusBadge status={status} /></td>
             <td className={cls.row__studentCount}>
                 {studentCount} 
                 <div className={cls.row__cards}>

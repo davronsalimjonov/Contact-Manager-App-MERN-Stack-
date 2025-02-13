@@ -36,6 +36,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/platform', title: 'Platforma', showBackButton: false },
         // Academic manager
         { path: '/users', title: 'Foydalanuvchilar', showBackButton: false },
+        { path: '/mentors', title: 'Mentorlar', showBackButton: false },
         { path: '/groups', title: 'Guruhlar', showBackButton: false },
         { path: '/groups/:id', title: 'Guruhlar', showBackButton: true },
         { path: '/groups/:id/lesson-schedule', title: 'Jadval', showBackButton: true },
