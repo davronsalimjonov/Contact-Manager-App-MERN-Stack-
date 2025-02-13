@@ -13,12 +13,9 @@ import { useNavigate } from 'react-router-dom'
 import { getFileCategory } from '@/utils/lib'
 
 const ScheduleLessonExercise = ({
-    description,
-    files = [],
     isLoading,
     onSubmit,
-    mark = "",
-    details = {}
+    studentSubmit
 }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [previewMaterial, setPreviewMaterial] = useState({ isFileOpen: false, material: null })
@@ -36,7 +33,7 @@ const ScheduleLessonExercise = ({
         isLoading ? <Loader /> :
             <form className={cls.ScheduleLessonExercise} onSubmit={handleSubmit(onSubmit)}>
                 <div className={cls.ScheduleLessonExercise__materials}>
-                    {files?.map((file, idx) => (
+                    {studentSubmit?.lessonFiles?.map((file, idx) => (
                         <div key={idx}>
                             {videoTypes.some(videoType =>
                                 file?.url?.toLowerCase().endsWith(videoType.toLowerCase())
@@ -72,15 +69,15 @@ const ScheduleLessonExercise = ({
                     />
                 </div>
                 <div className={cls.ScheduleLessonExercise__header} >
-                    <h1>{details?.title}</h1>
-                    <p>{details?.description}</p>
+                    <h1>{studentSubmit?.lessonHomeTask?.title}</h1>
+                    <p>{studentSubmit?.lessonHomeTask?.description}</p>
                 </div>
                 <FormTextArea
                     placeholder={`Izoh yozing...`}
                     className={cls.ScheduleLessonExercise__textArea}
                     register={register('description', { required: "Darsga ta'rif kiriting!" })}
                     error={errors?.description?.message}
-                    defaultValue={description}
+                    defaultValue={studentSubmit?.description}
                 />
                 <div className={cls.ScheduleLessonExercise__rating}>
                     <span>Baholang: </span>
@@ -90,11 +87,11 @@ const ScheduleLessonExercise = ({
                             width='32px'
                             height='32px'
                             onRate={(val) => setValue("mark", val)}
-                            defaultValue={mark}
+                            defaultValue={studentSubmit?.mark}
                         />
                     </div>
                 </div>
-                {description && mark && <Button
+                {studentSubmit?.description && studentSubmit?.mark && <Button
                     type='submit'
                     disabled={!isDirty}
                     isLoading={isSubmitting}

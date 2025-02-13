@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import MentorsTableRow from '@/components/UI/moleculs/MentorsTableRow';
+import CreateMentorCardModal from '@/components/UI/organisms/CreateMentorCardModal';
 import cls from './MentorsTable.module.scss';
 
 const MentorsTable = ({
@@ -9,8 +11,15 @@ const MentorsTable = ({
     startIndex = 0
 }) => {
     const navigate = useNavigate()
+    const [mentorCardModal, setMentorCardModal] = useState({ isOpen: false, mentorId: null })
+
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+            <CreateMentorCardModal
+                isOpen={mentorCardModal.isOpen}
+                mentorId={mentorCardModal.mentorId}
+                onClose={() => setMentorCardModal({ isOpen: false, mentorId: null })}
+            />
             {mentors?.length > 0 ? (
                 <table className={cls.table}>
                     <thead>
@@ -36,7 +45,8 @@ const MentorsTable = ({
                                 status={mentor?.status}
                                 studentCount={mentor?.student}
                                 cards={mentor?.cards}
-                                onClickMentorInfo={() => navigate(`/mentors/${mentor?.id}?role=${mentor?.role}`)}
+                                onClickMentorInfo={() => navigate(`${mentor?.id}?role=${mentor?.role}`)}
+                                onClickAdjustment={() => setMentorCardModal({ isOpen: true, mentorId: mentor?.id })}
                             />
                         ))}
                     </tbody>

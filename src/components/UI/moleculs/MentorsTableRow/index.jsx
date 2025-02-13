@@ -17,14 +17,14 @@ const MentorsTableRow = ({
     status = '',
     studentCount = 0,
     onClickMentorInfo,
-    onClickAdjusment,
+    onClickAdjustment,
     cards = []
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const menuItems = [
         { label: 'Mentor ma’lumotlari', onClick: onClickMentorInfo },
-        { label: 'Bonus/jarima', onClick: onClickAdjusment },
+        { label: 'Bonus/jarima', onClick: onClickAdjustment },
     ]
 
     return (
