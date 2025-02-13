@@ -9,7 +9,7 @@ import cls from "./SchduleDetails.module.scss"
 const ScheduleLessons = () => {
     const navigate = useNavigate()
     const { groupId } = useParams()
-    const { data: groupLesson, refetch, isLoading: isGroupLessonLoading } = useGetGroupLessons()
+    const { data: groupLesson, refetch, isLoading: isGroupLessonLoading } = useGetGroupLessons(groupId)
 
     return (
         <div className={cls.ScheduleLessons}>

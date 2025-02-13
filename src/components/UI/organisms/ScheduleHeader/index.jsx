@@ -23,11 +23,14 @@ const ScheduleHeader = () => {
                     <span>Videoni Ko'rish <ArrowFullIcon /></span>
                 </div>
                 <div className={cls.ScheduleHeader__details__homework}>
-                    {/* {singleLesson?.lessonHomeTask === null || singleLesson?.lessonHomeTask === undefined ?
+                    {singleLesson?.lessonHomeTask === null || singleLesson?.lessonHomeTask === undefined ?
+                        <Button onClick={() => navigate(`/schedule/homework/create/${homeWorkId}`)}>Vazifa Yaratish <PlusIcon height={18} width={18} /></Button>
                         :
                         <span>Vazifa <ArrowFullIcon /></span>
-                    } */}
+                    } 
                     <Button onClick={() => navigate(`create-homework`)}>Vazifa Yaratish <PlusIcon height={18} width={18} /></Button>
+                        <span onClick={() => navigate(`/schedule/homework/view/${singleLesson?.lessonHomeTask?.id}`)}>Vazifa <ArrowFullIcon /></span>
+                    
                 </div>
             </div>
             <ScheduleLessonDialog

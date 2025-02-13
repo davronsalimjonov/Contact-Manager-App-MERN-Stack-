@@ -10,10 +10,19 @@ const CustomFormFilePicker = ({
     placeholder = '',
     accept = '',
     onChange,
-    defaultFile = null,
+    defaultFile = [],
     isMulti = false
 }) => {
-    const [files, setFiles] = useState(defaultFile ? [defaultFile] : []);
+    const initialFiles = Array.isArray(defaultFile) 
+  ? defaultFile.map((file) => ({
+      name: file.fileName || file.name,
+      url: file.url,
+      size: file.size || 0,
+      isBackendFile: Boolean(file.url) 
+    }))
+  : [];
+
+    const [files, setFiles] = useState(initialFiles);
     const inputRef = useRef(null);
 
     const handleChange = (e) => {
@@ -50,10 +59,10 @@ const CustomFormFilePicker = ({
                                 {chunk.map((file, fileIndex) => (
                                     <div key={fileIndex} className={cls.fileItem}>
                                         <FilePreviewItem
-                                            name={file.name}
-                                            size={(file.size || 0) / 1024}
-                                            type={getFileCategory(file)}
-                                            className={cls.previewer}
+                                           name={file.name}
+                                           size={(file.size || 0) / 1024}
+                                           type={getFileCategory(file?.url) || getFileCategory(file)} 
+                                           className={cls.previewer}
                                         />
                                     </div>
                                 ))}

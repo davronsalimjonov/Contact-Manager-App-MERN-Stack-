@@ -4,10 +4,13 @@ import { FaPlay, FaPause } from "react-icons/fa";
 import cls from "./videoPlayer.module.scss";
 import { cn } from "@/utils/lib";
 import { FullScreenBtn } from "../icons";
+import { controllers } from "chart.js";
 
 const VideoPlayer = ({
     videoUrl,
     className = "",
+    controls = true,
+    disabled = false
     // setIsLarge,
     // isLarge=false
 }) => {
@@ -38,7 +41,7 @@ const VideoPlayer = ({
     };
 
     return (
-        <div className={cn(cls.videoContainer, className)} onClick={togglePlayPause}>
+        <div className={cn(cls.videoContainer, className)} onClick={!disabled && togglePlayPause}>
             {!playing &&
                 <span className={cls.playLarge}>
                     <FaPlay />
@@ -54,7 +57,7 @@ const VideoPlayer = ({
                 onProgress={handleProgress}
                 onDuration={setDuration}
             />
-            <div className={cls.controls}>
+            {controls && <div className={cls.controls}>
                 <button onClick={togglePlayPause} className={cls.playPause}>
                     {playing ? <FaPause /> : <FaPlay />}
                 </button>
@@ -80,7 +83,7 @@ const VideoPlayer = ({
                     {formatTime(currentTime)} / {formatTime(duration)}
                 </span>
 
-            </div>
+            </div>}
         </div>
     );
 };
