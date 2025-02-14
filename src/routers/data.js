@@ -173,6 +173,12 @@ export const managerSidebarLinks = [
         label: 'Guruhlar',
         link: '/groups',
         icon: PersonsIcon()
+    },
+    {
+        id: 11,
+        label: 'Adaptatsiya',
+        link: '/adaptation',
+        icon: WorkHistoryIcon()
     }
 ]
 

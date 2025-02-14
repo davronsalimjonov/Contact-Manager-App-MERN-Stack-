@@ -22,7 +22,7 @@ const Groups = () => {
     const [isOpenCreateGroup, setIsOpenCreateGroup] = useState(false)
     const [confirmStartGroup, setConfirmStartGroup] = useState({ isOpen: false, groupId: null })
     const [pagnination, setPagination] = useState({ page: 0, limit: 12 })
-    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 3 })
+    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 12 })
     const createGroupMutation = useCreateGroupMutation()
     const updateGroupMutation = useUpdateGroupMutation()
 

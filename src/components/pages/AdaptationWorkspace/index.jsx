@@ -13,7 +13,7 @@ const AdaptationWorkspace = () => {
     const { data: students, isLoading, updateStudentAdaptation } = useGetStudentsForAdaptation()
 
     const studentsByStatus = students?.reduce((acc, student) => {
-        const studentItem = { 
+        const studentItem = {
             id: student?.id,
             userCourseId: student?.userCourse?.id,
             userId: student?.userCourse?.user?.id,

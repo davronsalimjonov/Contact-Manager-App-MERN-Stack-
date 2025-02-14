@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { LESSON_TIME_OPTIONS, WEEKDAY_OPTIONS } from '@/constants/form';
 import { useCreateLessonScheduleMutation, useGetGroupLessonsSchedule } from '@/hooks/useLessonsSchedule';
@@ -6,7 +7,6 @@ import { CloseIcon } from '../../atoms/icons';
 import Button from '../../atoms/Buttons/Button';
 import FormSelect from '../../moleculs/Form/FormSelect';
 import cls from './CreateScheduleFormModal.module.scss';
-import toast from 'react-hot-toast';
 
 const isTimeSlotAvailable = (timeValue, lessons, weekday) => {
     if (!weekday) return false;
