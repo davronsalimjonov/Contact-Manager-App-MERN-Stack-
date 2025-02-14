@@ -26,7 +26,9 @@ const SingleMentor = () => {
     }
 
     const handleUpdateMentor = async (values) => {
-        const fd = objectToFormData({id: mentorId, ...values})
+        const updatedUserInfo = Object.assign({}, values)
+        if (!(updatedUserInfo?.avatar instanceof File) && updatedUserInfo?.avatar !== null) delete updatedUserInfo.avatar
+        const fd = objectToFormData({id: mentorId, ...updatedUserInfo})
 
         await updateMentor.mutateAsync(fd, {
             onSuccess: () => toast.success('Mentor ma`lumotlari o`zgartirildi'),
