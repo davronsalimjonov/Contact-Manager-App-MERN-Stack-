@@ -88,7 +88,7 @@ export const managerSidebarLinks = [
     {
         id: 1,
         link: '',
-        label: 'Mentor',
+        label: 'Mentorlar statistikasi',
         icon: SchoolIcon(),
         children: [
             {
@@ -126,12 +126,12 @@ export const managerSidebarLinks = [
             }
         ]
     },
-    {
-        id: 3,
-        label: 'Mentor statistikasi',
-        link: '/mentor-statistics',
-        icon: ManageAccountsIcon()
-    },
+    // {
+    //     id: 3,
+    //     label: 'Mentor statistikasi',
+    //     link: '/mentor-statistics',
+    //     icon: ManageAccountsIcon()
+    // },
     {
         id: 4,
         label: 'Servis statistikasi',

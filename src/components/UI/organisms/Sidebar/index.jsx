@@ -41,9 +41,9 @@ const Sidebar = ({
                 ))}
             </div>
             <div className={cls.sidebar__bottomList}>
-                <LanguageButton
+                {/* <LanguageButton
                     isOpen={isOpen}
-                />
+                /> */}
                 <SidebarLink
                     to='/settings'
                     label='Sozlamalar'
