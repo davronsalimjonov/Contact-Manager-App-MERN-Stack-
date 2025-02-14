@@ -61,6 +61,7 @@ import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
 import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
 import MentorCardsProvider from "@/providers/MentorCardsProvider";
 import { USER_ROLES } from "@/constants";
+import AcademyAdaptationWorkspace from "@/components/pages/AcademyAdaptationWorkspace";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -314,6 +315,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/groups/:groupId/lesson-schedule',
                 element: <LessonPlan />
+            },
+            {
+                path: '/adaptation',
+                element: <AcademyAdaptationWorkspace />
             },
             {
                 path: '/settings',
