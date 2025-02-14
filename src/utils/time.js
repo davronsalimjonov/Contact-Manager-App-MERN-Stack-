@@ -69,3 +69,5 @@ export const getTimeFromMinutes = (minutes = 0) => {
     const formattedMinutes = String(remainingMinutes).padStart(2, '0');
     return `${formattedHours}:${formattedMinutes}`;
 };
+
+export const isDatePassed = (date) => date < new Date();

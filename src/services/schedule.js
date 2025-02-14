@@ -34,6 +34,11 @@ export const getGroupLessonsSchedule = async (groupId) => {
     return res.data
 }
 
+export const updateLessonSchedule = async (scheduleId, data) => {
+    const res = await api.put(`/lesson-schedule/${scheduleId}`, data)
+    return res.data
+}
+
 export const createScheduleMove = async (data) => {
     const res = await api.post('/lesson-schedule/move', data)
     return res.data

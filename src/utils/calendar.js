@@ -9,7 +9,8 @@ export function convertLessonScheduleToEvents(data = [], { groupId } = {}) {
     const currentWeekday = currentDate.getDay();
 
     return data.flatMap(({ id, weekday, startTime, endTime, group, lessonScheduleMoves }) => {
-        const targetDate = new Date(currentYear, currentMonth, currentDay - currentWeekday + weekday);
+        let diff = weekday == 0 ? 7 : weekday;
+        const targetDate = new Date(currentYear, currentMonth, currentDay + (diff - currentWeekday));
 
         const createDateTime = (time, customDate) => {
             const baseDate = customDate || targetDate;

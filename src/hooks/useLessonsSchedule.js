@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSchedule, createScheduleMove, deleteMovedSchedule, getGroupLessonsSchedule, getMentorLessonsSchedule, createGroupLesson, createHomeWork, getMentorGroupLesson, getSingleLesson, getSingleHomeTask, getStudentSubmit, rateStudentSubmit, updateHomeWork } from "@/services/schedule"
+import { createSchedule, createScheduleMove, deleteMovedSchedule, getGroupLessonsSchedule, getMentorLessonsSchedule, createGroupLesson, createHomeWork, getMentorGroupLesson, getSingleLesson, getSingleHomeTask, getStudentSubmit, rateStudentSubmit, updateHomeWork, updateLessonSchedule } from "@/services/schedule"
 import { useGetUserId } from "./useGetUser"
 
 export const useGetMentorLessonsSchedule = () => {
@@ -19,12 +19,12 @@ export const useGetLessonInfo = (lessonId) => {
 export const useGetGroupLessonsSchedule = (groupId) => {
     return useQuery(['lessons-schedule', 'group', groupId], () => getGroupLessonsSchedule(groupId), { cacheTime: Infinity, staleTime: Infinity })
     // const { groupId, homeWorkId, lessonHomeTaskId, lessonStudent } = useParams()
-    
+
     const mentorLessonSchedule = useQuery(['lessons-schedule', mentorId], () => getMentorLessonsSchedule(mentorId), { cacheTime: Infinity, staleTime: Infinity })
     const mentorGroupLesson = useQuery(['lesson-group', groupId], () => groupId && getMentorGroupLesson(groupId), { cacheTime: Infinity, staleTime: Infinity })
-    const mentorSingleLesson = useQuery(['lesson-single',  homeWorkId], () => homeWorkId && getSingleLesson(homeWorkId), { cacheTime: Infinity, staleTime: Infinity })
-    const singleMentorHomeTask = useQuery(['lesson-mentor', lessonHomeTaskId], () => lessonHomeTaskId && getSingleHomeTask(lessonHomeTaskId), { cacheTime: Infinity, staleTime: Infinity})
-    const studentSubmit = useQuery(['lesson-submit', lessonStudent], () => getStudentSubmit(lessonStudent), { cacheTime: Infinity, staleTime: Infinity})
+    const mentorSingleLesson = useQuery(['lesson-single', homeWorkId], () => homeWorkId && getSingleLesson(homeWorkId), { cacheTime: Infinity, staleTime: Infinity })
+    const singleMentorHomeTask = useQuery(['lesson-mentor', lessonHomeTaskId], () => lessonHomeTaskId && getSingleHomeTask(lessonHomeTaskId), { cacheTime: Infinity, staleTime: Infinity })
+    const studentSubmit = useQuery(['lesson-submit', lessonStudent], () => getStudentSubmit(lessonStudent), { cacheTime: Infinity, staleTime: Infinity })
 
     return {
         mentorLessonSchedule,
@@ -80,7 +80,8 @@ export const useUpdateHomeWorkMutations = () => {
     }
 
     return {
-        updateHomeWorkMutation}
+        updateHomeWorkMutation
+    }
 }
 
 export const useLessonMutations = (groupId) => {
@@ -105,7 +106,10 @@ export const useCreateLessonScheduleMutation = () => {
 
     function onCreateScheduleSuccess(newSchedule) {
         const groupId = newSchedule?.group?.id
-        queryClient.setQueryData(['lessons-schedule', 'group', groupId], (oldData) => ([newSchedule, ...oldData]))
+        queryClient.setQueryData(['lessons-schedule', 'group', groupId], (oldData) => ({
+            ...oldData,
+            items: [newSchedule, ...(oldData?.items || [])]
+        }))
     }
 
     return createMutation
@@ -119,7 +123,10 @@ export const useScheduleMoveMutation = () => {
     })
 
     function onCreateSuccess(data) {
-        queryClient.setQueryData(['lessons-schedule', 'group', data?.group?.id], oldData => oldData?.map(lesson => lesson?.id === data?.id ? data : lesson))
+        queryClient.setQueryData(['lessons-schedule', 'group', data?.group?.id], oldData => ({
+            ...oldData,
+            items: oldData?.items?.map(lesson => lesson?.id === data?.id ? data : lesson)
+        }))
     }
 
     return moveMutation
@@ -133,8 +140,32 @@ export const useScheduleMoveDeleteMutation = () => {
     })
 
     function onDeleteSuccess(data) {
-        queryClient.setQueryData(['lessons-schedule', 'group', data?.group?.id], oldData => oldData?.map(lesson => lesson?.id === data?.id ? data : lesson))
+        queryClient.setQueryData(['lessons-schedule', 'group', data?.group?.id], oldData => ({
+            ...oldData,
+            items: oldData?.items?.map(lesson => lesson?.id === data?.id ? data : lesson)
+        }))
     }
 
     return moveDeleteMutation
+}
+
+export const useScheduleUpdateMutation = () => {
+    const queryClient = useQueryClient()
+    const updateMutation = useMutation({
+        mutationFn: async (data) => {
+            const id = data?.id
+            delete data?.id
+            return await updateLessonSchedule(id, data)
+        },
+        onSuccess: onUpdateSuccess
+    })
+
+    function onUpdateSuccess(data) {
+        queryClient.setQueryData(['lessons-schedule', 'group', data?.group?.id], oldData => ({
+            ...oldData,
+            items: oldData?.items?.map(lesson => lesson?.id === data?.id ? data : lesson)
+        }))
+    }
+
+    return updateMutation
 }

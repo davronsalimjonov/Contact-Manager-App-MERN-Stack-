@@ -11,6 +11,7 @@ const RadioButton = ({
     defaultChecked,
     className,
     radioClassName,
+    onChange,
     preffix
 }) => {
     return (
@@ -23,6 +24,7 @@ const RadioButton = ({
                 disabled={disabled}
                 className={radioClassName||cls.radio}
                 defaultChecked={defaultChecked}
+                onChange={onChange}
                 {...register}
             />
             {preffix && <span>{preffix}</span>}

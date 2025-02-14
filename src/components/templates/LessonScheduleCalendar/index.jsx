@@ -5,6 +5,7 @@ import getDay from "date-fns/getDay";
 import format from "date-fns/format";
 import { enUS, uz } from "date-fns/locale";
 import startOfWeek from "date-fns/startOfWeek";
+import { isDatePassed } from "@/utils/time";
 import { LEVEL_COLORS } from "@/constants/colors";
 import { CloseIcon } from "@/components/UI/atoms/icons";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
@@ -70,8 +71,6 @@ const CustomWeekEventComponent = ({ onClick, event, onClickDelete, withDeleteBut
     );
 };
 
-const isDatePassed = (date) => date < new Date();
-
 function LessonScheduleCalendar({
     events = [],
     className = '',
@@ -126,17 +125,17 @@ function LessonScheduleCalendar({
     };
 
     const handleDraggableAccessor = (event) => {
-        return !event?.isBusy && !event?.isRescheduled && !isDatePassed(event?.start);
+        return !event?.isBusy && !event?.isRescheduled;
     }
 
     const handleDrop = (event) => {
         const isTransfered = event?.event?.isTransfered;
-        const newStartDate = event?.start;
+        // const newStartDate = event?.start;
 
-        if (isDatePassed(newStartDate)) {
-            toast.error('Bu kunga kochirish mumkin emas!');
-            return;
-        }
+        // if (isDatePassed(newStartDate)) {
+        //     toast.error('Bu kunga kochirish mumkin emas!');
+        //     return;
+        // }
 
         const newEvent = {
             ...event.event,

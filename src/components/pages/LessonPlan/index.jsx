@@ -2,60 +2,88 @@ import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { isDatePassed } from '@/utils/time';
 import Loader from '@/components/UI/atoms/Loader';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import { convertLessonScheduleToEvents } from '@/utils/calendar';
 import ConfirmationModal from '@/components/UI/organisms/ConfirmationModal';
 import LessonScheduleCalendar from '@/components/templates/LessonScheduleCalendar';
 import CreateScheduleFormModal from '@/components/UI/organisms/CreateScheduleFormModal';
-import { useGetGroupLessonsSchedule, useScheduleMoveDeleteMutation, useScheduleMoveMutation } from '@/hooks/useLessonsSchedule';
+import ConfirmScheduleMoveModal from '@/components/UI/organisms/ConfirmScheduleMoveModal';
+import { useGetGroupLessonsSchedule, useScheduleMoveDeleteMutation, useScheduleMoveMutation, useScheduleUpdateMutation } from '@/hooks/useLessonsSchedule';
 import cls from './LessonPlan.module.scss';
+import { GROUP_STATUS } from '@/constants/enum';
 
 const LessonPlan = () => {
     const { groupId } = useParams()
     const [events, setEvents] = useState([])
-    const [isOpen, setIsOpen] = useState(false)
-    const [movedEvent, setMovedEvent] = useState(null)
+    const [isOpenCreateSchedule, setIsOpenCreateSchedule] = useState(false)
+    const [movedEvent, setMovedEvent] = useState({ isOpen: false, event: null })
     const [deletedEvent, setDeletedEvent] = useState(null)
     const moveMutation = useScheduleMoveMutation()
+    const updateMutation = useScheduleUpdateMutation()
     const deleteMutation = useScheduleMoveDeleteMutation()
     const { data: lessons, isLoading: isLoadingLessons } = useGetGroupLessonsSchedule(groupId)
 
     const handleEventDrop = (event) => {
-        setMovedEvent(event)
+        setMovedEvent({ isOpen: true, event })
         setEvents(prev => prev.map(e => e.id === event.lessonScheduleId ? { ...e, isRescheduled: true, isNewReschedule: e.isRescheduled } : e))
     }
+console.log(events);
 
-    const handleCreateScheduleMove = async () => {
+    const handleScheduleMove = async (type) => {
+        const event = movedEvent?.event
         const getMinutesFromStartOfDay = (date) => {
             return date.getHours() * 60 + date.getMinutes();
         };
 
-        const movedObject = {
-            weekday: movedEvent?.start?.getDay(),
-            startTime: getMinutesFromStartOfDay(movedEvent?.start),
-            endTime: getMinutesFromStartOfDay(movedEvent?.end),
-            date: format(movedEvent?.start, 'yyyy-MM-dd'),
-            fromDate: format(movedEvent?.fromDate, 'yyyy-MM-dd'),
-            lessonSchedule: movedEvent?.lessonScheduleId
-        };
+        if (type === 'temp') {
+            if (isDatePassed(event?.start)) {
+                toast.error('Bu kunga kochirish mumkin emas!')
+                return
+            }
+            const movedObject = {
+                weekday: event?.start?.getDay(),
+                startTime: getMinutesFromStartOfDay(event?.start),
+                endTime: getMinutesFromStartOfDay(event?.end),
+                date: format(event?.start, 'yyyy-MM-dd'),
+                fromDate: format(event?.fromDate, 'yyyy-MM-dd'),
+                lessonSchedule: event?.lessonScheduleId
+            };
 
-        await moveMutation.mutateAsync(movedObject, {
-            onSuccess: () => {
-                toast.success('Dars ko\'chirildi')
-                setMovedEvent(null)
-            },
-            onError: (error) => toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
-        })
+            await moveMutation.mutateAsync(movedObject, {
+                onSuccess: () => {
+                    toast.success('Dars ko\'chirildi')
+                    setMovedEvent({ isOpen: false, event: null })
+                },
+                onError: (error) => toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
+            })
+        } else {
+            const movedObject = {
+                id: event?.lessonScheduleId,
+                weekday: event?.start?.getDay(),
+                startTime: getMinutesFromStartOfDay(event?.start),
+                endTime: getMinutesFromStartOfDay(event?.end),
+            }
+
+            await updateMutation.mutateAsync(movedObject, {
+                onSuccess: () => {
+                    toast.success('Dars ko\'chirildi')
+                    setMovedEvent({ isOpen: false, event: null })
+                },
+                onError: (error) => toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
+            })
+        }
     }
 
     const handleCancel = () => {
         setEvents(prev => prev.map(e => {
-            if (e.id === movedEvent?.lessonScheduleId && !e?.isNewReschedule) {
+            const event = movedEvent?.event
+            if (e.id === event?.lessonScheduleId && !e?.isNewReschedule) {
                 return { ...e, isRescheduled: false }
             } else return e
         }))
-        setMovedEvent(null)
+        setMovedEvent({ isOpen: false, event: null })
     }
 
     const handleDeleteEvent = async (event) => {
@@ -70,7 +98,7 @@ const LessonPlan = () => {
 
     useEffect(() => {
         if (lessons) {
-            setEvents(convertLessonScheduleToEvents(lessons, { groupId }))
+            setEvents(convertLessonScheduleToEvents(lessons?.items, { groupId }))
         }
     }, [lessons])
 
@@ -83,21 +111,25 @@ const LessonPlan = () => {
                     onCancel={() => setDeletedEvent(null)}
                     onConfirm={() => handleDeleteEvent(deletedEvent)}
                 />
-                <ConfirmationModal
-                    title='Rostdan ham ushbu darsni o’chirishni xohlaysizmi?'
-                    isOpen={!!movedEvent}
-                    onCancel={handleCancel}
-                    onConfirm={handleCreateScheduleMove}
+                <ConfirmScheduleMoveModal
+                    isOpen={movedEvent?.isOpen}
+                    onConfirm={handleScheduleMove}
+                    onClose={handleCancel}
                 />
                 <CreateScheduleFormModal
-                    isOpen={isOpen}
                     groupId={groupId}
-                    onClose={() => setIsOpen(false)}
+                    isOpen={isOpenCreateSchedule}
+                    onClose={() => setIsOpenCreateSchedule(false)}
                 />
-                <Button onClick={() => setIsOpen(true)}>Qo’shish</Button>
+                <Button
+                    disabled={lessons?.status === GROUP_STATUS.CLOSED} 
+                    onClick={() => setIsOpenCreateSchedule(true)}
+                >
+                    Qo’shish
+                </Button>
                 <LessonScheduleCalendar
                     dragAndDrop
-                    events={[...events, movedEvent ? movedEvent : {}]}
+                    events={[...events, movedEvent?.event ? movedEvent?.event : {}]}
                     onEventDrop={handleEventDrop}
                     onDeleteEvent={event => setDeletedEvent(event)}
                 />

@@ -21,7 +21,7 @@ const SalesChart = ({
         labels: data?.map((item) => item?.label),
         datasets: [
             {
-                label: "Sotuvlar soni",
+                label: "Sotuv summasi",
                 data: data?.map((item) => item?.sum),
                 fill: true,
                 backgroundColor: (context) => {
