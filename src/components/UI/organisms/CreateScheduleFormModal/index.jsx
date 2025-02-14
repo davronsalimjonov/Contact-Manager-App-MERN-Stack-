@@ -83,7 +83,7 @@ const CreateScheduleFormModal = ({
                 <FormSelect
                     label='Start time'
                     placeholder='Tanlang'
-                    options={filterTimeOptions(lessons, selectedWeekday)}
+                    options={filterTimeOptions(lessons?.items, selectedWeekday)}
                     control={control}
                     name='startTime'
                     isSearchable
@@ -92,7 +92,7 @@ const CreateScheduleFormModal = ({
                 <FormSelect
                     label='End time'
                     placeholder='Tanlang'
-                    options={filterEndTimeOptions(selectedStartTime, lessons, selectedWeekday)}
+                    options={filterEndTimeOptions(selectedStartTime, lessons?.items, selectedWeekday)}
                     control={control}
                     name='endTime'
                     isSearchable

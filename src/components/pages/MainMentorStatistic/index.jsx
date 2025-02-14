@@ -1,16 +1,16 @@
+import Avatar from 'react-avatar'
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
-import Loader from '@/components/UI/atoms/Loader'
 import { getUserFullName } from '@/utils/lib'
+import Loader from '@/components/UI/atoms/Loader'
+import { formatNumber } from '@/utils/formatNumber'
+import Button from '@/components/UI/atoms/Buttons/Button'
 import CoursesChart from '@/components/UI/organisms/CoursesChart'
+import useGetMainMentorStatistic from '@/hooks/useGetMainMentorStatistic'
 import StudentsLevelChart from '@/components/UI/organisms/StudentsLevelChart'
 import NewStudentsCountChart from '@/components/UI/organisms/NewStudentsCountChart'
 import { LeftArrowIcon, MetricCashIcon, MetricPersonsIcon, MetricStarsIcon, MetricTimeIcon, StarIcon } from '@/components/UI/atoms/icons'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './MainMentorStatistic.module.scss'
-import useGetMainMentorStatistic from '@/hooks/useGetMainMentorStatistic'
-import Avatar from 'react-avatar'
-import { formatNumber } from '@/utils/formatNumber'
-import Button from '@/components/UI/atoms/Buttons/Button'
 
 const MainMentorStatistic = () => {
     const { mentorId } = useParams();
