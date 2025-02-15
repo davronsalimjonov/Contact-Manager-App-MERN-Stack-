@@ -8,7 +8,7 @@ const MetricCard = ({
   iconBg = "",
   iconStyle = {},
   additionalInformation,
-  percentage = undefined,
+  percentage,
 }) => {
   
   return (
@@ -20,7 +20,7 @@ const MetricCard = ({
               </div>
               <div className={cls.card__icon} style={{ backgroundColor: iconBg, ...iconStyle }}>{icon}</div>
         </div>
-        {!isNaN(percentage) && (
+        {Number.isInteger(percentage) && (
           <PerformanceIndicator
               value={Math.abs(percentage)}
               positively={percentage >= 0}

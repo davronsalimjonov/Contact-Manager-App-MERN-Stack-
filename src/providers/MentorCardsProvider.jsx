@@ -15,8 +15,6 @@ const MentorCardsProvider = ({ children }) => {
 
     useEffect(() => {
         if (user?.cards?.length > 0) {
-            console.log('new cards');
-            
             setCards(user?.cards?.filter(card => !card.isViewed))
         }
     }, [user?.cards])

@@ -4,7 +4,7 @@ import useGetUser from "@/hooks/useGetUser";
 import Login from "@/components/pages/Login";
 import Loader from "@/components/UI/atoms/Loader";
 import Settings from "@/components/pages/Settings";
-import Dashboard from "@/components/pages/SupervisorDashboard";
+import CallMentorDashboard from "@/components/pages/CallMentorDashboard";
 import Workspace from "@/components/pages/Workspace";
 import MyStudents from "@/components/pages/MyStudents";
 import MentorTasks from "@/components/pages/MentorTasks";
@@ -76,7 +76,7 @@ const callTecherRoutes = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <Dashboard />
+                element: <CallMentorDashboard />
             },
             {
                 path: '/students',

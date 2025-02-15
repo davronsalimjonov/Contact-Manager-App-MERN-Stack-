@@ -21,7 +21,7 @@ export function convertLessonScheduleToEvents(data = [], { groupId } = {}) {
 
         const isRescheduled = lessonScheduleMoves ? isSameDay(new Date(lessonScheduleMoves?.fromDate), createDateTime(startTime)) : false;
         const isBusy = groupId && groupId !== group?.id;
-        const color = groupId ? LEVEL_COLORS?.ACTIVE_COLOR : LEVEL_COLORS[group?.level] || LEVEL_COLORS.DEFAULT_COLOR;
+        const color = groupId ? LEVEL_COLORS?.ACTIVE_COLOR : LEVEL_COLORS[group?.level]?.color || LEVEL_COLORS.DEFAULT_COLOR;
 
         const baseEvent = {
             id,

@@ -8,7 +8,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import useGetStatistic from "@/hooks/useGetStatistic";
+import useGetStatistic from "@/hooks/useStatistic";
 import { useOutletContext } from "react-router-dom";
 import dayjs from "dayjs";
 

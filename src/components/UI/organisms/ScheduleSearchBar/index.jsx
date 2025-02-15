@@ -1,4 +1,3 @@
-import { DEGREEOPTIONS, STUDENT_STATUS_ENUMS, WEEKDAYOPTIONS } from '@/constants';
 import Select from '../../atoms/Form/Select';
 import cls from './ScheduleSearchBar.module.scss';
 import { PlusIcon} from '../../atoms/icons';

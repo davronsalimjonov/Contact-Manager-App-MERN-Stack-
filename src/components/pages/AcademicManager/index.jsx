@@ -1,14 +1,14 @@
 import { useOutletContext } from 'react-router-dom'
 import Loader from '@/components/UI/atoms/Loader'
-import useGetStatistic from '@/hooks/useGetStatistic'
+import useGetStatistic from '@/hooks/useStatistic'
 import CoursesChart from '@/components/UI/organisms/CoursesChart'
-import NewStudentsCountChart from '@/components/UI/organisms/NewStudentsCountChart'
+import NewStudentsCountChart from '@/components/UI/organisms/ActiveStudentsCountChart'
 import { MetricPersonsIcon } from '@/components/UI/atoms/icons'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './AcademicManager.module.scss'
 import MentorMetricCard from '@/components/UI/moleculs/MentorMetricCard'
 import BarChart from '@/components/UI/organisms/CourseSalesChart'
-import StudentsStatusChart from '@/components/UI/organisms/StudentsStatusChart'
+// import StudentsStatusChart from '@/components/UI/organisms/StudentsStatusChart'
 
 const AcademicManager = () => {
     const [period] = useOutletContext()
@@ -71,10 +71,10 @@ const AcademicManager = () => {
                             title='O’qidigan kurslari bo’yicha'
                             courses={studentsCountByCourse}
                         />
-                        <StudentsStatusChart
+                        {/* <StudentsStatusChart
                             title='O’quvchilar statusi bo’yicha'
                             status={statusUser}
-                        />
+                        /> */}
                     </div>
                     <NewStudentsCountChart
                         students={newStudentsCount}

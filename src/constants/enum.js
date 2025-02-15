@@ -61,3 +61,16 @@ export const MENTOR_CARDS_ENUM ={
     WARNING: 'yellow',
     BONUS: 'green'
 }
+
+export const STUDENT_STATUS_ENUMS = {
+    NEW: 'Yangi',
+    ADAPTATION: 'Adaptatsiya',
+    PAUSED: 'Pauza',
+    FINISHED: 'Bitirdi',
+    CANCELED: 'Bekor qilindi',
+    ACTIVE: 'O\'qiyapti',
+    PROBLEMATIC: 'Muammoli',
+    TIME_OVER: 'Vaqti tugadi',
+    WITHOUT_MENTOR: 'Mentorsiz',
+    SUCCESS: 'Muvaffaqiyatli'
+}

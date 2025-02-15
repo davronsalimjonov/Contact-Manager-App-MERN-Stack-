@@ -1,11 +1,9 @@
 import { useState } from "react";
 import parse from "date-fns/parse";
-import toast from "react-hot-toast";
 import getDay from "date-fns/getDay";
 import format from "date-fns/format";
 import { enUS, uz } from "date-fns/locale";
 import startOfWeek from "date-fns/startOfWeek";
-import { isDatePassed } from "@/utils/time";
 import { LEVEL_COLORS } from "@/constants/colors";
 import { CloseIcon } from "@/components/UI/atoms/icons";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";

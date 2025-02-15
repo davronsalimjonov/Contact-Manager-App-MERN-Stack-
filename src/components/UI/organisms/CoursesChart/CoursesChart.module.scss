@@ -18,9 +18,11 @@
     }
 
     &__legends{
-        height: 44px;
+        min-height: 44px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+        gap: 8px 16px;
+        flex-wrap: wrap;
     }
 }
