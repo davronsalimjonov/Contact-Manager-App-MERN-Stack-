@@ -1,11 +1,11 @@
 import { api, paramsToString } from "./api";
 
-export const getMainMentors = async (params) => {
+export const getMainMentorsStatistic = async (params) => {
     const res = await api.get(`/statistic/mentors/academy-statistic?${paramsToString(params)}`);
     return res.data;
 }
 
-export const getCallMentors = async (params) => {
+export const getCallMentorsStatistic = async (params) => {
     const res = await api.get(`/statistic/mentors/call-mentor-statistic?${paramsToString(params)}`);
     return res.data;
 }
@@ -17,11 +17,6 @@ export const getMentorsForOptions = async (role) => {
 
 export const getMentors = async (params) => {
     const res = await api.get(`/employee/all-mentors?${paramsToString(params)}`)
-    return res.data
-}
-
-export const getMentorById = async (mentorId, params) => {
-    const res = await api.get(`/employee/${mentorId}?${paramsToString(params)}`)
     return res.data
 }
 

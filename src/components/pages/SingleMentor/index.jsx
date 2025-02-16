@@ -2,15 +2,15 @@ import toast from 'react-hot-toast';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { objectToFormData } from '@/utils/lib';
 import Loader from '@/components/UI/atoms/Loader';
-import { useGetMentorById, useUpdateMentorMutation } from '@/hooks/useMentor';
+import { useGetEmployeeById, useUpdateEmployeeMutation } from '@/hooks/useEmployee';
 import MentorInformationForm from '@/components/UI/organisms/MentorInformationForm';
 import cls from './SingleMentor.module.scss';
 
 const SingleMentor = () => {
     const { mentorId } = useParams()
     const [searchParams] = useSearchParams()
-    const updateMentor = useUpdateMentorMutation()
-    const { data: mentor, isLoading: isLoadingMentor } = useGetMentorById(mentorId, { role: searchParams.get('role') })
+    const updateMentor = useUpdateEmployeeMutation()
+    const { data: mentor, isLoading: isLoadingMentor } = useGetEmployeeById(mentorId, { role: searchParams.get('role') })
 
     const defaultValues = {
         firstName: mentor?.firstName ?? '',

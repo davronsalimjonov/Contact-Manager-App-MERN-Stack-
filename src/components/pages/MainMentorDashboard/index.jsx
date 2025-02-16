@@ -1,24 +1,29 @@
-import { useOutletContext } from 'react-router-dom'
-import { formatPrice } from '@/utils/lib'
+import Avatar from 'react-avatar'
+import { useNavigate, useOutletContext } from 'react-router-dom'
+import { USER_ROLES } from '@/constants'
 import Loader from '@/components/UI/atoms/Loader'
 import { useGetUserId } from '@/hooks/useGetUser'
 import { STATUS_COLORS } from '@/constants/colors'
+import { useGetEmployeeById } from '@/hooks/useEmployee'
+import { formatPrice, getUserFullName } from '@/utils/lib'
 import CoursesChart from '@/components/UI/organisms/CoursesChart'
 import StudentsCountChart from '@/components/UI/organisms/StudentsCountChart'
 import ActiveStudentsCountChart from '@/components/UI/organisms/ActiveStudentsCountChart'
-import { MetricCashIcon, MetricPersonsIcon, MetricStarsIcon, StarIcon } from '@/components/UI/atoms/icons'
+import { LeftArrowIcon, MetricCashIcon, MetricPersonsIcon, MetricStarsIcon, StarIcon } from '@/components/UI/atoms/icons'
 import { useGetMainMentorStatistic, useGetStudentsCountByCourse, useGetStudentsCountByStatus } from '@/hooks/useStatistic'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './MainMentorDashboard.module.scss'
 
-const MainMentor = () => {
-    const mentorId = useGetUserId()
+const MainMentorDashboard = ({ userId, withUserInfo = false }) => {
+    const navigate = useNavigate()
     const [period] = useOutletContext()
+    const mentorId = userId || useGetUserId()
 
+    const { data: mentor, isLoading: isLoadingMentor } = useGetEmployeeById(mentorId, { role: USER_ROLES.MAIN_MENTOR }, { enabled: withUserInfo })
     const { data: mainMentorStatistic, isLoading: isLoadingMainMentorStatistic } = useGetMainMentorStatistic({ mentorId, startDate: period.startDate, endDate: period.endDate })
     const { data: studentsCountByCourse, isLoading: isLoadingStudentsCountByCourse } = useGetStudentsCountByCourse({ mentorId, startDate: period.startDate, endDate: period.endDate })
     const { data: studentsCountByStatus, isLoading: isLoadingStatusUser } = useGetStudentsCountByStatus({ mentorId, startDate: period.startDate, endDate: period.endDate })
-    
+
     const statusItems = studentsCountByStatus?.map((item) => ({
         label: item.status,
         value: item.count,
@@ -27,12 +32,19 @@ const MainMentor = () => {
         borderColor: STATUS_COLORS?.[item.status]?.borderColor
     }))
 
-    const isLoading = isLoadingStudentsCountByCourse || isLoadingStatusUser || isLoadingMainMentorStatistic
+    const isLoading = isLoadingMentor || isLoadingStudentsCountByCourse || isLoadingStatusUser || isLoadingMainMentorStatistic
 
     return (
         <div className={cls.page}>
             {!isLoading ? (
                 <>
+                    {withUserInfo && (
+                        <div className={cls.page__usercard}>
+                            <button onClick={() => navigate(-1)}><LeftArrowIcon /></button>
+                            <Avatar src={mentor?.url} name={getUserFullName(mentor)} size="50" round />
+                            <h2>{getUserFullName(mentor)}</h2>
+                        </div>
+                    )}
                     <div className={cls.page__metrics}>
                         <MetricCard
                             title='Faol o’quvchilar soni'
@@ -78,4 +90,4 @@ const MainMentor = () => {
     )
 }
 
-export default MainMentor
+export default MainMentorDashboard

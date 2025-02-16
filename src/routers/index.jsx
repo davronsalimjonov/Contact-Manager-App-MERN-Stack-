@@ -14,14 +14,14 @@ import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 // import Schedule from "@/components/pages/Schedule";
 // import SingleSchedule from "@/components/pages/SingleSchedule";
-import MainMentor from "@/components/pages/MainMentorDashboard";
+import MainMentorDashboard from "@/components/pages/MainMentorDashboard";
 import MainMentorStudents from "@/components/pages/MainMentorStudents";
 import Users from "@/components/pages/Users";
 import SingleUser from "@/components/pages/SingleUser";
-import MainMentors from "@/components/pages/MainMentors";
+import MainMentors from "@/components/pages/MainMentorsStatistic";
 import MainMentorStatistic from "@/components/pages/MainMentorStatistic";
-import CallMentors from "@/components/pages/CallMentors";
-import CallMentorStatistic from "@/components/pages/CallMentorsStatistic";
+import CallMentors from "@/components/pages/CallMentorsStatistic";
+import CallMentorStatistic from "@/components/pages/CallMentorStatistic";
 import AllStudents from "@/components/pages/AllStudents";
 import Courses from "@/components/pages/Courses";
 import AddStudent from "@/components/pages/AddStudent";
@@ -32,7 +32,6 @@ import StudentsRateForCallMentor from "@/components/pages/StudentsRateForCallMen
 import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
 import Dictionary from "@/components/pages/Dictionary";
 import Moderation from "@/components/pages/Moderation";
-import MentorsStatistic from "@/components/pages/MentorsStatistic";
 // import Notification from "@/components/pages/Notification";
 // import AddNotification from "@/components/pages/AddNotification";
 import AcademicManager from "@/components/pages/AcademicManager";
@@ -133,7 +132,7 @@ const mainMentorRoutes = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <MainMentor />
+                element: <MainMentorDashboard />
             },
             {
                 path: '/materials',
@@ -227,10 +226,6 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/call-teachers/:mentorId',
                 element: <CallMentorStatistic />
-            },
-            {
-                path: '/mentor-statistics',
-                element: <MentorsStatistic />
             },
             {
                 path: '/users',

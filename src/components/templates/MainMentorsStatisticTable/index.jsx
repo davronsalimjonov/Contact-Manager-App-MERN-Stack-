@@ -1,10 +1,10 @@
 import { getUserFullName } from "@/utils/lib";
 import { useNavigate } from "react-router-dom";
 import EmptyData from "@/components/UI/organisms/EmptyData";
-import CallMentorsStatisticTableRow from "@/components/UI/moleculs/CallMentorsStatisticTableRow";
-import cls from './CallMentorsStatisticTable.module.scss';
+import MainMentorsStatisticTableRow from "@/components/UI/moleculs/MainMentorsStatisticTableRow";
+import cls from './MainMentorsStatisticTable.module.scss';
 
-const CallMentorsStatisticTable = ({ mentors = [] }) => {
+const MainMentorsTable = ({ mentors = [] }) => {
     const navigate = useNavigate()
 
     return (
@@ -15,8 +15,8 @@ const CallMentorsStatisticTable = ({ mentors = [] }) => {
                         <tr>
                             <th>№</th>
                             <th>Ism familiyasi</th>
-                            <th>Qo'ng'iroqlar soni</th>
-                            <th>Adaptatsiyalar soni</th>
+                            <th>O'quvchilarining aktivligi</th>
+                            <th>Aktiv o'quvchilar soni</th>
                             <th>Mentor aktivligi</th>
                             <th>Oylik maosh</th>
                             <th>Reyting</th>
@@ -24,13 +24,13 @@ const CallMentorsStatisticTable = ({ mentors = [] }) => {
                     </thead>
                     <tbody>
                         {mentors.map((mentor, index) => (
-                            <CallMentorsStatisticTableRow
+                            <MainMentorsStatisticTableRow
                                 index={index + 1}
                                 onClick={() => navigate(mentor?.id)}
                                 fullName={getUserFullName(mentor)}
-                                callsCount={mentor?.callCount || 0}
-                                adaptationCount={mentor?.adaptationCount || 0}
-                                mentorActivityPercentage={mentor?.active || 0}
+                                activeStudentsPercentage={mentor?.activeStudentsPercentage || 0}
+                                activeStudentsCount={mentor?.activeStudentsCount || 0}
+                                mentorActivityPercentage={mentor?.mentorActivityPercentage || 0}
                                 salary={mentor?.salary || 0}
                                 rating={mentor?.rating || 0}
                             />
@@ -44,4 +44,4 @@ const CallMentorsStatisticTable = ({ mentors = [] }) => {
     )
 }
 
-export default CallMentorsStatisticTable;
+export default MainMentorsTable;
