@@ -25,6 +25,7 @@ const MainMentorsTable = ({ mentors = [] }) => {
                     <tbody>
                         {mentors.map((mentor, index) => (
                             <MainMentorsStatisticTableRow
+                                key={mentor?.id}
                                 index={index + 1}
                                 onClick={() => navigate(mentor?.id)}
                                 fullName={getUserFullName(mentor)}

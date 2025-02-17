@@ -50,7 +50,7 @@ import LessonsSchedule from "@/components/pages/LessonsSchedule";
 import SingleMentor from "@/components/pages/SingleMentor";
 import CoursesIFrame from "@/components/pages/CoursesIFrame";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
-import ScheduleDetails from "@/components/pages/ScheduleDetails";
+import ScheduleDetails from "@/components/pages/GroupLessons";
 import Groups from "@/components/pages/Groups";
 import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
 import SingleGroup from "@/components/pages/SingleGroup";

@@ -1,9 +1,9 @@
+import Loader from "@/components/UI/atoms/Loader";
+import { StarIcon } from "@/components/UI/atoms/icons";
 import { useGetCallMentorsStatistic } from "@/hooks/useMentor";
+import MentorsAvarageCard from "@/components/UI/moleculs/MentorsAvarageCard";
 import CallMentorsStatisticTable from "@/components/templates/CallMentorsStatisticTable";
 import cls from './CallMentorsStatistic.module.scss';
-import Loader from "@/components/UI/atoms/Loader";
-import MentorsAvarageCard from "@/components/UI/moleculs/MentorsAvarageCard";
-import { StarIcon } from "@/components/UI/atoms/icons";
 
 const CallMentorsStatistic = () => {
     const { data: mentors, isLoading } = useGetCallMentorsStatistic()

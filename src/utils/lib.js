@@ -357,7 +357,7 @@ export function getFileCategory(input) {
 export const autoPlayAudio = (url) => {
     if (!url) return;
     const audio = new Audio(url);
-    audio.play();
+    audio?.play();
 }
 
 export const copyToClipboard = (text) => {

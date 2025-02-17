@@ -1,0 +1,44 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 12px;
+    background-color: var(--base-white-color);
+    border-radius: 10px;
+    letter-spacing: 0%;
+    box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.04);
+
+    &__title {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 23.48px;
+    }
+
+    &__details {
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        align-items: center;
+        gap: 36px;
+
+        &__item,
+        &__video {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            &>span {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 16.44px;
+            }
+        }
+
+        &__video {
+            margin-left: auto;
+
+            &>span {
+                color: var(--blue-color);
+            }
+        }
+    }
+}
