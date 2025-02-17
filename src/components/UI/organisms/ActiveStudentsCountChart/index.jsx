@@ -100,7 +100,6 @@ const ActiveStudentsCountChart = ({ mentorId }) => {
         const endDate = dayjs(new Date(year, month, 0).toISOString()).format('YYYY-MM-DD');
         setDateRange({ startDate, endDate });
     };
-console.log(filledData);
 
     const data = {
         labels: filledData?.map(student => student?.date),

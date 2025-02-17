@@ -1,6 +1,5 @@
 import ScheduleLessonFiles from '@/components/UI/organisms/ScheduleLessonFiles'
 import { useGetMentorLessonsSchedule } from '@/hooks/useLessonsSchedule'
-import React from 'react'
 
 const ScheduleHomeWorkDetails = () => {
   const { studentSubmit: {data: studentSubmit, isLoading: isStudentSubmitLoading, refetch}} = useGetMentorLessonsSchedule()

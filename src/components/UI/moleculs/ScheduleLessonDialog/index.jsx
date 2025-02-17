@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Dialog from '../Dialog'
 import cls from "./ScheduleLessonDialog.module.scss"
 import { CloseIcon } from '../../atoms/icons'

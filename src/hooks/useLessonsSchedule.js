@@ -1,15 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSchedule, createScheduleMove, deleteMovedSchedule, getGroupLessonsSchedule, getMentorLessonsSchedule, createGroupLesson, createHomeWork, getMentorGroupLesson, getSingleLesson, getSingleHomeTask, getStudentSubmit, rateStudentSubmit, updateHomeWork, updateLessonSchedule } from "@/services/schedule"
+import { createSchedule, createScheduleMove, deleteMovedSchedule, getGroupLessonsSchedule, getMentorLessonsSchedule, createHomeWork, getSingleLesson, getSingleHomeTask, getStudentSubmit, rateStudentSubmit, updateHomeWork, updateLessonSchedule } from "@/services/schedule"
 import { useGetUserId } from "./useGetUser"
 
 export const useGetMentorLessonsSchedule = () => {
     const mentorId = useGetUserId()
     return useQuery(['lessons-schedule', mentorId], () => getMentorLessonsSchedule(mentorId), { cacheTime: Infinity, staleTime: Infinity })
-}
-
-export const useGetGroupLessons = (groupId) => {
-    return useQuery(['group-lessons', groupId], () => getMentorGroupLesson(groupId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!groupId })
 }
 
 export const useGetLessonInfo = (lessonId) => {
@@ -81,22 +77,6 @@ export const useUpdateHomeWorkMutations = () => {
 
     return {
         updateHomeWorkMutation
-    }
-}
-
-export const useLessonMutations = (groupId) => {
-    const queryClient = useQueryClient()
-    const createLessonMutation = useMutation({
-        mutationFn: createGroupLesson,
-        onSuccess: onCreateSuccess
-    })
-
-    function onCreateSuccess(newLesson) {
-        queryClient.setQueriesData(['group-lessons', groupId], (oldData) => ([...(oldData || []), newLesson]))
-    }
-
-    return {
-        createLessonMutation
     }
 }
 

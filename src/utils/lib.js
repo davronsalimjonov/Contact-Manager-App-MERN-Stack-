@@ -355,9 +355,13 @@ export function getFileCategory(input) {
 }
 
 export const autoPlayAudio = (url) => {
-    if (!url) return;
-    const audio = new Audio(url);
-    audio?.play();
+    try {
+        if (!url) return;
+        const audio = new Audio(url);
+        audio?.play();
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 export const copyToClipboard = (text) => {

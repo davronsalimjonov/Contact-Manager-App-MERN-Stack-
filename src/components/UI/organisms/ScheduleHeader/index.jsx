@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useGetLessonInfo, } from "@/hooks/useLessonsSchedule"
 import Button from "../../atoms/Buttons/Button"
 import ScheduleLessonDialog from "../../moleculs/ScheduleLessonDialog"
-import { ArrowFullIcon, BookPlayIcon, PlusIcon } from "../../atoms/icons"
+import { ArrowRightIcon, BookPlayIcon, PlusIcon } from "../../atoms/icons"
 import cls from "./ScheduleHeader.module.scss"
 
 const ScheduleHeader = () => {
@@ -20,16 +20,16 @@ const ScheduleHeader = () => {
             </div>
             <div className={cls.ScheduleHeader__details}>
                 <div className={cls.ScheduleHeader__details__video} onClick={() => setIsOpen(true)}>
-                    <span>Videoni Ko'rish <ArrowFullIcon /></span>
+                    <span>Videoni Ko'rish <ArrowRightIcon /></span>
                 </div>
                 <div className={cls.ScheduleHeader__details__homework}>
                     {singleLesson?.lessonHomeTask === null || singleLesson?.lessonHomeTask === undefined ?
                         <Button onClick={() => navigate(`/schedule/homework/create/${homeWorkId}`)}>Vazifa Yaratish <PlusIcon height={18} width={18} /></Button>
                         :
-                        <span>Vazifa <ArrowFullIcon /></span>
+                        <span>Vazifa <ArrowRightIcon /></span>
                     } 
                     <Button onClick={() => navigate(`create-homework`)}>Vazifa Yaratish <PlusIcon height={18} width={18} /></Button>
-                        <span onClick={() => navigate(`/schedule/homework/view/${singleLesson?.lessonHomeTask?.id}`)}>Vazifa <ArrowFullIcon /></span>
+                        <span onClick={() => navigate(`/schedule/homework/view/${singleLesson?.lessonHomeTask?.id}`)}>Vazifa <ArrowRightIcon /></span>
                     
                 </div>
             </div>

@@ -1,10 +1,9 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import ReactPlayer from "react-player";
 import { FaPlay, FaPause } from "react-icons/fa";
 import cls from "./videoPlayer.module.scss";
 import { cn } from "@/utils/lib";
 import { FullScreenBtn } from "../icons";
-import { controllers } from "chart.js";
 
 const VideoPlayer = ({
     videoUrl,

@@ -1,24 +1,21 @@
-.CreateNewLessonForm {
+.form {
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    background-color: var(--base-white-color);
     width: 412px;
     border-radius: 8px;
     padding: 16px;
     gap: 24px;
 
-    & header {
+    &__header{
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        & h1 {
+        &__title{
             font-size: 20px;
             font-weight: 600;
-        }
-
-        & div {
-            cursor: pointer;
+            line-height: 26px;
         }
     }
 }

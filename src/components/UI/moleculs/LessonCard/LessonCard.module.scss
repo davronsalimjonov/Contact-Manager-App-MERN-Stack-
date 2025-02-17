@@ -1,22 +1,24 @@
 .card {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-areas: 'title' 'details';
     gap: 24px;
     padding: 12px;
     background-color: var(--base-white-color);
     border-radius: 10px;
     letter-spacing: 0%;
     box-shadow: 0px -1px 4px 0px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
 
     &__title {
+        grid-area: title;
         font-weight: 600;
         font-size: 20px;
         line-height: 23.48px;
     }
 
     &__details {
-        display: grid;
-        grid-template-columns: auto auto 1fr;
+        grid-area: details;
+        display: flex;
         align-items: center;
         gap: 36px;
 
@@ -33,12 +35,28 @@
             }
         }
 
-        &__video {
+        &__btn{
             margin-left: auto;
-
-            &>span {
-                color: var(--blue-color);
-            }
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: var(--blue-color);
         }
+    }
+}
+
+.live{
+    padding: 16px 12px;
+    gap: 8px;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'icon title live';
+
+    &__icon{
+        display: flex;
+        grid-area: icon;
+    }
+    &__btn{
+        grid-area: live;
     }
 }
