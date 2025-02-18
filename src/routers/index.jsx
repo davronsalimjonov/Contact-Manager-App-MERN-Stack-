@@ -50,17 +50,17 @@ import LessonsSchedule from "@/components/pages/LessonsSchedule";
 import SingleMentor from "@/components/pages/SingleMentor";
 import CoursesIFrame from "@/components/pages/CoursesIFrame";
 import { callMentorSidebarLinks, mainMentorSidebarLinks, managerSidebarLinks, sellerSidebarLinks } from "./data";
-import ScheduleDetails from "@/components/pages/GroupLessons";
 import Groups from "@/components/pages/Groups";
-import ScheduleHomeWork from "@/components/pages/ScheduleHomeWork";
+import SingleLesson from "@/components/pages/SingleLesson";
 import SingleGroup from "@/components/pages/SingleGroup";
 import LessonPlan from "@/components/pages/LessonPlan";
+import GroupLessons from "@/components/pages/GroupLessons";
 import UserCourseUpdate from "@/components/pages/UserCourseUpdate";
 import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
 import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
 import MentorCardsProvider from "@/providers/MentorCardsProvider";
-import { USER_ROLES } from "@/constants";
 import AcademyAdaptationWorkspace from "@/components/pages/AcademyAdaptationWorkspace";
+import { USER_ROLES } from "@/constants";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -160,11 +160,11 @@ const mainMentorRoutes = createBrowserRouter([
             },
             {
                 path: '/lessons-schedule/:groupId',
-                element: <ScheduleDetails />
+                element: <GroupLessons />
             },
             {
                 path: '/lessons-schedule/:groupId/:lessonId',
-                element: <ScheduleHomeWork />
+                element: <SingleLesson />
             },
             {
                 path: '/lessons-schedule/:groupId/:lessonId/create-homework',

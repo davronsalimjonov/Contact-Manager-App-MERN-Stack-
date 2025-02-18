@@ -3,11 +3,11 @@ import Button from '../../atoms/Buttons/Button'
 import Rater from '../../atoms/Rater'
 import FormTextArea from '../Form/FormTextArea'
 import cls from "./ScheduleLessonExercise.module.scss"
-import ScheduleLessonDialog from '../ScheduleLessonDialog'
+// import ScheduleLessonDialog from '../ScheduleLessonDialog'
 import MaterialPreviewModal from '../../organisms/MaterialPreviewModal'
 import Loader from '../../atoms/Loader'
 import FilePreviewItem from '../FilePreviewItem'
-import VideoPlayer from '../../atoms/VideoPlayer'
+// import VideoPlayer from '../../atoms/VideoPlayer'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { getFileCategory } from '@/utils/lib'
@@ -42,11 +42,11 @@ const ScheduleLessonExercise = ({
                                     setIsOpen(true);
                                     setVideo(file?.url);
                                 }}>
-                                    <VideoPlayer
+                                    {/* <VideoPlayer
                                         videoUrl={file?.url}
                                         controls={false}
                                         disabled={true}
-                                    />
+                                    /> */}
                                 </div>
                             ) : (
                                 <FilePreviewItem
@@ -99,12 +99,12 @@ const ScheduleLessonExercise = ({
                     Yuborish
                 </Button>
                 }
-                <ScheduleLessonDialog
+                {/* <ScheduleLessonDialog
                     isOpen={isOpen}
                     setIsOpen={setIsOpen}
                     video={video}
                     setVideo={setVideo}
-                />
+                /> */}
             </form>
     )
 }

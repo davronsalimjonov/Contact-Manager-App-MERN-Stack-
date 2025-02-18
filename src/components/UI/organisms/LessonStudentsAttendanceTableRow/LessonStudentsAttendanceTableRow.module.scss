@@ -1,0 +1,28 @@
+
+.row {
+    &:hover > td{
+        background-color: rgba(245, 248, 254, 1);
+    }
+
+    & > td, &__homework {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 20px;
+        transition: all 0.3s;
+    }  
+
+    & > td{
+        padding: 10px 12px;
+        
+        &:first-child{
+            text-align: center;
+        }
+    }
+
+    &__homework{
+        &:hover{
+            color: var(--blue-color);
+            cursor: pointer;
+        }
+    }
+}

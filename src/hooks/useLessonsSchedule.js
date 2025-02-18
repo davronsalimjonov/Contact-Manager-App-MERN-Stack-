@@ -1,15 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSchedule, createScheduleMove, deleteMovedSchedule, getGroupLessonsSchedule, getMentorLessonsSchedule, createHomeWork, getSingleLesson, getSingleHomeTask, getStudentSubmit, rateStudentSubmit, updateHomeWork, updateLessonSchedule } from "@/services/schedule"
+import { createSchedule, createScheduleMove, deleteMovedSchedule, getGroupLessonsSchedule, getMentorLessonsSchedule, createHomeWork, getSingleHomeTask, getStudentSubmit, rateStudentSubmit, updateHomeWork, updateLessonSchedule } from "@/services/schedule"
 import { useGetUserId } from "./useGetUser"
 
 export const useGetMentorLessonsSchedule = () => {
     const mentorId = useGetUserId()
     return useQuery(['lessons-schedule', mentorId], () => getMentorLessonsSchedule(mentorId), { cacheTime: Infinity, staleTime: Infinity })
-}
-
-export const useGetLessonInfo = (lessonId) => {
-    return useQuery(['lesson', lessonId], () => getSingleLesson(lessonId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!lessonId })
 }
 
 export const useGetGroupLessonsSchedule = (groupId) => {

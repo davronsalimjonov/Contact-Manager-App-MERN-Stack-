@@ -21,7 +21,7 @@ const CreateNewLessonForm = ({
         await createLessonMutation.mutateAsync(data, {
             onSuccess: () => {
                 toast.success("Dars Yaratildi")
-                reset({})
+                setTimeout(reset, 300)
                 onClose?.()
             },
             onError: (res) => toast.error(res?.response?.data?.message || 'Xatolik yuz berdi')
@@ -33,7 +33,7 @@ const CreateNewLessonForm = ({
             <form className={cls.form} onSubmit={handleSubmit(handleCreateNewLesson)} >
                 <div className={cls.form__header}>
                     <span className={cls.form__header__title}>Darsni boshlash</span>
-                    <button onClick={onClose}>
+                    <button onClick={onClose} type='button'>
                         <CloseIcon />
                     </button>
                 </div>

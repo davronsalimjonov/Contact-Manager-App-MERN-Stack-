@@ -1,8 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createLesson, getGroupLessons } from "@/services/lesson"
+import { createLesson, getGroupLessons, getLessonInfo } from "@/services/lesson"
 
 export const useGetGroupLessons = (groupId) => {
     return useQuery(['lessons', groupId], () => getGroupLessons(groupId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!groupId })
+}
+
+export const useGetLessonInfo = (lessonId) => {
+    return useQuery(['lesson', lessonId], () => getLessonInfo(lessonId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!lessonId })
 }
 
 export const useCreateLessonMutation = () => {

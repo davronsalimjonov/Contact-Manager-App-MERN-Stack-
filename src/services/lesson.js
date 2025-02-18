@@ -10,3 +10,8 @@ export const getGroupLessons = async (groupId) => {
     const res = await api.get(`/lesson/group/${groupId}`)
     return res.data
 }
+
+export const getLessonInfo = async (lessonId) => {
+    const res = await api.get(`/lesson/${lessonId}`)
+    return res?.data
+}

@@ -49,11 +49,6 @@ export const deleteMovedSchedule = async (scheduleId) => {
     return res.data
 }
 
-export const getSingleLesson = async (lessonId) => {
-    const res = await api.get(`/lesson/${lessonId}`)
-    return res?.data
-}
-
 export const createHomeWork = async (data) => {
     const res = await api.post(`/lesson-home-task`, data)
     return res?.data
