@@ -14,18 +14,19 @@ const ConfirmScheduleMoveModal = ({
     const [isLoading, setIsLoading] = useState(false)
     const title = type === 'temp' ? 'Ushbu darsni shu hafta uchun ko’chirishni xohlaysizmi?' : 'Ushbu darsni doimiy ko’chirishni xohlaysizmi?'
 
+    const handleClose = () => {
+        setType('temp')
+        onClose?.()
+    }
+    
     const handleConfirm = async () => {
         try {
             setIsLoading(true)
             await onConfirm?.(type)
+            handleClose()
         } finally {
             setIsLoading(false)
         }
-    }
-
-    const handleClose = () => {
-        setType('temp')
-        onClose?.()
     }
 
     return (

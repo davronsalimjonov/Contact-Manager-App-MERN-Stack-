@@ -29,7 +29,6 @@ const LessonPlan = () => {
         setMovedEvent({ isOpen: true, event })
         setEvents(prev => prev.map(e => e.id === event.lessonScheduleId ? { ...e, isRescheduled: true, isNewReschedule: e.isRescheduled } : e))
     }
-console.log(events);
 
     const handleScheduleMove = async (type) => {
         const event = movedEvent?.event
