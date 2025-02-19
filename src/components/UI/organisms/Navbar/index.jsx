@@ -14,7 +14,7 @@ const Navbar = ({ onPerionChange }) => {
     const location = useLocation()
     const navigate = useNavigate()
     const { data: user } = useGetUser()
-    const timeperiodPickerPath = ['/', '/main-teachers', '/call-teachers', '/dashboard']
+    const timeperiodPickerPath = ['/', '/main-teachers', '/main-teachers/:id', '/call-teachers', '/call-teachers/:id', '/dashboard']
     const adaptationAllowedRoles = [USER_ROLES.CALL_MENTOR]
     const isMentor = user?.role === USER_ROLES.CALL_MENTOR || user?.role === USER_ROLES.MAIN_MENTOR
 
@@ -89,7 +89,7 @@ const Navbar = ({ onPerionChange }) => {
                         onChange={(e) => changeAdaptationStatus(user?.id, { isAdaptationActive: e.target.checked })}
                     />
                 )}
-                {timeperiodPickerPath.includes(location.pathname) && <TimePeriodPicker onChange={onPerionChange} selectsRange={rangeTimepicker} />}
+                {timeperiodPickerPath.some(path => matchRoute(path, location.pathname)) && <TimePeriodPicker onChange={onPerionChange} selectsRange={rangeTimepicker} />}
                 <NotificationButton />
                 <Avatar src={user?.url} name={getUserFullName(user)} size={56} round />
             </div>
