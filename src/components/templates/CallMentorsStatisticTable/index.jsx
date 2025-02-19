@@ -29,7 +29,7 @@ const CallMentorsStatisticTable = ({ mentors = [] }) => {
                                 index={index + 1}
                                 onClick={() => navigate(mentor?.id)}
                                 fullName={getUserFullName(mentor)}
-                                callsCount={mentor?.callCount || 0}
+                                callsCount={(mentor?.calls?.split('/')?.[0]) || 0}
                                 adaptationCount={mentor?.adaptationCount || 0}
                                 mentorActivityPercentage={mentor?.active || 0}
                                 salary={mentor?.salary || 0}

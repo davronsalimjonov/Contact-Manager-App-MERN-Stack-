@@ -1,14 +1,17 @@
-import toast from "react-hot-toast"
-import { useNavigate } from "react-router-dom"
 import { objectToMultiPartFormData } from "@/utils/lib"
 import ScheduleHomeWorkCreateForm from "@/components/UI/organisms/ScheduleHomeWorkCreateForm"
 import cls from "./CreateLessonHomework.module.scss"
+import Button from "@/components/UI/atoms/Buttons/Button"
 
 const CreateLessonHomework = () => {
 
   return (
     <div className={cls.form}>
-      <h1>Vazifa Yaratish</h1>
+      <h1 className={cls.form__title}>Vazifa Yaratish</h1>
+      <div className={cls.form__elements}>
+    
+      </div>
+      <Button className={cls.form__btn}>Yaratish</Button>
     </div>
   )
 }
