@@ -1,3 +1,4 @@
+import { useOutletContext } from "react-router-dom";
 import { formatPrice } from "@/utils/lib";
 import Loader from "@/components/UI/atoms/Loader";
 import { StarIcon } from "@/components/UI/atoms/icons";
@@ -7,7 +8,8 @@ import MainMentorsStatisticTable from "@/components/templates/MainMentorsStatist
 import cls from './MainMentorsStatistic.module.scss';
 
 const MainMentorsStatistic = () => {
-    const { data: mentors, isLoading } = useGetMainMentorsStatistic()
+    const [period] = useOutletContext()
+    const { data: mentors, isLoading } = useGetMainMentorsStatistic({ startDate: period.startDate, endDate: period.endDate })
 
     return !isLoading ? (
         <div className={cls.page}>

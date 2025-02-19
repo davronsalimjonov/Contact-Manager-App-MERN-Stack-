@@ -1,3 +1,4 @@
+import { useOutletContext } from "react-router-dom";
 import Loader from "@/components/UI/atoms/Loader";
 import { StarIcon } from "@/components/UI/atoms/icons";
 import { useGetCallMentorsStatistic } from "@/hooks/useMentor";
@@ -6,7 +7,8 @@ import CallMentorsStatisticTable from "@/components/templates/CallMentorsStatist
 import cls from './CallMentorsStatistic.module.scss';
 
 const CallMentorsStatistic = () => {
-    const { data: mentors, isLoading } = useGetCallMentorsStatistic()
+    const [period] = useOutletContext()
+    const { data: mentors, isLoading } = useGetCallMentorsStatistic({ startDate: period.startDate, endDate: period.endDate })
     
     return !isLoading ? (
         <div className={cls.page}>
