@@ -56,9 +56,9 @@ import SingleGroup from "@/components/pages/SingleGroup";
 import LessonPlan from "@/components/pages/LessonPlan";
 import GroupLessons from "@/components/pages/GroupLessons";
 import UserCourseUpdate from "@/components/pages/UserCourseUpdate";
-import ScheduleHomeworkCreate from "@/components/pages/ScheduleHomeWorkCreate";
 import ScheduleHomeWorkDetails from "@/components/pages/ScheduleHomeWorkDetails";
 import MentorCardsProvider from "@/providers/MentorCardsProvider";
+import CreateLessonHomework from "@/components/pages/CreateLessonHomework";
 import AcademyAdaptationWorkspace from "@/components/pages/AcademyAdaptationWorkspace";
 import { USER_ROLES } from "@/constants";
 
@@ -168,7 +168,7 @@ const mainMentorRoutes = createBrowserRouter([
             },
             {
                 path: '/lessons-schedule/:groupId/:lessonId/create-homework',
-                element: <ScheduleHomeworkCreate />
+                element: <CreateLessonHomework />
             },
             {
                 path: '/lessons-schedule/:groupId/:lessonId/homework/:homeworkId',

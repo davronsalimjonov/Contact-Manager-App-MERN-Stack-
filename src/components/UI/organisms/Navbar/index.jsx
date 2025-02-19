@@ -14,7 +14,7 @@ const Navbar = ({ onPerionChange }) => {
     const location = useLocation()
     const navigate = useNavigate()
     const { data: user } = useGetUser()
-    const timeperiodPickerPath = ['/', '/main-teachers', '/dashboard']
+    const timeperiodPickerPath = ['/', '/main-teachers', '/call-teachers', '/dashboard']
     const adaptationAllowedRoles = [USER_ROLES.CALL_MENTOR]
     const isMentor = user?.role === USER_ROLES.CALL_MENTOR || user?.role === USER_ROLES.MAIN_MENTOR
 

@@ -27,21 +27,21 @@ export const useGetGroupLessonsSchedule = (groupId) => {
     }
 }
 
-export const useHomeWorkMutations = () => {
-    const queryClient = useQueryClient()
-    const createHomeWorkMutation = useMutation({
-        mutationFn: createHomeWork,
-        onSuccess: onCreateSuccess
-    })
+// export const useHomeWorkMutations = () => {
+//     const queryClient = useQueryClient()
+//     const createHomeWorkMutation = useMutation({
+//         mutationFn: createHomeWork,
+//         onSuccess: onCreateSuccess
+//     })
 
-    function onCreateSuccess(newLesson) {
-        queryClient.setQueriesData(['lessons-single'], (oldLesson) => ([...(oldLesson || []), newLesson]))
-    }
+//     function onCreateSuccess(newLesson) {
+//         queryClient.setQueriesData(['lessons-single'], (oldLesson) => ([...(oldLesson || []), newLesson]))
+//     }
 
-    return {
-        createHomeWorkMutation
-    }
-}
+//     return {
+//         createHomeWorkMutation
+//     }
+// }
 
 export const useRateStudentHomeWorkMutations = () => {
     const { lessonId } = useParams()
@@ -60,21 +60,21 @@ export const useRateStudentHomeWorkMutations = () => {
     }
 }
 
-export const useUpdateHomeWorkMutations = () => {
-    const queryClient = useQueryClient()
-    const updateHomeWorkMutation = useMutation({
-        mutationFn: updateHomeWork,
-        onSuccess: onUpdateSuccess
-    })
+// export const useUpdateHomeWorkMutations = () => {
+//     const queryClient = useQueryClient()
+//     const updateHomeWorkMutation = useMutation({
+//         mutationFn: updateHomeWork,
+//         onSuccess: onUpdateSuccess
+//     })
 
-    function onUpdateSuccess(updateLesson) {
-        queryClient.setQueriesData(['lessons-single'], (oldLesson) => ([...(oldLesson || []), updateLesson]))
-    }
+//     function onUpdateSuccess(updateLesson) {
+//         queryClient.setQueriesData(['lessons-single'], (oldLesson) => ([...(oldLesson || []), updateLesson]))
+//     }
 
-    return {
-        updateHomeWorkMutation
-    }
-}
+//     return {
+//         updateHomeWorkMutation
+//     }
+// }
 
 export const useCreateLessonScheduleMutation = () => {
     const queryClient = useQueryClient()
