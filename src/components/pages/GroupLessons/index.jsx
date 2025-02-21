@@ -2,6 +2,7 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import Loader from "@/components/UI/atoms/Loader"
+import { useGetGroupInfo } from '@/hooks/useGroups'
 import { useGetGroupLessons } from '@/hooks/useLessons'
 import Button from "@/components/UI/atoms/Buttons/Button"
 import EmptyData from "@/components/UI/organisms/EmptyData"
@@ -10,16 +11,17 @@ import { PersonsIcon, PlusIcon } from "@/components/UI/atoms/icons"
 import MediaPreviewer from '@/components/UI/moleculs/MediaPreviewer'
 import CreateNewLessonForm from '@/components/UI/organisms/CreateNewLessonForm'
 import cls from "./GroupLessons.module.scss"
-import { useGetGroupInfo } from '@/hooks/useGroups'
 
-function checkSchedule(scheduleData = [], now = new Date()) {
+function checkSchedule(scheduleData = []) {
     // Получаем текущую дату и время
-    // const now = new Date();
+    const beforeUntilStart = 10
+    const afterUntilStart = -30
+    
+    const now = new Date();
     const currentWeekday = now.getDay(); // 0 = воскресенье, 1 = понедельник, и т.д.
     
     // Преобразуем текущее время в минуты от начала дня
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    console.log(currentMinutes);
     
     // Форматируем текущую дату в строку YYYY-MM-DD для сравнения
     const currentDate = now.toISOString().split('T')[0];
@@ -29,7 +31,8 @@ function checkSchedule(scheduleData = [], now = new Date()) {
         if (lesson.lessonScheduleMoves && lesson.lessonScheduleMoves.date === currentDate) {
             // Проверяем время до начала перенесенного занятия
             const minutesUntilStart = lesson.lessonScheduleMoves.startTime - currentMinutes;
-            if (minutesUntilStart >= 0 && minutesUntilStart <= 10) {
+            
+            if (minutesUntilStart <= beforeUntilStart && minutesUntilStart >= afterUntilStart) {
                 return true;
             }
             continue; // Пропускаем дальнейшие проверки для этого занятия
@@ -45,7 +48,7 @@ function checkSchedule(scheduleData = [], now = new Date()) {
         if (lesson.weekday === currentWeekday) {
             // Проверяем время до начала занятия
             const minutesUntilStart = lesson.startTime - currentMinutes;
-            if (minutesUntilStart >= 0 && minutesUntilStart <= 10) {
+            if (minutesUntilStart <= beforeUntilStart && minutesUntilStart >= afterUntilStart) {
                 return true;
             }
         }
@@ -66,8 +69,8 @@ const GroupLessons = () => {
         if(!url) return toast.error('Video topilmadi')
         setVideoUrl(url)
     }
-    // console.log(groupInfo?.lessonSchedules);
-    // console.log(checkSchedule(groupInfo?.lessonSchedules, new Date('2025-02-17T08:50:00.000Z')));
+
+    const isLessonAvailable = checkSchedule(groupInfo?.lessonSchedules);
 
     return (
         <div className={cls.lessons}>
@@ -85,7 +88,7 @@ const GroupLessons = () => {
                 <div className={cls.lessons__header__title}><PersonsIcon fill="var(--blue-color)" />{groupInfo?.title}</div>
                 <Button 
                     onClick={() => setIsOpenNewLessonModal(true)}
-                    disabled={checkSchedule(groupLesson?.lessonSchedules)}
+                    disabled={!isLessonAvailable}
                 >
                         <PlusIcon width={20} height={20} /> Boshlash
                 </Button>
