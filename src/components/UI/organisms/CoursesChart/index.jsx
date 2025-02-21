@@ -4,6 +4,14 @@ import LegendItem from '../../atoms/LegendItem';
 import cls from './CoursesChart.module.scss';
 
 const options = {
+    layout: {
+        padding: {
+            top: 25,
+            bottom: 25,
+            right: 0,
+            left: 0,
+        }
+    },
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -30,11 +38,11 @@ const CoursesChart = ({
 }) => {
     const colors = ['rgba(255, 207, 84, 0.8)', 'rgba(255, 51, 51, 0.8)', 'rgba(66, 120, 226, 0.8)']
     const studentsCount = courses?.reduce((acc, curr) => acc + +(curr?.count || 0), 0)
-    
+
     const getCourseColor = (index) => {
         return colors[index % colors.length]
     }
-    
+
     const data = {
         labels: courses?.map(course => course?.title),
         datasets: [
@@ -46,10 +54,10 @@ const CoursesChart = ({
         ]
     }
 
-    const legends = courses?.map((course, index) => ({ 
-        name: course?.title, 
+    const legends = courses?.map((course, index) => ({
+        name: course?.title,
         value: ((course?.count / studentsCount) * 100).toFixed(2),
-        color: getCourseColor(index) 
+        color: getCourseColor(index)
     }))
 
     return (

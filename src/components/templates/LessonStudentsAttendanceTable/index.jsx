@@ -19,6 +19,7 @@ const LessonStudentsAttendanceTable = ({
                             <th>№</th>
                             <th>Ism Familiya</th>
                             <th>O'quvchi Vazifasi</th>
+                            <th>Baho</th>
                             <th>Davomati</th>
                         </tr>
                     </thead>
@@ -30,6 +31,7 @@ const LessonStudentsAttendanceTable = ({
                                 fullName={getUserFullName(student?.student?.user)}
                                 attendance={student?.attendance}
                                 hasHomeWork={!!student?.lessonHomeWork}
+                                mark={student?.mark}
                                 onClickHomeWork={() => navigate(student?.id)}
                             />
                         ))}

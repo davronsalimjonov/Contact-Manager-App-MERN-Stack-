@@ -46,7 +46,7 @@ const StudentsCountChart = ({
                         <LevelLegendItem 
                             key={index}
                             count={item?.value}
-                            level={item?.label}
+                            level={item?.label || 'Darajasi aniqlanmagan'}
                             borderColor={item?.borderColor}
                             backgroundColor={item?.backgroundColor}
                             color={item?.color}

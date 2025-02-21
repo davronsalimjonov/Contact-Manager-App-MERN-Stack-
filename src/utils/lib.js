@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const formatPrice = num => {
-    num = String(num).replace(/\s+/g, '').replace(/[^+\d]/g, '')
+    num = String(num).replace(/\s+/g, '').replace(/[^+\d.]/g, '')
     return new Intl.NumberFormat('ru-RU').format(num)
 }
 

@@ -48,13 +48,13 @@ const MainMentorDashboard = ({ userId, withUserInfo = false }) => {
                     <div className={cls.page__metrics}>
                         <MetricCard
                             title='Faol o’quvchilar soni'
-                            value={`${mainMentorStatistic?.activeStudents || 0} ta`}
+                            value={<>{mainMentorStatistic?.activeStudents || 0} ta / {mainMentorStatistic?.activeStudentsPercentage || 0} %</>}
                             icon={<MetricPersonsIcon color='rgba(0, 182, 155, 1)' />}
                             iconBg='rgba(0, 182, 155, 0.21)'
                         />
                         <MetricCard
-                            title='O`quvchilar Aktivligi'
-                            value={`${mainMentorStatistic?.activeStudentsPercentage || 0} %`}
+                            title='Mentor aktivligi'
+                            value={`${mainMentorStatistic?.mentorActivityPercentage || 0} %`}
                             icon={<MetricPersonsIcon color='rgba(254, 197, 61, 1)' />}
                             iconBg='rgba(254, 242, 214, 1)'
                         />

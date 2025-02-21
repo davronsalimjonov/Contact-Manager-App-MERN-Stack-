@@ -119,7 +119,7 @@ const ActiveStudentsCountChart = ({ mentorId }) => {
     return (
         <div className={cls.cart}>
             <div className={cls.cart__header}>
-                <h3 className={cls.cart__header__title}>O'quvchilar oqimi</h3>
+                <h3 className={cls.cart__header__title}>O'quvchilar aktivligi</h3>
                 <Select
                     placeholder='Oy'
                     isSearchable={false}
