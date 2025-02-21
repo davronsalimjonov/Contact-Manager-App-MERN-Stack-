@@ -1,5 +1,6 @@
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
+import { useGetUserId } from '@/hooks/useGetUser'
 import { useCreateLessonMutation } from '@/hooks/useLessons'
 import Dialog from '../../moleculs/Dialog'
 import { CloseIcon } from '../../atoms/icons'
@@ -13,13 +14,18 @@ const CreateNewLessonForm = ({
     groupId,
     onClose,
 }) => {
+    const mentorId = useGetUserId()
     const { register, reset, handleSubmit, formState: { isDirty, errors, isSubmitting } } = useForm()
     const createLessonMutation = useCreateLessonMutation()
     
     const handleCreateNewLesson = async (data) => {
         data = { ...data, group: groupId }
         await createLessonMutation.mutateAsync(data, {
-            onSuccess: () => {
+            onSuccess: (res) => {
+                const videoPlatformUrl = new URL(res?.url || '')
+                videoPlatformUrl.searchParams.set('user', mentorId)
+                window.open(videoPlatformUrl.toString(), '_blank')
+                
                 toast.success("Dars Yaratildi")
                 setTimeout(reset, 300)
                 onClose?.()

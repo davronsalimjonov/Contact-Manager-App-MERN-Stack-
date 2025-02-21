@@ -1,9 +1,7 @@
 import { memo, useState } from 'react';
-import { formatFileSize } from '@/utils/lib';
 import { getTimeFromDate } from '@/utils/time';
 import { updateHomeWork } from '@/services/chat';
 import Rater from '../../atoms/Rater';
-import { FileIcon } from '../../atoms/icons';
 import MediaPreviewer from '../MediaPreviewer';
 import LessonTaskModal from '../LessonTaskModal';
 import ChatMessageLayout from '../ChatMessageLayout';

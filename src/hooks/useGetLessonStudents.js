@@ -3,5 +3,5 @@ import { removeEmptyKeys } from "@/utils/lib"
 import { getLessonStudents } from "@/services/schedule"
 
 export const useGetLessonStudents = (lessonId, params = {}) => {
-    return useQuery(['lesson-students', lessonId, ...Object.values(removeEmptyKeys(params))], () => getLessonStudents(lessonId, {...params}))
+    return useQuery(['lesson-students', lessonId, ...Object.values(removeEmptyKeys(params))], () => getLessonStudents(lessonId, params), {retry: false})
 }

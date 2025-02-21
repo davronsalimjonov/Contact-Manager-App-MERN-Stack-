@@ -52,15 +52,15 @@ export function objectToFormData(obj, formData = new FormData()) {
                 formData.append(key, value.toISOString());
             } 
 
-            // else if (Array.isArray(value)) {
-            //     value.forEach((item) => {
-            //         if(typeof item === 'object' && item !== null) {
-            //             item = JSON.stringify(item)
-            //         }                    
-            //         formData.append(`${key}[]`, item);
-            //     });
-            //     formData.append(key, JSON.stringify(value))
-            // }
+            else if (Array.isArray(value)) {
+                value.forEach((item, index) => {
+                    if(typeof item === 'object' && item !== null) {
+                        // item = JSON.stringify(item)
+                    }                    
+                    formData.append(`${key}`, item);
+                });
+                // formData.append(key, JSON.stringify(value))
+            }
 
             else if (typeof value === 'object' && value !== null) {
                 objectToFormData(value, formData);

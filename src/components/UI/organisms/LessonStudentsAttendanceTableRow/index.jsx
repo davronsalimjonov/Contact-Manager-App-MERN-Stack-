@@ -7,7 +7,8 @@ const LessonStudentsAttendanceTableRow = ({
     fullName = "",
     hasHomeWork = false,
     attendance = false,
-    onClick
+    onClick,
+    onClickHomeWork
 }) => {
 
     return (
@@ -16,7 +17,7 @@ const LessonStudentsAttendanceTableRow = ({
             <td>{fullName}</td>
             <td>
                 {hasHomeWork ? (
-                    <button className={cls.row__homework}>Topshirdi</button>
+                    <button className={cls.row__homework} onClick={onClickHomeWork}>Topshirdi</button>
                 ) : (
                     <EmptyDataText text='Vazifa topshirilmagan' />
                 )}

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import LessonStudentsAttendanceTableRow from '@/components/UI/organisms/LessonStudentsAttendanceTableRow';
@@ -7,6 +8,8 @@ const LessonStudentsAttendanceTable = ({
     students = [],
     startIndex = 0 
 }) => {
+    const navigate = useNavigate()
+
     return (
         <div className={cls.wrapper}>
             {students?.length > 0 ? (
@@ -27,6 +30,7 @@ const LessonStudentsAttendanceTable = ({
                                 fullName={getUserFullName(student?.student?.user)}
                                 attendance={student?.attendance}
                                 hasHomeWork={!!student?.lessonHomeWork}
+                                onClickHomeWork={() => navigate(student?.id)}
                             />
                         ))}
                     </tbody>

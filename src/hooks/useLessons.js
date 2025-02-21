@@ -1,12 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createLesson, getGroupLessons, getLessonInfo } from "@/services/lesson"
+import { createLesson, createLessonHomeWork, getGroupLessons, getLessonInfo, getStudentLessonHomework, rateLessonHomeWork } from "@/services/lesson"
 
 export const useGetGroupLessons = (groupId) => {
     return useQuery(['lessons', groupId], () => getGroupLessons(groupId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!groupId })
 }
 
 export const useGetLessonInfo = (lessonId) => {
-    return useQuery(['lesson', lessonId], () => getLessonInfo(lessonId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!lessonId })
+    return useQuery(['lesson-info', lessonId], () => getLessonInfo(lessonId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!lessonId })
+}
+
+export const useGetStudentLessonHomework = (homeWorkId) => {
+    return useQuery(['lesson-home-work', homeWorkId], () => getStudentLessonHomework(homeWorkId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!homeWorkId })
 }
 
 export const useCreateLessonMutation = () => {
@@ -22,4 +26,47 @@ export const useCreateLessonMutation = () => {
     }
 
     return createLessonMutation
+}
+
+export const useCreateLessonHomeWorkMutation = () => {
+    const queryClient = useQueryClient()
+    const createHomeWorkMutation = useMutation({
+        mutationFn: createLessonHomeWork,
+        onSuccess: onCreateSuccess
+    })
+
+    function onCreateSuccess(homeWork, body) {
+        const lessonId = body?.get('lesson')
+        queryClient.setQueryData(['lesson-info', lessonId], (oldData) => ({
+            ...oldData,
+            lessonHomeTask: homeWork
+        }))
+    }
+
+    return createHomeWorkMutation
+}
+
+export const useRateLessonHomeWorkMutation = () => {
+    const queryClient = useQueryClient()
+    const rateLessonHomeWorkMutation = useMutation({
+        mutationFn: async data => {
+            data = Object.assign({}, data)
+            const id = data.id
+            delete data.id
+            delete data.homeWorkId
+            return await rateLessonHomeWork(id, data)
+        },
+        onSuccess: onCreateSuccess
+    })
+
+    function onCreateSuccess(res, body) {
+        const homeWorkId = body.homeWorkId
+        queryClient.setQueryData(['lesson-home-work', homeWorkId], (oldData) => ({
+            ...oldData,
+            mark: body.mark,
+            comment: body.comment
+        }))
+    }
+
+    return rateLessonHomeWorkMutation
 }

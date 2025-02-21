@@ -20,14 +20,7 @@ export const CALL_RECORD_DEFAULT_PEAKS = Array(300).fill(0)
 
 export const UNITS = Array.from(Array(12)).map((_, index) => ({ value: 5 * (index + 1), label: `Unit ${5 * (index + 1)}` }));
 
-export const DEGREE = [
-    "A1",
-    "A2",
-    "B1",
-    "B2",
-    "C1",
-    "C2"
-];
+export const DEGREE = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 export const STATUSOPTIONS = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
 
@@ -45,3 +38,5 @@ export const PAYMENT_LINK = [
         value: paymentLink,
     }
 ]
+
+export const MEDIA_FILES_TYPES = 'image/*, application/pdf, video/*, audio/*, .doc, .docx'

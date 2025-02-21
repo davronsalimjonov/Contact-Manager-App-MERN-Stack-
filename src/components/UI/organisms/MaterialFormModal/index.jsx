@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { MEDIA_FILES_TYPES } from '@/constants';
 import Button from '../../atoms/Buttons/Button';
 import Dialog from '../../moleculs/Dialog';
 import FormInput from '../../moleculs/Form/FormInput';
@@ -47,7 +48,7 @@ const MaterialFormModal = ({
                 <FormFilePicker
                     label='Material'
                     placeholder='Rasm, pdf, video, audio, doc'
-                    accept='image/*, application/pdf, video/*, audio/*, .doc, .docx'
+                    accept={MEDIA_FILES_TYPES}
                     onChange={(file) => setValue('file', file, { shouldDirty: true, shouldValidate: true })}
                     defaultFile={getValues('file')}
                     error={errors.file?.message}

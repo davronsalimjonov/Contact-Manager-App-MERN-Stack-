@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StarsRating } from 'stars-rating-react-hooks';
 
 const Rater = ({
-    count = 5,
+    count = 4,
     defaultValue = 0,
     isDisabled = false,
     onRate,
