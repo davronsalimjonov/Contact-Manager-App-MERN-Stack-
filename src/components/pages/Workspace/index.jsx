@@ -61,7 +61,7 @@ const Workspace = () => {
             time={item?.time}
             status={status}
             group={item?.group}
-            onClickCall={() => handleClickCard(item?.student?.user?.id)}
+            onClickCall={() => handleClickCard(item?.student?.id)}
         />
     ), [])
 

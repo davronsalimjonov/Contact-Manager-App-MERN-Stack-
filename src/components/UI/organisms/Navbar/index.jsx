@@ -22,7 +22,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/', title: 'Dashboard', roleTitles: { [USER_ROLES.SELLER]: 'Home' }, showBackButton: false },
         { path: '/students', title: 'O’quvchilarim', showBackButton: false },
         { path: '/students/chat/:id', title: 'O’quvchilarim', showBackButton: true },
-        { path: '/students/:courseId/:userId', title: 'O’quvchi ma’lumotlari', showBackButton: true },
+        { path: '/students/:courseId/:userId', title: 'O’quvchi ma’lumotlari', showBackButton: false },
         { path: '/workspace', title: 'Workspace', showBackButton: false },
         { path: '/user-course/:id', title: 'O’quvchi ma’lumotlari', showBackButton: true },
         { path: '/dictionary', title: 'Lug’at', showBackButton: false },

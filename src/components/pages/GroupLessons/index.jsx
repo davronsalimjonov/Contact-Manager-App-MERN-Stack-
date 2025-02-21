@@ -11,42 +11,35 @@ import { PersonsIcon, PlusIcon } from "@/components/UI/atoms/icons"
 import MediaPreviewer from '@/components/UI/moleculs/MediaPreviewer'
 import CreateNewLessonForm from '@/components/UI/organisms/CreateNewLessonForm'
 import cls from "./GroupLessons.module.scss"
+import { useGetUserId } from '@/hooks/useGetUser'
 
 function checkSchedule(scheduleData = []) {
-    // Получаем текущую дату и время
     const beforeUntilStart = 10
     const afterUntilStart = -30
     
     const now = new Date();
-    const currentWeekday = now.getDay(); // 0 = воскресенье, 1 = понедельник, и т.д.
+    const currentWeekday = now.getDay();
     
-    // Преобразуем текущее время в минуты от начала дня
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
     
-    // Форматируем текущую дату в строку YYYY-MM-DD для сравнения
     const currentDate = now.toISOString().split('T')[0];
 
     for (const lesson of scheduleData) {
-        // Проверяем, есть ли перенос занятия на сегодня
         if (lesson.lessonScheduleMoves && lesson.lessonScheduleMoves.date === currentDate) {
-            // Проверяем время до начала перенесенного занятия
             const minutesUntilStart = lesson.lessonScheduleMoves.startTime - currentMinutes;
             
             if (minutesUntilStart <= beforeUntilStart && minutesUntilStart >= afterUntilStart) {
                 return true;
             }
-            continue; // Пропускаем дальнейшие проверки для этого занятия
+            continue;
         }
         
-        // Проверяем, не отменено ли занятие на сегодня
         if (lesson.lessonScheduleMoves && 
             lesson.lessonScheduleMoves.fromDate === currentDate) {
-            continue; // Пропускаем это занятие
+            continue;
         }
         
-        // Проверяем обычное расписание
         if (lesson.weekday === currentWeekday) {
-            // Проверяем время до начала занятия
             const minutesUntilStart = lesson.startTime - currentMinutes;
             if (minutesUntilStart <= beforeUntilStart && minutesUntilStart >= afterUntilStart) {
                 return true;
@@ -59,11 +52,18 @@ function checkSchedule(scheduleData = []) {
 
 const GroupLessons = () => {
     const navigate = useNavigate()
+    const mentorId = useGetUserId()
     const { groupId } = useParams()
     const [videoUrl, setVideoUrl] = useState('')
     const [isOpenNewLessonModal, setIsOpenNewLessonModal] = useState(false)
     const { data: groupLesson, isLoading: isGroupLessonLoading } = useGetGroupLessons(groupId)
     const { data: groupInfo } = useGetGroupInfo(groupId)
+
+    const redirectToPlatform = (url = '') => {
+        const link = new URL(url)
+        link.searchParams.set('user', mentorId)
+        window.open(link.toString(), '_blank')
+    }
 
     const handleVideoPreview = (url) => {
         if(!url) return toast.error('Video topilmadi')
@@ -82,7 +82,7 @@ const GroupLessons = () => {
             <MediaPreviewer 
                 visible={!!videoUrl}
                 urls={[videoUrl]}
-                onClose={() => setVideoUrl(null)}
+                setVisible={() => setVideoUrl('')}
             />
             <div className={cls.lessons__header}>
                 <div className={cls.lessons__header__title}><PersonsIcon fill="var(--blue-color)" />{groupInfo?.title}</div>
@@ -105,6 +105,7 @@ const GroupLessons = () => {
                             isLive={lesson?.status === 'ongoing'}
                             onClick={() => navigate(lesson?.id)}
                             onClickVideo={() => handleVideoPreview(lesson?.video)}
+                            onClickLesson={() => redirectToPlatform(lesson?.url)}
                         />
                     )) : (
                         <EmptyData />

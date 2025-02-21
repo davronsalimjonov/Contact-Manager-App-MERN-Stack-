@@ -30,7 +30,6 @@ const MediaPreviewer = ({
 
     return (
         <PreviewModal
-            
             visible={visible}
             setVisible={setVisible}
             urls={urls}
