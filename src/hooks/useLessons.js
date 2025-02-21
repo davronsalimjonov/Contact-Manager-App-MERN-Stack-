@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createLesson, createLessonHomeWork, getGroupLessons, getLessonInfo, getStudentLessonHomework, rateLessonHomeWork } from "@/services/lesson"
+import { createLesson, createLessonHomeWork, getGroupLessons, getLessonHomeTask, getLessonInfo, getStudentLessonHomework, rateLessonHomeWork, updateLessonHomeTask } from "@/services/lesson"
 
 export const useGetGroupLessons = (groupId) => {
     return useQuery(['lessons', groupId], () => getGroupLessons(groupId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!groupId })
@@ -11,6 +11,10 @@ export const useGetLessonInfo = (lessonId) => {
 
 export const useGetStudentLessonHomework = (homeWorkId) => {
     return useQuery(['lesson-home-work', homeWorkId], () => getStudentLessonHomework(homeWorkId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!homeWorkId })
+}
+
+export const useGetLessonHomeTask = (homeTaskId) => {
+    return useQuery(['lesson-home-task', homeTaskId], () => getLessonHomeTask(homeTaskId), { cacheTime: Infinity, staleTime: Infinity, enabled: !!homeTaskId })
 }
 
 export const useCreateLessonMutation = () => {
@@ -69,4 +73,23 @@ export const useRateLessonHomeWorkMutation = () => {
     }
 
     return rateLessonHomeWorkMutation
+}
+
+export const useUpdateLessonHomeTaskMutation = () => {
+   const queryClient = useQueryClient()
+   const updateLessonHomeWorkMutation = useMutation({
+       mutationFn: async data => {
+           const id = data.get('id')
+           data.delete('id')
+           return await updateLessonHomeTask(id, data)
+       },
+       onSuccess: onCreateSuccess
+   })
+
+   function onCreateSuccess(updatedTask) {
+       const homeTaskId = updatedTask?.id
+       queryClient.setQueryData(['lesson-home-task', homeTaskId], updatedTask)
+   }
+   
+   return updateLessonHomeWorkMutation
 }

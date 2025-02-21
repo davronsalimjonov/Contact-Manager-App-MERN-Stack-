@@ -12,8 +12,9 @@ const FormMultipleFilePicker = ({
     limit = 10,
     accept,
     onChange,
+    defaultFiles = []
 }) => {
-    const [files, setFiles] = useState([])
+    const [files, setFiles] = useState(defaultFiles)
 
     const handlePickFile = (file) => {
         if (files.length < limit && file) {

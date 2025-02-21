@@ -26,6 +26,16 @@ export const getStudentLessonHomework = async (homeworkId) => {
     return res?.data
 }
 
+export const updateLessonHomeTask = async (homeTaskId, data) => {
+    const res = await api.put(`/lesson-home-task/${homeTaskId}`, data, { headers: { 'Content-Type': 'multipart/form-data' } })
+    return res?.data
+}
+
+export const getLessonHomeTask = async (homeTaskId) => {
+    const res = await api.get(`/lesson-home-task/${homeTaskId}`)
+    return res?.data
+}
+
 export const rateLessonHomeWork = async (homeworkId, data) => {
     const res = await api.put(`/lesson-home-task/rate-lesson-home-work/${homeworkId}`, data)
     return res?.data

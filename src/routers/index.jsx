@@ -61,6 +61,7 @@ import MentorCardsProvider from "@/providers/MentorCardsProvider";
 import CreateLessonHomework from "@/components/pages/CreateLessonHomework";
 import AcademyAdaptationWorkspace from "@/components/pages/AcademyAdaptationWorkspace";
 import { USER_ROLES } from "@/constants";
+import UpdateLessonHomework from "@/components/pages/UpdateLessonHomework";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -169,6 +170,10 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '/lessons-schedule/:groupId/:lessonId/create-homework',
                 element: <CreateLessonHomework />
+            },
+            {
+                path: '/lessons-schedule/:groupId/:lessonId/hometask/:homeTaskId',
+                element: <UpdateLessonHomework />
             },
             {
                 path: '/lessons-schedule/:groupId/:lessonId/:homeWorkId',

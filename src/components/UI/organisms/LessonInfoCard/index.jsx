@@ -24,7 +24,12 @@ const LessonInfoCard = ({ lessonId = '' }) => {
                     Videoni Ko'rish <ArrowRightIcon />
                 </button>
                 {lessonInfo?.lessonHomeTask ? (
-                    <button className={cls.card__details__btn}>Vazifa <ArrowRightIcon /></button>
+                    <button 
+                        onClick={() => navigate(`hometask/${lessonInfo?.lessonHomeTask?.id}`)} 
+                        className={cls.card__details__btn}
+                    >
+                        Vazifa <ArrowRightIcon />
+                    </button>
                 ) : (
                     <Button onClick={() => navigate(`create-homework`)}>Vazifa Yaratish <PlusIcon height={18} width={18} /></Button>
                 )}
