@@ -13,7 +13,7 @@ import cls from './HomeworkReview.module.scss';
 
 const HomeworkReview = () => {
   const { homeWorkId } = useParams()
-  const [isOpenMediaModal, setIsOpenMediaModal] = useState(false)
+  const [previewMaterialUrl, setPreviewMaterialUrl] = useState('')
   const { data: homework, isLoading } = useGetStudentLessonHomework(homeWorkId)
   const { register, handleSubmit, setValue, formState: { errors, isDirty, isSubmitting, isValid } } = useForm()
   const rateLessonHomeWorkMutation = useRateLessonHomeWorkMutation()
@@ -36,18 +36,18 @@ const HomeworkReview = () => {
   return !isLoading ? (
     <form className={cls.page} onSubmit={handleSubmit(handleSubmitForm)}>
       <MediaPreviewer
-        urls={homework?.lessonFiles?.map(file => file?.url)}
-        visible={isOpenMediaModal}
-        setVisible={() => setIsOpenMediaModal(false)}
+        urls={[previewMaterialUrl]}
+        visible={!!previewMaterialUrl}
+        setVisible={() => setPreviewMaterialUrl('')}
       />
       <div className={cls.page__files}>
         {homework?.lessonFiles?.map(file => (
           <FilePreviewItem
-            key={file?.id}
             className={cls.page__files__item}
-            name={file?.fileName}
+            key={file?.id}
             size={file?.size}
-            onClick={() => setIsOpenMediaModal(true)}
+            name={file?.fileName}
+            onClick={() => setPreviewMaterialUrl(file?.url || '')}
           />
         ))}
       </div>

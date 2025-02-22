@@ -60,3 +60,8 @@ export const getActiveStudentsCount = async (params) => {
     const res = await api.get(`/statistic/active-students?${paramsToString(params)}`)
     return res.data
 }
+
+export const getAcademyManagerStatistics = async (params) => {
+    const res = await api.get(`/statistic/academy-manager-card-statistic?${paramsToString(params)}`)
+    return res.data
+}

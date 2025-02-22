@@ -39,6 +39,8 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/lessons-schedule/:groupId', title: 'Darslar', showBackButton: true },
         { path: '/lessons-schedule/:groupId/:lessonId', title: 'Darslar', showBackButton: true },
         { path: '/lessons-schedule/:groupId/:lessonId/:homeworkId', title: 'Uy ishi', showBackButton: true },
+        { path: '/lessons-schedule/:groupId/:lessonId/hometask/:hometaskId', title: 'Uy ishi', showBackButton: true },
+        { path: '/lessons-schedule/:groupId/:lessonId/create-homework', title: 'Uy ishi', showBackButton: true },
         { path: '/platform', title: 'Platforma', showBackButton: false },
         { path: '/materials', title: 'Materials', showBackButton: false },
         // Academic manager

@@ -20,7 +20,6 @@ const customPointPlugin = {
                 const meta = chart.getDatasetMeta(0);
                 const point = meta.data[index];
 
-                // Рисуем светло-голубой ореол
                 ctx.beginPath();
                 ctx.arc(point.x, point.y, 16, 0, 2 * Math.PI);
                 ctx.fillStyle = 'rgba(18, 86, 219, 0.2)';
@@ -32,7 +31,6 @@ const customPointPlugin = {
                 ctx.lineWidth = 2;
                 ctx.stroke();
 
-                // Отображаем текст значения над точкой
                 ctx.font = 'regular 10px Arial';
                 ctx.fillStyle = '#3A4B5A';
                 ctx.textAlign = 'center';
@@ -59,7 +57,7 @@ const options = {
             grid: { drawTicks: false, borderDash: [3, 3] },
             border: { display: false },
             ticks: { stepSize: 20 },
-            suggestedMin: 1, // Минимальное значение Y, если данных нет
+            suggestedMin: 1,
             suggestedMax: 100 
         }
     },
@@ -78,8 +76,8 @@ const fillMissingMonthDates = (data = [], month, year) => {
         const existing = data.find(item => dayjs(item.date).date() === day);
 
         return {
-            date: day, // Возвращаем число вместо даты
-            count: existing ? Number(existing.count) : null, // Преобразуем count в число
+            date: day,
+            count: existing ? Number(existing.count) : null,
         };
     });
 
@@ -88,7 +86,7 @@ const fillMissingMonthDates = (data = [], month, year) => {
 
 const ActiveStudentsCountChart = ({ mentorId }) => {
     const [period] = useOutletContext();
-    const userId = mentorId || useGetUserId()
+    const userId = mentorId || mentorId !== null ? useGetUserId() : ''
     const [dateRange, setDateRange] = useState({ startDate: dayjs().startOf('month').format('YYYY-MM-DD'), endDate: dayjs().endOf('month').format('YYYY-MM-DD') });
     const { data: newStudentsCount, isLoading: isLoadingNewStudentsCount } = useGetActiveStudentsCount({ mentorId: userId, startDate: dateRange.startDate, endDate: dateRange?.endDate })
     const filledData = fillMissingMonthDates(newStudentsCount, new Date(dateRange.startDate).getMonth() + 1, new Date(dateRange.startDate).getFullYear());

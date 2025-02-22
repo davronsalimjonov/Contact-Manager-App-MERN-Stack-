@@ -3,29 +3,17 @@
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 36px;
 
-    &__metrics{
+    &__metrics, &__usersMetrics{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        gap: 24px;
+        gap: 16px;
     }
 
-    &__charts{
+    &__studentCharts{
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 24px;
-        margin: 20px 0;
-
-        & > *{
-            grid-column: 1fr;
-        }
-    }
-
-    &__mentorMetricCardParent {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 20px;
-        margin-top: 20px;
+        gap: 16px;
     }
 }

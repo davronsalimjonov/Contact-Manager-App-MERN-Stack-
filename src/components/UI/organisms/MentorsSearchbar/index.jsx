@@ -48,9 +48,9 @@ const MentorsSearchBar = ({
                 onChange={onChangeDegree}
                 isclearable
             />
-            <Button onClick={() => navigate(`/mentors/add-mentor`)}>
+            {/* <Button onClick={() => navigate(`/mentors/add-mentor`)}>
                 Mentor Qo'shish <ArrowDown fill='white' />
-            </Button>
+            </Button> */}
         </div>
     );
 }
