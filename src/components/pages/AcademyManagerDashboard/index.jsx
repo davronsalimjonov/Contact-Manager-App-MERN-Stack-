@@ -9,16 +9,17 @@ import UsersMetricCard from '@/components/UI/moleculs/UsersMetricCard'
 import StudentsCountChart from '@/components/UI/organisms/StudentsCountChart'
 import CourseSalesBarChart from '@/components/UI/organisms/CourseSalesBarChart'
 import ActiveStudentsCountChart from '@/components/UI/organisms/ActiveStudentsCountChart'
-import { useGetAcademyManagerStatistics, useGetStudentsCountByCourse, useGetStudentsCountByStatus } from '@/hooks/useStatistic'
-import cls from './AcademicManager.module.scss'
+import { useGetAcademyManagerStatistics, useGetSoldCoursesCountStatistic, useGetStudentsCountByCourse, useGetStudentsCountByStatus } from '@/hooks/useStatistic'
+import cls from './AcademyManagerDashboard.module.scss'
 
-const AcademicManager = () => {
+const AcademyManagerDashboard = () => {
   const [period] = useOutletContext()
   const { data: metrics, isLoading: isLoadingMetrics } = useGetAcademyManagerStatistics({ startDate: period.startDate, endDate: period.endDate })
   const { data: studentsCountByCourse, isLoading: isLoadingCourse } = useGetStudentsCountByCourse({ startDate: period.startDate, endDate: period.endDate })
   const { data: studentsCountByStatus, isLoading: isLoadingStatus } = useGetStudentsCountByStatus({ startDate: period.startDate, endDate: period.endDate })
+  const { data: soldCoursesCount, isLoading: isLoadingSoldCoursesCount } = useGetSoldCoursesCountStatistic({ startDate: period.startDate, endDate: period.endDate })
 
-  const isLoading = isLoadingMetrics || isLoadingCourse || isLoadingStatus
+  const isLoading = isLoadingMetrics || isLoadingCourse || isLoadingStatus || isLoadingSoldCoursesCount
 
   const statusItems = studentsCountByStatus?.map((item) => ({
     label: item.status,
@@ -93,11 +94,11 @@ const AcademicManager = () => {
           count={metrics?.onlineUsers?.count}
         />
       </div>
-      <CourseSalesBarChart />
+      <CourseSalesBarChart items={soldCoursesCount} startDate={period.startDate} />
     </div>
   ) : (
     <Loader />
   )
 }
 
-export default AcademicManager
+export default AcademyManagerDashboard

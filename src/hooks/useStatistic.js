@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getAcademyManagerStatistics, getActiveStudentsCount, getCallMentorStatistic, getMainMentorStatistic, getNewStudentsCount, getStudentCountByCourse, getStudentCountByLevel, getStudentsCountByStatus } from "@/services/statistic";
+import { getAcademyManagerStatistics, getActiveStudentsCount, getCallMentorStatistic, getMainMentorStatistic, getNewStudentsCount, getSoldCoursesCountStatistic, getStudentCountByCourse, getStudentCountByLevel, getStudentsCountByStatus } from "@/services/statistic";
 
 export const useGetStudentsCountByCourse = ({ startDate, endDate, mentorId } = {}) => {
     return useQuery(['statistic', 'students-count-by-course', mentorId, startDate, endDate], () => getStudentCountByCourse({ teacher: mentorId, startDate, endDate }), { staleTime: Infinity, cacheTime: Infinity })
@@ -31,4 +31,8 @@ export const useGetActiveStudentsCount = ({ mentorId, startDate, endDate } = {})
 
 export const useGetAcademyManagerStatistics = ({ startDate, endDate } = {}) => {
     return useQuery(['statistic', 'academy-manager', startDate, endDate], () => getAcademyManagerStatistics({ startDate, endDate }), { staleTime: Infinity, cacheTime: Infinity })
+}
+
+export const useGetSoldCoursesCountStatistic = ({ startDate, endDate } = {}) => {
+    return useQuery(['statistic', 'sold-courses', startDate, endDate], () => getSoldCoursesCountStatistic({ startDate, endDate }), { staleTime: Infinity, cacheTime: Infinity })
 }

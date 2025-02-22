@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { isDatePassed } from '@/utils/time';
+import { GROUP_STATUS } from '@/constants/enum';
 import Loader from '@/components/UI/atoms/Loader';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import { convertLessonScheduleToEvents } from '@/utils/calendar';
@@ -12,7 +13,6 @@ import CreateScheduleFormModal from '@/components/UI/organisms/CreateScheduleFor
 import ConfirmScheduleMoveModal from '@/components/UI/organisms/ConfirmScheduleMoveModal';
 import { useGetGroupLessonsSchedule, useScheduleMoveDeleteMutation, useScheduleMoveMutation, useScheduleUpdateMutation } from '@/hooks/useLessonsSchedule';
 import cls from './LessonPlan.module.scss';
-import { GROUP_STATUS } from '@/constants/enum';
 
 const LessonPlan = () => {
     const { groupId } = useParams()

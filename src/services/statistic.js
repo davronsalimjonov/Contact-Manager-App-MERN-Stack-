@@ -65,3 +65,8 @@ export const getAcademyManagerStatistics = async (params) => {
     const res = await api.get(`/statistic/academy-manager-card-statistic?${paramsToString(params)}`)
     return res.data
 }
+
+export const getSoldCoursesCountStatistic = async (params) => {
+    const res = await api.get(`/statistic/user-course/student-count-by-new-for-admin?${paramsToString(params)}`)
+    return res.data
+}

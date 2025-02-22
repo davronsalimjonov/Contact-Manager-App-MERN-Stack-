@@ -34,7 +34,6 @@ import Dictionary from "@/components/pages/Dictionary";
 import Moderation from "@/components/pages/Moderation";
 // import Notification from "@/components/pages/Notification";
 // import AddNotification from "@/components/pages/AddNotification";
-import AcademicManager from "@/components/pages/AcademicManager";
 import SellersDashboard from "@/components/pages/SellersDashboard";
 import SellerWorkspace from "@/components/pages/SellerWorkspace";
 import SellerStatistics from "@/components/pages/SellerStatistics";
@@ -60,8 +59,9 @@ import HomeworkReview from "@/components/pages/HomeworkReview";
 import MentorCardsProvider from "@/providers/MentorCardsProvider";
 import CreateLessonHomework from "@/components/pages/CreateLessonHomework";
 import AcademyAdaptationWorkspace from "@/components/pages/AcademyAdaptationWorkspace";
-import { USER_ROLES } from "@/constants";
 import UpdateLessonHomework from "@/components/pages/UpdateLessonHomework";
+import AcademyManagerDashboard from "@/components/pages/AcademyManagerDashboard";
+import { USER_ROLES } from "@/constants";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -214,7 +214,7 @@ const managerRoutes = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <AcademicManager />
+                element: <AcademyManagerDashboard />
             },
             {
                 path: '/main-teachers',
