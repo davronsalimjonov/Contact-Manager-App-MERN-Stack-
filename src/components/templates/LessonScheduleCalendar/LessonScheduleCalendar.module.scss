@@ -6,6 +6,7 @@
     flex-direction: column;
     justify-content: center;
     position: relative;
+    transition: all 0.3s;
 
     & > button{
         align-self: flex-end;

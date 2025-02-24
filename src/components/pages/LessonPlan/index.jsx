@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { isDatePassed } from '@/utils/time';
+import { convertMinutesToUTC0, isDatePassed } from '@/utils/time';
 import { GROUP_STATUS } from '@/constants/enum';
 import Loader from '@/components/UI/atoms/Loader';
 import Button from '@/components/UI/atoms/Buttons/Button';
@@ -43,8 +43,8 @@ const LessonPlan = () => {
             }
             const movedObject = {
                 weekday: event?.start?.getDay(),
-                startTime: getMinutesFromStartOfDay(event?.start),
-                endTime: getMinutesFromStartOfDay(event?.end),
+                startTime: convertMinutesToUTC0(getMinutesFromStartOfDay(event?.start)),
+                endTime: convertMinutesToUTC0(getMinutesFromStartOfDay(event?.end)),
                 date: format(event?.start, 'yyyy-MM-dd'),
                 fromDate: format(event?.fromDate, 'yyyy-MM-dd'),
                 lessonSchedule: event?.lessonScheduleId
@@ -61,8 +61,8 @@ const LessonPlan = () => {
             const movedObject = {
                 id: event?.lessonScheduleId,
                 weekday: event?.start?.getDay(),
-                startTime: getMinutesFromStartOfDay(event?.start),
-                endTime: getMinutesFromStartOfDay(event?.end),
+                startTime: convertMinutesToUTC0(getMinutesFromStartOfDay(event?.start)),
+                endTime: convertMinutesToUTC0(getMinutesFromStartOfDay(event?.end)),
             }
 
             await updateMutation.mutateAsync(movedObject, {
