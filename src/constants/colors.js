@@ -68,23 +68,23 @@ export const STATUS_COLORS = {
         borderColor: 'rgba(255, 51, 51, 0.2)'
     },
     [STUDENT_STATUS_ENUMS.WITHOUT_MENTOR]: {
-        backgroundColor: "rgba(255, 52, 219, 0.8)",
-        color: "rgba(255, 52, 219, 0.1)",
+        color: "rgba(255, 52, 219, 0.8)",
+        backgroundColor: "rgba(255, 52, 219, 0.1)",
         borderColor: 'rgba(255, 52, 219, 0.2)'
     },
     [STUDENT_STATUS_ENUMS.SUCCESS]: {
-        backgroundColor: "rgba(255, 210, 95, 0.8)",
-        color: "rgba(255, 210, 95, 0.1)",
+        color: "rgba(255, 210, 95, 0.8)",
+        backgroundColor: "rgba(255, 210, 95, 0.1)",
         borderColor: 'rgba(255, 210, 95, 0.2)'
     },
     [STUDENT_STATUS_ENUMS.CANCELED]: {
-        backgroundColor: "rgba(255, 52, 219, 0.8)",//
-        color: "rgba(255, 52, 219, 0.1)",
+        color: "rgba(255, 52, 219, 0.8)",
+        backgroundColor: "rgba(255, 52, 219, 0.1)",
         borderColor: 'rgba(255, 52, 219, 0.2)'
     },
     [STUDENT_STATUS_ENUMS.FINISHED]: {
-        backgroundColor: "rgba(39, 205, 2, 0.8)",//
-        color: "rgba(39, 205, 2, 0.1)",
+        color: "rgba(39, 205, 2, 0.8)",
+        backgroundColor: "rgba(39, 205, 2, 0.1)",
         borderColor: 'rgba(39, 205, 2, 0.2)'
     }
 }
