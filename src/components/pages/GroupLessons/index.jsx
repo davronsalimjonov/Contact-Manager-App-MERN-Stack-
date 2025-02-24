@@ -2,7 +2,9 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import Loader from "@/components/UI/atoms/Loader"
+import { useGetUserId } from '@/hooks/useGetUser'
 import { useGetGroupInfo } from '@/hooks/useGroups'
+import { convertMinutesFromUTC0 } from '@/utils/time'
 import { useGetGroupLessons } from '@/hooks/useLessons'
 import Button from "@/components/UI/atoms/Buttons/Button"
 import EmptyData from "@/components/UI/organisms/EmptyData"
@@ -11,42 +13,52 @@ import { PersonsIcon, PlusIcon } from "@/components/UI/atoms/icons"
 import MediaPreviewer from '@/components/UI/moleculs/MediaPreviewer'
 import CreateNewLessonForm from '@/components/UI/organisms/CreateNewLessonForm'
 import cls from "./GroupLessons.module.scss"
-import { useGetUserId } from '@/hooks/useGetUser'
 
-function checkSchedule(scheduleData = []) {
+function checkSchedule(data = []) {
+    const scheduleData = JSON.parse(JSON.stringify(data))
     const beforeUntilStart = 10
-    const afterUntilStart = -30
-    
+
     const now = new Date();
     const currentWeekday = now.getDay();
-    
+
     const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    
+
     const currentDate = now.toISOString().split('T')[0];
 
     for (const lesson of scheduleData) {
+        lesson.startTime = convertMinutesFromUTC0(lesson.startTime);
+        lesson.endTime = convertMinutesFromUTC0(lesson.endTime);
+
+        if (lesson.lessonScheduleMoves) {
+            lesson.lessonScheduleMoves.startTime = convertMinutesFromUTC0(lesson.lessonScheduleMoves?.startTime);
+            lesson.lessonScheduleMoves.endTime = convertMinutesFromUTC0(lesson.lessonScheduleMoves?.endTime);
+        }
+
+
         if (lesson.lessonScheduleMoves && lesson.lessonScheduleMoves.date === currentDate) {
             const minutesUntilStart = lesson.lessonScheduleMoves.startTime - currentMinutes;
-            
+            const afterUntilStart = lesson.lessonScheduleMoves.startTime - lesson.lessonScheduleMoves.endTime;
+
             if (minutesUntilStart <= beforeUntilStart && minutesUntilStart >= afterUntilStart) {
                 return true;
             }
             continue;
         }
-        
-        if (lesson.lessonScheduleMoves && 
+
+        if (lesson.lessonScheduleMoves &&
             lesson.lessonScheduleMoves.fromDate === currentDate) {
             continue;
         }
-        
+
         if (lesson.weekday === currentWeekday) {
             const minutesUntilStart = lesson.startTime - currentMinutes;
+            const afterUntilStart = lesson.startTime - lesson.endTime;
             if (minutesUntilStart <= beforeUntilStart && minutesUntilStart >= afterUntilStart) {
                 return true;
             }
         }
     }
-    
+
     return false;
 }
 
@@ -66,7 +78,7 @@ const GroupLessons = () => {
     }
 
     const handleVideoPreview = (url) => {
-        if(!url) return toast.error('Video topilmadi')
+        if (!url) return toast.error('Video topilmadi')
         setVideoUrl(url)
     }
 
@@ -74,23 +86,23 @@ const GroupLessons = () => {
 
     return (
         <div className={cls.lessons}>
-            <CreateNewLessonForm 
+            <CreateNewLessonForm
                 groupId={groupId}
-                isOpen={isOpenNewLessonModal} 
-                onClose={() => setIsOpenNewLessonModal(false)} 
+                isOpen={isOpenNewLessonModal}
+                onClose={() => setIsOpenNewLessonModal(false)}
             />
-            <MediaPreviewer 
+            <MediaPreviewer
                 visible={!!videoUrl}
                 urls={[videoUrl]}
                 setVisible={() => setVideoUrl('')}
             />
             <div className={cls.lessons__header}>
                 <div className={cls.lessons__header__title}><PersonsIcon fill="var(--blue-color)" />{groupInfo?.title}</div>
-                <Button 
+                <Button
                     onClick={() => setIsOpenNewLessonModal(true)}
                     disabled={!isLessonAvailable}
                 >
-                        <PlusIcon width={20} height={20} /> Boshlash
+                    <PlusIcon width={20} height={20} /> Boshlash
                 </Button>
             </div>
             <div className={cls.lessons__cards} >

@@ -15,32 +15,6 @@ export const getNewStudentsCount = async (params) => {
     return res.data
 }
 
-export const getLessonRate = async (mentorId, params) => {
-    const res = await api.get(`/lesson-rate/teachers/statistic/${mentorId}?${paramsToString(params)}`);
-    return res.data
-}
-
-export const getLessonRateStatistic = async (params) => {
-    const res = await api.get(`/lesson-rate/teachers/statistic?${paramsToString(params)}`);
-    return res.data;
-}
-
-export const getCallRateStatistic = async (params) => {
-    const res = await api.get(`/call-rate/teachers/statistic?${paramsToString(params)}`);
-    return res.data;
-}
-
-
-export const getStudentsRateForCallMentor = async (params) => {
-    const res = await api.get(`/call-rate?${paramsToString(params)}`);
-    return res.data;
-}
-
-export const getStudentsRateForTeacher = async (teacherId, groupId, params) => {
-    const res = await api.get(`/lesson-rate/teacher/${teacherId}/${groupId}?${paramsToString(params)}`);
-    return res.data;
-}
-
 export const getCallMentorStatistic = async (mentorId, params) => {
     const res = await api.get(`/statistic/mentors/call-mentor-statistic/${mentorId}?${paramsToString(params)}`)
     return res.data

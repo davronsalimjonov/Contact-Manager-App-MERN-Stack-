@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SelectorButton from '../../atoms/SelectorButton';
 import FormElementWrapper from '../Form/FormElementWrapper';
 import cls from './Selector.module.scss';

@@ -1,9 +1,13 @@
-.content{
-    padding: 12px;
-    background-color: var(--base-white-color);
-    border-radius: 20px;
-}
 
-.form__tabs{
-    width: 50%;
+.layout{
+    padding: 12px;
+    border-radius: 20px;
+    background-color: var(--base-white-color);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__tab{
+        padding: 4px 8px;
+    }
 }
