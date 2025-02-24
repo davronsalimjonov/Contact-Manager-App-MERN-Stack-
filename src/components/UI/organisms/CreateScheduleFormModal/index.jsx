@@ -1,5 +1,6 @@
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
+import { convertMinutesToUTC0 } from '@/utils/time';
 import { LESSON_TIME_OPTIONS, WEEKDAY_OPTIONS } from '@/constants/form';
 import { useCreateLessonScheduleMutation, useGetGroupLessonsSchedule } from '@/hooks/useLessonsSchedule';
 import Dialog from '../../moleculs/Dialog';
@@ -55,6 +56,9 @@ const CreateScheduleFormModal = ({
 
     const handleCreateSchedule = async (data) => {
         data.group = groupId
+        data.startTime = convertMinutesToUTC0(data.startTime)
+        data.endTime = convertMinutesToUTC0(data.endTime)
+
         await createScheduleMutation.mutateAsync(data, {
             onSuccess: () => {
                 toast.success('Dars jadval muvaffaqiyatli qo’shildi')

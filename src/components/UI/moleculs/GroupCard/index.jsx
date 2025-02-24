@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import Avatar from 'react-avatar';
 import { cn } from '@/utils/lib';
-import { getDayName, getTimeFromMinutes } from '@/utils/time';
+import { convertMinutesFromUTC0, getDayName, getTimeFromMinutes } from '@/utils/time';
 import { CheckIcon, PersonsIcon, PlayArrowIcon } from '../../atoms/icons';
 import cls from './GroupCard.module.scss';
 
@@ -45,7 +45,7 @@ const GroupCard = ({
                         <div className={cls.card__times__item} key={schedule?.id}>
                             <span className={cls.card__times__item__day}>{getDayName(schedule?.weekday)}</span>
                             <span className={cls.card__times__item__line}></span>
-                            <span className={cls.card__times__item__time}>{getTimeFromMinutes(schedule?.startTime)} - {getTimeFromMinutes(schedule?.endTime)}</span>
+                            <span className={cls.card__times__item__time}>{getTimeFromMinutes(convertMinutesFromUTC0(schedule?.startTime))} - {getTimeFromMinutes(convertMinutesFromUTC0(schedule?.endTime))}</span>
                         </div>
                     ))
                 ) : (

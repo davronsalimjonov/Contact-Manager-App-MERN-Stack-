@@ -71,3 +71,13 @@ export const getTimeFromMinutes = (minutes = 0) => {
 };
 
 export const isDatePassed = (date) => date < new Date();
+
+export function convertMinutesToUTC0(minutes = 0) {
+    const localOffset = new Date().getTimezoneOffset();
+    return minutes - localOffset;
+}
+
+export function convertMinutesFromUTC0(minutes) {
+    const localOffset = new Date().getTimezoneOffset();
+    return minutes + localOffset;
+}

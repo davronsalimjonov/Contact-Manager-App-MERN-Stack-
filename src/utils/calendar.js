@@ -1,5 +1,5 @@
 import { LEVEL_COLORS } from "@/constants/colors";
-import { isSameDay } from "./time";
+import { convertMinutesFromUTC0, isSameDay } from "./time";
 
 export function convertLessonScheduleToEvents(data = [], { groupId } = {}) {
     const currentDate = new Date();
@@ -15,7 +15,7 @@ export function convertLessonScheduleToEvents(data = [], { groupId } = {}) {
         const createDateTime = (time, customDate) => {
             const baseDate = customDate || targetDate;
             const hours = Math.floor(time / 60);
-            const minutes = time % 60;
+            const minutes = convertMinutesFromUTC0(time % 60);
             return new Date(baseDate.getFullYear(), baseDate.getMonth(), baseDate.getDate(), hours, minutes);
         };
 
