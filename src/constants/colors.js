@@ -59,7 +59,7 @@ export const STATUS_COLORS = {
     },
     [STUDENT_STATUS_ENUMS.PROBLEMATIC]: {
         color: 'rgba(100, 2, 205, 0.8)',
-        backgroundColor: 'rgba(100, 2, 205, 0.1)', //
+        backgroundColor: 'rgba(100, 2, 205, 0.1)',
         borderColor: 'rgba(100, 2, 205, 0.2)'
     },
     [STUDENT_STATUS_ENUMS.TIME_OVER]: {

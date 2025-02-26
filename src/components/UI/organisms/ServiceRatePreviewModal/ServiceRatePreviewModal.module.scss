@@ -1,0 +1,52 @@
+.modal {
+    width: 520px;
+    padding: 16px;
+    background-color: var(--base-white-color);
+    border-radius: 8px;
+    display: grid;
+    grid-template-areas:
+        'user rating'
+        'description description';
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+
+    &__user {
+        grid-area: user;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    &__rating {
+        grid-area: rating;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    &__description {
+        grid-area: description;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        letter-spacing: 0%;
+
+        &>span {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        &>ul {
+            list-style: none;
+            padding: 10px;
+            background-color: var(--blue-200-color);
+            border-radius: 4px;
+
+            &>li {
+                font-size: 14px;
+                line-height: 20px;
+            }
+        }
+    }
+}

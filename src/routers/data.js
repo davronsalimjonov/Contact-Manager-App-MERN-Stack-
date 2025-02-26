@@ -137,6 +137,28 @@ export const managerSidebarLinks = [
         label: 'Servis statistikasi',
         link: '/service-statistics',
         icon: LanIcon(),
+        children: [
+            {
+                id: '4.1',
+                label: 'Dars bo\'yicha statistika',
+                link: '/statistics/lessons'
+            },
+            {
+                id: '4.2',
+                label: 'Call bo\'yicha statistika',
+                link: '/statistics/call'
+            },
+            {
+                id: '4.3',
+                label: 'Ilova bahosi',
+                link: '/statistics/app-rate'
+            },
+            {
+                id: '4.4',
+                label: 'Mentorlar bahosi',
+                link: '/statistics/mentors-rate'
+            }
+        ]
     },
     // {
     //     id: 5,

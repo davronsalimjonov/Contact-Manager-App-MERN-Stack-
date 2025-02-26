@@ -27,7 +27,6 @@ import Courses from "@/components/pages/Courses";
 import AddStudent from "@/components/pages/AddStudent";
 import UpdateSingleStudentCourse from "@/components/pages/UpdateSingleStudentCourse";
 import UpdateCourse from "@/components/pages/UpdateCourse";
-import ServisStatistic from "@/components/pages/ServisStatistic";
 // import StudentsRateForCallMentor from "@/components/pages/StudentsRateForCallMentor";
 // import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
 import Dictionary from "@/components/pages/Dictionary";
@@ -61,6 +60,9 @@ import CreateLessonHomework from "@/components/pages/CreateLessonHomework";
 import AcademyAdaptationWorkspace from "@/components/pages/AcademyAdaptationWorkspace";
 import UpdateLessonHomework from "@/components/pages/UpdateLessonHomework";
 import AcademyManagerDashboard from "@/components/pages/AcademyManagerDashboard";
+import GroupStatistics from "@/components/pages/LessonsStatistics/GroupStatistics";
+import SingleGroupStatistics from "@/components/pages/LessonsStatistics/SingleGroupStatistics";
+import LessonStatistics from "@/components/pages/LessonsStatistics/LessonStatistics";
 import { USER_ROLES } from "@/constants";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
@@ -289,8 +291,16 @@ const managerRoutes = createBrowserRouter([
             //     element: <AddNotification/>
             // },
             {
-                path: '/service-statistics',
-                element: <ServisStatistic />
+                path: '/statistics/lessons',
+                element: <GroupStatistics />
+            },
+            {
+                path: '/statistics/lessons/:mentorId/:groupId',
+                element: <SingleGroupStatistics />
+            },
+            {
+                path: '/statistics/lessons/:mentorId/:groupId/:lessonId',
+                element: <LessonStatistics />
             },
             // {
             //     path: '/service-statistics/lesson-rate/:teacherId/:groupId',
