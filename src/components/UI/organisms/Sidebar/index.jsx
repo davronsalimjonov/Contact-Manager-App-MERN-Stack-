@@ -5,9 +5,9 @@ import usePersistentState from '@/hooks/usePersistentState';
 import MenuButton from '../../moleculs/MenuButton';
 import SidebarLink from '../../moleculs/SidebarLink';
 import LogoutButton from '../../moleculs/LogoutButton';
-import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
-import cls from './Sidebar.module.scss';
 import ReminderFormModal from '../ReminderFormModal';
+import { CheckListIcon, MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
+import cls from './Sidebar.module.scss';
 
 const Sidebar = ({
     links = []
@@ -43,7 +43,12 @@ const Sidebar = ({
                 ))}
             </div>
             <div className={cls.sidebar__bottomList}>
-                {/* <button onClick={() => setIsOpenReminder(true)}>reminder</button> */}
+                <button 
+                    className={cls.sidebar__bottomList__reminder}
+                    onClick={() => setIsOpenReminder(true)}
+                >
+                    <CheckListIcon /> Eslatma
+                </button>
                 <SidebarLink
                     to='/settings'
                     label='Sozlamalar'

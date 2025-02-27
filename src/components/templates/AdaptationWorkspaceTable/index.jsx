@@ -19,7 +19,8 @@ const AdaptationWorkspaceTable = ({
             userId: student?.userCourse?.user?.id,
             fullName: getUserFullName(student?.userCourse?.user), 
             phone: student?.userCourse?.user?.phone, 
-            commingDate: student?.startDate
+            commingDate: student?.startDate,
+            firstContactDate: student?.firstContactDate
         }
 
         if (!acc[student?.status]) {
@@ -88,6 +89,7 @@ const AdaptationWorkspaceTable = ({
                     phone={item.phone}
                     fullName={item.fullName}
                     commingDate={item.commingDate}
+                    firstContactDate={item.firstContactDate}
                     showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                     showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                     onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
