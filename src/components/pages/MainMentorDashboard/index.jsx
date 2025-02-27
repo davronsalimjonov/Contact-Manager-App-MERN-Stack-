@@ -33,6 +33,7 @@ const MainMentorDashboard = ({ userId, withUserInfo = false }) => {
     }))
 
     const isLoading = isLoadingMentor || isLoadingStudentsCountByCourse || isLoadingStatusUser || isLoadingMainMentorStatistic
+console.log(mentorId + '  mentor');
 
     return (
         <div className={cls.page}>

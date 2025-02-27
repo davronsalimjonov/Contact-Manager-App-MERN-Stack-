@@ -86,7 +86,8 @@ const fillMissingMonthDates = (data = [], month, year) => {
 
 const ActiveStudentsCountChart = ({ mentorId }) => {
     const [period] = useOutletContext();
-    const userId = mentorId || mentorId !== null ? useGetUserId() : ''
+    const userId = mentorId || (mentorId !== null ? useGetUserId() : '')
+    
     const [dateRange, setDateRange] = useState({ startDate: dayjs().startOf('month').format('YYYY-MM-DD'), endDate: dayjs().endOf('month').format('YYYY-MM-DD') });
     const { data: newStudentsCount, isLoading: isLoadingNewStudentsCount } = useGetActiveStudentsCount({ mentorId: userId, startDate: dateRange.startDate, endDate: dateRange?.endDate })
     const filledData = fillMissingMonthDates(newStudentsCount, new Date(dateRange.startDate).getMonth() + 1, new Date(dateRange.startDate).getFullYear());
