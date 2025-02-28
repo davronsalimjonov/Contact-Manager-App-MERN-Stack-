@@ -65,6 +65,7 @@ import SingleGroupStatistics from "@/components/pages/LessonsStatistics/SingleGr
 import LessonStatistics from "@/components/pages/LessonsStatistics/LessonStatistics";
 import { USER_ROLES } from "@/constants";
 import MentorSalary from "@/components/pages/MentorSalary";
+import { Suspense } from "react";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -73,6 +74,7 @@ const callTecherRoutes = createBrowserRouter([
         path: '/',
         element: (
             <MentorCardsProvider>
+
                 <MainLayout sidebarLinks={callMentorSidebarLinks} />
             </MentorCardsProvider>
         ),
@@ -87,7 +89,11 @@ const callTecherRoutes = createBrowserRouter([
             },
             {
                 path: '/students',
-                element: <MyStudents />
+                element: (
+                    <Suspense fallback={<Loader />}>
+                        <MyStudents />
+                    </Suspense>
+                )
             },
             {
                 path: '/students/:courseId/:userId',

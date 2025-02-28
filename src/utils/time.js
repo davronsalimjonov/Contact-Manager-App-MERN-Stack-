@@ -3,7 +3,7 @@ import { uz } from 'date-fns/locale';
 import { daysOfWeekFull, daysOfWeekShort } from "@/constants";
 
 export const getTimeFromDate = (date) => {
-    if(!date) return
+    if (!date) return
     return format(date, 'HH:mm');
 }
 
@@ -38,8 +38,8 @@ export const isSameDay = (date1, date2) => {
 }
 
 export function formatMessageDate(timestamp, { month = 'long' } = {}) {
-    if(!timestamp) return
-    
+    if (!timestamp) return
+
     const monthFormat = month === 'long' ? 'd MMMM' : 'd.MM'
     const date = new Date(timestamp);
     const now = new Date();
@@ -80,4 +80,22 @@ export function convertMinutesToUTC0(minutes = 0) {
 export function convertMinutesFromUTC0(minutes) {
     const localOffset = new Date().getTimezoneOffset() * -1;
     return minutes + localOffset;
+}
+
+export function getDateDifference(startDate, endDate) {
+    if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
+        console.log('Обе даты должны быть экземплярами объекта Date');
+    }
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        console.log('Одна из дат некорректна');
+    }
+
+    const timeDifference = Math.abs(endDate.getTime() - startDate.getTime());
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+
+    return { days, hours, minutes };
 }

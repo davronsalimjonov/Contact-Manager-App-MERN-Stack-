@@ -72,7 +72,9 @@ const AdaptationWorkspaceTable = ({
     const handleStatusChange = async ({ draggableId, destination: { droppableId, index } }) => {
         try {
             await updateStudentAdaptationStatus(draggableId, { status: droppableId, index })
-            onDrop?.(draggableId, { status: droppableId, index })
+            const student = studentsByStatus[draggableId]?.find(item => item.id === draggableId)
+            const firstContactDate = student?.firstContactDate || new Date().toISOString()
+            onDrop?.(draggableId, { status: droppableId, index, firstContactDate })
         } catch (error) {
             toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')    
         }
@@ -90,7 +92,7 @@ const AdaptationWorkspaceTable = ({
                     fullName={item.fullName}
                     commingDate={item.commingDate}
                     firstContactDate={item.firstContactDate}
-                    showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW}
+                    showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
                     showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                     onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
                 />

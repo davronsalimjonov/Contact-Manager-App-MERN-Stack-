@@ -44,10 +44,10 @@ const Sidebar = ({
             </div>
             <div className={cls.sidebar__bottomList}>
                 <button 
-                    className={cls.sidebar__bottomList__reminder}
+                    className={cn(cls.sidebar__bottomList__reminder, !isOpen && cls.close__btn)}
                     onClick={() => setIsOpenReminder(true)}
                 >
-                    <CheckListIcon /> Eslatma
+                    <CheckListIcon /> <span>Eslatma</span>
                 </button>
                 <SidebarLink
                     to='/settings'
