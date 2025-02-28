@@ -13,6 +13,7 @@ import { LeftArrowIcon, MetricCashIcon, MetricPersonsIcon, MetricStarsIcon, Metr
 import { useGetCallMentorStatistic, useGetStudentsCountByCourse, useGetStudentsCountByLevel } from '@/hooks/useStatistic'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './CallMentorDashboard.module.scss'
+import MentorCards from '@/components/UI/organisms/MentorCards'
 
 const CallMentorDashboard = ({ userId, withUserInfo = false }) => {
     const navigate = useNavigate()
@@ -39,10 +40,13 @@ const CallMentorDashboard = ({ userId, withUserInfo = false }) => {
             {!isLoading ? (
                 <>
                     {withUserInfo && (
-                        <div className={cls.page__usercard}>
-                            <button onClick={() => navigate(-1)}><LeftArrowIcon /></button>
-                            <Avatar src={mentor?.url} name={getUserFullName(mentor)} size="50" round />
-                            <h2>{getUserFullName(mentor)}</h2>
+                        <div className={cls.page__header}>
+                            <div className={cls.page__usercard}>
+                                <button onClick={() => navigate(-1)}><LeftArrowIcon /></button>
+                                <Avatar src={mentor?.url} name={getUserFullName(mentor)} size="50" round />
+                                <h2>{getUserFullName(mentor)}</h2>
+                            </div>
+                            <MentorCards cards={callMentorStatistic?.cards} />
                         </div>
                     )}
                     <div className={cls.page__metrics}>

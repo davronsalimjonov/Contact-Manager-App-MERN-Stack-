@@ -5,6 +5,12 @@
     flex-direction: column;
     gap: 18px;
 
+    &__header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     &__usercard{
         display: flex;
         align-items: center;

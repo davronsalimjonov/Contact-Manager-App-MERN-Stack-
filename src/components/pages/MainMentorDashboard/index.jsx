@@ -13,6 +13,7 @@ import { LeftArrowIcon, MetricCashIcon, MetricPersonsIcon, MetricStarsIcon, Star
 import { useGetMainMentorStatistic, useGetStudentsCountByCourse, useGetStudentsCountByStatus } from '@/hooks/useStatistic'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './MainMentorDashboard.module.scss'
+import MentorCards from '@/components/UI/organisms/MentorCards'
 
 const MainMentorDashboard = ({ userId, withUserInfo = false }) => {
     const navigate = useNavigate()
@@ -39,10 +40,13 @@ const MainMentorDashboard = ({ userId, withUserInfo = false }) => {
             {!isLoading ? (
                 <>
                     {withUserInfo && (
-                        <div className={cls.page__usercard}>
-                            <button onClick={() => navigate(-1)}><LeftArrowIcon /></button>
-                            <Avatar src={mentor?.url} name={getUserFullName(mentor)} size="50" round />
-                            <h2>{getUserFullName(mentor)}</h2>
+                        <div className={cls.page__header}>
+                            <div className={cls.page__usercard}>
+                                <button onClick={() => navigate(-1)}><LeftArrowIcon /></button>
+                                <Avatar src={mentor?.url} name={getUserFullName(mentor)} size="50" round />
+                                <h2>{getUserFullName(mentor)}</h2>
+                            </div>
+                            <MentorCards cards={mainMentorStatistic?.cards} />
                         </div>
                     )}
                     <div className={cls.page__metrics}>
