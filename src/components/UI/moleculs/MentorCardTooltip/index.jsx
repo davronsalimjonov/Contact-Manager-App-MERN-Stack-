@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { usePopper } from 'react-popper';
 import { cn, formatPrice } from '@/utils/lib';
 import { MENTOR_CARDS_ENUM } from '@/constants/enum';
 import cls from './MentorCardTooltip.module.scss';
@@ -45,15 +46,25 @@ const MentorCardTooltip = ({
     description = ''
 }) => {
     const [isVisible, setIsVisible] = useState(false);
-    const [shouldRender, setShouldRender] = useState(false);
+    const [referenceElement, setReferenceElement] = useState(null);
+    const [popperElement, setPopperElement] = useState(null);
     const timeoutRef = useRef(null);
+
+    const { styles, attributes } = usePopper(referenceElement, popperElement, {
+        placement: 'bottom',// Use fixed strategy to avoid position flickering
+        modifiers: [
+            {
+                name: 'offset',
+                options: { offset: [0, 0] },
+            },
+        ],
+    });
 
     useEffect(() => {
         if (isVisible) {
-            setShouldRender(true);
+            clearTimeout(timeoutRef.current);
         } else {
             timeoutRef.current = setTimeout(() => {
-                setShouldRender(false);
             }, 300);
         }
 
@@ -64,18 +75,22 @@ const MentorCardTooltip = ({
         };
     }, [isVisible]);
 
-
     return (
         <div
             className={cls['tooltip-wrapper']}
+            ref={setReferenceElement}
             onMouseEnter={() => setIsVisible(true)}
             onMouseLeave={() => setIsVisible(false)}
         >
             {children}
 
-            {shouldRender && (
-                <div className={cn(cls.tooltip, isVisible && cls.visible)}>
-                    <Polygon />
+            {isVisible && (
+                <div
+                    ref={setPopperElement}
+                    style={styles.popper}
+                    {...attributes.popper}
+                    className={cn(cls.tooltip, isVisible && cls.visible)}
+                >
                     <div className={cls.tooltip__content}>
                         <div className={cls.tooltip__content__type}>
                             {getTooltipIcon(type)}

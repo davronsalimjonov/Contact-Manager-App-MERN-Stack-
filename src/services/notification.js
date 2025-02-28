@@ -5,13 +5,13 @@ export const getNotification = async (type, params) => {
     return res.data
 }
 
-export const getNotifications = async (userId) => {
-    const res = await api.get(`/teacher-notification/teacher/${userId}`)
+export const getNotifications = async () => {
+    const res = await api.get(`/teacher-notification/inbox`)
     return res.data
 }
 
-export const getNotificationCount = async (userId) => {
-    const res = await api.get(`/teacher-notification/teacher/notification-count/${userId}`)
+export const getNotificationCount = async () => {
+    const res = await api.get(`/teacher-notification/teacher/notification-count/`)
     return res.data
 }
 

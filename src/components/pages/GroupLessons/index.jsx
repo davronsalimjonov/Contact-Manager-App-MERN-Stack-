@@ -13,6 +13,7 @@ import { PersonsIcon, PlusIcon } from "@/components/UI/atoms/icons"
 import MediaPreviewer from '@/components/UI/moleculs/MediaPreviewer'
 import CreateNewLessonForm from '@/components/UI/organisms/CreateNewLessonForm'
 import cls from "./GroupLessons.module.scss"
+import { redirectToPlatform } from '@/utils/lib'
 
 function checkSchedule(data = []) {
     const scheduleData = JSON.parse(JSON.stringify(data))
@@ -71,12 +72,6 @@ const GroupLessons = () => {
     const { data: groupLesson, isLoading: isGroupLessonLoading } = useGetGroupLessons(groupId)
     const { data: groupInfo } = useGetGroupInfo(groupId)
 
-    const redirectToPlatform = (url = '') => {
-        const link = new URL(url)
-        link.searchParams.set('user', mentorId)
-        window.open(link.toString(), '_blank')
-    }
-
     const handleVideoPreview = (url) => {
         if (!url) return toast.error('Video topilmadi')
         setVideoUrl(url)
@@ -117,7 +112,7 @@ const GroupLessons = () => {
                             isLive={lesson?.status === 'ongoing'}
                             onClick={() => navigate(lesson?.id)}
                             onClickVideo={() => handleVideoPreview(lesson?.video)}
-                            onClickLesson={() => redirectToPlatform(lesson?.url)}
+                            onClickLesson={() => redirectToPlatform(lesson?.mentorUrl, mentorId)}
                         />
                     )) : (
                         <EmptyData />

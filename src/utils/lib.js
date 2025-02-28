@@ -368,3 +368,9 @@ export const copyToClipboard = (text) => {
     if (!text || !navigator?.clipboard) return;
     navigator.clipboard.writeText(text)
 }
+
+export const redirectToPlatform = (url = '', mentorId = '') => {
+    const link = new URL(url)
+    link.searchParams.set('uid', mentorId)
+    window.open(link.toString(), '_blank')
+}
