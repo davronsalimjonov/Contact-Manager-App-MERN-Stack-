@@ -43,6 +43,7 @@ const customPointPlugin = {
 const options = {
     responsive: true,
     maintainAspectRatio: false,
+    padding: 20,
     plugins: {
         legend: { display: false },
         datalabels: { display: false },
@@ -56,9 +57,8 @@ const options = {
         y: {
             grid: { drawTicks: false, borderDash: [3, 3] },
             border: { display: false },
-            ticks: { stepSize: 20 },
-            suggestedMin: 1,
-            suggestedMax: 100 
+            ticks: { padding: 10, maxTicksLimit: 10 },
+            beginAtZero: true,
         }
     },
     elements: {
@@ -70,7 +70,7 @@ const options = {
 const fillMissingMonthDates = (data = [], month, year) => {
     const formattedMonth = String(month).padStart(2, "0");
     const daysInMonth = dayjs(`${year}-${formattedMonth}-01`).daysInMonth();
-    
+
     const filledData = Array.from({ length: daysInMonth }, (_, i) => {
         const day = i + 1;
         const existing = data.find(item => dayjs(item.date).date() === day);
@@ -87,7 +87,7 @@ const fillMissingMonthDates = (data = [], month, year) => {
 const ActiveStudentsCountChart = ({ mentorId }) => {
     const [period] = useOutletContext();
     const userId = mentorId || (mentorId !== null ? useGetUserId() : '')
-    
+
     const [dateRange, setDateRange] = useState({ startDate: dayjs().startOf('month').format('YYYY-MM-DD'), endDate: dayjs().endOf('month').format('YYYY-MM-DD') });
     const { data: newStudentsCount, isLoading: isLoadingNewStudentsCount } = useGetActiveStudentsCount({ mentorId: userId, startDate: dateRange.startDate, endDate: dateRange?.endDate })
     const filledData = fillMissingMonthDates(newStudentsCount, new Date(dateRange.startDate).getMonth() + 1, new Date(dateRange.startDate).getFullYear());

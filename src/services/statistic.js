@@ -44,3 +44,8 @@ export const getSoldCoursesCountStatistic = async (params) => {
     const res = await api.get(`/statistic/user-course/student-count-by-new-for-admin?${paramsToString(params)}`)
     return res.data
 }
+
+export const getMentorSalary = async (mentorId, role, params) => {
+    const res = await api.get(`/statistic/mentors/mentor-salary/${role}/${mentorId}?${paramsToString(params)}`)
+    return res.data
+}

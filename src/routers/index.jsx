@@ -64,6 +64,7 @@ import GroupStatistics from "@/components/pages/LessonsStatistics/GroupStatistic
 import SingleGroupStatistics from "@/components/pages/LessonsStatistics/SingleGroupStatistics";
 import LessonStatistics from "@/components/pages/LessonsStatistics/LessonStatistics";
 import { USER_ROLES } from "@/constants";
+import MentorSalary from "@/components/pages/MentorSalary";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -79,6 +80,10 @@ const callTecherRoutes = createBrowserRouter([
             {
                 path: '',
                 element: <CallMentorDashboard />
+            },
+            {
+                path: '/salary',
+                element: <MentorSalary />
             },
             {
                 path: '/students',
@@ -136,6 +141,10 @@ const mainMentorRoutes = createBrowserRouter([
             {
                 path: '',
                 element: <MainMentorDashboard />
+            },
+            {
+                path: '/salary',
+                element: <MentorSalary />
             },
             {
                 path: '/materials',
@@ -227,12 +236,20 @@ const managerRoutes = createBrowserRouter([
                 element: <MainMentorStatistic />
             },
             {
+                path: '/main-teachers/:mentorId/salary',
+                element: <MentorSalary />
+            },
+            {
                 path: '/call-teachers',
                 element: <CallMentors />
             },
             {
                 path: '/call-teachers/:mentorId',
                 element: <CallMentorStatistic />
+            },
+            {
+                path: '/call-teachers/:mentorId/salary',
+                element: <MentorSalary />
             },
             {
                 path: '/users',

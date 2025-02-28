@@ -33,7 +33,6 @@ const MainMentorDashboard = ({ userId, withUserInfo = false }) => {
     }))
 
     const isLoading = isLoadingMentor || isLoadingStudentsCountByCourse || isLoadingStatusUser || isLoadingMainMentorStatistic
-console.log(mentorId + '  mentor');
 
     return (
         <div className={cls.page}>
@@ -64,6 +63,7 @@ console.log(mentorId + '  mentor');
                             value={`${formatPrice(mainMentorStatistic?.salary || 0)} som`}
                             icon={<MetricCashIcon />}
                             iconBg='rgba(254, 197, 61, 0.2)'
+                            onClick={() => navigate(`salary${withUserInfo ? `?role=${mentor?.role}` : ''}`)}
                         />
                         <MetricCard
                             title='O`rtacha Reytinggi'

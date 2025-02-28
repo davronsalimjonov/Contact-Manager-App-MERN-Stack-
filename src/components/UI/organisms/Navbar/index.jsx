@@ -27,6 +27,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/user-course/:id', title: 'O’quvchi ma’lumotlari', showBackButton: true },
         { path: '/dictionary', title: 'Lug’at', showBackButton: false },
         { path: '/settings', title: 'Sozlamalar', showBackButton: false },
+        { path: '/salary', title: 'Oylik maosh', showBackButton: true },
         // Nazoratchi
         { path: '/tasks', title: 'Vazifalarim', showBackButton: false },
         { path: '/adaptation-workspace', title: 'Workspace', showBackButton: false },
@@ -45,7 +46,9 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/materials', title: 'Materials', showBackButton: false },
         // Academic manager
         { path: '/main-teachers', title: 'Asosiy mentorlar', showBackButton: false },
+        { path: '/main-teachers/:mentorId/salary', title: 'Oylik maosh', showBackButton: true },
         { path: '/call-teachers', title: 'Nazoratchi mentorlar', showBackButton: false },
+        { path: '/call-teachers/:mentorId/salary', title: 'Oylik maosh', showBackButton: true },
         { path: '/users', title: 'Foydalanuvchilar', showBackButton: false },
         { path: '/users/:id', title: 'Foydalanuvchi ma’lumotlari', showBackButton: false },
         { path: '/mentors', title: 'Mentorlar', showBackButton: false },

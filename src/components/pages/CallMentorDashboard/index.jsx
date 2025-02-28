@@ -64,6 +64,7 @@ const CallMentorDashboard = ({ userId, withUserInfo = false }) => {
                             value={`${formatPrice(callMentorStatistic?.salary || 0)} UZS`}
                             icon={<MetricCashIcon />}
                             iconBg='rgba(254, 197, 61, 0.2)'
+                            onClick={() => navigate(`salary${withUserInfo ? `?role=${mentor?.role}` : ''}`)}
                         />
                         <MetricCard
                             title='Adaptatsiya soni'

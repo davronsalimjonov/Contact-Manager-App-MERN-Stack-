@@ -9,10 +9,11 @@ const MetricCard = ({
   iconStyle = {},
   additionalInformation,
   percentage,
+  onClick
 }) => {
-  
+
   return (
-    <div className={cls.card}>
+    <div className={cls.card} onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
         <div>
               <div>
                 <h3 className={cls.card__title}>{title}</h3>
