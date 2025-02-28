@@ -124,8 +124,12 @@ const ConversationInput = ({
                     ...oldData,
                     homeTask: {
                         ...oldData.homeTask,
-                        [data?.file ? 'url' : '']: data?.file ? URL.createObjectURL(data?.file) : '',
                         ...data,
+                        [data.file ? 'file': '']: data?.file?.name ? {
+                            url: URL.createObjectURL(data?.file),
+                            fileName: data?.file?.name,
+                            size: (data?.file?.size || 0) / 1024
+                        } : data?.file,
                     }
                 }))
                 updateHomeTask(taskId, objectToFormData(data))

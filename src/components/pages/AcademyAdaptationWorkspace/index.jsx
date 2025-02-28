@@ -22,7 +22,7 @@ const AcademyAdaptationWorkspace = () => {
                 className={cls.page__select}
                 options={options}
                 onChange={mentor => setSelectedMentor(mentor?.value)}
-                defaultValue={selectedMentor}
+                defaultValue={options?.find(option => option.value === selectedMentor)}
                 isclearable
             />
             <AdaptationWorkspaceTable

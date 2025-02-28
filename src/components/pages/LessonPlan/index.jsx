@@ -101,42 +101,40 @@ const LessonPlan = () => {
         }
     }, [lessons])
 
-    return (
-        !isLoadingLessons ? (
-            <div className={cls.page}>
-                <ConfirmationModal
-                    title='Rostdan ham ushbu darsni o’chirishni xohlaysizmi?'
-                    isOpen={!!deletedEvent}
-                    onCancel={() => setDeletedEvent(null)}
-                    onConfirm={() => handleDeleteEvent(deletedEvent)}
-                />
-                <ConfirmScheduleMoveModal
-                    isOpen={movedEvent?.isOpen}
-                    onConfirm={handleScheduleMove}
-                    onClose={handleCancel}
-                />
-                <CreateScheduleFormModal
-                    groupId={groupId}
-                    isOpen={isOpenCreateSchedule}
-                    onClose={() => setIsOpenCreateSchedule(false)}
-                />
-                <Button
-                    disabled={lessons?.status === GROUP_STATUS.CLOSED} 
-                    onClick={() => setIsOpenCreateSchedule(true)}
-                >
-                    Qo’shish
-                </Button>
-                <LessonScheduleCalendar
-                    dragAndDrop
-                    events={[...events, movedEvent?.event ? movedEvent?.event : {}]}
-                    onEventDrop={handleEventDrop}
-                    onDeleteEvent={event => setDeletedEvent(event)}
-                />
-            </div>
-        ) : (
-            <Loader />
-        )
-    );
+    return !isLoadingLessons ? (
+        <div className={cls.page}>
+            <ConfirmationModal
+                title='Rostdan ham ushbu darsni o’chirishni xohlaysizmi?'
+                isOpen={!!deletedEvent}
+                onCancel={() => setDeletedEvent(null)}
+                onConfirm={() => handleDeleteEvent(deletedEvent)}
+            />
+            <ConfirmScheduleMoveModal
+                isOpen={movedEvent?.isOpen}
+                onConfirm={handleScheduleMove}
+                onClose={handleCancel}
+            />
+            <CreateScheduleFormModal
+                groupId={groupId}
+                isOpen={isOpenCreateSchedule}
+                onClose={() => setIsOpenCreateSchedule(false)}
+            />
+            <Button
+                disabled={lessons?.status === GROUP_STATUS.CLOSED}
+                onClick={() => setIsOpenCreateSchedule(true)}
+            >
+                Qo’shish
+            </Button>
+            <LessonScheduleCalendar
+                dragAndDrop
+                events={[...events, movedEvent?.event ? movedEvent?.event : {}]}
+                onEventDrop={handleEventDrop}
+                onDeleteEvent={event => setDeletedEvent(event)}
+            />
+        </div>
+    ) : (
+        <Loader />
+    )
 }
 
 export default LessonPlan;

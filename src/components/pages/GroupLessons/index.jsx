@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 import Loader from "@/components/UI/atoms/Loader"
@@ -14,6 +14,9 @@ import MediaPreviewer from '@/components/UI/moleculs/MediaPreviewer'
 import CreateNewLessonForm from '@/components/UI/organisms/CreateNewLessonForm'
 import cls from "./GroupLessons.module.scss"
 import { redirectToPlatform } from '@/utils/lib'
+import { useSocket } from '@/providers/SocketProvider'
+import { useQueryClient } from 'react-query'
+import { LESSON_STATUS_ENUMS } from '@/constants/enum'
 
 function checkSchedule(data = []) {
     const scheduleData = JSON.parse(JSON.stringify(data))
@@ -64,9 +67,11 @@ function checkSchedule(data = []) {
 }
 
 const GroupLessons = () => {
+    const {socket} = useSocket()
+    const { groupId } = useParams()
     const navigate = useNavigate()
     const mentorId = useGetUserId()
-    const { groupId } = useParams()
+    const queryClient = useQueryClient()
     const [videoUrl, setVideoUrl] = useState('')
     const [isOpenNewLessonModal, setIsOpenNewLessonModal] = useState(false)
     const { data: groupLesson, isLoading: isGroupLessonLoading } = useGetGroupLessons(groupId)
@@ -78,6 +83,18 @@ const GroupLessons = () => {
     }
 
     const isLessonAvailable = checkSchedule(groupInfo?.lessonSchedules);
+
+    useEffect(() => {
+        if(socket && !socket.hasListeners('live-lesson-end')){
+            socket.on('live-lesson-end', data => {
+                const groupId = data?.groupId
+                const lessonId = data?.lessonId
+                queryClient.setQueryData(['lessons', groupId], (oldData) => {
+                    return oldData?.map(lesson => lesson?.id === lessonId ? { ...lesson, status: LESSON_STATUS_ENUMS.FINISHED } : lesson )
+                })
+            })
+        }
+    }, [socket])
 
     return (
         <div className={cls.lessons}>
@@ -109,7 +126,7 @@ const GroupLessons = () => {
                             title={lesson?.title}
                             date={lesson?.date}
                             duration={lesson?.duration}
-                            isLive={lesson?.status === 'ongoing'}
+                            isLive={lesson?.status === LESSON_STATUS_ENUMS.ONGOING}
                             onClick={() => navigate(lesson?.id)}
                             onClickVideo={() => handleVideoPreview(lesson?.video)}
                             onClickLesson={() => redirectToPlatform(lesson?.mentorUrl, mentorId)}

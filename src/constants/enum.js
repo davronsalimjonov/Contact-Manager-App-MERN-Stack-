@@ -74,3 +74,8 @@ export const STUDENT_STATUS_ENUMS = {
     WITHOUT_MENTOR: 'Mentorsiz',
     SUCCESS: 'Muvaffaqiyatli'
 }
+
+export const LESSON_STATUS_ENUMS = {
+    ONGOING: 'ongoing',
+    FINISHED: 'finished'
+}
