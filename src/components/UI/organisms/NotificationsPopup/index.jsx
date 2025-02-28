@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { debounce } from '@/utils/lib';
 import EmptyData from '../EmptyData';
 import NotificationItem from '../../moleculs/NotificationItem';
@@ -6,8 +7,10 @@ import cls from './NotificationsPopup.module.scss';
 
 const NotificationsPopup = ({
     notifications = [],
-    onNotificationsViewed
+    onNotificationsViewed,
+    handleClose
 }) => {
+    const navigate = useNavigate()
     const notificationIds = useRef([])
 
     const debounceOnNotificationsViewed = debounce((ids) => {
@@ -22,6 +25,13 @@ const NotificationsPopup = ({
         debounceOnNotificationsViewed(notificationIds.current)
     }
 
+    const handleClickNotification = (notification) => {
+        if(notification?.type === 'time-is-up') {
+            navigate(`/students/${notification?.typeId}`)
+            handleClose?.()
+        }
+    }
+
     return (
         <div className={cls.popup}>
             <h4 className={cls.popup__title}>Bildirishnomalar</h4>
@@ -32,8 +42,9 @@ const NotificationsPopup = ({
                             <NotificationItem
                                 key={notification?.id}
                                 title={notification?.title}
-                                date={notification?.createdAt}
+                                date={notification?.date}
                                 isViewed={notification?.isViewed}
+                                onClick={() => handleClickNotification(notification)}
                                 onVisible={() => handleNotificationsViewed(notification?.id)}
                             />
                         ))}

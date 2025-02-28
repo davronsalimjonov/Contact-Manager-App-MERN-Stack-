@@ -1251,7 +1251,7 @@ export const CheckListIcon = ({ width = 40, height = 40 }) => {
             <defs>
                 <linearGradient id="paint0_linear_7882_63036" x1="34" y1="0" x2="34" y2="68" gradientUnits="userSpaceOnUse">
                     <stop stopColor="#138BD7" />
-                    <stop offset="1" stop-color="#62AAFB" />
+                    <stop offset="1" stopColor="#62AAFB" />
                 </linearGradient>
             </defs>
         </svg>

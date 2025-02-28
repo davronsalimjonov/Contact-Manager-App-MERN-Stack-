@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from "react-query"
 import { getNotificationCount, getNotifications } from "@/services/notification"
 import { useGetUserId } from "./useGetUser"
 
-export const useGetNotifications = ({ ...options }) => {
+export const useGetNotifications = ({ ...options } = {}) => {
     const userId = useGetUserId()
     const queryClient = useQueryClient()
     const data = useQuery(['notifications', userId], getNotifications, { staleTime: Infinity, cacheTime: Infinity, ...options })

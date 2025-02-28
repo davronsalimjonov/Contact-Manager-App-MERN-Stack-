@@ -29,7 +29,7 @@ const NotificationButton = () => {
         ],
     });
     const { data: notificationCount } = useGetNotificationCount()
-    const { data: notifications, addNewNotification, updateNotificationsViewedState } = useGetNotifications({ enabled: notificationCount > 0 })
+    const { data: notifications, addNewNotification, updateNotificationsViewedState } = useGetNotifications()
 
     function handleClosePopup() {
         const ids = viewedNotifications.current
@@ -74,6 +74,7 @@ const NotificationButton = () => {
                     <NotificationsPopup
                         notifications={notifications}
                         onNotificationsViewed={onNotificationsViewed}
+                        handleClose={handleClosePopup}
                     />
                 </div>
             }
