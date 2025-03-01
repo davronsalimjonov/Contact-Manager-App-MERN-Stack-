@@ -29,6 +29,9 @@ const NotificationsPopup = ({
         if(notification?.type === 'time-is-up') {
             navigate(`/students/${notification?.typeId}`)
             handleClose?.()
+        } else if(notification?.type === 'adaptation') {
+            navigate('/adaptation-workspace')
+            handleClose?.()
         }
     }
 
