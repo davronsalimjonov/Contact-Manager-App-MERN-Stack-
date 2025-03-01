@@ -13,9 +13,9 @@ export const useGetCallMentorStudents = (params = {}) => {
     const { socket } = useSocket()
     const queryClient = useQueryClient()
 
-    const addNewMessage = (userCourseId) => {
+    const addNewMessage = (chatId) => {
         queryClient.setQueriesData(['students', userId], (students) => {
-            const studentIndex = students?.findIndex(student => student.id === userCourseId);
+            const studentIndex = students?.findIndex(student => student.chatId === chatId);
 
             if (studentIndex === -1) {
                 return students;
@@ -33,8 +33,8 @@ export const useGetCallMentorStudents = (params = {}) => {
 
     useEffect(() => {
         if (socket && !socket.hasListeners('new-message')) {
-            socket.on('new-message', userCourseId => {
-                addNewMessage(userCourseId)
+            socket.on('new-message', chatId => {
+                addNewMessage(chatId)
                 if (!soundTimer) {
                     autoPlayAudio('/audio/new-message-came.mp3')
                     soundTimer = setTimeout(() => {
