@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { removeEmptyKeys } from "@/utils/lib"
-import { getEmployeeById, updateEmployee } from "@/services/employee"
+import { createMentorEmployee, getEmployeeById, updateEmployee } from "@/services/employee"
 
 export const useGetEmployeeById = (employeeId, params = {}, options = {}) => {
     return useQuery(['employee', employeeId, ...Object.values(removeEmptyKeys(params))], () => getEmployeeById(employeeId, params), { cacheTime: Infinity, staleTime: Infinity, ...options })
@@ -27,4 +27,22 @@ export const useUpdateEmployeeMutation = () => {
     }
 
     return updateMutation
+}
+
+export const useCreateMentorEmployeeMutation = () => {
+    const queryClient = useQueryClient()
+    const createMutation = useMutation({
+        mutationFn: createMentorEmployee,
+        onSuccess: onCreateSuccess
+    })
+
+    function onCreateSuccess(data) {
+        queryClient.invalidateQueries(['all-mentors'])
+        // queryClient.setQueriesData(['all-mentors'], (oldData) => ({
+        //     ...oldData,
+        //     items: [data, ...oldData?.items]
+        // }))
+    }
+
+    return createMutation
 }

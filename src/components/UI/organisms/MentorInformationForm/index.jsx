@@ -15,13 +15,14 @@ import FormSelect from '../../moleculs/Form/FormSelect';
 import cls from './MentorInformationForm.module.scss';
 
 const MentorInformationForm = ({
+    isCreate = false,
     defaultValues,
-    onSubmit
+    onSubmit,
 }) => {
     const { register, control, reset, watch, handleSubmit, setValue, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
         defaultValues,
         mode: 'onSubmit',
-        resolver: yupResolver(mentorSchema.shape({ sip: Yup.number().transform((value) => isNaN(value) ? null : value).required('SIP raqami kiritilishi shart') }))
+        resolver: yupResolver(mentorSchema.shape(!isCreate ? { sip: Yup.number().transform((value) => isNaN(value) ? null : value).required('SIP raqami kiritilishi shart') } : {}))
     })
     const avatar = watch('avatar')
 
@@ -102,6 +103,7 @@ const MentorInformationForm = ({
                         label='Status'
                         placeholder="Statusni Tanlang"
                         options={MENTOR_STATUS_OPTIONS}
+                        defaultValue={'Ishlayapti'}
                         control={control}
                         name='status'
                         error={errors?.status?.message}
@@ -113,7 +115,7 @@ const MentorInformationForm = ({
                         isLoading={isSubmitting}
                         disabled={!isDirty}
                     >
-                        Tahrirlash
+                        {isCreate ? 'Yaratish' : 'Tahrirlash'}
                     </Button>
                     <RedButton
                         disabled={!isDirty}

@@ -66,6 +66,7 @@ import LessonStatistics from "@/components/pages/LessonsStatistics/LessonStatist
 import { USER_ROLES } from "@/constants";
 import MentorSalary from "@/components/pages/MentorSalary";
 import { Suspense } from "react";
+import CreateMentor from "@/components/pages/CreateMentor";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -286,8 +287,8 @@ const managerRoutes = createBrowserRouter([
                 element: <SingleMentor />
             },
             {
-                path: '/mentors/add-mentor',
-                element: <SingleMentor />
+                path: '/mentors/create-mentor',
+                element: <CreateMentor />
             },
             {
                 path: '/user-course/:userCourseId',

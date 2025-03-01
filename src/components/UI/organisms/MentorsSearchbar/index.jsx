@@ -3,7 +3,7 @@ import { debounce } from '@/utils/lib';
 import { ENGLISH_LEVEL_OPTIONS, MENTOR_STATUS_OPTIONS } from '@/constants/form';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
-import { ArrowDown } from '../../atoms/icons';
+import { PlusIcon } from '../../atoms/icons';
 import Button from '../../atoms/Buttons/Button';
 import PhoneInput from '../../atoms/Form/PhoneInput';
 import cls from './MentorsSearchbar.module.scss';
@@ -48,9 +48,9 @@ const MentorsSearchBar = ({
                 onChange={onChangeDegree}
                 isclearable
             />
-            {/* <Button onClick={() => navigate(`/mentors/add-mentor`)}>
-                Mentor Qo'shish <ArrowDown fill='white' />
-            </Button> */}
+            <Button onClick={() => navigate(`/mentors/create-mentor`)}>
+                Mentor Qo'shish <PlusIcon />
+            </Button>
         </div>
     );
 }

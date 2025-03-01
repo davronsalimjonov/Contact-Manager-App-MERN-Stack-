@@ -52,6 +52,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/users', title: 'Foydalanuvchilar', showBackButton: false },
         { path: '/users/:id', title: 'Foydalanuvchi ma’lumotlari', showBackButton: false },
         { path: '/mentors', title: 'Mentorlar', showBackButton: false },
+        { path: '/mentors/create-mentor', title: 'Mentor yaratish', showBackButton: true },
         { path: '/mentors/:mentorId', title: 'Mentor ma’lumotlari', showBackButton: false },
         { path: '/statistics/lessons', title: 'Servis statistikasi', showBackButton: false },
         { path: '/statistics/lessons/:mentorId/:groupId', title: 'Servis statistikasi', showBackButton: false },

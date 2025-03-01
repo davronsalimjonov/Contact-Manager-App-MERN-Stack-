@@ -37,9 +37,9 @@ const UsersSearchBar = ({
                 onChange={onChangeStatus}
                 isclearable
             />
-            <Button>
+            {/* <Button>
                 Foydalanuvchi Qo'shish <ArrowDown fill="#fff" />
-            </Button>
+            </Button> */}
         </div>
     );
 }
