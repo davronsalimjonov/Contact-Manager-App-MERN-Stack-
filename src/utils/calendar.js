@@ -6,12 +6,15 @@ export function convertLessonScheduleToEvents(data = [], { groupId } = {}) {
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
     const currentDay = currentDate.getDate();
-    const currentWeekday = currentDate.getDay();
-
+    
+    const jsWeekday = currentDate.getDay();
+    
+    const mondayDate = new Date(currentYear, currentMonth, currentDay - jsWeekday + (jsWeekday === 0 ? -6 : 1));
+    
     return data.flatMap(({ id, weekday, startTime, endTime, group, lessonScheduleMoves }) => {
-        let diff = weekday == 0 ? 7 : weekday;
-        const targetDate = new Date(currentYear, currentMonth, currentDay + (diff - currentWeekday));
-
+        const daysToAdd = weekday === 0 ? 6 : weekday - 1;
+        const targetDate = new Date(mondayDate.getFullYear(), mondayDate.getMonth(), mondayDate.getDate() + daysToAdd);
+        
         const createDateTime = (time, customDate) => {
             const baseDate = customDate || targetDate;
             const hours = Math.floor(time / 60);

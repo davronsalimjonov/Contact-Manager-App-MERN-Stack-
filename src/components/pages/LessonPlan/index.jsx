@@ -100,7 +100,7 @@ const LessonPlan = () => {
             setEvents(convertLessonScheduleToEvents(lessons?.items, { groupId }))
         }
     }, [lessons])
-
+    
     return !isLoadingLessons ? (
         <div className={cls.page}>
             <ConfirmationModal

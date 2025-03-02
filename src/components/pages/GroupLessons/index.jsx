@@ -112,7 +112,7 @@ const GroupLessons = () => {
                 <div className={cls.lessons__header__title}><PersonsIcon fill="var(--blue-color)" />{groupInfo?.title}</div>
                 <Button
                     onClick={() => setIsOpenNewLessonModal(true)}
-                    // disabled={!isLessonAvailable}
+                    disabled={!isLessonAvailable}
                 >
                     <PlusIcon width={20} height={20} /> Boshlash
                 </Button>
