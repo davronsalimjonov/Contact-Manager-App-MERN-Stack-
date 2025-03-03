@@ -24,8 +24,6 @@ export const DEGREE = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 export const STATUSOPTIONS = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }))
 
-export const WEEKDAYOPTIONS = daysOfWeekFull.map((day) => ({ value: day, label: day }));
-
 export const DEGREEOPTIONS = DEGREE.map((level) => ({ value: level, label: level }));
 
 export const STUDENTS_STATUS_OPTIONS = STUDENT_STATUS_ENUMS.map((status) => ({ value: status, label: status }));

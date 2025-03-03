@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Button from "../../atoms/Buttons/Button";
-import { Modal } from "antd";
 import AddNewWordForm from "../AddNewWordForm";
 import Dialog from "../../moleculs/Dialog";
 

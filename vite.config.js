@@ -22,7 +22,19 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
+          'vendor-core': ['react', 'react-dom', 'react-router-dom'],
+          // State management
+          'vendor-state': ['react-redux', '@reduxjs/toolkit', 'redux', 'redux-persist'],
+          // UI libraries
+          'vendor-ui': ['antd', 'react-select', 'react-avatar', 'react-beautiful-dnd', 'react-paginate'],
+          // Forms and validation
+          'vendor-forms': ['react-hook-form', '@hookform/resolvers', 'yup', 'react-input-mask', 'react-phone-number-input'],
+          // Charts and media
+          'vendor-media': ['chart.js', 'react-chartjs-2', 'wavesurfer.js', '@wavesurfer/react'],
+          // Date handling
+          'vendor-date': ['dayjs', 'react-datepicker', 'react-big-calendar'],
+          // Network and API
+          'vendor-network': ['axios', 'react-query', 'socket.io-client']
         },
       },
     },

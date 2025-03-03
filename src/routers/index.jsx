@@ -12,8 +12,6 @@ import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
 import SingleStudent from "@/components/pages/SingleStudent";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-// import Schedule from "@/components/pages/Schedule";
-// import SingleSchedule from "@/components/pages/SingleSchedule";
 import MainMentorDashboard from "@/components/pages/MainMentorDashboard";
 import MainMentorStudents from "@/components/pages/MainMentorStudents";
 import Users from "@/components/pages/Users";
@@ -24,15 +22,10 @@ import CallMentors from "@/components/pages/CallMentorsStatistic";
 import CallMentorStatistic from "@/components/pages/CallMentorStatistic";
 import AllStudents from "@/components/pages/AllStudents";
 import Courses from "@/components/pages/Courses";
-import AddStudent from "@/components/pages/AddStudent";
 import UpdateSingleStudentCourse from "@/components/pages/UpdateSingleStudentCourse";
 import UpdateCourse from "@/components/pages/UpdateCourse";
-// import StudentsRateForCallMentor from "@/components/pages/StudentsRateForCallMentor";
-// import StudentsRateForTeacher from "@/components/pages/StudentsRateForTeachers";
 import Dictionary from "@/components/pages/Dictionary";
 import Moderation from "@/components/pages/Moderation";
-// import Notification from "@/components/pages/Notification";
-// import AddNotification from "@/components/pages/AddNotification";
 import SellersDashboard from "@/components/pages/SellersDashboard";
 import SellerWorkspace from "@/components/pages/SellerWorkspace";
 import SellerStatistics from "@/components/pages/SellerStatistics";
@@ -198,18 +191,6 @@ const mainMentorRoutes = createBrowserRouter([
                 path: '/lessons-schedule/:groupId/:lessonId/:homeWorkId',
                 element: <HomeworkReview />
             },
-            // {
-            //     path: '/lessons-schedule',
-            //     element: <Schedule />
-            // },
-            // {
-            //     path: '/lessons-schedule/:scheduleId',
-            //     element: <SingleSchedule />
-            // },
-            // {
-            //     path: '/schedule/table',
-            //     element: <ScheduleHomeWork />
-            // },
             {
                 path: '/platform',
                 element: <CoursesIFrame />
@@ -307,14 +288,6 @@ const managerRoutes = createBrowserRouter([
                 path: '/courses/:courseId',
                 element: <UpdateCourse />
             },
-            // {
-            //     path:'/notifications',
-            //     element: <Notification/>
-            // },
-            // {
-            //     path:'/notifications/add',
-            //     element: <AddNotification/>
-            // },
             {
                 path: '/statistics/lessons',
                 element: <GroupStatistics />
@@ -331,14 +304,6 @@ const managerRoutes = createBrowserRouter([
                 path: '/statistics/app-rate',
                 element: <AppRateStatistics />
             },
-            // {
-            //     path: '/service-statistics/lesson-rate/:teacherId/:groupId',
-            //     element: <StudentsRateForTeacher />
-            // },
-            // {
-            //     path: '/service-statistics/call-rate/:teacherId',
-            //     element: <StudentsRateForCallMentor />
-            // },
             {
                 path: '/moderation/:courseId',
                 element: <Moderation />
