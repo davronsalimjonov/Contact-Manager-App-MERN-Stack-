@@ -34,9 +34,9 @@ const LessonCard = ({
                     <button className={cls.card__details__btn} onClick={e => (e.stopPropagation(), onClickVideo?.())}>
                         Dars videosini ko'rish <ArrowRightIcon />
                     </button>
-                </div>
+                </div>  
             )}
-            {isLive && <button className={cls.card__details__btn} onClick={onClickLesson}>Darsga o’tish <ArrowRightIcon /></button>}
+            {isLive && <button className={cls.card__details__btn} onClick={e => (e.stopPropagation(), onClickLesson?.())}>Darsga o’tish <ArrowRightIcon /></button>}
         </div>
     )
 }

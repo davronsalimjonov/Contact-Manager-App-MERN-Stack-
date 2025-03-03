@@ -1,0 +1,12 @@
+
+.page{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+
+    &__table{
+        flex-grow: 1;
+        overflow: auto;
+    }
+}

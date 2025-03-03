@@ -67,6 +67,7 @@ import { USER_ROLES } from "@/constants";
 import MentorSalary from "@/components/pages/MentorSalary";
 import { Suspense } from "react";
 import CreateMentor from "@/components/pages/CreateMentor";
+import AppRateStatistics from "@/components/pages/AppRateStatistics";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -325,6 +326,10 @@ const managerRoutes = createBrowserRouter([
             {
                 path: '/statistics/lessons/:mentorId/:groupId/:lessonId',
                 element: <LessonStatistics />
+            },
+            {
+                path: '/statistics/app-rate',
+                element: <AppRateStatistics />
             },
             // {
             //     path: '/service-statistics/lesson-rate/:teacherId/:groupId',

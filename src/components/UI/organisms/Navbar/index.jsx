@@ -57,6 +57,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/statistics/lessons', title: 'Servis statistikasi', showBackButton: false },
         { path: '/statistics/lessons/:mentorId/:groupId', title: 'Servis statistikasi', showBackButton: false },
         { path: '/statistics/lessons/:mentorId/:groupId/:lessonId', title: 'Servis statistikasi', showBackButton: false },
+        { path: '/statistics/app-rate', title: 'Ilova bahosi', showBackButton: false },
         { path: '/courses', title: 'Kurslar', showBackButton: false },
         { path: '/groups', title: 'Guruhlar', showBackButton: false },
         { path: '/groups/:id', title: 'Guruh ma’lumotlari', showBackButton: true },
