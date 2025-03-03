@@ -11,9 +11,9 @@ import StudentsCountChart from '@/components/UI/organisms/StudentsCountChart'
 import ActiveStudentsCountChart from '@/components/UI/organisms/ActiveStudentsCountChart'
 import { LeftArrowIcon, MetricCashIcon, MetricPersonsIcon, MetricStarsIcon, StarIcon } from '@/components/UI/atoms/icons'
 import { useGetMainMentorStatistic, useGetStudentsCountByCourse, useGetStudentsCountByStatus } from '@/hooks/useStatistic'
+import MentorCards from '@/components/UI/organisms/MentorCards'
 import MetricCard from '../../UI/moleculs/MetricCard'
 import cls from './MainMentorDashboard.module.scss'
-import MentorCards from '@/components/UI/organisms/MentorCards'
 
 const MainMentorDashboard = ({ userId, withUserInfo = false }) => {
     const navigate = useNavigate()
@@ -52,7 +52,7 @@ const MainMentorDashboard = ({ userId, withUserInfo = false }) => {
                     <div className={cls.page__metrics}>
                         <MetricCard
                             title='Faol o’quvchilar soni'
-                            value={<>{mainMentorStatistic?.activeStudents || 0} ta / {mainMentorStatistic?.activeStudentsPercentage || 0} %</>}
+                            value={<>{mainMentorStatistic?.activeStudents || 0} ta / {mainMentorStatistic?.totalStudentsCount || 0} tadan</>}
                             icon={<MetricPersonsIcon color='rgba(0, 182, 155, 1)' />}
                             iconBg='rgba(0, 182, 155, 0.21)'
                         />
