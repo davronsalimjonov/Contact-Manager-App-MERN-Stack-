@@ -30,7 +30,7 @@ const MainMentorsTable = ({ mentors = [] }) => {
                                 onClick={() => navigate(mentor?.id)}
                                 fullName={getUserFullName(mentor)}
                                 activeStudentsPercentage={mentor?.activeStudentsPercentage || 0}
-                                activeStudentsCount={mentor?.activeStudentsCount || 0}
+                                activeStudentsCount={mentor?.activeStudents || 0}
                                 mentorActivityPercentage={mentor?.mentorActivityPercentage || 0}
                                 salary={mentor?.salary || 0}
                                 rating={mentor?.rating || 0}
