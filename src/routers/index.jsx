@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { RouterProvider } from "react-router-dom";
 import { USER_ROLES } from "@/constants";
 import useGetUser from "@/hooks/useGetUser";
 import loadingRoutes from "./loading";
 import emptyRoutes from "./empty";
-import Loader from "@/components/UI/atoms/Loader";
 
 const getRoutesByRole = async (role) => {
     try {
