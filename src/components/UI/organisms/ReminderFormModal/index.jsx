@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import Button from '../../atoms/Buttons/Button';
 import Dialog from '../../moleculs/Dialog';
@@ -5,9 +6,10 @@ import FormDatepicker from '../../moleculs/Form/FormDatepicker';
 import FormInput from '../../moleculs/Form/FormInput';
 import { useCreateReminderMutation } from '@/hooks/useReminder';
 import cls from './ReminderFormModal.module.scss';
-import toast from 'react-hot-toast';
 
 const ReminderFormModal = ({
+    type = 'notification',
+    typeId = null,
     isOpen = false,
     onClose,
 }) => {
@@ -20,7 +22,8 @@ const ReminderFormModal = ({
     }
 
     const handleCreateReminder = async (data) => {
-        data.type = 'notification'
+        data.type = type
+        data.typeId = typeId
         await createReminderMutation.mutateAsync(data, {
             onSuccess: () => {
                 toast.success('Task yaratildi')

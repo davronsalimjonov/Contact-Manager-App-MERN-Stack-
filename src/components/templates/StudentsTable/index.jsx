@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getDayName } from '@/utils/time';
 import { cn, getUserFullName } from '@/utils/lib';
-import Mapper from '@/components/UI/atoms/Mapper';
-import Loader from '@/components/UI/atoms/Loader';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
@@ -14,7 +12,6 @@ import cls from './StudentsTable.module.scss';
 const StudentsTable = ({
     groupId = '',
     students = [],
-    isLoading,
     menuButtons = true
 }) => {
     const navigate = useNavigate()
@@ -75,40 +72,34 @@ const StudentsTable = ({
                         </tr>
                     </thead>
                     <tbody>
-                        <Mapper
-                            data={students}
-                            isInfinityQuery
-                            isLoading={isLoading}
-                            renderItem={(student, index) => (
-                                <StudentsTableRow
-                                    key={student?.id}
-                                    withCheckbox={!!groupId}
-                                    index={index + 1}
-                                    chatId={student?.id}
-                                    avatar={student?.url}
-                                    status={student?.status}
-                                    userCourseId={student?.id}
-                                    phoneNumber={student?.phone}
-                                    time={student?.connectionTime}
-                                    fullName={getUserFullName(student)}
-                                    unreadedMessagesCount={student?.messageCount}
-                                    days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
-                                    checked={checkedStudents.includes(student?.id)}
-                                    onChangeCheckbox={handleCheckboxChange}
-                                    onClick={() => navigate(`/students/chat/${student?.id}`)}
-                                    onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.userId })}
-                                    onClickTransfer={() => setTransfer({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
-                                    onClickUserInfo={() => navigate(`/students/${student?.id}/${student?.userId}`)}
-                                    menuButtons={menuButtons}
-                                />
-                            )}
-                        />
+                        {students?.map((student, index) => (
+                            <StudentsTableRow
+                                key={student?.id}
+                                withCheckbox={!!groupId}
+                                index={index + 1}
+                                chatId={student?.id}
+                                avatar={student?.url}
+                                status={student?.status}
+                                userCourseId={student?.id}
+                                phoneNumber={student?.phone}
+                                time={student?.connectionTime}
+                                fullName={getUserFullName(student)}
+                                unreadedMessagesCount={student?.messageCount}
+                                days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
+                                checked={checkedStudents.includes(student?.id)}
+                                onChangeCheckbox={handleCheckboxChange}
+                                onClick={() => navigate(`/students/chat/${student?.id}`)}
+                                onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.userId })}
+                                onClickTransfer={() => setTransfer({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
+                                onClickUserInfo={() => navigate(`/students/${student?.id}/${student?.userId}`)}
+                                menuButtons={menuButtons}
+                            />
+                        ))}
                     </tbody>
                 </table>
             ) : (
-                !isLoading && <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas." />
+                <EmptyData text="Sizda hozirda hech qanday ma'lumot mavjud emas." />
             )}
-            {isLoading && <Loader size={80} />}
         </div>
     );
 }

@@ -5,6 +5,7 @@ import { useGetMyGroups } from '@/hooks/useGetGroups';
 import StudentsTable from '@/components/templates/StudentsTable';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
 import cls from './MyStudents.module.scss';
+import Loader from '@/components/UI/atoms/Loader';
 
 const MyStudents = () => {
     const [filter, setFilter] = useState({})
@@ -12,12 +13,12 @@ const MyStudents = () => {
     const { data: students, isLoading: isLoadingStudents } = useGetCallMentorStudents(filter)
 
     function getGroupOptions() {
-        const options = [{ value: '', label: 'Barchasi' } ]
-    
+        const options = [{ value: '', label: 'Barchasi' }]
+
         groups?.forEach(group => {
             options.push({ value: group.id, label: group.title })
         })
-    
+
         return options
     }
 
@@ -35,11 +36,14 @@ const MyStudents = () => {
                 onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
                 onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
             />
-            <StudentsTable
-                groupId={filter.group}
-                students={students}
-                isLoading={isLoadingStudents}
-            />
+            {!isLoadingStudents ? (
+                <StudentsTable
+                    groupId={filter.group}
+                    students={students}
+                />
+            ) : (
+                <Loader />
+            )}
         </div>
     );
 }
