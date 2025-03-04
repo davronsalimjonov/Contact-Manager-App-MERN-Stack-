@@ -38,10 +38,10 @@ const AllStudentsTableRow = ({
             </td>
             <td>{formatPhoneNumberIntl(phoneNumber)}</td>
             <td ><StudentStatus status={status} /></td>
-            <td className={cls.row__teachers}>
+            {status !== "Adaptatsiya" ? <td className={cls.row__teachers}>
                 <p className={cls.row__teachers__main}>{mainTeacher || <EmptyDataText />}</p>
                 <p className={cls.row__teachers__second}>{secondTeacher || <EmptyDataText />}</p>
-            </td>
+            </td> : <td className={cls.row__teachers__adaptation}>{secondTeacher || <EmptyDataText />}</td>}
             <td>{level || <EmptyDataText />}</td>
             <td className={cls.row__course}>{course || <EmptyDataText />}</td>
             <td>{group || <EmptyDataText />}</td>

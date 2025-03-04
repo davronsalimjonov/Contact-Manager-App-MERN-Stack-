@@ -53,7 +53,7 @@ const AllStudentsTable = ({
                                 fullName={getUserFullName(student?.user)}
                                 phoneNumber={student?.user?.phone}
                                 status={student?.status}
-                                mainTeacher={getUserFullName(student?.teacher)}
+                                mainTeacher={student?.status !== "Adaptatsiya" && getUserFullName(student?.teacher)}
                                 secondTeacher={getUserFullName(student?.secondTeacher)}
                                 level={student?.level}
                                 course={student?.course?.title}
