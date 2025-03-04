@@ -1,4 +1,3 @@
-import { getFileCategory } from '@/utils/lib';
 import FilePreviewItem from '../FilePreviewItem';
 import TableActionButton from '../TableActionButton';
 import cls from './MaterialItem.module.scss';
@@ -8,13 +7,10 @@ const MaterialItem = ({
     description = '',
     fileName = '',
     fileSize = 0,
-    fileUrl = '',
     onClickEdit,
     onClickDelete,
     onClickFile
 }) => {
-    const fileType = getFileCategory(fileUrl)
-
     const dropdownMenuItems = [
         { label: 'Tahrirlash', onClick: onClickEdit },
         { label: "O'chirish", onClick: onClickDelete },
@@ -28,7 +24,6 @@ const MaterialItem = ({
                 className={cls.item__file}
                 name={fileName}
                 size={fileSize}
-                type={fileType}
                 onClick={onClickFile}
             />
             {description && <span className={cls.item__description} title={description}>{description}</span>}

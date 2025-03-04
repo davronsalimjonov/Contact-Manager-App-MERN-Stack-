@@ -4,10 +4,17 @@ import { CloseIcon } from '../../icons';
 import cls from './Select.module.scss';
 
 const ClearIndicator = (props) => {
+    const handleClearIndicatorClick = (e) => {
+        e.stopPropagation();
+        props.selectProps.onClear()
+    }
+    
     return (
-        <components.ClearIndicator {...props} className={cls.closeIcon}>
-            <CloseIcon />
-        </components.ClearIndicator>
+        <div onMouseDown={handleClearIndicatorClick} style={{ display: 'flex', alignItems: 'center' }}>
+            <components.ClearIndicator {...props} className={cls.closeIcon}>
+                <CloseIcon />
+            </components.ClearIndicator>
+        </div>
     );
 };
 
@@ -20,28 +27,33 @@ const DropdownIndicator = (props) => {
 const Select = ({
     onChange,
     options = [],
-    isClearable,
+    isclearable,
     placeholder = '',
     className = '',
     isSearchable = true,
     error,
+    isMulti = false,
+    register,
     ...otherProps
 }) => {
+
     return (
         <ReactSelect
             components={{
                 Menu: (props) => <components.Menu {...props} className={cls.menu} />,
                 ClearIndicator,
-                DropdownIndicator
+                DropdownIndicator,
             }}
             className={cn(cls.select, error && cls.error, className)}
             options={options}
             placeholder={placeholder}
             onChange={onChange}
-            isClearable={isClearable}
+            isClearable={isclearable}
             isSearchable={isSearchable}
-            menuPortalTarget={document.body}
-            menuPosition={'fixed'} 
+            isMulti={isMulti}
+            {...register}
+            menuPortalTarget={document.getElementById('app')}
+            menuPosition={'fixed'}
             styles={{ menuPortal: base => ({ ...base, zIndex: 99999999999 }) }}
             {...otherProps}
         />

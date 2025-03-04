@@ -1,0 +1,22 @@
+.bar {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    align-items: center;
+
+    &>* {
+        flex: 1;
+    }
+
+    &__form{
+        display: flex;
+        align-items: center;
+        flex: 2;
+
+        &__input, &__select{
+            background-color: var(--base-white-color) !important;
+            z-index: 20;
+        }
+    }
+}

@@ -2,10 +2,10 @@ import { useQuery, useQueryClient } from "react-query"
 import { getNotificationCount, getNotifications } from "@/services/notification"
 import { useGetUserId } from "./useGetUser"
 
-export const useGetNotifications = ({ ...options }) => {
+export const useGetNotifications = ({ ...options } = {}) => {
     const userId = useGetUserId()
     const queryClient = useQueryClient()
-    const data = useQuery(['notifications', userId], () => getNotifications(userId), { staleTime: Infinity, cacheTime: Infinity, ...options })
+    const data = useQuery(['notifications', userId], getNotifications, { staleTime: Infinity, cacheTime: Infinity, ...options })
 
     const addNewNotification = (newNotification) => {
         queryClient.setQueriesData(['notification-count', userId], (oldData) => (oldData || 0) + 1)
@@ -30,7 +30,7 @@ export const useGetNotifications = ({ ...options }) => {
 export const useGetNotificationCount = () => {
     const userId = useGetUserId()
     const queryClient = useQueryClient()
-    const data = useQuery(['notification-count', userId], () => getNotificationCount(userId), { staleTime: Infinity, cacheTime: Infinity, enabled: !!userId })
+    const data = useQuery(['notification-count', userId], getNotificationCount, { staleTime: Infinity, cacheTime: Infinity, enabled: !!userId })
 
     const addNewNotificationCount = (count) => {
         queryClient.setQueriesData(['notification-count', userId], (oldData) => oldData + count)

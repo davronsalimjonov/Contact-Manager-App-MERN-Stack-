@@ -1,0 +1,26 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: var(--base-white-color);
+    gap: 24px;
+
+    &__title {
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 26px;
+        letter-spacing: 0%;
+    }
+
+    &__elements {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    &__btn {
+        min-width: 170px;
+        margin-left: auto;
+    }
+}

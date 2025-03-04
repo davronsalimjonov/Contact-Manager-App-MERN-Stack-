@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/utils/lib';
 import useClickOutside from '@/hooks/useClickOutside';
 import cls from './Dialog.module.scss';
@@ -11,13 +11,16 @@ const Dialog = ({
 }) => {
     const [isVisible, setIsVisible] = useState(true)
     const ref = useClickOutside({ onClickOutside: onClose, disable: !isOpen })
+    const timeoutRef = useRef(null)
 
-    useEffect(() => { 
-        if(!isOpen){
-            setTimeout(() => setIsVisible(false), 300)
+    useEffect(() => {
+        if (!isOpen) {
+            timeoutRef.current = setTimeout(() => setIsVisible(false), 300)
         } else {
             setIsVisible(true)
         }
+
+        return () => clearTimeout(timeoutRef.current)
     }, [isOpen])
 
     return createPortal(isVisible ? (

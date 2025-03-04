@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { useGetUserId } from '@/hooks/useGetUser';
 import { updateUserCourse } from '@/services/course';
 import { addStudentToGroup } from '@/services/group';
 import { useGetUserCourses } from '@/hooks/useUserCourse';
 import Loader from '../../atoms/Loader';
-import UserCourseRow from '../../moleculs/UserCourseRow';
 import GroupPickerModal from '../GroupPickerModal';
 import ConfirmationModal from '../ConfirmationModal';
+import UserCourseRow from '../../moleculs/UserCourseRow';
 import cls from './UserCourseTable.module.scss';
 
-const UserCourseTable = ({ userId, userCourseId }) => {
+const UserCourseTable = ({ userId, userCourseId, disabled = true }) => {
+    const navigate = useNavigate()
     const queryClient = useQueryClient()
     const mentorId = useGetUserId()
     const [groupPicker, setGroupPicker] = useState({ isOpen: false, level: '', userCourseId: null })
@@ -56,7 +58,6 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                 title={`Rostan ${confirmModal?.groupName} guruhga biriktirmoqchimisiz?`}
                 isOpen={confirmModal?.isOpen}
                 onClose={() => setConfirmModal(state => ({ ...state, isOpen: false }))}
-                onCancel={() => setConfirmModal(state => ({ ...state, isOpen: false }))}
                 onConfirm={() => handleAddToGroup(confirmModal?.groupId, confirmModal?.userCourseId)}
             />
             <GroupPickerModal
@@ -80,13 +81,14 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                                 <th>Tugash sanasi</th>
                                 <th>Darajasi</th>
                                 <th>Guruh</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {courses?.map((course, index) => (
                                 <UserCourseRow
                                     key={course?.id}
-                                    disabled={course?.id !== userCourseId}
+                                    disabled={disabled ? course?.id !== userCourseId : false}
                                     index={index + 1}
                                     level={course?.level}
                                     endDate={course?.endDate}
@@ -94,8 +96,9 @@ const UserCourseTable = ({ userId, userCourseId }) => {
                                     group={course?.group?.title}
                                     startDate={course?.startDate}
                                     courseName={course?.course?.title}
-                                    onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
                                     onLevelChange={({ value: level }) => handleUpdateUserLevel(course?.id, level)}
+                                    onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
+                                    onClickEdit={() => navigate(`/user-course/${course?.id}`)}
                                 />
                             ))}
                         </tbody>

@@ -1,0 +1,38 @@
+.card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--blue-100-color);
+    padding: 12px;
+    padding-right: 24px;
+    border-radius: 12px;
+
+    &__title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 25.83px;
+        color: var(--blue-color);
+    }
+
+    &__details {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+
+        &__btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 18.78px;
+            letter-spacing: 0%;
+            color: var(--blue-color);
+        }
+    }
+}

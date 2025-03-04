@@ -24,3 +24,18 @@ export const getGroupStudents = async (groupId, params = {}) => {
     const res = await api.get(`/lesson/students/group/${groupId}?${paramsToString(params)}`)
     return res.data
 }
+
+export const transferStudent = async (data) => {
+    const res = await api.post('/group/transfer-student', data)
+    return res.data
+}
+
+export const updateGroup = async (groupId, data) => {
+    const res = await api.put(`/group/${groupId}`, data)
+    return res.data
+}
+
+export const getGroupsForOptions = async () => {
+    const res = await api.get(`/group/all-for-select`)
+    return res.data
+}

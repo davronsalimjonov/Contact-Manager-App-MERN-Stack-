@@ -8,11 +8,15 @@ const FormSelect = ({
     error = '',
     options = [],
     placeholder = '',
-    isClearable = false,
+    isclearable = false,
     isSearchable = false,
     defaultValue,
     control,
-    onChange
+    isMulti,
+    onChange,
+    className,
+    register = {},
+    rules 
 }) => {
     return (
         <FormElementWrapper label={label} error={error}>
@@ -20,16 +24,20 @@ const FormSelect = ({
                 <Controller
                     name={name}
                     control={control}
+                    rules={rules}
                     defaultValue={defaultValue}
                     render={({ field: { value, onChange } }) => (
                         <Select
-                            value={options.find(c => c.value === value) || null}
-                            onChange={(selected) => onChange(selected?.value || null)}
+                            value={isMulti ? options?.filter(option => value?.includes(option?.value)) : options.find(c => c.value === value) || null}
+                            onChange={(selected) => onChange(isMulti ? selected?.map(option => option.value) : (selected?.value || null))}
                             options={options}
                             placeholder={placeholder}
                             isSearchable={isSearchable}
-                            isClearable={isClearable}
+                            isclearable={isclearable}
+                            isMulti={isMulti}
                             error={error}
+                            className={className}
+                            register={register}
                         />
                     )}
                 />
@@ -39,7 +47,7 @@ const FormSelect = ({
                     placeholder={placeholder}
                     onChange={onChange}
                     isSearchable={isSearchable}
-                    isClearable={isClearable}
+                    isclearable={isclearable}
                     error={error}
                 />
             )}

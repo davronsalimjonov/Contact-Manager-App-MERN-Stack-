@@ -1,31 +1,33 @@
 import { useState } from 'react';
-import useGetGroups from '@/hooks/useGetGroups';
 import Tabs from '@/components/UI/moleculs/Tabs';
-import useGetStudents from '@/hooks/useGetStudents';
+import { useGetCallMentorStudents } from '@/hooks/useStudents';
+import { useGetMyGroups } from '@/hooks/useGetGroups';
 import StudentsTable from '@/components/templates/StudentsTable';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
 import cls from './MyStudents.module.scss';
 
 const MyStudents = () => {
     const [filter, setFilter] = useState({})
-    const { data: groups } = useGetGroups()
-    const { ref, data: students, isLoading: isLoadingStudents } = useGetStudents(filter)
+    const { data: groups } = useGetMyGroups()
+    const { data: students, isLoading: isLoadingStudents } = useGetCallMentorStudents(filter)
 
-    const tabOptions = [
-        { value: '', label: 'Barchasi' },
-    ]
-
-    groups?.forEach(group => {
-        tabOptions.push({ value: group.id, label: group.title })
-    })
+    function getGroupOptions() {
+        const options = [{ value: '', label: 'Barchasi' } ]
+    
+        groups?.forEach(group => {
+            options.push({ value: group.id, label: group.title })
+        })
+    
+        return options
+    }
 
     return (
         <div className={cls.page}>
-            <Tabs 
-                className={cls.page__tab} 
-                tabClassName={cls.page__tab__button} 
-                options={tabOptions} 
-                onChange={group => setFilter(state => ({ ...state, group }))} 
+            <Tabs
+                className={cls.page__tab}
+                tabClassName={cls.page__tab__button}
+                options={getGroupOptions()}
+                onChange={group => setFilter(state => ({ ...state, group }))}
             />
             <StudentsSearchBar
                 onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
@@ -34,7 +36,7 @@ const MyStudents = () => {
                 onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
             />
             <StudentsTable
-                triggerRef={ref}
+                groupId={filter.group}
                 students={students}
                 isLoading={isLoadingStudents}
             />

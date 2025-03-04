@@ -1,0 +1,87 @@
+import ModerationTable from "@/components/templates/ModerationTable";
+import cls from './ModerationAllCourseRate.module.scss';
+import useGetCourseRate from "@/hooks/useGetCourseRate";
+import { Pagination } from "antd";
+import { useState } from "react";
+import ModerationDialog from "../ModerationDialog";
+
+const ModerationAllCourseRate = ({ courseId, activeTab }) => {
+
+    const [filter, setFilter] = useState({
+        page: 1,
+        limit: 10,
+    }
+    );
+
+    const { data: comments, isLoading: isLoadingComments } = useGetCourseRate(courseId, {
+        page: filter.page,
+        limit: filter.limit,
+        isActive: activeTab
+    });
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const [comment, setComment] = useState({});
+
+    const onClose = () => {
+        setIsOpen(false);
+    }
+
+    const onOpen = (data) => {
+        setComment(data);
+        setIsOpen(true);
+    }
+
+
+    const onShowSizeChange = (current, pageSize) => {
+        setFilter((prev) => {
+            return {
+                ...prev,
+                page: current,
+                limit: pageSize,
+            }
+        })
+    };
+
+    return (
+        <>
+            <ModerationTable
+                isLoading={isLoadingComments}
+                comments={comments}
+                onOpen={onOpen}
+                courseId={courseId}
+                params={{
+                    page: filter.page,
+                    limit: filter.limit,
+                    isActive: activeTab,
+                }} />
+            {
+                (comments?.meta?.totalItems > filter.limit) && <div className={cls.pagination}>
+                    <Pagination
+                        showSizeChanger
+                        onShowSizeChange={onShowSizeChange}
+                        defaultCurrent={filter.page}
+                        defaultPageSize={filter.limit}
+                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} comments`}
+                        onChange={(page) => {
+                            setFilter((prev) => {
+                                return {
+                                    ...prev,
+                                    page: page,
+                                }
+                            })
+                        }}
+                        total={comments?.meta?.totalItems}
+                    />
+                </div>
+            }
+            <ModerationDialog comment={comment} isOpen={isOpen} onClose={onClose} courseId={courseId} params={{
+                page: filter.page,
+                limit: filter.limit,
+                isActive: activeTab
+            }} />
+        </>
+    )
+}
+
+export default ModerationAllCourseRate;

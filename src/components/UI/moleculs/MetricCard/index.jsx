@@ -8,10 +8,12 @@ const MetricCard = ({
   iconBg = "",
   iconStyle = {},
   additionalInformation,
-  percentage = undefined,
+  percentage,
+  onClick
 }) => {
+
   return (
-    <div className={cls.card}>
+    <div className={cls.card} onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
         <div>
               <div>
                 <h3 className={cls.card__title}>{title}</h3>
@@ -19,7 +21,7 @@ const MetricCard = ({
               </div>
               <div className={cls.card__icon} style={{ backgroundColor: iconBg, ...iconStyle }}>{icon}</div>
         </div>
-        {!isNaN(percentage) && (
+        {Number.isInteger(percentage) && (
           <PerformanceIndicator
               value={Math.abs(percentage)}
               positively={percentage >= 0}

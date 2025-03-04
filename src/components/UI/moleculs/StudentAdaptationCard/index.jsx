@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import { cn } from '@/utils/lib';
 import { useStopwatch } from '@/hooks/useTimer';
+import { getDateDifference } from '@/utils/time';
 import { BellIcon } from '../../atoms/icons';
 import cls from './StudentAdaptationCard.module.scss';
 
@@ -11,10 +12,11 @@ const StudentAdaptationCard = ({
     commingDate = '',
     showStatus = false,
     showTimer = false,
+    firstContactDate = '',
     onClick,
 }) => {
     const [status, setStatus] = useState('low')
-    const { days, hours, minutes} = useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
+    const { days, hours, minutes} = firstContactDate ? getDateDifference(new Date(commingDate), new Date(firstContactDate)) : useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
 
     useEffect(() => {
         if(hours == 1 && days == 0) setStatus('medium')

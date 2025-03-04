@@ -1,0 +1,21 @@
+.update__form{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.dictionary__buttons{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.field {
+    width: 100%;
+    border: none;
+
+    &>div {
+        background-color: #F6F9FD;
+
+    }
+}

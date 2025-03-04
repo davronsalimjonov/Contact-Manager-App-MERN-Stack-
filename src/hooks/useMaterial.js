@@ -18,15 +18,13 @@ export const useMaterialMutations = () => {
     })
 
     function onCreateMaterialSuccess(newFile) {
-        queryClient.invalidateQueries(['materials', userId], oldData => {
+        queryClient.setQueryData(['materials', userId], oldData => {
             oldData.pages[0].items = [newFile, ...oldData.pages[0].items]
             return oldData
         })
     }
 
     function onDeleteMaterialSuccess(_, id) {
-        console.log(id);
-        
         queryClient.setQueryData(['materials', userId], (oldData) => {
             return {
                 ...oldData,

@@ -37,3 +37,45 @@ export const ADAPTATION_WORKSPACE_STATUS = {
     ISSUE: 'issue',
     PAUSED: 'paused'
 }
+
+export const GROUP_STATUS = {
+    ACTIVE: 'active',
+    COLLECTING: 'collecting',
+    CLOSED: 'closed'
+}
+
+export const USER_TYPE_ENUMS = {
+    FREE: 'Free',
+    STUDENT: 'O\'quvchi'
+}
+
+export const MENTOR_STATUS_ENUM = {
+    TRIAL_PERIOD: 'Sinovda',
+    ACTIVE: 'Ishlayapti',
+    PAUSED: 'Vaqtincha Ta`tilda',
+    QUIT: 'Ishdan Ketdi'
+}
+
+export const MENTOR_CARDS_ENUM ={
+    FINE: 'red',
+    WARNING: 'yellow',
+    BONUS: 'green'
+}
+
+export const STUDENT_STATUS_ENUMS = {
+    NEW: 'Yangi',
+    ADAPTATION: 'Adaptatsiya',
+    PAUSED: 'Pauza',
+    FINISHED: 'Bitirdi',
+    CANCELED: 'Bekor qilindi',
+    ACTIVE: 'O\'qiyapti',
+    PROBLEMATIC: 'Muammoli',
+    TIME_OVER: 'Vaqti tugadi',
+    WITHOUT_MENTOR: 'Mentorsiz',
+    SUCCESS: 'Muvaffaqiyatli'
+}
+
+export const LESSON_STATUS_ENUMS = {
+    ONGOING: 'ongoing',
+    FINISHED: 'finished'
+}

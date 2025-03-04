@@ -1,0 +1,57 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    overflow: hidden;
+
+    &__breadcrumb{
+        align-self: flex-end;
+    }
+    
+    &__layout {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 16px;
+        background-color: var(--base-white-color);
+        border-radius: 12px;
+        height: 100%;
+
+        &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &__title {
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 22px;
+            }
+
+            &__info {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+
+                &>button {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 4px 12px;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 16px;
+                    color: var(--blue-color);
+                    border: 1px solid var(--blue-400-color);
+                    border-radius: 4px;
+                }
+            }
+        }
+
+        &__content {
+            flex-grow: 1;
+            overflow: auto;
+        }
+    }
+}

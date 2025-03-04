@@ -79,7 +79,7 @@ const ConversationInput = ({
                         updateMessage(id, res)
                     })
                 } else if (messageType === MessageTypes.COMMENT) {
-                    createComment({ chat: conversationId, text: data.message }).then(res => {
+                    createComment({ chat: conversationId, text: data.message, student: userCourseId }).then(res => {
                         socket.emit('room-message', { message: res, room: conversationId, studentId })
                         updateMessage(id, res)
                     })
@@ -108,7 +108,7 @@ const ConversationInput = ({
                 addNewMessage(newMessage)
                 reset()
 
-                const fd = objectToFormData({ chat: conversationId, userCourse: userCourseId, student: studentId, mentor: userId, ...data })
+                const fd = objectToFormData({ chat: conversationId, student: userCourseId, mentor: userId, ...data })
                 createLessonTask(fd).then(res => updateMessage(id, res))
 
                 setIsOpenDatepicker(false)
@@ -124,8 +124,12 @@ const ConversationInput = ({
                     ...oldData,
                     homeTask: {
                         ...oldData.homeTask,
-                        [data?.file ? 'url' : '']: data?.file ? URL.createObjectURL(data?.file) : '',
                         ...data,
+                        [data.file ? 'file': '']: data?.file?.name ? {
+                            url: URL.createObjectURL(data?.file),
+                            fileName: data?.file?.name,
+                            size: (data?.file?.size || 0) / 1024
+                        } : data?.file,
                     }
                 }))
                 updateHomeTask(taskId, objectToFormData(data))

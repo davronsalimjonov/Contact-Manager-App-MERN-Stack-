@@ -6,9 +6,9 @@ import { useSocket } from "./SocketProvider";
 import { USER_ROLES } from "@/constants";
 
 const SocketEventsProvider = ({ children }) => {
-    const user = useGetUser()
     const userId = useGetUserId()
     const { socket } = useSocket()
+    const { data: user } = useGetUser()
     const queryClient = useQueryClient()
 
     useEffect(() => {
@@ -17,8 +17,8 @@ const SocketEventsProvider = ({ children }) => {
                 socket.on('new-adaptation', (newStudent) => {
                     const queryKey = ['adaptation-students', userId]
                     const queryState = queryClient.getQueryState(queryKey)
+                    if (queryState) queryClient.setQueryData(queryKey, (students) => [...(students || []), newStudent])
                     autoPlayAudio('/audio/new-adaptation-sound.mp3')
-                    if (!queryState) queryClient.setQueryData(queryKey, (students) => [...(students || []), newStudent])
                 })
             }
         }

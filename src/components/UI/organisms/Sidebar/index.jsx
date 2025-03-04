@@ -5,8 +5,8 @@ import usePersistentState from '@/hooks/usePersistentState';
 import MenuButton from '../../moleculs/MenuButton';
 import SidebarLink from '../../moleculs/SidebarLink';
 import LogoutButton from '../../moleculs/LogoutButton';
-import LanguageButton from '../../moleculs/LanguageButton';
-import { MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
+import ReminderFormModal from '../ReminderFormModal';
+import { CheckListIcon, MyTeacherLogo, SettingsIcon } from '../../atoms/icons';
 import cls from './Sidebar.module.scss';
 
 const Sidebar = ({
@@ -14,9 +14,14 @@ const Sidebar = ({
 }) => {
     const [isOpen, setIsOpen] = usePersistentState('sidebar-state', true)
     const [isModal, setIsModal] = useState(false)
+    const [isOpenReminder, setIsOpenReminder] = useState(false)
 
     return (
         <aside className={cn(cls.sidebar, !isOpen && cls.close)}>
+            <ReminderFormModal 
+                isOpen={isOpenReminder}
+                onClose={() => setIsOpenReminder(false)}
+            />
             <Link to='/'>
                 <MyTeacherLogo className={cn(!isOpen && cls.closeLogo)} />
             </Link>
@@ -38,9 +43,12 @@ const Sidebar = ({
                 ))}
             </div>
             <div className={cls.sidebar__bottomList}>
-                <LanguageButton
-                    isOpen={isOpen}
-                />
+                <button 
+                    className={cn(cls.sidebar__bottomList__reminder, !isOpen && cls.close__btn)}
+                    onClick={() => setIsOpenReminder(true)}
+                >
+                    <CheckListIcon /> <span>Eslatma</span>
+                </button>
                 <SidebarLink
                     to='/settings'
                     label='Sozlamalar'

@@ -7,6 +7,7 @@ const FormRadioGroup = ({
     label = '',
     options = [],
     register = {},
+    onChange,
     disabled,
     error,
 }) => {
@@ -22,6 +23,7 @@ const FormRadioGroup = ({
                             label={option.label}
                             disabled={disabled}
                             register={register}
+                            onChange={onChange}
                             defaultChecked={option.defaultChecked}
                             error={error}
                         />

@@ -1,0 +1,32 @@
+.table {
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    grid-template-columns: 
+        minmax(44px, 44px)
+        minmax(311px, 1.6fr)
+        minmax(150px, 1fr)
+        minmax(150px, 1fr)
+        minmax(150px, 0.9fr)
+        minmax(150px, 1fr)
+        minmax(150px, 150px);
+    border-radius: 12px;
+    overflow: auto;
+
+    & tbody, & thead, & tr{
+      display: contents;
+    }
+
+    & th{
+      position: sticky;
+      top: 0;
+      background-color: var(--dark-gray-400-color);
+      padding: 14px 16px;
+      text-align: left;
+      z-index: 10;
+      
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+    }
+}

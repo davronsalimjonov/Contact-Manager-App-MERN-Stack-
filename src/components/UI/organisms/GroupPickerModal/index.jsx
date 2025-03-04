@@ -12,12 +12,14 @@ const GroupPickerModal = ({
     onClose,
     onChooseGroup
 }) => {
-    const { data: groups, isLoadingGroups } = useGetActiveGroups({ level }, !!level)
+    const { data: groups, isLoading: isLoadingGroups } = useGetActiveGroups({ level }, { enabled: !!level })
 
     return (
         <Dialog isOpen={isOpen} onClose={onClose}>
             <div className={cls.wrapper}>
-                {isLoadingGroups ? <Loader /> : (
+                {isLoadingGroups ? (
+                    <Loader />
+                ) : (
                     groups?.length > 0 ? (
                         <div className={cls.modal}>
                             {groups?.map(group => (

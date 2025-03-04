@@ -9,7 +9,8 @@ const NotificationItem = ({
     date = '',
     decription = '',
     isViewed = false,
-    onVisible
+    onVisible,
+    onClick
 }) => {
     const { ref } = useInView({ 
         threshold: 1, 
@@ -19,7 +20,11 @@ const NotificationItem = ({
     });
 
     return (
-        <div className={cn(cls.item, !isViewed && cls.unreaded)} ref={ref}>
+        <div 
+            ref={ref}
+            onClick={onClick}
+            className={cn(cls.item, !isViewed && cls.unreaded)} 
+        >
             <div className={cls.item__icon}>
                 <MessageIcon />
             </div>

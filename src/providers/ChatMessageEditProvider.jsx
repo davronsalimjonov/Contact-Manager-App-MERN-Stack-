@@ -10,8 +10,8 @@ const ChatMessageEditProvider = ({ children }) => {
         if (message?.type === MessageTypes.LESSON_TASK) {
             let file = null
 
-            if (message?.homeTask?.url) {
-                const fileName = message?.homeTask?.url.split('/').pop()
+            if (message?.homeTask?.file) {
+                const fileName = message?.homeTask?.file?.fileName
                 file = new File([new Blob()], fileName)
             }
 

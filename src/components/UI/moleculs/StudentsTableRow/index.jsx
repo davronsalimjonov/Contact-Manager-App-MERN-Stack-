@@ -1,32 +1,40 @@
-import { useNavigate } from 'react-router-dom';
+import Avatar from 'react-avatar';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import TableActionButton from '../TableActionButton';
 import cls from './StudentsTableRow.module.scss';
-import Avatar from 'react-avatar';
 
 const StudentsTableRow = ({
+    withCheckbox = false,
     index = 0,
     avatar = '',
     days = '',
     time = '',
     status = '',
-    chatId = '',
     fullName = '',
     phoneNumber = '',
     userCourseId = '',
-    unreadedMessagesCount = 0
+    checked = false,
+    unreadedMessagesCount = 0,
+    onClick,
+    onClickUserInfo,
+    onClickChangePassword,
+    onClickTransfer,
+    onChangeCheckbox,
+    menuButtons = true
 }) => {
-    const navigate = useNavigate()
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
     const dropdownMenuItems = [
-        { label: 'O’quvchi ma’lumotlari', onClick: () => navigate(userCourseId) },
+        { label: 'O’quvchi ma’lumotlari', onClick: onClickUserInfo },
+        { label: 'Parol o’zgartirish', onClick: onClickChangePassword },
+        { label: 'Transfer qilish', onClick: onClickTransfer },
     ]
 
     return (
-        <tr className={cls.row} onClick={() => navigate(`/students/chat/${chatId}`)}>
+        <tr className={cls.row} onClick={onClick}>
+            {withCheckbox && <td><input type="checkbox" onClick={e => e.stopPropagation()} value={userCourseId} checked={checked} onChange={onChangeCheckbox} /></td>}
             <td>{index}</td>
             <td className={cls.row__name}>
                 <div className={cls.row__notification}>
@@ -36,7 +44,7 @@ const StudentsTableRow = ({
                         src={avatar}
                         name={fullName}
                     />
-                    {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount > 9 ? '9+' : unreadedMessagesCount  }</span>}
+                    {unreadedMessagesCount > 0 && <span className={cls.row__notification__badge}>{unreadedMessagesCount > 9 ? '9+' : unreadedMessagesCount}</span>}
                 </div>
                 <span title={fullName}>{fullName}</span>
             </td>
@@ -47,7 +55,7 @@ const StudentsTableRow = ({
             </td>
             <td><StudentStatus status={status} /></td>
             <td onClick={(e) => (e.stopPropagation())}>
-                <TableActionButton menuItems={dropdownMenuItems} />
+                {menuButtons && <TableActionButton menuItems={dropdownMenuItems} />}
             </td>
         </tr>
     );

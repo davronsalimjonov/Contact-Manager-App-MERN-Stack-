@@ -6,6 +6,10 @@
         line-height: 18.78px;
         display: flex;
         align-items: center;
+
+        &:last-child{
+            padding: 0;
+        }
     }
 }
 
@@ -14,7 +18,9 @@
     background-color: transparent;
 
     & > div{
-        padding-left: 0 !important;
+        padding: 0 16px 0 0 !important;
+        min-height: 24px !important;
+        max-height: 24px !important;
     }
 }
 

@@ -1,27 +1,26 @@
-
-.wrapper{
+.wrapper {
     display: flex;
     align-items: center;
     position: relative;
 
-    & > input{
+    &>input {
         width: 100%;
     }
 
-    &:has(.input__preffix){
-        & > input{
+    &:has(.input__preffix) {
+        &>input {
             padding-right: 48px;
         }
     }
 
-    &:has(.input__suffix){
-        & > input{
+    &:has(.input__suffix) {
+        &>input {
             padding-left: 48px;
         }
     }
 }
 
-.input{
+.input {
     padding: 10px 16px;
     background-color: var(--blue-200-color);
     font-size: 14px;
@@ -30,7 +29,7 @@
     border-radius: 4px;
     border: 1px solid transparent;
 
-    &__preffix{
+    &__preffix {
         max-width: 24px;
         max-height: 24px;
         position: absolute;
@@ -41,7 +40,7 @@
         align-items: center;
     }
 
-    &__suffix{
+    &__suffix {
         max-width: 24px;
         max-height: 24px;
         position: absolute;
@@ -52,16 +51,16 @@
         align-items: center;
     }
 
-    &::placeholder{
-       color: #A2A0B3;
-       font-family: Raleway;
+    &::placeholder {
+        color: #A2A0B3;
+        font-family: Raleway;
     }
 
-    &:focus{
+    &:focus {
         border-color: var(--blue-color);
     }
 }
 
-.error{
+.error {
     border-color: var(--red-color) !important;
 }

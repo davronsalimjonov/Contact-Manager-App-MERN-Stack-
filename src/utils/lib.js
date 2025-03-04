@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const formatPrice = num => {
-    num = String(num).replace(/\s+/g, '').replace(/[^+\d]/g, '')
+    num = String(num).replace(/\s+/g, '').replace(/[^+\d.]/g, '')
     return new Intl.NumberFormat('ru-RU').format(num)
 }
 
@@ -23,10 +23,10 @@ export const getUserFullName = (user) => {
     let { firstName, lastName } = user || {}
     firstName = firstName?.charAt(0).toUpperCase() + firstName?.slice(1)?.toLowerCase();
     lastName = lastName?.charAt(0).toUpperCase() + lastName?.slice(1)?.toLowerCase();
-    return `${firstName || ''} ${lastName || ''}`
+    return `${firstName || ''} ${lastName || ''}`.trim()
 }
 
-export function removeEmptyKeys(obj) {
+export function removeEmptyKeys(obj = {}) {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ''));
 }
 
@@ -50,10 +50,48 @@ export function objectToFormData(obj, formData = new FormData()) {
                 });
             } else if (value instanceof Date) {
                 formData.append(key, value.toISOString());
+            } 
+
+            else if (Array.isArray(value)) {
+                value.forEach((item, index) => {
+                    if(typeof item === 'object' && item !== null) {
+                        // item = JSON.stringify(item)
+                    }                    
+                    formData.append(`${key}`, item);
+                });
+                // formData.append(key, JSON.stringify(value))
+            }
+
+            else if (typeof value === 'object' && value !== null) {
+                objectToFormData(value, formData);
+            } else {
+                formData.append(key, value);
+            }
+        }
+    }
+    return formData;
+}
+
+export function objectToMultiPartFormData(obj, formData = new FormData()) {
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            if (value instanceof File) {
+                formData.append(key, value);
+            } else if (value instanceof FileList) {
+                Array.from(value).forEach((file) => {
+                    formData.append(key, file);
+                });
+            } else if (value instanceof Date) {
+                formData.append(key, value.toISOString());
             } else if (Array.isArray(value)) {
                 value.forEach((item) => {
-                    formData.append(key, item);
+                    if(typeof item === 'object' && item !== null) {
+                        item = JSON.stringify(item)
+                    }                    
+                    formData.append(`${key}[]`, item);
                 });
+                formData.append(key, JSON.stringify(value))
             } else if (typeof value === 'object' && value !== null) {
                 objectToFormData(value, formData);
             } else {
@@ -63,6 +101,7 @@ export function objectToFormData(obj, formData = new FormData()) {
     }
     return formData;
 }
+
 
 export const onImageError = (e, url = '/images/not-found.jpg') => {
     e.target.id = url;
@@ -316,7 +355,22 @@ export function getFileCategory(input) {
 }
 
 export const autoPlayAudio = (url) => {
-    if (!url) return;
-    const audio = new Audio(url);
-    audio.play();
+    try {
+        if (!url) return;
+        const audio = new Audio(url);
+        audio?.play();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const copyToClipboard = (text) => {
+    if (!text || !navigator?.clipboard) return;
+    navigator.clipboard.writeText(text)
+}
+
+export const redirectToPlatform = (url = '', mentorId = '') => {
+    const link = new URL(url)
+    link.searchParams.set('uid', mentorId)
+    window.open(link.toString(), '_blank')
 }

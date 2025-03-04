@@ -42,6 +42,8 @@ const StudentInformationForm = ({ courseId = '' }) => {
         firstName: student?.firstName,
         lastName: student?.lastName,
         phone: student?.phone,
+        secondPhone: student?.secondPhone,
+        thirdPhone: student?.thirdPhone,
         birthday: student?.birthday,
         gender: String(student?.gender),
         createdAt: student?.createdAt ? dayjs(student?.createdAt).format('DD.MM.YYYY') : ''
@@ -93,6 +95,7 @@ const StudentInformationForm = ({ courseId = '' }) => {
             toast.error(res?.message || error?.message || 'Xatolik yuz berdi')
         }
     }
+
 
     const handleUpdateConnectionTimes = async (data) => {
         try {
@@ -166,7 +169,23 @@ const StudentInformationForm = ({ courseId = '' }) => {
                     <FormPhoneInput
                         name='phone'
                         placeholder='+998'
-                        label='Telefon nomer'
+                        label='Asosiy raqam'
+                        disabled={!isEditable}
+                        control={control}
+                        error={errors?.phone?.message}
+                    />
+                    <FormPhoneInput
+                        name='secondPhone'
+                        placeholder='+998'
+                        label='Qoshimcha raqam'
+                        disabled={!isEditable}
+                        control={control}
+                        error={errors?.secondPhone?.message}
+                    />
+                    <FormPhoneInput
+                        name='thirdPhone'
+                        placeholder='+998'
+                        label='Qoshimcha raqam'
                         disabled={!isEditable}
                         control={control}
                         error={errors?.phone?.message}

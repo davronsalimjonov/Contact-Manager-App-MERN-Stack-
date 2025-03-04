@@ -72,7 +72,6 @@ const Materials = () => {
                 isOpen={Boolean(deleteMaterialId)}
                 onClose={() => setDeleteMaterialId(null)}
                 onConfirm={() => handleDeleteMaterial(deleteMaterialId)}
-                onCancel={() => setDeleteMaterialId(null)}
             />
             <MaterialFormModal
                 isOpen={isOpenModal}
@@ -101,7 +100,6 @@ const Materials = () => {
                                 description={item.description}
                                 fileName={item.file?.fileName}
                                 fileSize={item.file?.size}
-                                fileUrl={item.file?.url}
                                 onClickEdit={() => handleSetMaterial(item)}
                                 onClickDelete={() => setDeleteMaterialId(item.id)}
                                 onClickFile={() => setPreviewMaterial({isOpen: true, material: item})}

@@ -12,7 +12,7 @@ export const getMessageOwner = (message) => {
     } else if(messageType === MessageTypes.TASK) {
         owner = message?.task?.createdBy === USER_ROLES.SELLER ? message?.task?.salesManager : message?.task?.mentor
     } else if(messageType === MessageTypes.STUDENT_HOME_WORK) {
-        owner = message?.studentHomeWork?.student
+        owner = message?.studentHomeWork?.student?.user
     } else if(messageType === MessageTypes.SMS) {
         owner = message?.sms?.sender
     } else if(messageType === MessageTypes.LESSON_TASK) {

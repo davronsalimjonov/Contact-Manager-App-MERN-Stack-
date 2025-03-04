@@ -1,0 +1,18 @@
+.time__input {
+font-size: 14px;
+font-weight: 400;
+line-height: 20px;
+
+
+    &::-webkit-calendar-picker-indicator {
+        position: absolute;
+        right: 10px;
+        padding: 5px;
+        z-index: 100;
+        background: none;
+    }
+
+    // &::-webkit-datetime-edit-ampm-field {
+    //     display: none;
+    // }
+}

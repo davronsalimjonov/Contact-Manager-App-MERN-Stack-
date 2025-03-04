@@ -1,14 +1,18 @@
-import { cn, formatFileSize } from '@/utils/lib';
-import { AudioIcon, DocsIcon, PdfIcon, PictureIcon, VideoIcon } from '../../atoms/icons';
+import { cn, formatFileSize, getFileCategory } from '@/utils/lib';
+import { AudioIcon, CloseIcon, DocsIcon, PdfIcon, PictureIcon, VideoIcon } from '../../atoms/icons';
 import cls from './FilePreviewItem.module.scss';
 
 const FilePreviewItem = ({
     className = '',
     name = '',
     size = 0,
-    type = '',
+    // type = '',
+    isClearable = false,
+    onClear,
     onClick
 }) => {
+    const type = getFileCategory(name)
+    
     const getFileIcon = (type) => {
         switch (type) {
             case 'pdf': return <PdfIcon />;
@@ -25,6 +29,7 @@ const FilePreviewItem = ({
             <div className={cls.item__icon}>{getFileIcon(type)}</div>
             <span className={cls.item__name} title={name}>{name}</span>
             <span className={cls.item__size}>{formatFileSize(size)}</span>
+            {isClearable && <button onClick={onClear} className={cls.item__clear}><CloseIcon /></button>}
         </div>
     );
 }

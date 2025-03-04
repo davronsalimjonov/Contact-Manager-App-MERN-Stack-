@@ -5,9 +5,10 @@ import StudentInformationForm from '@/components/UI/organisms/StudentInformation
 import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
 import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleStudent.module.scss';
+import UserCourseTable from '@/components/UI/organisms/UserCourseTable';
 
 const SingleStudent = () => {
-    const { courseId } = useParams()
+    const { courseId, userId } = useParams()
     const { data: course, isLoading: isLoadingStudent } = useGetStudentCourseById(courseId)
     const student = course?.user
 
@@ -16,6 +17,7 @@ const SingleStudent = () => {
             {!isLoadingStudent ? (
                 <>
                     <StudentInformationForm courseId={courseId} />
+                    <UserCourseTable userId={userId} userCourseId={courseId} />
                     <div className={cls.page__cards}>
                         <StudentActionHistory />
                         <StudentPersonalInfo
