@@ -25,7 +25,6 @@ const TransferStudentModal = ({
     const { data: groups, isLoading: isLoadingGroups } = useGetActiveGroups(filter, { enabled: isOpen });
     const transferStudentMutation = useTransferMutation()
     const filteredGroups = groups?.filter(group => group.id !== groupId);
-
     const singleTransferConfirmTitle = `Rostan ham o\'quvchini shu guruhga transfer qilmoqchimisiz?`
     const multipleTransferConfirmTitle = `Rostan ham o\'quvchilarni shu guruhga transfer qilmoqchimisiz?`
 

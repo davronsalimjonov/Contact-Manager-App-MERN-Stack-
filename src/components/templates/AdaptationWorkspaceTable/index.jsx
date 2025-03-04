@@ -91,6 +91,7 @@ const AdaptationWorkspaceTable = ({
                     phone={item.phone}
                     fullName={item.fullName}
                     commingDate={item.commingDate}
+                    userCourseId={item?.userCourseId}
                     firstContactDate={item.firstContactDate}
                     showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
                     showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}

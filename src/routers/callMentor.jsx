@@ -76,12 +76,12 @@ export const CallMentorRoutes = () => createBrowserRouter([
                 element: <MyStudents />
             },
             {
-                path: '/students/:courseId/:userId',
-                element: <SingleStudent />
-            },
-            {
                 path: '/students/chat/:userCourseId',
                 element: <Chat />
+            },
+            {
+                path: '/students/:courseId/:userId',
+                element: <SingleStudent />
             },
             {
                 path: '/user-course/:userCourseId',

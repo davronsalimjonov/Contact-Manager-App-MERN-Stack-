@@ -5,6 +5,7 @@ import { useStopwatch } from '@/hooks/useTimer';
 import { getDateDifference } from '@/utils/time';
 import { BellIcon } from '../../atoms/icons';
 import cls from './StudentAdaptationCard.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const StudentAdaptationCard = ({
     fullName = '',
@@ -12,11 +13,13 @@ const StudentAdaptationCard = ({
     commingDate = '',
     showStatus = false,
     showTimer = false,
+    userCourseId = '',
     firstContactDate = '',
     onClick,
 }) => {
     const [status, setStatus] = useState('low')
     const { days, hours, minutes} = firstContactDate ? getDateDifference(new Date(commingDate), new Date(firstContactDate)) : useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
+    const navigate = useNavigate()
 
     useEffect(() => {
         if(hours == 1 && days == 0) setStatus('medium')
@@ -37,6 +40,14 @@ const StudentAdaptationCard = ({
                 <BellIcon />
                 <span>{days > 0 && `${days} kun `}{hours > 0 && `${hours} soat `}{minutes} minut</span>
             </div>}
+            <div className={cls.card__btns}>
+                <button>Task Biriktirish</button>
+                <button onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    navigate(`/students/chat/${userCourseId}`)
+                }}>Chat</button>
+            </div>
         </div>
     );
 }
