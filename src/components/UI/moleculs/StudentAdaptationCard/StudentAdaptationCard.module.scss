@@ -15,7 +15,7 @@
     margin-bottom: 6px;
   }
 
-  & > span {
+  &>span {
     font-size: 12px;
     line-height: 14.09px;
   }
@@ -35,29 +35,20 @@
 
   &__btns {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: 2fr 1fr;
     gap: 6px;
     margin-top: 12px;
 
     & button {
-        font-weight: 400;
-        font-size: 10px;
-        line-height: 11.74px;
-        letter-spacing: 0%;
-        text-align: right;
-        padding: 4px 6px;
-        border-radius: 6px;
-        background-color: #fff;
-        text-align: center;
-        border: 1px solid #E7EEFB;
-
-        &:first-child {
-            grid-column: span 3; 
-        }
-    
-        &:last-child {
-            grid-column: span 1;
-        }
+      font-size: 10px;
+      line-height: 11.74px;
+      letter-spacing: 0%;
+      padding: 4px 6px;
+      border-radius: 6px;
+      background-color: #fff;
+      text-align: center;
+      border: 1px solid var(--blue-400-color);
+      color: var(--dark-gray-700-color);
     }
   }
 }

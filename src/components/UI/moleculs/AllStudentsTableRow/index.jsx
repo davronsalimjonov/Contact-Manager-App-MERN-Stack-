@@ -18,11 +18,13 @@ const AllStudentsTableRow = ({
     course,
     group,
     courseEndDate,
+    isAdaptation = false,
+    adaptationTecherFullName = '',
     onClickUserInfo,
     onClickChangePassword,
     onClickTransfer
 }) => {
-    
+
     const menuButtons = [
         { label: 'Oquvchi malumotlari', onClick: onClickUserInfo },
         { label: 'Parol ozgartirish', onClick: onClickChangePassword },
@@ -38,10 +40,14 @@ const AllStudentsTableRow = ({
             </td>
             <td>{formatPhoneNumberIntl(phoneNumber)}</td>
             <td ><StudentStatus status={status} /></td>
-            {status !== "Adaptatsiya" ? <td className={cls.row__teachers}>
-                <p className={cls.row__teachers__main}>{mainTeacher || <EmptyDataText />}</p>
-                <p className={cls.row__teachers__second}>{secondTeacher || <EmptyDataText />}</p>
-            </td> : <td className={cls.row__teachers__adaptation}>{secondTeacher || <EmptyDataText />}</td>}
+            {isAdaptation ? (
+                <td className={cls.row__teachers__adaptation}>{adaptationTecherFullName || <EmptyDataText />}</td>
+            ) : (
+                <td className={cls.row__teachers}>
+                    <p className={cls.row__teachers__main}>{mainTeacher || <EmptyDataText />}</p>
+                    <p className={cls.row__teachers__second}>{secondTeacher || <EmptyDataText />}</p>
+                </td>
+            )}
             <td>{level || <EmptyDataText />}</td>
             <td className={cls.row__course}>{course || <EmptyDataText />}</td>
             <td>{group || <EmptyDataText />}</td>

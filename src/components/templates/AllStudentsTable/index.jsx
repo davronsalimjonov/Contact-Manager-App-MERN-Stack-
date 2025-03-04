@@ -6,6 +6,7 @@ import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
 import AllStudentsTableRow from '@/components/UI/moleculs/AllStudentsTableRow';
 import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
 import cls from './AllStudentsTable.module.scss';
+import { STUDENT_STATUS_ENUMS } from '@/constants/enum';
 
 const AllStudentsTable = ({
     students = [],
@@ -53,12 +54,14 @@ const AllStudentsTable = ({
                                 fullName={getUserFullName(student?.user)}
                                 phoneNumber={student?.user?.phone}
                                 status={student?.status}
-                                mainTeacher={student?.status !== "Adaptatsiya" && getUserFullName(student?.teacher)}
+                                mainTeacher={getUserFullName(student?.teacher)}
                                 secondTeacher={getUserFullName(student?.secondTeacher)}
                                 level={student?.level}
                                 course={student?.course?.title}
                                 group={student?.group?.title}
                                 courseEndDate={student?.endDate}
+                                isAdaptation={student?.status === STUDENT_STATUS_ENUMS.ADAPTATION}
+                                adaptationTecherFullName={getUserFullName(student?.adaptation)}
                                 onClickUserInfo={() => navigate(`${student?.id}/${student?.user?.id}`)}
                                 onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.user?.id })}
                                 onClickTransfer={() => setTransferStudent({ isOpen: true, userIds: [student?.id], groupId: student?.group?.id })}

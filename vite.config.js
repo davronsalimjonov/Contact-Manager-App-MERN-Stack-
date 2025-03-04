@@ -38,7 +38,13 @@ export default defineConfig({
         },
       },
     },
-    minify: 'esbuild',
+    minify: 'terser', // Explicitly use Terser
+    terserOptions: {
+      compress: {
+        drop_console: true, // Remove console.log statements
+        pure_funcs: ['console.log'], // Mark as removable
+      },
+    },
     commonjsOptions: {
       include: [/node_modules/],
       transformMixedEsModules: true,

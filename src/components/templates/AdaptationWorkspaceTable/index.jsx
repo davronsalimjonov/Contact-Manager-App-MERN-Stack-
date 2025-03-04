@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
@@ -5,20 +6,22 @@ import { ADAPTATION_WORKSPACE_STATUS } from '@/constants/enum';
 import WorkspaceTable from '@/components/templates/WorkspaceTable';
 import { updateStudentAdaptationStatus } from '@/services/students';
 import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
+import ReminderFormModal from '@/components/UI/organisms/ReminderFormModal';
 
 const AdaptationWorkspaceTable = ({
     students = [],
     onDrop
 }) => {
     const navigate = useNavigate()
+    const [reminder, setReminder] = useState({ isOpen: false, userId: null, userCourseId: null })
 
     const studentsByStatus = students?.reduce((acc, student) => {
         const studentItem = {
             id: student?.id,
             userCourseId: student?.userCourse?.id,
             userId: student?.userCourse?.user?.id,
-            fullName: getUserFullName(student?.userCourse?.user), 
-            phone: student?.userCourse?.user?.phone, 
+            fullName: getUserFullName(student?.userCourse?.user),
+            phone: student?.userCourse?.user?.phone,
             commingDate: student?.startDate,
             firstContactDate: student?.firstContactDate
         }
@@ -76,29 +79,38 @@ const AdaptationWorkspaceTable = ({
             const firstContactDate = student?.firstContactDate || new Date().toISOString()
             onDrop?.(draggableId, { status: droppableId, index, firstContactDate })
         } catch (error) {
-            toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')    
+            toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
         }
     }
-    
+
     return (
-        <WorkspaceTable
-            key={students?.length}
-            columns={workspaceColumns}
-            onChange={handleStatusChange}
-            renderItem={(item, status) => (
-                <StudentAdaptationCard
-                    key={item.id}
-                    phone={item.phone}
-                    fullName={item.fullName}
-                    commingDate={item.commingDate}
-                    userCourseId={item?.userCourseId}
-                    firstContactDate={item.firstContactDate}
-                    showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
-                    showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
-                    onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
-                />
-            )}
-        />
+        <>
+            <ReminderFormModal 
+                isOpen={reminder.isOpen}
+                type='adaptation-notification'
+                typeId={`${reminder?.userCourseId}/${reminder?.userId}`}
+                onClose={() => setReminder({ isOpen: false, userId: null, userCourseId: null })}
+            />
+            <WorkspaceTable
+                key={students?.length}
+                columns={workspaceColumns}
+                onChange={handleStatusChange}
+                renderItem={(item, status) => (
+                    <StudentAdaptationCard
+                        key={item.id}
+                        phone={item.phone}
+                        fullName={item.fullName}
+                        commingDate={item.commingDate}
+                        firstContactDate={item.firstContactDate}
+                        showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
+                        showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
+                        onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
+                        onClickChat={() => navigate(`/students/chat/${item.userCourseId}`)}
+                        onClickTask={() => setReminder({ isOpen: true, userId: item.userId, userCourseId: item.userCourseId })}
+                    />
+                )}
+            />
+        </>
     )
 }
 
