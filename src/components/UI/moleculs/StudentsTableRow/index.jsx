@@ -6,7 +6,6 @@ import TableActionButton from '../TableActionButton';
 import cls from './StudentsTableRow.module.scss';
 
 const StudentsTableRow = ({
-    withCheckbox = false,
     index = 0,
     avatar = '',
     days = '',
@@ -14,14 +13,11 @@ const StudentsTableRow = ({
     status = '',
     fullName = '',
     phoneNumber = '',
-    userCourseId = '',
-    checked = false,
     unreadedMessagesCount = 0,
     onClick,
     onClickUserInfo,
     onClickChangePassword,
     onClickTransfer,
-    onChangeCheckbox,
     menuButtons = true
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -34,7 +30,6 @@ const StudentsTableRow = ({
 
     return (
         <tr className={cls.row} onClick={onClick}>
-            {withCheckbox && <td><input type="checkbox" onClick={e => e.stopPropagation()} value={userCourseId} checked={checked} onChange={onChangeCheckbox} /></td>}
             <td>{index}</td>
             <td className={cls.row__name}>
                 <div className={cls.row__notification}>

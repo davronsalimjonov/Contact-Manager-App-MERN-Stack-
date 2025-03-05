@@ -79,8 +79,6 @@ const Groups = () => {
                                 studentsCount={group.studentsCount}
                                 mainMentorFullName={getUserFullName(group.academyMentor)}
                                 mainMentorAvatar={group.academyMentor?.url}
-                                callMentorFullName={getUserFullName(group.callMentor)}
-                                callMentorAvatar={group.callMentor?.url}
                                 isCollecting={group.status === 'collecting'}
                                 isClosed={group.status === 'closed'}
                                 showStartButton

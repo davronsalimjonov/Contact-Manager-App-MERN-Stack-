@@ -28,7 +28,7 @@ const GroupPickerModal = ({
                                     name={group.title}
                                     studentsCount={group.studentsCount}
                                     mainMentorFullName={getUserFullName(group.academyMentor)}
-                                    callMentorFullName={getUserFullName(group.callMentor)}
+                                    mainMentorAvatar={group.academyMentor?.url}
                                     isCollecting={group.status === 'collecting'}
                                     schedules={group.lessonSchedules}
                                     onClick={() => onChooseGroup(group)}

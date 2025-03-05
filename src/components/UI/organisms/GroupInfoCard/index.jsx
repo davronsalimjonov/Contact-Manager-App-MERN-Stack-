@@ -25,14 +25,11 @@ const GroupInfoCard = ({
     const isActive = group?.status === GROUP_STATUS.ACTIVE
     const mainMentorFullName = getUserFullName(group?.academyMentor)
     const mainMentorAvatar = group?.academyMentor?.url
-    const callMentorFullName = getUserFullName(group?.callMentor)
-    const callMentorAvatar = group?.callMentor?.url
     const confirmModalTitle = confirmChangeStatus.status === GROUP_STATUS.ACTIVE ? 'Ushbu guruhni active holatga o’tkazmoqchimisiz?' : 'Ushbu guruhni yopmoqchimisiz?'
 
     const defaultFormValues = {
         title: group?.title,
         academyMentor: group?.academyMentor?.id,
-        callMentor: group?.callMentor?.id,
     }
 
     const handleSubmit = async (data) => {
@@ -96,17 +93,6 @@ const GroupInfoCard = ({
                                 />
                                 <span className={cls.card__mentors__item__role}>Asosiy mentor</span>
                                 <span className={cls.card__mentors__item__name}>{mainMentorFullName}</span>
-                            </div>
-                            <div className={cls.card__mentors__item}>
-                                <Avatar
-                                    round
-                                    size='28'
-                                    src={callMentorAvatar}
-                                    name={callMentorFullName}
-                                    className={cls.card__mentors__item__avatar}
-                                />
-                                <span className={cls.card__mentors__item__role}>Nazoratchi mentor</span>
-                                <span className={cls.card__mentors__item__name}>{callMentorFullName}</span>
                             </div>
                         </div>
                         {isCollecting && <Button onClick={() => setConfirmChangeStatus({ isOpen: true, status: GROUP_STATUS.ACTIVE })}>Boshlash</Button>}

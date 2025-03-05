@@ -17,8 +17,6 @@ const GroupCard = ({
     schedules = [],
     mainMentorFullName = '',
     mainMentorAvatar = '',
-    callMentorFullName = '',
-    callMentorAvatar = '',
     isCollecting = false,
     isClosed = false,
     isSelected = false,
@@ -57,11 +55,6 @@ const GroupCard = ({
                     <span className={cls.card__mentors__card__role}>Asosiy mentor</span>
                     <span className={cls.card__mentors__card__name}>{mainMentorFullName}</span>
                     <Avatar className={cls.card__mentors__card__avatar} src={mainMentorAvatar} name={mainMentorFullName} round size={28} />
-                </div>
-                <div className={cls.card__mentors__card}>
-                    <span className={cls.card__mentors__card__role}>Nazoratchi mentor</span>
-                    <span className={cls.card__mentors__card__name}>{callMentorFullName}</span>
-                    <Avatar className={cls.card__mentors__card__avatar} name={callMentorFullName} src={callMentorAvatar} round size={28} />
                 </div>
             </div>
         </div>

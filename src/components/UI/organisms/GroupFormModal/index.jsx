@@ -18,9 +18,8 @@ const GroupFormModal = ({
     onSubmit,
 }) => {
     const { control, register, handleSubmit, reset, formState: { errors, isSubmitting, isSubmitSuccessful, dirtyFields, isDirty } } = useForm({ defaultValues })
-    const { callMentors: { data: callMentors }, mainMentors: { data: mainMentors } } = useGetMentorsForOptions({ enabled: isOpen })
+    const { mainMentors: { data: mainMentors } } = useGetMentorsForOptions({ enabled: isOpen })
 
-    const callMentorOptions = callMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
     const mainMentorOptions = mainMentors?.map((item) => ({ value: item?.id, label: getUserFullName(item) }))
 
     useEffect(() => {
@@ -70,17 +69,6 @@ const GroupFormModal = ({
                     name='academyMentor'
                     rules={{ required: "Asosiy Mentor Tanlang" }}
                     error={errors?.academyMentor?.message}
-                />
-                <FormSelect
-                    label='Nazoratchi Mentor'
-                    placeholder="Nazoratchi Mentorni Tanlang"
-                    options={callMentorOptions}
-                    isclearable={!isEdit}
-                    isSearchable={true}
-                    control={control}
-                    name='callMentor'
-                    rules={{ required: "Nazoratchi Mentor Tanlang" }}
-                    error={errors?.callMentor?.message}
                 />
                 <Button
                     type='submit'
