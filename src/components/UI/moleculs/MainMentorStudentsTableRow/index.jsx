@@ -13,6 +13,7 @@ const MainMentorStudentsTableRow = ({
     status = '',
     fullName = '',
     phoneNumber = '',
+    messageCount = 0,
     checkbox = false,
     checked = false,
     onChangeCheckbox,
@@ -51,6 +52,7 @@ const MainMentorStudentsTableRow = ({
                         src={avatar}
                         name={fullName}
                     />
+                    {messageCount > 0 && <span className={cls.row__notification__badge}>{messageCount}</span>}
                 </div>
                 <span title={fullName}>{fullName}</span>
             </td>

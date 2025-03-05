@@ -68,6 +68,41 @@ export const useGetStudentsForAdaptation = () => {
 
 export const useGetMainMentorStudents = (params = {}) => {
     const mentorId = useGetUserId()
+    const queryClient = useQueryClient()
+    const { socket } = useSocket()
+
+    const addNewMessage = (chatId) => {
+        queryClient.setQueriesData(['students', mentorId], (students) => {
+            const studentIndex = students?.findIndex(student => student.chatId === chatId);
+
+            if (studentIndex === -1) {
+                return students;
+            }
+
+            const updatedStudents = [...students];
+            const [student] = updatedStudents.splice(studentIndex, 1);
+
+            student.messageCount = (student.messageCount || 0) + 1;
+            updatedStudents.unshift(student);
+
+            return updatedStudents;
+        })
+    }
+
+    useEffect(() => {
+        if (socket && !socket.hasListeners('new-message')) {
+            socket.on('new-message', chatId => {
+                addNewMessage(chatId)
+                if (!soundTimer) {
+                    autoPlayAudio('/audio/new-message-came.mp3')
+                    soundTimer = setTimeout(() => {
+                        soundTimer = null;
+                    }, 300);
+                }
+            })
+        }
+    }, [socket])
+
     return useQuery(
         ['students', mentorId, ...Object.values(removeEmptyKeys(params))],
         () => getMainMentorStudents(mentorId, params),

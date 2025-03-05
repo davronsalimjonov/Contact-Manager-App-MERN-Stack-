@@ -1,6 +1,6 @@
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
-import { convertMinutesToUTC0 } from '@/utils/time';
+import { convertMinutesFromUTC0, convertMinutesToUTC0 } from '@/utils/time';
 import { LESSON_TIME_OPTIONS, WEEKDAY_OPTIONS } from '@/constants/form';
 import { useCreateLessonScheduleMutation, useGetGroupLessonsSchedule } from '@/hooks/useLessonsSchedule';
 import Dialog from '../../moleculs/Dialog';
@@ -54,6 +54,12 @@ const CreateScheduleFormModal = ({
     const selectedWeekday = watch('weekday')
     const selectedStartTime = watch('startTime')
 
+    const timeConvertedLessons = lessons?.items?.map(lesson => ({
+        ...lesson,
+        startTime: convertMinutesFromUTC0(lesson.startTime),
+        endTime: convertMinutesFromUTC0(lesson.endTime)
+    }))
+
     const handleCreateSchedule = async (data) => {
         data.group = groupId
         data.startTime = convertMinutesToUTC0(data.startTime)
@@ -87,7 +93,7 @@ const CreateScheduleFormModal = ({
                 <FormSelect
                     label='Start time'
                     placeholder='Tanlang'
-                    options={filterTimeOptions(lessons?.items, selectedWeekday)}
+                    options={filterTimeOptions(timeConvertedLessons, selectedWeekday)}
                     control={control}
                     name='startTime'
                     isSearchable
@@ -96,7 +102,7 @@ const CreateScheduleFormModal = ({
                 <FormSelect
                     label='End time'
                     placeholder='Tanlang'
-                    options={filterEndTimeOptions(selectedStartTime, lessons?.items, selectedWeekday)}
+                    options={filterEndTimeOptions(selectedStartTime, timeConvertedLessons, selectedWeekday)}
                     control={control}
                     name='endTime'
                     isSearchable

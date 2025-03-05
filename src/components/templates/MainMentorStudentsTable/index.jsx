@@ -79,6 +79,7 @@ const MainMentorStudentsTable = ({
                                 status={student?.status}
                                 phoneNumber={student?.phone}
                                 fullName={getUserFullName(student)}
+                                messageCount={student?.messageCount}
                                 checkbox={withCheckbox}
                                 checked={selectedStudents.has(student?.id)}
                                 onChangeCheckbox={handleCheckboxChange}
