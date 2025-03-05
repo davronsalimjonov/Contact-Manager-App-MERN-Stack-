@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "react-query";
 import { useSocket } from "@/providers/SocketProvider";
 import { autoPlayAudio, removeEmptyKeys } from "@/utils/lib";
 import { getAllStudents, getStudentsForAdaptation } from "@/services/students";
-import { getCallMentorStudents, getMainMentorStudents, getStudentIds } from "@/services/course";
+import { getCallMentorStudents, getMainMentorStudents } from "@/services/course";
 import { useGetUserId } from "./useGetUser";
 
 let soundTimer = null;
@@ -73,10 +73,6 @@ export const useGetMainMentorStudents = (params = {}) => {
         () => getMainMentorStudents(mentorId, params),
         { cacheTime: 5 * 60 * 1000, staleTime: 5 * 60 * 1000 }
     )
-}
-
-export const useGetMainMentorStudentsIds = (params = {}, options = {}) => {
-    return useQuery(['student-ids', ...Object.values(params)], () => getStudentIds(params), { cacheTime: 0, staleTime: 0, ...options })
 }
 
 export function useGetAllStudents(params) {

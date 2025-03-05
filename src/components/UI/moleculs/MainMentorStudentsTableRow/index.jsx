@@ -18,7 +18,8 @@ const MainMentorStudentsTableRow = ({
     onChangeCheckbox,
     onClickTransfer,
     onClickChangePassword,
-    onClickStudentInfo
+    onClickStudentInfo,
+    onClick
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
 
@@ -29,10 +30,16 @@ const MainMentorStudentsTableRow = ({
     ]
 
     return (
-        <tr className={cls.row}>
+        <tr className={cls.row} onClick={onClick}>
             {checkbox && (
                 <td>
-                    <input type="checkbox" checked={checked} value={userCourseId} onChange={onChangeCheckbox}/>
+                    <input 
+                        type="checkbox" 
+                        checked={checked} 
+                        value={userCourseId}
+                        onClick={e => e.stopPropagation()} 
+                        onChange={onChangeCheckbox}
+                    />
                 </td>
             )}
             <td>{index}</td>

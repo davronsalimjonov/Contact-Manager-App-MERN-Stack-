@@ -18,6 +18,7 @@ import Settings from "@/components/pages/Settings";
 import PageNotFound from "@/components/pages/PageNotFound";
 import { BooksMoviesAndMusicIcon, HouseIcon, ListIcon, PersonsIcon, TranslateIcon } from "@/components/UI/atoms/icons";
 import { createBrowserRouter } from "react-router-dom";
+import Chat from "@/components/pages/Chat";
 
 const links = [
     {
@@ -82,6 +83,10 @@ const MainMentorRoutes = () => createBrowserRouter([
             {
                 path: '/students',
                 element: <MainMentorStudents />
+            },
+            {
+                path: '/students/chat/:userCourseId',
+                element: <Chat />
             },
             {
                 path: '/students/:courseId/:userId',

@@ -10,14 +10,12 @@ import cls from './MainMentorStudentsTable.module.scss';
 
 const MainMentorStudentsTable = ({
     students = [],
-    startIndex = 1,
     withCheckbox = false,
     groupId,
     selectedStudents,
     onSelectStudent,
     onSelectAll,
     isAllSelected,
-    isAllStudentsLoading
 }) => {
     const navigate = useNavigate()
     const [passwordModal, setPasswordModal] = useState({ isOpen: false, userId: '' })
@@ -59,7 +57,6 @@ const MainMentorStudentsTable = ({
                                         type="checkbox"
                                         checked={isAllSelected}
                                         onChange={handleSelectAll}
-                                        disabled={isAllStudentsLoading}
                                     />
                                 </th>
                             )}
@@ -76,18 +73,19 @@ const MainMentorStudentsTable = ({
                             <MainMentorStudentsTableRow
                                 key={student?.id}
                                 userCourseId={student?.id}
-                                index={startIndex + index + 1}
+                                index={index + 1}
                                 avatar={student?.url}
                                 group={student?.group}
                                 status={student?.status}
                                 phoneNumber={student?.phone}
                                 fullName={getUserFullName(student)}
-                                onClickStudentInfo={() => navigate(`${student?.id}/${student?.userId}`)}
-                                onClickChangePassword={() => setPasswordModal({ isOpen: true, userId: student?.userId })}
-                                onClickTransfer={() => setTransferModal({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
                                 checkbox={withCheckbox}
                                 checked={selectedStudents.has(student?.id)}
                                 onChangeCheckbox={handleCheckboxChange}
+                                onClickStudentInfo={() => navigate(`${student?.id}/${student?.userId}`)}
+                                onClickChangePassword={() => setPasswordModal({ isOpen: true, userId: student?.userId })}
+                                onClickTransfer={() => setTransferModal({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
+                                onClick={() => navigate(`chat/${student?.id}`)}
                             />
                         ))}
                     </tbody>
