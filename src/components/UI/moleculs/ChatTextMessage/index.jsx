@@ -8,6 +8,7 @@ const ChatTextMessage = memo(({
     message = '',
     fullName = '',
     isSender = true,
+    isViewed = false,
     avatar = ''
 }) => {
     return (
@@ -17,6 +18,8 @@ const ChatTextMessage = memo(({
             time={getTimeFromDate(time)}
             isSender={isSender}
             avatar={avatar}
+            isViewed={isViewed}
+            showViewedStatus
         >
             <div className={cls.message}>{message}</div>
         </ChatMessageLayout>

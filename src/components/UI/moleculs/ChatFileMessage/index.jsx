@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { getTimeFromDate } from '@/utils/time';
 import ChatFileItem from '../ChatFileItem';
 import ChatMessageLayout from '../ChatMessageLayout';
-import cls from './ChatFileMessage.module.scss';
 import MediaPreviewer from '../MediaPreviewer';
 
 const ChatFileMessage = ({
@@ -11,7 +10,9 @@ const ChatFileMessage = ({
     fullName = '',
     fileName = '',
     fileSize = 0,
-    fileUrl = ''
+    fileUrl = '',
+    isSender = false,
+    isViewed = false
 }) => {
     const [isOpenModal, setIsOpenModal] = useState(false)
 
@@ -20,6 +21,8 @@ const ChatFileMessage = ({
             fullName={fullName}
             avatar={avatar}
             time={getTimeFromDate(time)}
+            isSender={isSender}
+            isViewed={isViewed}
         >
             <MediaPreviewer
                 visible={isOpenModal}

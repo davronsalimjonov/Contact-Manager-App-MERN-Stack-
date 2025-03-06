@@ -31,8 +31,9 @@
             font-weight: 600;
             line-height: 16.44px;
             color: var(--dark-gray-500-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
     }
-
-
 }

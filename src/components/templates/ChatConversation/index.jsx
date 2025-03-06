@@ -26,7 +26,7 @@ const ChatConversation = ({
     const {socket} = useSocket()
     const unreadedMessages = useRef({ ids: [], index: null })
     const { data: chatInfo, removeUnreadedMessagesCount, addUnreadedMessagesCount } = useGetChat(userCourseId)
-    const { data, messages, isLoading: isLoadingMessages, addPrevMessages, addNextMessages, addNewMessage } = useGetChatMessages(conversationId)
+    const { data, messages, isLoading: isLoadingMessages, addPrevMessages, addNextMessages, addNewMessage, setIsViewedMessages } = useGetChatMessages(conversationId)
 
     const handleTopReach = async (beforeTopReach) => {
         try {
@@ -89,10 +89,12 @@ const ChatConversation = ({
 
             socket.emit('join-room', conversationId)
             socket.on('receive-room-message', handleReceiveNewMessage)
+            socket.on('message-is-viewed', setIsViewedMessages)
 
             return () => {
                 socket.emit('leave-room', conversationId)
                 socket.removeAllListeners('receive-room-message', handleReceiveNewMessage)
+                socket.removeAllListeners('message-is-viewed', setIsViewedMessages)
             }
         }
     }, [socket, conversationId])

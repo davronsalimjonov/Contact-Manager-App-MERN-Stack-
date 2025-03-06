@@ -14,7 +14,9 @@ const ChatImageMessage = memo(({
     height = DEFAULT_IMAGE_HEIGHT,
     fullName = '',
     avatar = '',
-    time = ''
+    time = '',
+    isSender = false,
+    isViewed = false
 }) => {
     const [isOpenModal, setIsOpenModal] = useState(false)
     const { width: imageWidth, height: imageHeight } = getProportionalDimensions({
@@ -31,6 +33,9 @@ const ChatImageMessage = memo(({
             avatar={avatar}
             fullName={fullName} 
             time={getTimeFromDate(time)}
+            isViewed={isViewed}
+            isSender={isSender}
+            showViewedStatus
         >
             {imageUrl && (
                 <MediaPreviewer

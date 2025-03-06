@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useInView } from "react-intersection-observer";
 import { getUserFullName } from "@/utils/lib";
+import { getMessageOwner } from "@/utils/chat";
 import { MessageTypes } from "@/constants/enum";
 import { useGetUserId } from "@/hooks/useGetUser";
 import ChatSmsMessage from "../../moleculs/ChatSmsMessage";
@@ -14,7 +15,6 @@ import ChatHomeWorkMessage from "../../moleculs/ChatHomeWorkMessage";
 import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 import ChatTaskMessage from "../../moleculs/ChatTaskMessage";
 import ChatFileMessage from "../../moleculs/ChatFileMessage";
-import { getMessageOwner } from "@/utils/chat";
 import ChatLessonHomeworkMessage from "../../moleculs/ChatLessonHomeworkMessage";
 
 const RenderMessage = memo(({
@@ -25,10 +25,13 @@ const RenderMessage = memo(({
     onTaskComplete
 }) => {
     const userId = useGetUserId()
+    const owner = getMessageOwner(message)
+    const messageType = message?.type === MessageTypes.MESSAGE ? message?.message?.type : message?.type
+    
     const { ref } = useInView({
         threshold: 0.5,
         triggerOnce: true,
-        skip: skipObserver,
+        skip: skipObserver || owner?.id === userId,
         onChange: (isVisible) => {
             if (isVisible) {
                 onMessageVisible?.(message)
@@ -36,9 +39,6 @@ const RenderMessage = memo(({
             }
         }
     })
-
-    const messageType = message?.type === MessageTypes.MESSAGE ? message?.message?.type : message?.type
-    const owner = getMessageOwner(message)
 
     switch (messageType) {
         case MessageTypes.TEXT:
@@ -49,6 +49,7 @@ const RenderMessage = memo(({
                         message={message?.message?.text}
                         avatar={owner.url}
                         isSender={owner.id === userId}
+                        isViewed={message?.isViewed}
                         fullName={getUserFullName(owner)}
                     />
                 </div>
@@ -57,12 +58,14 @@ const RenderMessage = memo(({
             return (
                 <div ref={ref}>
                     <ChatImageMessage
+                        avatar={owner.url}
                         time={message?.createdAt}
                         imageUrl={message?.message?.file?.url}
                         width={message?.message?.file?.width}
                         height={message?.message?.file?.height}
-                        avatar={owner.url}
                         fullName={getUserFullName(owner)}
+                        isSender={owner.id === userId}
+                        isViewed={message?.isViewed}
                     />
                 </div>
             );
@@ -74,6 +77,8 @@ const RenderMessage = memo(({
                         audioUrl={message?.message?.file?.url}
                         avatar={owner?.url}
                         fullName={getUserFullName(owner)}
+                        isSender={owner.id === userId}
+                        isViewed={message?.isViewed}
                     />
                 </div>
             )
@@ -85,6 +90,8 @@ const RenderMessage = memo(({
                         audioUrl={message?.message?.file?.url}
                         avatar={owner?.url}
                         fullName={getUserFullName(owner)}
+                        isSender={owner.id === userId}
+                        isViewed={message?.isViewed}
                     />
                 </div>
             );
@@ -98,6 +105,8 @@ const RenderMessage = memo(({
                         fileName={message?.message?.file?.fileName}
                         fileSize={message?.message?.file?.size}
                         fileUrl={message?.message?.file?.url}
+                        isSender={owner.id === userId}
+                        isViewed={message?.isViewed}
                     />
                 </div>
             );
@@ -111,6 +120,8 @@ const RenderMessage = memo(({
                         fileName={message?.message?.file?.fileName}
                         fileSize={message?.message?.file?.size}
                         fileUrl={message?.message?.file?.url}
+                        isSender={owner.id === userId}
+                        isViewed={message?.isViewed}
                     />
                 </div>
             );

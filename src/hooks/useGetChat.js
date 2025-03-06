@@ -54,13 +54,26 @@ export const useGetChatMessages = (chatId) => {
         })
     }
 
+    const setIsViewedMessages = (ids = []) => {
+        queryClient.setQueryData(queryKey, (oldData) => {
+            return oldData?.map(message => ({
+                ...message,
+                items: message?.items?.map(item => {
+                    if (ids?.includes(item?.id)) item.isViewed = true
+                    return item
+                })
+            }))
+        })
+    }
+
     return {
         ...messages,
         messages: messages?.data?.reduce((acc, curr) => ([...acc, ...(curr?.items || [])]), []),
         updateMessage,
         addPrevMessages,
         addNextMessages,
-        addNewMessage
+        addNewMessage,
+        setIsViewedMessages
     }
 }
 
