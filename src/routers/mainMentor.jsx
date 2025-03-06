@@ -121,7 +121,7 @@ const MainMentorRoutes = () => createBrowserRouter([
                 element: <UpdateLessonHomework />
             },
             {
-                path: '/lessons-schedule/:groupId/:lessonId/:homeWorkId',
+                path: '/homework/:homeWorkId',
                 element: <HomeworkReview />
             },
             {

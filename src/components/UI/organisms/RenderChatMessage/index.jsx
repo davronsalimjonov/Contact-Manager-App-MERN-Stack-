@@ -201,15 +201,12 @@ const RenderMessage = memo(({
             return (
                 <div ref={ref}>
                     <ChatLessonHomeworkMessage
-                        avatar={message?.homeWork?.mentor?.url}
-                        fullName={getUserFullName(message?.homeWork?.mentor)}
-                        title={message?.homeWork?.title}
-                        file={message?.homeWork?.url}
-                        description={message?.homeWork?.description}
+                        avatar={owner?.url}
+                        fullName={getUserFullName(owner)}
+                        taskTitle={message?.lessonHomeWork?.lessonHomeTask?.title}
+                        isChecked={message?.lessonHomeWork?.mark > 0}
+                        homeWorkId={message?.lessonHomeWork?.lessonStudent?.id}
                         time={message?.createdAt}
-                        date={message?.homeWork?.date}
-                        status={message?.homeWork?.status}
-                        onEdit={onEditMessage}
                     />
                 </div>
             )

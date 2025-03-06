@@ -32,7 +32,7 @@ const LessonStudentsAttendanceTable = ({
                                 attendance={student?.attendance}
                                 hasHomeWork={!!student?.lessonHomeWork}
                                 mark={student?.mark}
-                                onClickHomeWork={() => navigate(student?.id)}
+                                onClickHomeWork={() => navigate(`/homework/${student?.id}`)}
                             />
                         ))}
                     </tbody>

@@ -17,6 +17,8 @@ export const getMessageOwner = (message) => {
         owner = message?.sms?.sender
     } else if(messageType === MessageTypes.LESSON_TASK) {
         owner = message?.homeTask?.mentor
+    } else if(messageType === MessageTypes.LESSON_HOME_WORK){
+        owner = message?.lessonHomeWork?.user
     }
 
     return owner

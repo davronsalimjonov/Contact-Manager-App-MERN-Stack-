@@ -23,6 +23,9 @@
         &:last-child {
             padding: 16px;
             background-color: var(--dark-gray-200-color);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
         }
     }
 
@@ -32,6 +35,9 @@
         height: 40px;
         border-radius: 50%;
         background-color: var(--blue-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     &__name {
@@ -47,5 +53,14 @@
         font-size: 14px;
         line-height: 19px;
         color: var(--dark-gray-800-color);
+    }
+
+    &__check{
+        border-radius: 20px;
+    }
+
+    &__checked{
+        border-radius: 20px;
+        background-color: rgba(30, 181, 58, 1);
     }
 }
