@@ -1,10 +1,11 @@
 import Avatar from 'react-avatar';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
-import { formatDate } from '@/utils/formatDate';
+import format from 'date-fns/format'
 import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import TableActionButton from '../TableActionButton';
 import cls from './AllStudentsTableRow.module.scss';
+import { isSameDay } from '@/utils/time';
 
 const AllStudentsTableRow = ({
     index,
@@ -17,7 +18,7 @@ const AllStudentsTableRow = ({
     level,
     course,
     group,
-    courseEndDate,
+    lastLogin,
     isAdaptation = false,
     adaptationTecherFullName = '',
     onClickUserInfo,
@@ -53,7 +54,7 @@ const AllStudentsTableRow = ({
             <td>{level || <EmptyDataText />}</td>
             <td className={cls.row__course}>{course || <EmptyDataText />}</td>
             <td>{group || <EmptyDataText />}</td>
-            <td>{formatDate(courseEndDate)}</td>
+            <td>{lastLogin ? format(new Date(lastLogin), isSameDay(lastLogin, new Date()) ? 'HH:mm' : 'dd.MM.yyyy') : <EmptyDataText />}</td>
             <td><TableActionButton menuItems={menuButtons} /></td>
         </tr>
 

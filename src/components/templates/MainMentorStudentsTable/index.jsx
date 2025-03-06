@@ -73,6 +73,7 @@ const MainMentorStudentsTable = ({
                             <th>Telefon raqami</th>
                             <th>Guruhi</th>
                             <th>Statusi {selectedStudents?.size > 0 && <Button onClick={handleTransferAllStudents}>Transfer</Button>}</th>
+                            <th>Oxirgi kirgan vaqti</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -90,6 +91,7 @@ const MainMentorStudentsTable = ({
                                 messageCount={student?.messageCount}
                                 checkbox={withCheckbox}
                                 checked={selectedStudents.has(student?.id)}
+                                lastLogin={student?.lastLogin}
                                 onChangeCheckbox={handleCheckboxChange}
                                 onClickStudentInfo={() => navigate(`${student?.id}/${student?.userId}`)}
                                 onClickChangePassword={() => setPasswordModal({ isOpen: true, userId: student?.userId })}

@@ -1,5 +1,7 @@
 import Avatar from 'react-avatar';
+import format from 'date-fns/format'
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
+import { isSameDay } from '@/utils/time';
 import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import TableActionButton from '../TableActionButton';
@@ -16,6 +18,7 @@ const MainMentorStudentsTableRow = ({
     messageCount = 0,
     checkbox = false,
     checked = false,
+    lastLogin,
     onChangeCheckbox,
     onClickTransfer,
     onClickChangePassword,
@@ -58,13 +61,10 @@ const MainMentorStudentsTableRow = ({
                 </div>
                 <span title={fullName}>{fullName}</span>
             </td>
-            <td>
-                <span title={formatedPhoneNumber}>{formatedPhoneNumber ? formatedPhoneNumber : <EmptyDataText />}</span>
-            </td>
-            <td>
-                <span title={group}>{group || <EmptyDataText />}</span>
-            </td>
+            <td><span title={formatedPhoneNumber}>{formatedPhoneNumber ? formatedPhoneNumber : <EmptyDataText />}</span></td>
+            <td><span title={group}>{group || <EmptyDataText />}</span></td>
             <td><StudentStatus status={status} /></td>
+            <td>{lastLogin ? format(new Date(lastLogin), isSameDay(lastLogin, new Date()) ? 'HH:mm' : 'dd.MM.yyyy') : <EmptyDataText />}</td>
             <td onClick={e => e.stopPropagation()}>
                 <TableActionButton menuItems={dropdownMenuItems} />
             </td>

@@ -4,6 +4,8 @@ import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';
 import TableActionButton from '../TableActionButton';
 import cls from './StudentsTableRow.module.scss';
+import { isSameDay } from '@/utils/time';
+import format from 'date-fns/format'
 
 const StudentsTableRow = ({
     index = 0,
@@ -14,6 +16,7 @@ const StudentsTableRow = ({
     fullName = '',
     phoneNumber = '',
     unreadedMessagesCount = 0,
+    lastLogin = '',
     onClick,
     onClickUserInfo,
     onClickChangePassword,
@@ -51,6 +54,7 @@ const StudentsTableRow = ({
                 <span title={formatedPhoneNumber}>{formatedPhoneNumber ? formatedPhoneNumber : <EmptyDataText />}</span>
             </td>
             <td><StudentStatus status={status} /></td>
+            <td>{lastLogin ? format(new Date(lastLogin), isSameDay(lastLogin, new Date()) ? 'HH:mm' : 'dd.MM.yyyy') : <EmptyDataText />}</td>
             <td onClick={(e) => (e.stopPropagation())}>
                 {menuButtons && <TableActionButton menuItems={dropdownMenuItems} />}
             </td>

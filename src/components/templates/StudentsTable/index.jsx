@@ -53,6 +53,7 @@ const StudentsTable = ({
                             <th>Bog’lanish vaqti</th>
                             <th>Telefon raqami</th>
                             <th>Statusi</th>
+                            <th>Oxirgi kirgan vaqti</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -68,6 +69,7 @@ const StudentsTable = ({
                                 time={student?.connectionTime}
                                 fullName={getUserFullName(student)}
                                 unreadedMessagesCount={student?.messageCount}
+                                lastLogin={student?.lastLogin}
                                 days={student?.days?.map(day => getDayName(day, 'short')).join(', ') || ''}
                                 onClick={() => navigate(`/students/chat/${student?.id}`)}
                                 onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.userId })}

@@ -49,7 +49,7 @@ const AllStudentsTable = ({
                             <th>Darajasi</th>
                             <th>Kursi</th>
                             <th>Guruh</th>
-                            <th>Tugash sanasi</th>
+                            <th>Oxirgi kirgan vaqti</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -67,7 +67,7 @@ const AllStudentsTable = ({
                                 level={student?.level}
                                 course={student?.course?.title}
                                 group={student?.group?.title}
-                                courseEndDate={student?.endDate}
+                                lastLogin={student?.lastLogin}
                                 isAdaptation={student?.status === STUDENT_STATUS_ENUMS.ADAPTATION}
                                 adaptationTecherFullName={getUserFullName(student?.adaptation?.mentor)}
                                 onClickUserInfo={() => navigate(`${student?.id}/${student?.user?.id}`)}
