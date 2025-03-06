@@ -67,7 +67,7 @@ const AllStudentsTable = ({
                                 level={student?.level}
                                 course={student?.course?.title}
                                 group={student?.group?.title}
-                                lastLogin={student?.lastLogin}
+                                lastLogin={student?.user?.lastLogin}
                                 isAdaptation={student?.status === STUDENT_STATUS_ENUMS.ADAPTATION}
                                 adaptationTecherFullName={getUserFullName(student?.adaptation?.mentor)}
                                 onClickUserInfo={() => navigate(`${student?.id}/${student?.user?.id}`)}
