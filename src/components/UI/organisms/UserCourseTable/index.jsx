@@ -20,16 +20,13 @@ const UserCourseTable = ({ userId, userCourseId, disabled = true }) => {
     const [confirmModal, setConfirmModal] = useState({ isOpen: false, groupId: null, groupName: null, userCourseId: null })
     const { data: courses, isLoading } = useGetUserCourses(userId)
 
-    const handleUpdateUserLevel = (userCourseId, level) => {
+    const handleUpdateUserCourse = async (userCourseId, data) => {
         try {
+            const res = await updateUserCourse(userCourseId, data)
             queryClient.setQueryData(['user-courses', userId], (oldData) => {
-                return oldData?.map(course => course?.id === userCourseId ? { ...course, level } : course)
+                return oldData?.map(course => course?.id === userCourseId ? res : course)
             })
-            updateUserCourse(userCourseId, { level })
         } catch (error) {
-            queryClient.setQueryData(['user-courses', userId], (oldData) => {
-                return oldData?.map(course => course?.id === userCourseId ? { ...course, level: null } : course)
-            })
             toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
         }
     }
@@ -80,6 +77,7 @@ const UserCourseTable = ({ userId, userCourseId, disabled = true }) => {
                                 <th>Sotib olgan sana</th>
                                 <th>Tugash sanasi</th>
                                 <th>Darajasi</th>
+                                <th>Nazoratchi mentor</th>
                                 <th>Guruh</th>
                                 <th></th>
                             </tr>
@@ -96,7 +94,9 @@ const UserCourseTable = ({ userId, userCourseId, disabled = true }) => {
                                     group={course?.group?.title}
                                     startDate={course?.startDate}
                                     courseName={course?.course?.title}
-                                    onLevelChange={({ value: level }) => handleUpdateUserLevel(course?.id, level)}
+                                    callMentor={course?.secondTeacher?.id}
+                                    onLevelChange={({ value: level }) => handleUpdateUserCourse(course?.id, { level })}
+                                    onChangeCallMentor={({ value: secondTeacher }) => handleUpdateUserCourse(course?.id, { secondTeacher })}
                                     onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
                                     onClickEdit={() => navigate(`/user-course/${course?.id}`)}
                                 />
