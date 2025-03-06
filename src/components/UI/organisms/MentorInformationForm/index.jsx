@@ -22,7 +22,7 @@ const MentorInformationForm = ({
     const { register, control, reset, watch, handleSubmit, setValue, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
         defaultValues,
         mode: 'onSubmit',
-        resolver: yupResolver(mentorSchema.shape(!isCreate ? { sip: Yup.number().transform((value) => isNaN(value) ? null : value).required('SIP raqami kiritilishi shart') } : {}))
+        resolver: yupResolver(mentorSchema)
     })
     const avatar = watch('avatar')
 

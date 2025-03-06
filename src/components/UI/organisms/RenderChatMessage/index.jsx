@@ -15,6 +15,7 @@ import ChatLessonTaskMessage from "../../moleculs/ChatLessonTaskMessage";
 import ChatTaskMessage from "../../moleculs/ChatTaskMessage";
 import ChatFileMessage from "../../moleculs/ChatFileMessage";
 import { getMessageOwner } from "@/utils/chat";
+import ChatLessonHomeworkMessage from "../../moleculs/ChatLessonHomeworkMessage";
 
 const RenderMessage = memo(({
     message,
@@ -196,6 +197,22 @@ const RenderMessage = memo(({
                     />
                 </div>
             );
+        case MessageTypes.LESSON_HOME_WORK: 
+            return (
+                <div ref={ref}>
+                    <ChatLessonHomeworkMessage
+                        avatar={message?.homeWork?.mentor?.url}
+                        fullName={getUserFullName(message?.homeWork?.mentor)}
+                        title={message?.homeWork?.title}
+                        file={message?.homeWork?.url}
+                        description={message?.homeWork?.description}
+                        time={message?.createdAt}
+                        date={message?.homeWork?.date}
+                        status={message?.homeWork?.status}
+                        onEdit={onEditMessage}
+                    />
+                </div>
+            )
         case MessageTypes.DATE_SEPARATOR:
             return (
                 <ChatDateSeparator date={message?.date} />

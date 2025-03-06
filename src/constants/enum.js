@@ -13,7 +13,8 @@ export const MessageTypes = {
     COMMENT: 'comment',
     DATE_SEPARATOR: 'date_separator',
     LESSON_TASK: 'home-task',
-    STUDENT_HOME_WORK: 'student-home-work'
+    STUDENT_HOME_WORK: 'student-home-work',
+    LESSON_HOME_WORK: 'lesson-home-work',
 }
 
 export const HomeLessonTaskStatus = {
