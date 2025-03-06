@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
 import { STUDENT_STATUS_ENUMS } from '@/constants/enum';
 import EmptyData from '@/components/UI/organisms/EmptyData';
-import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
+import StudentChangePasswordModal from '../StudentChangePasswordModal';
 import AllStudentsTableRow from '@/components/UI/moleculs/AllStudentsTableRow';
 import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
 import ChangeCallMentorModal from '@/components/UI/organisms/ChangeCallMentorModal';
@@ -20,7 +20,7 @@ const AllStudentsTable = ({
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            <ChangePasswordForm
+            <StudentChangePasswordModal
                 isOpen={changePassword.isOpen}
                 userId={changePassword.userId}
                 onClose={() => setChangePassword({ isOpen: false, userId: null })}

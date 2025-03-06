@@ -5,6 +5,7 @@ import EmptyData from '@/components/UI/organisms/EmptyData';
 import MentorsTableRow from '@/components/UI/moleculs/MentorsTableRow';
 import CreateMentorCardModal from '@/components/UI/organisms/CreateMentorCardModal';
 import cls from './MentorsTable.module.scss';
+import MentorChangePasswordModal from '../MentorChangePasswordModal';
 
 const MentorsTable = ({
     mentors = [],
@@ -12,6 +13,7 @@ const MentorsTable = ({
 }) => {
     const navigate = useNavigate()
     const [mentorCardModal, setMentorCardModal] = useState({ isOpen: false, mentorId: null })
+    const [changePassword, setChangePassword] = useState({ isOpen: false, mentorId: null, role: null })
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -19,6 +21,12 @@ const MentorsTable = ({
                 isOpen={mentorCardModal.isOpen}
                 mentorId={mentorCardModal.mentorId}
                 onClose={() => setMentorCardModal({ isOpen: false, mentorId: null })}
+            />
+            <MentorChangePasswordModal 
+                isOpen={changePassword?.isOpen}
+                mentorId={changePassword?.mentorId}
+                role={changePassword?.role}
+                onClose={() => setChangePassword({ isOpen: false, mentorId: null, role: null })}
             />
             {mentors?.length > 0 ? (
                 <table className={cls.table}>
@@ -47,6 +55,7 @@ const MentorsTable = ({
                                 cards={mentor?.cards}
                                 onClickMentorInfo={() => navigate(`${mentor?.id}?role=${mentor?.role}`)}
                                 onClickAdjustment={() => setMentorCardModal({ isOpen: true, mentorId: mentor?.id })}
+                                onClickChangePassword={() => setChangePassword({ isOpen: true, mentorId: mentor?.id, role: mentor?.role })}
                             />
                         ))}
                     </tbody>

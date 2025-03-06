@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { cn, getUserFullName } from '@/utils/lib';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import EmptyData from '@/components/UI/organisms/EmptyData';
-import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
+import StudentChangePasswordModal from '../StudentChangePasswordModal';
 import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
+import ChangeCallMentorModal from '@/components/UI/organisms/ChangeCallMentorModal';
 import MainMentorStudentsTableRow from '@/components/UI/moleculs/MainMentorStudentsTableRow';
 import cls from './MainMentorStudentsTable.module.scss';
-import ChangeCallMentorModal from '@/components/UI/organisms/ChangeCallMentorModal';
 
 const MainMentorStudentsTable = ({
     students = [],
@@ -38,7 +38,7 @@ const MainMentorStudentsTable = ({
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            <ChangePasswordForm
+            <StudentChangePasswordModal
                 isOpen={passwordModal?.isOpen}
                 userId={passwordModal?.userId}
                 onClose={() => setPasswordModal({ isOpen: false, userId: '' })}

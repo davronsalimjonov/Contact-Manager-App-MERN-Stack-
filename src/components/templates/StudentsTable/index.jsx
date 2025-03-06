@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { getDayName } from '@/utils/time';
 import { cn, getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
-import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
+import StudentsTableRow from '../../UI/moleculs/StudentsTableRow';
+import StudentChangePasswordModal from '../StudentChangePasswordModal';
 import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
 import ChangeCallMentorModal from '@/components/UI/organisms/ChangeCallMentorModal';
-import StudentsTableRow from '../../UI/moleculs/StudentsTableRow';
 import cls from './StudentsTable.module.scss';
 
 const StudentsTable = ({
@@ -21,7 +21,7 @@ const StudentsTable = ({
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
             {menuButtons && (
-                <ChangePasswordForm
+                <StudentChangePasswordModal
                     isOpen={changePassword.isOpen}
                     userId={changePassword.userId}
                     onClose={() => setChangePassword({ isOpen: false, userId: '' })}

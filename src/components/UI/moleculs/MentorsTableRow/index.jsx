@@ -18,6 +18,7 @@ const MentorsTableRow = ({
     studentCount = 0,
     onClickMentorInfo,
     onClickAdjustment,
+    onClickChangePassword,
     cards = []
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -25,6 +26,7 @@ const MentorsTableRow = ({
     const menuItems = [
         { label: 'Mentor ma’lumotlari', onClick: onClickMentorInfo },
         { label: 'Bonus/jarima', onClick: onClickAdjustment },
+        { label: 'Parol ozgartirish', onClick: onClickChangePassword }
     ]
 
     return (
@@ -43,13 +45,13 @@ const MentorsTableRow = ({
             <td>{degree || <EmptyDataText />}</td>
             <td><MentorStatusBadge status={status} /></td>
             <td className={cls.row__studentCount}>
-                {studentCount} 
+                {studentCount}
                 <div className={cls.row__cards}>
                     {cards?.length > 0 && cards?.map((card, index) => (
                         <Fragment key={index}>
-                        {card?.type === MENTOR_CARDS_ENUM.BONUS && <GreenCardIcon />}
-                        {card?.type === MENTOR_CARDS_ENUM.WARNING && <YellowCardIcon />}
-                        {card?.type === MENTOR_CARDS_ENUM.FINE && <RedCardIcon />}
+                            {card?.type === MENTOR_CARDS_ENUM.BONUS && <GreenCardIcon />}
+                            {card?.type === MENTOR_CARDS_ENUM.WARNING && <YellowCardIcon />}
+                            {card?.type === MENTOR_CARDS_ENUM.FINE && <RedCardIcon />}
                         </Fragment>
                     ))}
                 </div>
