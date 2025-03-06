@@ -20,6 +20,7 @@ const MainMentorStudentsTableRow = ({
     onClickTransfer,
     onClickChangePassword,
     onClickStudentInfo,
+    onClickChangeCallMentor,
     onClick
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -27,7 +28,8 @@ const MainMentorStudentsTableRow = ({
     const dropdownMenuItems = [
         { label: 'O’quvchi ma’lumotlari', onClick: onClickStudentInfo },
         { label: 'Transfer Student', onClick: onClickTransfer },
-        { label: "O'quvchi Parolini O'zgartirish", onClick: onClickChangePassword }
+        { label: "O'quvchi Parolini O'zgartirish", onClick: onClickChangePassword },
+        { label: 'Nazoratchi mentor ozgartirish', onClick: onClickChangeCallMentor }
     ]
 
     return (
@@ -63,7 +65,7 @@ const MainMentorStudentsTableRow = ({
                 <span title={group}>{group || <EmptyDataText />}</span>
             </td>
             <td><StudentStatus status={status} /></td>
-            <td>
+            <td onClick={e => e.stopPropagation()}>
                 <TableActionButton menuItems={dropdownMenuItems} />
             </td>
         </tr>

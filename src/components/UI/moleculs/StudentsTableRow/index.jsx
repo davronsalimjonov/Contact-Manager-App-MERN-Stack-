@@ -18,6 +18,7 @@ const StudentsTableRow = ({
     onClickUserInfo,
     onClickChangePassword,
     onClickTransfer,
+    onClickChangeCallMentor,
     menuButtons = true
 }) => {
     const formatedPhoneNumber = formatPhoneNumberIntl(phoneNumber)
@@ -26,6 +27,7 @@ const StudentsTableRow = ({
         { label: 'O’quvchi ma’lumotlari', onClick: onClickUserInfo },
         { label: 'Parol o’zgartirish', onClick: onClickChangePassword },
         { label: 'Transfer qilish', onClick: onClickTransfer },
+        { label: 'Nazoratchi mentorni ozgartirish', onClick: onClickChangeCallMentor }
     ]
 
     return (

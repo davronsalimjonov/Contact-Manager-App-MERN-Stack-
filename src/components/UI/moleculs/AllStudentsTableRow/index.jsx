@@ -22,13 +22,15 @@ const AllStudentsTableRow = ({
     adaptationTecherFullName = '',
     onClickUserInfo,
     onClickChangePassword,
-    onClickTransfer
+    onClickTransfer,
+    onClickChangeCallMentor
 }) => {
 
     const menuButtons = [
         { label: 'Oquvchi malumotlari', onClick: onClickUserInfo },
         { label: 'Parol ozgartirish', onClick: onClickChangePassword },
-        { label: 'Transfer', onClick: onClickTransfer }
+        { label: 'Transfer', onClick: onClickTransfer },
+        { label: 'Nazoratchi mentor ozgartirish', onClick: onClickChangeCallMentor }
     ]
 
     return (

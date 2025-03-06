@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
+import { STUDENT_STATUS_ENUMS } from '@/constants/enum';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
 import AllStudentsTableRow from '@/components/UI/moleculs/AllStudentsTableRow';
 import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
+import ChangeCallMentorModal from '@/components/UI/organisms/ChangeCallMentorModal';
 import cls from './AllStudentsTable.module.scss';
-import { STUDENT_STATUS_ENUMS } from '@/constants/enum';
 
 const AllStudentsTable = ({
     students = [],
@@ -15,6 +16,7 @@ const AllStudentsTable = ({
     const navigate = useNavigate()
     const [changePassword, setChangePassword] = useState({ isOpen: false, userId: null })
     const [transferStudent, setTransferStudent] = useState({ isOpen: false, userIds: null, groupId: null })
+    const [changeCallMentor, setChangeCallMentor] = useState({ isOpen: false, userCourseId: null, currentMentorId: null })
 
     return (
         <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
@@ -28,6 +30,12 @@ const AllStudentsTable = ({
                 userIds={transferStudent.userIds}
                 groupId={transferStudent.groupId}
                 onClose={() => setTransferStudent({ isOpen: false, userIds: null, groupId: null })}
+            />
+            <ChangeCallMentorModal 
+                isOpen={changeCallMentor.isOpen}
+                userCourseId={changeCallMentor.userCourseId}
+                currentMentorId={changeCallMentor.currentMentorId}
+                onClose={() => setChangeCallMentor({ isOpen: false, userCourseId: null, currentMentorId: null })}
             />
             {students?.length > 0 ? (
                 <table className={cls.table}>
@@ -61,10 +69,11 @@ const AllStudentsTable = ({
                                 group={student?.group?.title}
                                 courseEndDate={student?.endDate}
                                 isAdaptation={student?.status === STUDENT_STATUS_ENUMS.ADAPTATION}
-                                adaptationTecherFullName={getUserFullName(student?.adaptation)}
+                                adaptationTecherFullName={getUserFullName(student?.adaptation?.mentor)}
                                 onClickUserInfo={() => navigate(`${student?.id}/${student?.user?.id}`)}
                                 onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.user?.id })}
                                 onClickTransfer={() => setTransferStudent({ isOpen: true, userIds: [student?.id], groupId: student?.group?.id })}
+                                onClickChangeCallMentor={() => setChangeCallMentor({ isOpen: true, userCourseId: student?.id, currentMentorId: student?.secondTeacher?.id })}
                             />
                         ))}
                     </tbody>

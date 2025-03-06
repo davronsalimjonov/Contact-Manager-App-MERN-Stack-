@@ -8,7 +8,7 @@ import cls from './AllStudents.module.scss';
 
 const AllStudents = () => {
     const [filter, setFilter] = useState({});
-    const [pagination, setPagination] = useState({ page: 0, limit: 10 });
+    const [pagination, setPagination] = useState({ page: 0, limit: 12 });
     const { data: students, isLoading: isLoadingStudents } = useGetAllStudents({ ...filter, page: pagination.page + 1, limit: pagination.limit });
 
     const handleFilterChange = (key, value) => {

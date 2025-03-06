@@ -7,6 +7,7 @@ import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
 import TransferStudentModal from '@/components/UI/organisms/TransferStudentModal';
 import MainMentorStudentsTableRow from '@/components/UI/moleculs/MainMentorStudentsTableRow';
 import cls from './MainMentorStudentsTable.module.scss';
+import ChangeCallMentorModal from '@/components/UI/organisms/ChangeCallMentorModal';
 
 const MainMentorStudentsTable = ({
     students = [],
@@ -20,6 +21,7 @@ const MainMentorStudentsTable = ({
     const navigate = useNavigate()
     const [passwordModal, setPasswordModal] = useState({ isOpen: false, userId: '' })
     const [transferModal, setTransferModal] = useState({ isOpen: false, userIds: [], groupId: '' })
+    const [changeCallMentor, setChangeCallMentor] = useState({ isOpen: false, userCourseId: null, currentMentorId: null })
 
     const handleTransferAllStudents = () => {
         setTransferModal({ isOpen: true, userIds: Array.from(selectedStudents), groupId })
@@ -46,6 +48,12 @@ const MainMentorStudentsTable = ({
                 groupId={transferModal?.groupId}
                 userIds={transferModal?.userIds}
                 onClose={() => setTransferModal(state => ({ ...state, isOpen: false }))}
+            />
+            <ChangeCallMentorModal
+                isOpen={changeCallMentor?.isOpen}
+                userCourseId={changeCallMentor?.userCourseId}
+                currentMentorId={changeCallMentor?.currentMentorId}
+                onClose={() => setChangeCallMentor(state => ({ ...state, isOpen: false, userCourseId: null, currentMentorId: null }))}
             />
             {students?.length > 0 ? (
                 <table className={cn(cls.table, withCheckbox && cls.withCheckbox)}>
@@ -86,6 +94,7 @@ const MainMentorStudentsTable = ({
                                 onClickStudentInfo={() => navigate(`${student?.id}/${student?.userId}`)}
                                 onClickChangePassword={() => setPasswordModal({ isOpen: true, userId: student?.userId })}
                                 onClickTransfer={() => setTransferModal({ isOpen: true, userIds: [student?.id], groupId: student?.groupId })}
+                                onClickChangeCallMentor={() => setChangeCallMentor({ isOpen: true, userCourseId: student?.id, currentMentorId: student?.secondTeacher?.id })}
                                 onClick={() => navigate(`chat/${student?.id}`)}
                             />
                         ))}
