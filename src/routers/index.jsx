@@ -5,6 +5,7 @@ import { USER_ROLES } from "@/constants";
 import useGetUser from "@/hooks/useGetUser";
 import loadingRoutes from "./loading";
 import emptyRoutes from "./empty";
+import authRoutes from "./auth";
 
 const getRoutesByRole = async (role) => {
     try {
@@ -49,7 +50,6 @@ const Routers = () => {
                     const roleRouter = await getRoutesByRole(user.role);
                     setRouter(roleRouter);
                 } else {
-                    const { default: authRoutes } = await import('./auth');
                     setRouter(authRoutes);
                 }
             } catch (error) {
