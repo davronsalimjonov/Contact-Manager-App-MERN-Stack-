@@ -210,6 +210,7 @@ const ConversationInput = ({
                 </FormProvider>
             ) : (
                 <textarea
+                    id='chat-textarea'
                     onKeyDown={handleKeyDown}
                     className={cls.input__textarea}
                     placeholder={getTextAreaPlaceholder(messageType)}
@@ -232,7 +233,10 @@ const ConversationInput = ({
                 <div>
                     {messageType === MessageTypes.SMS && (
                         <SmsTemplateButton
-                            onSelect={(message) => setValue('message', message, { shouldDirty: true, shouldValidate: true })}
+                            onSelect={(message) => (
+                                setValue('message', message, { shouldDirty: true, shouldValidate: true }),
+                                adjustHeight({target: document.getElementById('chat-textarea')})
+                            )}
                         />
                     )}
                 </div>

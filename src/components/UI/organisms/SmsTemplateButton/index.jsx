@@ -11,7 +11,7 @@ const SmsTemplateButton = ({
     const [isVisible, setIsVisible] = useState(false);
     const [popperEl, setPopperEl] = useState(null);
     const [referenceEl, setReferenceEl] = useState(null);
-    const containerRef = useClickOutside({ onClickOutside: () => isOpen && handleClose() });
+    const containerRef = useClickOutside({ onClickOutside: handleClose });
     const { styles, attributes } = usePopper(referenceEl, popperEl, {
         placement: 'right-end',
         modifiers: [
@@ -33,7 +33,7 @@ const SmsTemplateButton = ({
         }
     };
 
-    const handleClose = () => {
+    function handleClose() {
         setIsVisible(false);
         setTimeout(() => setIsOpen(false), 300);
     };

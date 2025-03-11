@@ -4,6 +4,10 @@
     gap: 16px;
     cursor: default;
 
+    &__avatar{
+        flex-shrink: 0;
+    }
+
     &__body {
         display: flex;
         flex-direction: column;
