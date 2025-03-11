@@ -1,4 +1,4 @@
-import Avatar from 'react-avatar';
+import Avatar from '@/components/UI/atoms/Avatar';
 import format from 'date-fns/format'
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import { isSameDay } from '@/utils/time';

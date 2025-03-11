@@ -1,4 +1,4 @@
-import Avatar from 'react-avatar';
+import Avatar from '@/components/UI/atoms/Avatar';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import StudentStatus from '../../atoms/StudentStatus';
 import EmptyDataText from '../../atoms/EmptyDataText';

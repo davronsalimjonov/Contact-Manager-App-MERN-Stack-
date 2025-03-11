@@ -90,6 +90,7 @@ const useGetChat = (userCourseId) => {
 
         if (userRole === USER_ROLES.SELLER) studentsQueryKey = ['seller-students', userId]
         else if (userRole === USER_ROLES.CALL_MENTOR) studentsQueryKey = ['students', userId]
+        else if (userRole === USER_ROLES.MAIN_MENTOR) studentsQueryKey = ['students', userId]
 
         queryClient.setQueriesData(['chat', 'info', userCourseId], (oldData) => ({ ...oldData, count: Math.max(oldData?.count - count, 0) }))
         if (studentsQueryKey) {
