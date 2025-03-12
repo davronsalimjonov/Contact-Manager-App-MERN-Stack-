@@ -1,30 +1,24 @@
-import { useState } from 'react'
 import Loader from '@/components/UI/atoms/Loader'
 import { useGetMentors } from '@/hooks/useMentor'
-import MentorsSearchBar from '@/components/UI/organisms/MentorsSearchbar'
+import useSessionState from '@/hooks/useSessionState'
 import MentorsTable from '@/components/templates/MentorsTable'
 import Pagination from '@/components/UI/moleculs/CustomPagination'
+import MentorsSearchBar from '@/components/UI/organisms/MentorsSearchbar'
 import cls from './AllMentors.module.scss'
 
 const AllMentors = () => {
-    const [filter, setFilter] = useState({})
-    const [pagination, setPagination] = useState({ page: 0, limit: 10 });
+    const [filter, setFilter] = useSessionState('all-mentors-filter', {})
+    const [pagination, setPagination] = useSessionState('all-mentors-pagination', { page: 0, limit: 10 });
     const { data: allMentors, isLoading: isLoadingAllMentors } = useGetMentors({ ...filter, page: pagination.page + 1, limit: pagination.limit });
 
-    const handleFilterChange = (key, value) => {
-        setFilter(state => ({ ...state, [key]: value }))
+    const handleFilterChange = (value) => {
+        setFilter(value)
         setPagination(state => ({ ...state, page: 0 }))
     }
 
     return (
       <div className={cls.AllMentors}>
-          <MentorsSearchBar
-              onChangeFirstName={(e) => handleFilterChange('firstName', e.target.value?.trim())}
-              onChangeLastName={(e) => handleFilterChange('lastName', e.target.value?.trim())}
-              onChangePhone={(phone) => handleFilterChange('phone', phone)}
-              onChangeStatus={(status) => handleFilterChange('status', status?.value)}
-              onChangeDegree={(degree) => handleFilterChange('degree', degree?.value)}
-          />
+          <MentorsSearchBar onChange={handleFilterChange} defaultValue={filter} />
           {!isLoadingAllMentors ? (
               <MentorsTable
                   mentors={allMentors?.items}
@@ -34,8 +28,9 @@ const AllMentors = () => {
               <Loader />
           )}
           <Pagination
-              page={pagination.page}
+              initialPage={pagination.page}
               pageCount={allMentors?.meta?.totalPages}
+              page={pagination.page}
               onPageChange={({ selected: page }) => setPagination({ ...pagination, page })}
           />
       </div>

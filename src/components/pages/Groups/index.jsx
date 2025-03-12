@@ -5,6 +5,7 @@ import { getUserFullName } from '@/utils/lib';
 import { GROUP_STATUS } from '@/constants/enum';
 import Tabs from '@/components/UI/moleculs/Tabs';
 import Loader from '@/components/UI/atoms/Loader';
+import useSessionState from '@/hooks/useSessionState';
 import { PlusIcon } from '@/components/UI/atoms/icons';
 import { ENGLISH_LEVEL_OPTIONS } from '@/constants/form';
 import Button from '@/components/UI/atoms/Buttons/Button';
@@ -18,11 +19,11 @@ import cls from './Groups.module.scss';
 
 const Groups = () => {
     const navigate = useNavigate()
-    const [activeLevel, setActiveLevel] = useState('A1')
+    const [activeLevel, setActiveLevel] = useSessionState('groups-active-level', 'A1')
+    const [pagnination, setPagination] = useSessionState('groups-pagination', { page: 0, limit: 12 })
     const [isOpenCreateGroup, setIsOpenCreateGroup] = useState(false)
     const [confirmStartGroup, setConfirmStartGroup] = useState({ isOpen: false, groupId: null })
-    const [pagnination, setPagination] = useState({ page: 0, limit: 12 })
-    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: 12 })
+    const { data: groups, isLoading } = useGetGroupsByLevel(activeLevel, { page: pagnination.page + 1, limit: pagnination.limit })
     const createGroupMutation = useCreateGroupMutation()
     const updateGroupMutation = useUpdateGroupMutation()
 
@@ -41,6 +42,11 @@ const Groups = () => {
             onSuccess: () => toast.success("Gurux active holatga o’tildi!"),
             onError: (err) => toast.error(err?.response?.data?.message || "Xatolik Yuz Berdi!")
         })
+    }
+
+    const handleChangeLevel = (level) => {
+        setActiveLevel(level)
+        setPagination(state => ({ ...state, page: 0 }))
     }
 
     return (
@@ -65,7 +71,8 @@ const Groups = () => {
             <Tabs
                 className={cls.groups__tabs}
                 activeTabClassName={cls.groups__tabs__active}
-                onChange={setActiveLevel}
+                onChange={handleChangeLevel}
+                defaultValue={activeLevel}
                 options={ENGLISH_LEVEL_OPTIONS}
             />
             {!isLoading ? (
@@ -96,6 +103,7 @@ const Groups = () => {
             {groups?.items?.length > 0 && (
                 <Pagination
                     initialPage={pagnination.page}
+                    page={pagnination.page}
                     pageCount={groups?.meta?.totalPages}
                     onPageChange={({ selected: page }) => setPagination({ ...pagnination, page })}
                 />

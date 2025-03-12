@@ -6,9 +6,10 @@ import { useGetMainMentorStudents } from '@/hooks/useStudents'
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar'
 import MainMentorStudentsTable from '@/components/templates/MainMentorStudentsTable'
 import cls from './MainMentorStudents.module.scss'
+import useSessionState from '@/hooks/useSessionState'
 
 const MainMentorStudents = () => {
-    const [filter, setFilter] = useState({})
+    const [filter, setFilter] = useSessionState('main-mentor-students-filter', {})
     const [selectedStudents, setSelectedStudents] = useState(new Set())
     const { data: students, isLoading: isLoadingStudents } = useGetMainMentorStudents(filter)
     const { data: groups } = useGetMyGroups()
@@ -57,13 +58,12 @@ const MainMentorStudents = () => {
                 options={getGroupOptions()}
                 className={cls.page__tab}
                 tabClassName={cls.page__tab__button}
+                defaultValue={filter?.group}
                 onChange={group => handleFilterChange({ group })}
             />
             <StudentsSearchBar
-                onChangeStatus={(status) => handleFilterChange({ status: status?.value })}
-                onChangeFirstName={e => handleFilterChange({ firstName: e.target.value?.trim() })}
-                onChangeLastName={e => handleFilterChange({ lastName: e.target.value?.trim() })}
-                onChangePhone={phone => handleFilterChange({ phone })}
+                onChange={handleFilterChange}
+                defaultValue={filter}
             />
             {!isLoadingStudents ? (
                 <MainMentorStudentsTable

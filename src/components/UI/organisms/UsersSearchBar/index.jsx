@@ -1,47 +1,54 @@
+import { useState } from 'react';
 import { debounce } from '@/utils/lib';
-import { USER_TYPE_OPTIONS } from '@/constants/form';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
-import { ArrowDown } from '../../atoms/icons';
-import Button from '../../atoms/Buttons/Button';
 import PhoneInput from '../../atoms/Form/PhoneInput';
 import cls from './UsersSearchBar.module.scss';
 
-const UsersSearchBar = ({
-    onChangeStatus,
-    onChangeFirstName,
-    onChangeLastName,
-    onChangePhone,
-}) => {    
+const UsersSearchBar = ({ onChange, defaultValue }) => {
+    const [filters, setFilters] = useState({ ...defaultValue });
+
+    const handleChange = (field, value) => {
+        const updatedFilters = { ...filters, [field]: value };
+        setFilters(updatedFilters);
+        onChange(updatedFilters);
+    };
+
+    const statusOptions = [
+        { label: 'O\'quvchi', value: true },
+        { label: 'Free', value: false },
+    ];
+
     return (
         <div className={cls.bar}>
             <Input
-                placeholder='Ism'
+                placeholder="Ism"
+                defaultValue={filters.firstName}
                 className={cls.bar__form__input}
-                onChange={debounce(onChangeFirstName, 200)}
+                onChange={debounce((e) => handleChange("firstName", e.target.value), 200)}
             />
             <Input
-                placeholder='Familiya'
+                placeholder="Familiya"
+                defaultValue={filters.lastName}
                 className={cls.bar__form__input}
-                onChange={debounce(onChangeLastName, 200)}
+                onChange={debounce((e) => handleChange("lastName", e.target.value), 200)}
             />
             <PhoneInput
                 className={cls.bar__form__input}
-                placeholder='Telefon raqam'
-                onChange={debounce(onChangePhone, 200)}
+                placeholder="Telefon raqam"
+                defaultValue={filters.phone}
+                onChange={debounce((value) => handleChange("phone", value), 200)}
             />
             <Select
                 className={cls.bar__form__select}
-                placeholder='Status user'
-                options={USER_TYPE_OPTIONS}
-                onChange={onChangeStatus}
-                isclearable
+                placeholder="Status user"
+                defaultValue={statusOptions.find(option => option.value === filters.isPro)}
+                options={statusOptions}
+                onChange={(option) => handleChange("isPro", option?.value)}
+                isClearable
             />
-            {/* <Button>
-                Foydalanuvchi Qo'shish <ArrowDown fill="#fff" />
-            </Button> */}
         </div>
     );
-}
+};
 
 export default UsersSearchBar;

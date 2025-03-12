@@ -1,21 +1,19 @@
-import { useState } from 'react';
 import Loader from '@/components/UI/atoms/Loader';
+import useSessionState from '@/hooks/useSessionState';
 import { useGetCallMentorStudents } from '@/hooks/useStudents';
 import StudentsTable from '@/components/templates/StudentsTable';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
 import cls from './MyStudents.module.scss';
 
 const MyStudents = () => {
-    const [filter, setFilter] = useState({})
+    const [filter, setFilter] = useSessionState('my-students-filter', {})
     const { data: students, isLoading: isLoadingStudents } = useGetCallMentorStudents(filter)
 
     return (
         <div className={cls.page}>
             <StudentsSearchBar
-                onChangeStatus={(status) => setFilter(state => ({ ...state, status: status?.value }))}
-                onChangeFirstName={e => setFilter(state => ({ ...state, firstName: e.target.value?.trim() }))}
-                onChangeLastName={e => setFilter(state => ({ ...state, lastName: e.target.value?.trim() }))}
-                onChangePhone={phone => setFilter(state => ({ ...state, phone }))}
+                onChange={setFilter}
+                defaultValue={filter}
             />
             {!isLoadingStudents ? (
                 <StudentsTable students={students} />
