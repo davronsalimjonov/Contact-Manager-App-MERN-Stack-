@@ -90,13 +90,19 @@ const SaleForm = ({ onSubmit }) => {
                     control={control}
                     error={errors?.secondPhone?.message}
                 />
-                <FormPhoneInput
+                {/* <FormPhoneInput
                     label='Telefon nomerni kiriting'
                     placeholder='Telefon nomerni kiriting'
                     disabled={!secondPhone}
                     name='thirdPhone'
                     control={control}
                     error={errors?.thirdPhone?.message}
+                /> */}
+                <FormInput 
+                    label='Telegram akkaunt'
+                    placeholder='Kiriting'
+                    register={register('telegram')}
+                    error={errors?.telegram?.message}
                 />
                 <FormRadioGroup
                     label='Jinsi'
