@@ -46,7 +46,8 @@ const StudentInformationForm = ({ courseId = '' }) => {
         thirdPhone: student?.thirdPhone,
         birthday: student?.birthday,
         gender: String(student?.gender),
-        createdAt: student?.createdAt ? dayjs(student?.createdAt).format('DD.MM.YYYY') : ''
+        createdAt: student?.createdAt ? dayjs(student?.createdAt).format('DD.MM.YYYY') : '',
+        telegram: student?.telegram
     }
     const connectionDays = course?.days
     const connectionTime = course?.connectionTime
@@ -228,7 +229,12 @@ const StudentInformationForm = ({ courseId = '' }) => {
                             </button>
                         )}
                     />
-                    <span></span>
+                    <FormInput 
+                        label='Telegram akkaunt'
+                        placeholder='Telegram akkaunt'
+                        register={register('telegram')}
+                        error={errors?.telegram?.message}
+                    />
                     <Button
                         type='submit'
                         isLoading={isSubmitting}
