@@ -167,7 +167,7 @@ function LessonScheduleCalendar({
                     defaultView="week"
                     startAccessor="start"
                     localizer={localizer}
-                    min={new Date(2024, 0, 1, 10, 0)}
+                    min={new Date(2024, 0, 1, 5, 0)}
                     max={new Date(2024, 0, 1, 23, 0)}
                     onEventDrop={handleDrop}
                     draggableAccessor={handleDraggableAccessor}
