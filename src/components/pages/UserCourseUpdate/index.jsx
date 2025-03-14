@@ -12,6 +12,7 @@ import FormSelect from '@/components/UI/moleculs/Form/FormSelect';
 import { useGetCourses, useGetUserCourseById, useUserCourseMutations } from '@/hooks/useUserCourse';
 import FormPasswordInput from '@/components/UI/moleculs/Form/FormPasswordInput';
 import cls from './UserCourseUpdate.module.scss';
+import FormDatepicker from '@/components/UI/moleculs/Form/FormDatepicker';
 
 const UserCourseUpdate = () => {
     const { userCourseId } = useParams()
@@ -25,7 +26,9 @@ const UserCourseUpdate = () => {
         login: userCourse?.login,
         password: userCourse?.password,
         status: userCourse?.status,
-        level: userCourse?.level
+        level: userCourse?.level,
+        startDate: userCourse?.startDate,
+        endDate: userCourse?.endDate
     })
 
     useEffect(() => {
@@ -61,13 +64,13 @@ const UserCourseUpdate = () => {
                         <FormInput
                             label='Login'
                             placeholder='Login'
-                            register={register('login', { required: 'Loginni kiriting' })}
+                            register={register('login')}
                             error={errors?.login?.message}
                         />
                         <FormPasswordInput
                             label='Parol'
                             placeholder='Parol'
-                            register={register('password', { required: 'Parolni kiriting' })}
+                            register={register('password')}
                             error={errors?.password?.message}
                         />
                         <FormSelect
@@ -76,7 +79,6 @@ const UserCourseUpdate = () => {
                             options={STUDENTS_STATUS_OPTIONS}
                             control={control}
                             name='status'
-                            rules={{ required: 'Foydalanuvchi statusini tanlang' }}
                             error={errors?.status?.message}
                         />
                         <FormSelect
@@ -85,8 +87,21 @@ const UserCourseUpdate = () => {
                             options={ENGLISH_LEVEL_OPTIONS}
                             control={control}
                             name='level'
-                            rules={{ required: 'Levelni tanlang' }}
                             error={errors?.level?.message}
+                        />
+                        <FormDatepicker 
+                            label='Boshlanish sanasi'
+                            placeholder='Boshlanish sanasi'
+                            control={control}
+                            name='startDate'
+                            error={errors?.startDate?.message}
+                        />
+                        <FormDatepicker 
+                            label='Tugash sanasi'
+                            placeholder='Tugash sanasi'
+                            control={control}
+                            name='endDate'
+                            error={errors?.endDate?.message}
                         />
                     </div>
                     <div className={cls.page__form__buttons}>
