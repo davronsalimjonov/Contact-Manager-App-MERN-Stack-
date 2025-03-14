@@ -64,6 +64,7 @@ const CreateScheduleFormModal = ({
         data.group = groupId
         data.startTime = convertMinutesToUTC0(data.startTime)
         data.endTime = convertMinutesToUTC0(data.endTime)
+        data.weekday = Number(data.weekday)
 
         await createScheduleMutation.mutateAsync(data, {
             onSuccess: () => {

@@ -1,5 +1,5 @@
 import { USER_ROLES } from ".";
-import { MENTOR_STATUS_ENUM, USER_TYPE_ENUMS } from "./enum";
+import { MENTOR_STATUS_ENUM, STUDENT_TYPE, USER_TYPE_ENUMS } from "./enum";
 
 export const GENDER_OPTIONS = [
     { value: '1', label: 'Erkak' },
@@ -47,7 +47,7 @@ export const WEEKDAY_OPTIONS = [
     { value: 4, label: 'Payshanba' },
     { value: 5, label: 'Juma' },
     { value: 6, label: 'Shanba' },
-    { value: 0, label: 'Yakshanba' },
+    { value: '0', label: 'Yakshanba' },
 ]
 
 export const LESSON_TIME_OPTIONS = [
@@ -273,4 +273,22 @@ export const MENTOR_STATUS_OPTIONS = [
     { label: 'Ishlayapti', value: MENTOR_STATUS_ENUM.ACTIVE },
     { label: 'Vaqtincha Ta`tilda', value: MENTOR_STATUS_ENUM.PAUSED },
     { label: 'Ishdan Ketdi', value: MENTOR_STATUS_ENUM.QUIT },
+]
+
+export const STUDENT_TYPE_OPTIONS = [
+    { label: 'Yangi', value: STUDENT_TYPE.NEW },
+    { label: 'Qayta sotuv', value: STUDENT_TYPE.RESALE },
+    { label: 'Sarafan', value: STUDENT_TYPE.SARAFAN },
+    { label: 'Qolgan to`lov', value: STUDENT_TYPE.REMAINING_PAYMENT },
+]
+
+export const PAYMENT_TYPE_OPTIONS = [
+    { label: 'Uzum-3', value: 'uzum-3' },
+    { label: 'Uzum-6', value: 'uzum-6' },
+    { label: 'Uzum-12', value: 'uzum-12' },
+    { label: 'Anor-6', value: 'anor-6' },
+    { label: 'Alif-6', value: 'alif-6' },
+    { label: 'Click', value: 'click' },
+    { label: 'Karta', value: 'karta' },
+    { label: 'Bank', value: 'bank' },
 ]
