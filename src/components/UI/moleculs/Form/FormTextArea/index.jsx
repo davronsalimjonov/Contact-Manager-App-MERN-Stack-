@@ -2,6 +2,7 @@ import TextArea from '@/components/UI/atoms/Form/TextArea';
 import FormElementWrapper from '../FormElementWrapper';
 
 const FormTextArea = ({
+    wrapperClassName = '',
     className = '',
     label = '',
     value,
@@ -15,7 +16,7 @@ const FormTextArea = ({
     ...otherProps
 }) => {
     return (
-        <FormElementWrapper label={label} error={error}>
+        <FormElementWrapper className={wrapperClassName} label={label} error={error}>
             <TextArea
                 className={className}
                 value={value}

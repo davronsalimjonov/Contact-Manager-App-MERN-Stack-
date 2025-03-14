@@ -16,11 +16,11 @@ export const getSellerMetrics = async (sellerId, params) => {
 }
 
 export const createSellerStudent = async (data) => {
-    const res = await api.post(`/user-course/create-sales-form`, data)
+    const res = await api.post(`/user-course/create-sales-form`, data, { headers: { "Content-Type": "multipart/form-data" } })
     return res?.data
 }
 
-export const updateSellerPlan = async (sellerId,data) => {
+export const updateSellerPlan = async (sellerId, data) => {
     const res = await api.put(`/sales-manager/plan/${sellerId}`, data)
     return res?.data
 }

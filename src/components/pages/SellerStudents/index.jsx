@@ -6,6 +6,7 @@ import Button from '@/components/UI/atoms/Buttons/Button';
 import StudentsTable from '@/components/templates/StudentsTable';
 import StudentsSearchBar from '@/components/UI/organisms/StudentsSearchBar';
 import cls from './SellerStudents.module.scss';
+import Loader from '@/components/UI/atoms/Loader';
 
 const SellerStudents = () => {
     const navigate = useNavigate() 
@@ -23,11 +24,14 @@ const SellerStudents = () => {
                 />
                 <Button onClick={() => navigate('/sales-form')}>O’quvchi qo’shish <PlusIcon /> </Button>
             </div>
-            <StudentsTable
-                students={students}
-                isLoading={isLoadingStudents}
-                menuButtons={false}
-            />
+            {isLoadingStudents ? (
+                <Loader />
+            ) : (
+                <StudentsTable
+                    students={students}
+                    menuButtons={false}
+                />
+            )}
         </div>
     );
 }

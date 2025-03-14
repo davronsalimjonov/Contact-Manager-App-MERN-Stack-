@@ -80,3 +80,10 @@ export const LESSON_STATUS_ENUMS = {
     ONGOING: 'ongoing',
     FINISHED: 'finished'
 }
+
+export const STUDENT_TYPE = {
+    RESALE: 'resale',
+    SARAFAN: 'sarafan',
+    REMAINING_PAYMENT: 'remaining-payment',
+    NEW: 'new'
+}

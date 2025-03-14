@@ -12,4 +12,10 @@ export const saleFormSchema = Yup.object().shape({
     course: Yup.string().required('Kurs tanlash majburiy'),
     month: Yup.number().required('Oy tanlash majburiy'),
     gender: genderSchema,
+    userType: Yup.string().required('O\'quvchi turi tanlash majburiy'),
+    paymentType: Yup.string().required('To\'lov turi tanlash majburiy'),
+    paymentAmount: Yup.string().required('Summa kiritish majburiy'),
+    file: Yup.mixed().required('Chekni yuklash majburiy'),
+    date: Yup.date().required('Sanani kiritish majburiy'),
+    comment: Yup.string(),
   });

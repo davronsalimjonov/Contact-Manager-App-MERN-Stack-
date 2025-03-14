@@ -15,6 +15,7 @@ const FilePicker = ({
 
     const handleChange = (e) => {
         const file = e.target.files?.[0]
+        if (!file) return
         setFile(file)
         onChange?.(file)
     }
