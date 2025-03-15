@@ -13,6 +13,7 @@ const StudentAdaptationCard = ({
     showStatus = false,
     showTimer = false,
     firstContactDate = '',
+    withChatBtn = true,
     onClick,
     onClickChat,
     onClickTask
@@ -41,7 +42,7 @@ const StudentAdaptationCard = ({
             </div>}
             <div className={cls.card__btns} onClick={e => e.stopPropagation()}>
                 <button onClick={onClickTask}>Task Biriktirish</button>
-                <button onClick={onClickChat}>Chat</button>
+                {withChatBtn && <button onClick={onClickChat}>Chat</button>}
             </div>
         </div>
     );

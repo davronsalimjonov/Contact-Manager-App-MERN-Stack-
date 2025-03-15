@@ -81,7 +81,7 @@ export const LESSON_STATUS_ENUMS = {
     FINISHED: 'finished'
 }
 
-export const STUDENT_TYPE = {
+export const SALE_TYPE = {
     RESALE: 'resale',
     SARAFAN: 'sarafan',
     REMAINING_PAYMENT: 'remaining-payment',

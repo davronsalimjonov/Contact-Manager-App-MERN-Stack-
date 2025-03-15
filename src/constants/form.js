@@ -1,5 +1,5 @@
 import { USER_ROLES } from ".";
-import { MENTOR_STATUS_ENUM, STUDENT_TYPE, USER_TYPE_ENUMS } from "./enum";
+import { MENTOR_STATUS_ENUM, SALE_TYPE, USER_TYPE_ENUMS } from "./enum";
 
 export const GENDER_OPTIONS = [
     { value: '1', label: 'Erkak' },
@@ -275,11 +275,11 @@ export const MENTOR_STATUS_OPTIONS = [
     { label: 'Ishdan Ketdi', value: MENTOR_STATUS_ENUM.QUIT },
 ]
 
-export const STUDENT_TYPE_OPTIONS = [
-    { label: 'Yangi', value: STUDENT_TYPE.NEW },
-    { label: 'Qayta sotuv', value: STUDENT_TYPE.RESALE },
-    { label: 'Sarafan', value: STUDENT_TYPE.SARAFAN },
-    { label: 'Qolgan to`lov', value: STUDENT_TYPE.REMAINING_PAYMENT },
+export const SALE_TYPE_OPTIONS = [
+    { label: 'Yangi', value: SALE_TYPE.NEW },
+    { label: 'Qayta sotuv', value: SALE_TYPE.RESALE },
+    { label: 'Sarafan', value: SALE_TYPE.SARAFAN },
+    { label: 'Qolgan to`lov', value: SALE_TYPE.REMAINING_PAYMENT },
 ]
 
 export const PAYMENT_TYPE_OPTIONS = [

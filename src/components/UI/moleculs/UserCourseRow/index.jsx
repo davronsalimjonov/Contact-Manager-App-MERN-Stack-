@@ -1,10 +1,12 @@
 import dayjs from 'dayjs';
+import { useRef, useState } from 'react';
 import { cn, getUserFullName } from '@/utils/lib';
 import { ENGLISH_LEVEL_OPTIONS } from '@/constants/form';
 import { useGetMentorsForOptions } from '@/hooks/useMentor';
+import UserCourseSaleHistoryTable from '@/components/templates/UserCourseSaleHistoryTable';
 import Select from '../../atoms/Form/Select';
 import Button from '../../atoms/Buttons/Button';
-import { EditIcon } from '../../atoms/icons';
+import { ArrowDown, EditIcon } from '../../atoms/icons';
 import cls from './UserCourseRow.module.scss';
 
 const UserCourseRow = ({
@@ -17,21 +19,24 @@ const UserCourseRow = ({
     group = '',
     callMentor,
     hasGroup = false,
+    reSales = [],
     onClickAddCourse,
     onLevelChange,
     onChangeCallMentor,
     onClickEdit
 }) => {
+    const historyTableRef = useRef(null)
+    const [isOpenHistory, setIsOpenHistory] = useState(false)
     const { callMentors: { data: callMentors } } = useGetMentorsForOptions()
     const mentorOptions = callMentors?.map(mentor => ({ value: mentor.id, label: getUserFullName(mentor) }))
 
     return (
-        <tr className={cn(cls.row, disabled && cls.disabled)}>
-            <td>{index}</td>
-            <td>{courseName}</td>
-            <td>{dayjs(startDate).format('DD.MM.YYYY')}</td>
-            <td>{dayjs(endDate).format('DD.MM.YYYY')}</td>
-            <td>
+        <div className={cn(cls.row, disabled && cls.disabled)}>
+            <span>{index}</span>
+            <span>{courseName}</span>
+            <span>{dayjs(startDate).format('DD.MM.YYYY')}</span>
+            <span>{dayjs(endDate).format('DD.MM.YYYY')}</span>
+            <span>
                 <Select
                     disabled={disabled}
                     className={cls.select}
@@ -40,8 +45,8 @@ const UserCourseRow = ({
                     placeholder='Aniqlanmagan'
                     onChange={onLevelChange}
                 />
-            </td>
-            <td>
+            </span>
+            <span>
                 <Select
                     key={mentorOptions?.length}
                     disabled={disabled}
@@ -51,10 +56,29 @@ const UserCourseRow = ({
                     placeholder='Aniqlanmagan'
                     onChange={onChangeCallMentor}
                 />
-            </td>
-            <td>{hasGroup ? group : <Button disabled={!level || disabled} onClick={onClickAddCourse}>Guruh biriktirish</Button>}</td>
-            <td><button onClick={onClickEdit}><EditIcon /></button></td>
-        </tr>
+            </span>
+            <span>{hasGroup ? group : <Button disabled={!level || disabled} onClick={onClickAddCourse}>Guruh biriktirish</Button>}</span>
+            <span><button onClick={onClickEdit}><EditIcon /></button></span>
+            {reSales?.length > 0 ? (
+                <button
+                    className={cls.row__button}
+                    onClick={() => setIsOpenHistory(state => !state)}
+                    style={{ transform: isOpenHistory ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                    disabled={reSales?.length == 0}
+                >
+                    <ArrowDown fill='var(--blue-color)' />
+                </button>
+            ) : (
+                <span></span>
+            )}
+            <div
+                ref={historyTableRef}
+                className={cls.accordion}
+                style={{ height: isOpenHistory ? historyTableRef?.current?.scrollHeight : '0' }}
+            >
+                <UserCourseSaleHistoryTable items={reSales} />
+            </div>
+        </div>
     );
 }
 

@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import UserCourseTable from '@/components/UI/organisms/UserCourseTable';
+import UserCourseTable from '@/components/templates/UserCourseTable';
 import UserInformationForm from '@/components/UI/organisms/UserInformationForm';
 import cls from './SingleUser.module.scss';
 

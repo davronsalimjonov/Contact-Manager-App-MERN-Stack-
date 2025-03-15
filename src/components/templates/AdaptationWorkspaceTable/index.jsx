@@ -10,6 +10,7 @@ import ReminderFormModal from '@/components/UI/organisms/ReminderFormModal';
 
 const AdaptationWorkspaceTable = ({
     students = [],
+    redirectToChat = true,
     onDrop
 }) => {
     const navigate = useNavigate()
@@ -104,6 +105,7 @@ const AdaptationWorkspaceTable = ({
                         firstContactDate={item.firstContactDate}
                         showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
                         showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
+                        withChatBtn={redirectToChat}
                         onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
                         onClickChat={() => navigate(`/students/chat/${item.userCourseId}`)}
                         onClickTask={() => setReminder({ isOpen: true, userId: item.userId, userCourseId: item.userCourseId })}

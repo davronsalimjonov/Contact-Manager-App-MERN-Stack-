@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { GENDER_OPTIONS, PAYMENT_TYPE_OPTIONS, STUDENT_TYPE_OPTIONS } from '@/constants/form';
+import { GENDER_OPTIONS, PAYMENT_TYPE_OPTIONS } from '@/constants/form';
 import { formatPrice } from '@/utils/lib';
 import { saleFormSchema } from '@/schemas/seller';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -105,9 +105,9 @@ const SaleForm = ({ onSubmit }) => {
                     error={errors?.course?.message}
                 />
                 <FormSelect
-                    label="O'quvchi turi"
-                    placeholder="O'quvchi turi"
-                    options={STUDENT_TYPE_OPTIONS}
+                    label="Sotuv turi"
+                    placeholder="Sotuv turi"
+                    options={SALE_TYPE_OPTIONS}
                     name='userType'
                     control={control}
                     error={errors?.userType?.message}

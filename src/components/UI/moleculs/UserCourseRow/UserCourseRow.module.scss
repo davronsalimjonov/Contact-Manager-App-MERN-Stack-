@@ -1,5 +1,7 @@
 .row {
-    & td {
+    display: contents;
+
+    & span {
         padding: 10px 16px;
         font-size: 16px;
         font-weight: 500;
@@ -7,24 +9,37 @@
         display: flex;
         align-items: center;
 
-        &:last-child{
+        &:last-child {
             padding: 0;
         }
     }
+
+    &__button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
 }
 
-.select{
+.select {
     width: 100%;
     background-color: transparent;
 
-    & > div{
+    &>div {
         padding: 0 16px 0 0 !important;
         min-height: 24px !important;
         max-height: 24px !important;
     }
 }
 
-.disabled > td{
+.disabled>td {
     opacity: 0.4;
     pointer-events: none;
+}
+
+.accordion {
+    grid-column: span 9;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }

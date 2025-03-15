@@ -28,15 +28,14 @@
             minmax(150px, 0.77fr) 
             minmax(150px, 0.82fr)
             minmax(150px, 0.82fr)
+            minmax(48px, 48px)
             minmax(48px, 48px);
 
-        & tr,
-        & thead,
-        & tbody {
+        &__header, &__body, &__header__row {
             display: contents;
         }
 
-        & th {
+        &__header__row > span{
             position: sticky;
             top: 0;
             z-index: 10;

@@ -6,10 +6,10 @@ import { useGetUserId } from '@/hooks/useGetUser';
 import { updateUserCourse } from '@/services/course';
 import { addStudentToGroup } from '@/services/group';
 import { useGetUserCourses } from '@/hooks/useUserCourse';
-import Loader from '../../atoms/Loader';
-import GroupPickerModal from '../GroupPickerModal';
-import ConfirmationModal from '../ConfirmationModal';
-import UserCourseRow from '../../moleculs/UserCourseRow';
+import Loader from '../../UI/atoms/Loader';
+import GroupPickerModal from '../../UI/organisms/GroupPickerModal';
+import ConfirmationModal from '../../UI/organisms/ConfirmationModal';
+import UserCourseRow from '../../UI/moleculs/UserCourseRow';
 import cls from './UserCourseTable.module.scss';
 
 const UserCourseTable = ({ userId, userCourseId, disabled = true }) => {
@@ -69,20 +69,21 @@ const UserCourseTable = ({ userId, userCourseId, disabled = true }) => {
             <div className={cls.card}>
                 <h3 className={cls.card__title}>Kurs</h3>
                 {!isLoading ? (
-                    <table className={cls.card__table}>
-                        <thead>
-                            <tr>
-                                <th>№</th>
-                                <th>Kurs nomi</th>
-                                <th>Sotib olgan sana</th>
-                                <th>Tugash sanasi</th>
-                                <th>Darajasi</th>
-                                <th>Nazoratchi mentor</th>
-                                <th>Guruh</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div className={cls.card__table}>
+                        <div className={cls.card__table__header}>
+                            <div className={cls.card__table__header__row}>
+                                <span>№</span>
+                                <span>Kurs nomi</span>
+                                <span>Sotib olgan sana</span>
+                                <span>Tugash sanasi</span>
+                                <span>Darajasi</span>
+                                <span>Nazoratchi mentor</span>
+                                <span>Guruh</span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div className={cls.card__table__body}>
                             {courses?.map((course, index) => (
                                 <UserCourseRow
                                     key={course?.id}
@@ -95,14 +96,15 @@ const UserCourseTable = ({ userId, userCourseId, disabled = true }) => {
                                     startDate={course?.startDate}
                                     courseName={course?.course?.title}
                                     callMentor={course?.secondTeacher?.id}
+                                    reSales={course?.reSales}
                                     onLevelChange={({ value: level }) => handleUpdateUserCourse(course?.id, { level })}
                                     onChangeCallMentor={({ value: secondTeacher }) => handleUpdateUserCourse(course?.id, { secondTeacher })}
                                     onClickAddCourse={() => setGroupPicker({ isOpen: true, level: course?.level, userCourseId: course?.id })}
                                     onClickEdit={() => navigate(`/user-course/${course?.id}`)}
                                 />
                             ))}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 ) : (
                     <Loader size={40} />
                 )}

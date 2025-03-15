@@ -5,7 +5,7 @@ import StudentInformationForm from '@/components/UI/organisms/StudentInformation
 import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
 import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleStudent.module.scss';
-import UserCourseTable from '@/components/UI/organisms/UserCourseTable';
+import UserCourseTable from '@/components/templates/UserCourseTable';
 
 const SingleStudent = () => {
     const { courseId, userId } = useParams()
