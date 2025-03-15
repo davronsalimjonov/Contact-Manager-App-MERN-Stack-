@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { GENDER_OPTIONS, PAYMENT_TYPE_OPTIONS } from '@/constants/form';
+import { GENDER_OPTIONS, PAYMENT_TYPE_OPTIONS, SALE_TYPE_OPTIONS } from '@/constants/form';
 import { formatPrice } from '@/utils/lib';
 import { saleFormSchema } from '@/schemas/seller';
 import { yupResolver } from '@hookform/resolvers/yup';
