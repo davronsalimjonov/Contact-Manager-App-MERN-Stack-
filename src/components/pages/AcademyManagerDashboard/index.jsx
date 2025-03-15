@@ -51,8 +51,8 @@ const AcademyManagerDashboard = () => {
           icon={<MetricPersonsIcon color='rgba(255, 0, 0, 1)' />}
         />
         <MetricCard
-          title='Qayta sotuv'
-          value={`${formatNumber(metrics?.resale || 0)} ta`}
+          title='Qayta sotuv/Sarafan'
+          value={`${formatNumber(metrics?.resale?.resaleCount || 0)}/${formatNumber(metrics?.resale?.sarafanCount || 0)} ta`}
           iconBg='rgba(160, 188, 241, .3)'
           icon={<MetricPersonsIcon color='rgba(18, 86, 219, 1)' />}
         />
