@@ -291,4 +291,8 @@ export const PAYMENT_TYPE_OPTIONS = [
     { label: 'Click', value: 'click' },
     { label: 'Karta', value: 'karta' },
     { label: 'Bank', value: 'bank' },
+    { label: 'Paylater-3', value: 'paylater-3' },
+    { label: 'Paylater-6', value: 'paylater-6' },
+    { label: 'Paylater-9', value: 'paylater-9' },
+    { label: 'Paylater-12', value: 'paylater-12' },
 ]
