@@ -9,8 +9,8 @@ import cls from './AcademyAdaptationWorkspace.module.scss'
 
 const AcademyAdaptationWorkspace = () => {
     const [selectedMentor, setSelectedMentor] = useState()
-    const { callMentors: { data: callMentors } } = useGetMentorsForOptions()
     const { data: students, isLoading, updateStudentAdaptation } = useGetAllAdaptation({ mentorId: selectedMentor })
+    const { callMentors: { data: callMentors } } = useGetMentorsForOptions()
 
     const options = [{ value: 'mentorsiz', label: 'Mentorsiz' }]
     callMentors?.forEach(mentor => options.push({ value: mentor.id, label: getUserFullName(mentor) }))

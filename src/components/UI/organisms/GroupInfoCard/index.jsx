@@ -29,6 +29,7 @@ const GroupInfoCard = ({
 
     const defaultFormValues = {
         title: group?.title,
+        level: group?.level,
         academyMentor: group?.academyMentor?.id,
     }
 

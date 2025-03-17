@@ -201,8 +201,8 @@ function LessonScheduleCalendar({
                     defaultView="week"
                     startAccessor="start"
                     localizer={localizer}
-                    min={new Date(2024, 0, 1, 10, 0)}
-                    max={new Date(2024, 0, 1, 23, 0)}
+                    min={new Date(2024, 0, 1, 0, 0)}
+                    max={new Date(2024, 0, 1, 23, 59)}
                     eventPropGetter={eventStyleGetter}
                     components={{
                         timeSlotWrapper: CustomTimeSlotWrapper,

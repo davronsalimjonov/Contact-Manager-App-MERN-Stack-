@@ -3,7 +3,7 @@ import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import { cn } from '@/utils/lib';
 import { useStopwatch } from '@/hooks/useTimer';
 import { getDateDifference } from '@/utils/time';
-import { BellIcon } from '../../atoms/icons';
+import { BellIcon, ReAssignAdaptationMentor } from '../../atoms/icons';
 import cls from './StudentAdaptationCard.module.scss';
 
 const StudentAdaptationCard = ({
@@ -16,7 +16,8 @@ const StudentAdaptationCard = ({
     withChatBtn = true,
     onClick,
     onClickChat,
-    onClickTask
+    onClickTask,
+    onClickChange
 }) => {
     const [status, setStatus] = useState('low')
     const { days, hours, minutes} = firstContactDate ? getDateDifference(new Date(commingDate), new Date(firstContactDate)) : useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
@@ -42,7 +43,7 @@ const StudentAdaptationCard = ({
             </div>}
             <div className={cls.card__btns} onClick={e => e.stopPropagation()}>
                 <button onClick={onClickTask}>Task Biriktirish</button>
-                {withChatBtn && <button onClick={onClickChat}>Chat</button>}
+                {withChatBtn ? <button onClick={onClickChat}>Chat</button> : <button onClick={onClickChange}><ReAssignAdaptationMentor /></button>}
             </div>
         </div>
     );

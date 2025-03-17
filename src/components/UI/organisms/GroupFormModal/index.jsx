@@ -48,15 +48,15 @@ const GroupFormModal = ({
                     register={register('title', { required: 'Guruh Nomini Kiriting!' })}
                     error={errors?.title?.message}
                 />
-                {!isEdit && <FormSelect
+                {isEdit && <FormSelect
                     label='Level'
-                    placeholder="Levelni tanlang"
+                    placeholder="Levelni kiriting"
                     options={ENGLISH_LEVEL_OPTIONS}
                     isclearable
                     isSearchable={true}
                     control={control}
                     name='level'
-                    rules={{ required: "Levelni tanlang" }}
+                    rules={{ required: "Levelni kiriting" }}
                     error={errors?.level?.message}
                 />}
                 <FormSelect

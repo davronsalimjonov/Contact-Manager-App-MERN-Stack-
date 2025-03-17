@@ -1,0 +1,22 @@
+.MediaMerginDialog {
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 95px 233px;
+    border-radius: 25px;
+
+    & img {
+        width: 450px;
+    }
+
+    & h2 {
+        margin-top: 36px;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        text-align: center;
+    }
+}

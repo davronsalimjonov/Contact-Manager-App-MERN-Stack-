@@ -17,6 +17,7 @@ import { redirectToPlatform } from '@/utils/lib'
 import { useSocket } from '@/providers/SocketProvider'
 import { useQueryClient } from 'react-query'
 import { LESSON_STATUS_ENUMS } from '@/constants/enum'
+import MediaMergingDialog from '@/components/templates/MediaMergingDialog'
 
 function checkSchedule(data = []) {
     const scheduleData = JSON.parse(JSON.stringify(data))
@@ -67,12 +68,14 @@ function checkSchedule(data = []) {
 }
 
 const GroupLessons = () => {
-    const {socket} = useSocket()
+    const { socket } = useSocket()
     const { groupId } = useParams()
     const navigate = useNavigate()
     const mentorId = useGetUserId()
     const queryClient = useQueryClient()
     const [videoUrl, setVideoUrl] = useState('')
+    const [videoStatus, setVideoStatus] = useState('')
+    const [isOpen, setIsOpen] = useState(false)
     const [isOpenNewLessonModal, setIsOpenNewLessonModal] = useState(false)
     const { data: groupLesson, isLoading: isGroupLessonLoading } = useGetGroupLessons(groupId)
     const { data: groupInfo } = useGetGroupInfo(groupId)
@@ -85,17 +88,17 @@ const GroupLessons = () => {
     const isLessonAvailable = checkSchedule(groupInfo?.lessonSchedules);
 
     useEffect(() => {
-        if(socket && !socket.hasListeners('live-lesson-end')){
+        if (socket && !socket.hasListeners('live-lesson-end')) {
             socket.on('live-lesson-end', data => {
                 const groupId = data?.groupId
                 const lessonId = data?.lessonId
                 queryClient.setQueryData(['lessons', groupId], (oldData) => {
-                    return oldData?.map(lesson => lesson?.id === lessonId ? { ...lesson, status: LESSON_STATUS_ENUMS.FINISHED } : lesson )
+                    return oldData?.map(lesson => lesson?.id === lessonId ? { ...lesson, status: LESSON_STATUS_ENUMS.FINISHED } : lesson)
                 })
             })
         }
     }, [socket])
-
+    
     return (
         <div className={cls.lessons}>
             <CreateNewLessonForm
@@ -103,11 +106,17 @@ const GroupLessons = () => {
                 isOpen={isOpenNewLessonModal}
                 onClose={() => setIsOpenNewLessonModal(false)}
             />
-            <MediaPreviewer
-                visible={!!videoUrl}
-                urls={[videoUrl]}
-                setVisible={() => setVideoUrl('')}
-            />
+            {videoStatus === "merging" ?
+                <MediaMergingDialog
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                />
+                : <MediaPreviewer
+                    visible={!!videoUrl}
+                    urls={[videoUrl]}
+                    setVisible={() => setVideoUrl('')}
+                />
+            }
             <div className={cls.lessons__header}>
                 <div className={cls.lessons__header__title}><PersonsIcon fill="var(--blue-color)" />{groupInfo?.title}</div>
                 <Button
@@ -127,6 +136,9 @@ const GroupLessons = () => {
                             date={lesson?.date}
                             duration={lesson?.duration}
                             isLive={lesson?.status === LESSON_STATUS_ENUMS.ONGOING}
+                            videoStatus={lesson?.videoStatus}
+                            setVideoStatus={setVideoStatus}
+                            setIsOpen={setIsOpen}
                             onClick={() => navigate(lesson?.id)}
                             onClickVideo={() => handleVideoPreview(lesson?.video)}
                             onClickLesson={() => redirectToPlatform(lesson?.mentorUrl, mentorId)}

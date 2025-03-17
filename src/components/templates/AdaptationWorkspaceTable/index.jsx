@@ -7,6 +7,7 @@ import WorkspaceTable from '@/components/templates/WorkspaceTable';
 import { updateStudentAdaptationStatus } from '@/services/students';
 import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
 import ReminderFormModal from '@/components/UI/organisms/ReminderFormModal';
+import ChangeAdaptationMentorForm from '@/components/UI/organisms/ChangeAdaptationMentorForm';
 
 const AdaptationWorkspaceTable = ({
     students = [],
@@ -15,6 +16,7 @@ const AdaptationWorkspaceTable = ({
 }) => {
     const navigate = useNavigate()
     const [reminder, setReminder] = useState({ isOpen: false, userId: null, userCourseId: null })
+    const [isModal, setIsModal] = useState(false)
 
     const studentsByStatus = students?.reduce((acc, student) => {
         const studentItem = {
@@ -109,8 +111,13 @@ const AdaptationWorkspaceTable = ({
                         onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
                         onClickChat={() => navigate(`/students/chat/${item.userCourseId}`)}
                         onClickTask={() => setReminder({ isOpen: true, userId: item.userId, userCourseId: item.userCourseId })}
+                        onClickChange={() => setIsModal(true)}
                     />
                 )}
+            />
+            <ChangeAdaptationMentorForm
+                isOpen={isModal}
+                setIsOpen={setIsModal}
             />
         </>
     )
