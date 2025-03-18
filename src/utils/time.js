@@ -99,3 +99,13 @@ export function getDateDifference(startDate, endDate) {
 
     return { days, hours, minutes };
 }
+
+export function generateTimeOptions() {
+    const options = [];
+    for (let minutes = 0; minutes < 24 * 60; minutes += 5) {
+      const hours = Math.floor(minutes / 60).toString().padStart(2, '0');
+      const mins = (minutes % 60).toString().padStart(2, '0');
+      options.push({ value: minutes, label: `${hours}:${mins}` });
+    }
+    return options;
+}  
