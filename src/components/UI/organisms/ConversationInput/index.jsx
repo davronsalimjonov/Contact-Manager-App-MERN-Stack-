@@ -213,6 +213,7 @@ const ConversationInput = ({
                     id='chat-textarea'
                     onKeyDown={handleKeyDown}
                     className={cls.input__textarea}
+                    readOnly={messageType === MessageTypes.SMS}
                     placeholder={getTextAreaPlaceholder(messageType)}
                     {...register('message', {
                         required: !selectedFile,

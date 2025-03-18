@@ -15,7 +15,7 @@ const ChatSmsMessage = ({
             case 'waiting': return 'Kutilmoqda';
             case 'STORED': return 'Kutilmoqda';
             case 'ACCEPTED': return 'Kutilmoqda';
-            case 'DELIVERED': return 'Yekazildi'
+            case 'DELIVERED': return 'Yetkazildi'
             default: return 'Kutilmoqda';
         }
     }
