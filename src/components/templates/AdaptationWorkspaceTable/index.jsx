@@ -27,7 +27,8 @@ const AdaptationWorkspaceTable = ({
             fullName: getUserFullName(student?.userCourse?.user),
             phone: student?.userCourse?.user?.phone,
             commingDate: student?.startDate,
-            firstContactDate: student?.firstContactDate
+            firstContactDate: student?.firstContactDate,
+            operator: getUserFullName(student?.userCourse?.salesManager)
         }
 
         if (!acc[student?.status]) {
@@ -105,6 +106,7 @@ const AdaptationWorkspaceTable = ({
                         adaptationId={item?.id}
                         phone={item.phone}
                         fullName={item.fullName}
+                        operator={item?.operator}
                         commingDate={item.commingDate}
                         firstContactDate={item.firstContactDate}
                         showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
