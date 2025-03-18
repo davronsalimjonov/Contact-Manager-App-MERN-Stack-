@@ -1,4 +1,4 @@
-import { STUDENT_STATUS_ENUMS } from "./enum";
+import { EMPLOYEE_STATUS_ENUM, STUDENT_STATUS_ENUMS } from "./enum";
 
 export const LEVEL_COLORS = {
     'A1': {
@@ -86,5 +86,24 @@ export const STATUS_COLORS = {
         color: "rgba(43, 2, 205, 1)",
         backgroundColor: "rgba(43, 2, 205, 0.09)",
         borderColor: 'rgba(43, 2, 205, 0.2)'
+    }
+}
+
+export const EMPLOYEE_STATUS_COLORS = {
+    [EMPLOYEE_STATUS_ENUM.ACTIVE]: {
+        color: 'rgba(39, 205, 2, 1)',
+        backgroundColor: 'rgba(39, 205, 2, 0.09)'
+    },
+    [EMPLOYEE_STATUS_ENUM.PAUSED]: {
+        color: 'rgba(18, 86, 219, 1)',
+        backgroundColor: 'rgba(18, 86, 219, 0.09)'
+    },
+    [EMPLOYEE_STATUS_ENUM.QUIT]: {
+        color: 'rgba(255, 0, 0, 1)',
+        backgroundColor: 'rgba(255, 0, 0, 0.09)'
+    },
+    [EMPLOYEE_STATUS_ENUM.TRIAL_PERIOD]: {
+        color: 'rgba(228, 191, 0, 1)',
+        backgroundColor: 'rgba(228, 191, 0, 0.09)'
     }
 }

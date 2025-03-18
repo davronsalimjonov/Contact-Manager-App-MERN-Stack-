@@ -4,7 +4,7 @@ import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import { MENTOR_CARDS_ENUM } from '@/constants/enum';
 import TableActionButton from '../TableActionButton';
 import EmptyDataText from '../../atoms/EmptyDataText';
-import MentorStatusBadge from '../../atoms/MentorStatusBadge';
+import EmployeeStatusBadge from '../../atoms/EmployeeStatusBadge';
 import { GreenCardIcon, RedCardIcon, YellowCardIcon } from '../../atoms/icons';
 import cls from './MentorsTableRow.module.scss';
 
@@ -43,7 +43,7 @@ const MentorsTableRow = ({
             </td>
             <td>{formatedPhoneNumber || <EmptyDataText />}</td>
             <td>{degree || <EmptyDataText />}</td>
-            <td><MentorStatusBadge status={status} /></td>
+            <td><EmployeeStatusBadge status={status} /></td>
             <td className={cls.row__studentCount}>
                 {studentCount}
                 <div className={cls.row__cards}>

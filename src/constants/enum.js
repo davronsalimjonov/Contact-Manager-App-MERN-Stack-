@@ -50,7 +50,7 @@ export const USER_TYPE_ENUMS = {
     STUDENT: 'O\'quvchi'
 }
 
-export const MENTOR_STATUS_ENUM = {
+export const EMPLOYEE_STATUS_ENUM = {
     TRIAL_PERIOD: 'Sinovda',
     ACTIVE: 'Ishlayapti',
     PAUSED: 'Vaqtincha Ta`tilda',
