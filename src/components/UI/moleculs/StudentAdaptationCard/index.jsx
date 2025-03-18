@@ -7,6 +7,7 @@ import { BellIcon, ReAssignAdaptationMentor } from '../../atoms/icons';
 import cls from './StudentAdaptationCard.module.scss';
 
 const StudentAdaptationCard = ({
+    adaptationId="",
     fullName = '',
     phone = '',
     commingDate = '',
@@ -14,6 +15,7 @@ const StudentAdaptationCard = ({
     showTimer = false,
     firstContactDate = '',
     withChatBtn = true,
+    setAdaptationId,
     onClick,
     onClickChat,
     onClickTask,
@@ -43,7 +45,10 @@ const StudentAdaptationCard = ({
             </div>}
             <div className={cls.card__btns} onClick={e => e.stopPropagation()}>
                 <button onClick={onClickTask}>Task Biriktirish</button>
-                {withChatBtn ? <button onClick={onClickChat}>Chat</button> : <button onClick={onClickChange}><ReAssignAdaptationMentor /></button>}
+                {withChatBtn ? <button onClick={onClickChat}>Chat</button> : <button onClick={() => {
+                    onClickChange()
+                    setAdaptationId(adaptationId)
+                }}><ReAssignAdaptationMentor /></button>}
             </div>
         </div>
     );

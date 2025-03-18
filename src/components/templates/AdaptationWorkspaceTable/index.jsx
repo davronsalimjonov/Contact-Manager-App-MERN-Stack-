@@ -16,6 +16,7 @@ const AdaptationWorkspaceTable = ({
 }) => {
     const navigate = useNavigate()
     const [reminder, setReminder] = useState({ isOpen: false, userId: null, userCourseId: null })
+    const [adaptationId, setAdaptationId] = useState('')
     const [isModal, setIsModal] = useState(false)
 
     const studentsByStatus = students?.reduce((acc, student) => {
@@ -101,6 +102,7 @@ const AdaptationWorkspaceTable = ({
                 renderItem={(item, status) => (
                     <StudentAdaptationCard
                         key={item.id}
+                        adaptationId={item?.id}
                         phone={item.phone}
                         fullName={item.fullName}
                         commingDate={item.commingDate}
@@ -108,6 +110,7 @@ const AdaptationWorkspaceTable = ({
                         showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
                         showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                         withChatBtn={redirectToChat}
+                        setAdaptationId={setAdaptationId}
                         onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
                         onClickChat={() => navigate(`/students/chat/${item.userCourseId}`)}
                         onClickTask={() => setReminder({ isOpen: true, userId: item.userId, userCourseId: item.userCourseId })}
@@ -118,6 +121,7 @@ const AdaptationWorkspaceTable = ({
             <ChangeAdaptationMentorForm
                 isOpen={isModal}
                 setIsOpen={setIsModal}
+                adaptationId={adaptationId}
             />
         </>
     )

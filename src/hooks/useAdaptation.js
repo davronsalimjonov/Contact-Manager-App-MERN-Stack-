@@ -1,6 +1,6 @@
-import { useQuery, useQueryClient } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import { removeEmptyKeys } from "@/utils/lib"
-import { getAllAdaptation } from "@/services/adaptation"
+import { changeAdaptationMentor, getAllAdaptation } from "@/services/adaptation"
 
 export const useGetAllAdaptation = (params = {}) => {
     const queryClient = useQueryClient()
@@ -13,4 +13,22 @@ export const useGetAllAdaptation = (params = {}) => {
     }
 
     return { ...query, updateStudentAdaptation }
+}
+
+export const useChangeAdaptationMentorMutation = () => {
+    const queryClient = useQueryClient()
+    const changeAdaptationMentorMutation = useMutation({
+        mutationFn: changeAdaptationMentor,
+        onSuccess: onCreateSuccess
+    })
+
+    function onCreateSuccess(data) {
+        const adaptationId = data?.id
+        queryClient.setQueryData(['adaptation', 'change-mentor', adaptationId], oldData => ({
+            ...oldData,
+            items: oldData?.items?.map(item => item.id === adaptationId ? data : item)
+        }))
+    }
+
+    return changeAdaptationMentorMutation
 }
