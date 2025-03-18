@@ -14,7 +14,6 @@ const LessonCard = ({
     onClick,
     onClickLesson
 }) => {
-
     return (
         <div className={cn(cls.card, isLive && cls.live)} onClick={onClick}>
             {isLive && <div className={cls.live__icon}><LiveIcon /></div>}

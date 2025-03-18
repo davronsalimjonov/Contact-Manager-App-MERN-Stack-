@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import { useQueryClient } from 'react-query'
 import { useNavigate, useParams } from 'react-router-dom'
+import { redirectToPlatform } from '@/utils/lib'
 import Loader from "@/components/UI/atoms/Loader"
 import { useGetUserId } from '@/hooks/useGetUser'
 import { useGetGroupInfo } from '@/hooks/useGroups'
 import { convertMinutesFromUTC0 } from '@/utils/time'
+import { useSocket } from '@/providers/SocketProvider'
+import { LESSON_STATUS_ENUMS } from '@/constants/enum'
 import { useGetGroupLessons } from '@/hooks/useLessons'
 import Button from "@/components/UI/atoms/Buttons/Button"
 import EmptyData from "@/components/UI/organisms/EmptyData"
 import LessonCard from '@/components/UI/moleculs/LessonCard'
 import { PersonsIcon, PlusIcon } from "@/components/UI/atoms/icons"
 import MediaPreviewer from '@/components/UI/moleculs/MediaPreviewer'
+import MediaMergingDialog from '@/components/templates/MediaMergingDialog'
 import CreateNewLessonForm from '@/components/UI/organisms/CreateNewLessonForm'
 import cls from "./GroupLessons.module.scss"
-import { redirectToPlatform } from '@/utils/lib'
-import { useSocket } from '@/providers/SocketProvider'
-import { useQueryClient } from 'react-query'
-import { LESSON_STATUS_ENUMS } from '@/constants/enum'
 
 function checkSchedule(data = []) {
     const scheduleData = JSON.parse(JSON.stringify(data))
@@ -67,30 +67,25 @@ function checkSchedule(data = []) {
 }
 
 const GroupLessons = () => {
-    const {socket} = useSocket()
+    const { socket } = useSocket()
     const { groupId } = useParams()
     const navigate = useNavigate()
     const mentorId = useGetUserId()
     const queryClient = useQueryClient()
-    const [videoUrl, setVideoUrl] = useState('')
     const [isOpenNewLessonModal, setIsOpenNewLessonModal] = useState(false)
+    const [videoPreview, setVideoPreview] = useState({ isOpen: false, status: null, url: '' })
     const { data: groupLesson, isLoading: isGroupLessonLoading } = useGetGroupLessons(groupId)
     const { data: groupInfo } = useGetGroupInfo(groupId)
-
-    const handleVideoPreview = (url) => {
-        if (!url) return toast.error('Video topilmadi')
-        setVideoUrl(url)
-    }
 
     const isLessonAvailable = checkSchedule(groupInfo?.lessonSchedules);
 
     useEffect(() => {
-        if(socket && !socket.hasListeners('live-lesson-end')){
+        if (socket && !socket.hasListeners('live-lesson-end')) {
             socket.on('live-lesson-end', data => {
                 const groupId = data?.groupId
                 const lessonId = data?.lessonId
                 queryClient.setQueryData(['lessons', groupId], (oldData) => {
-                    return oldData?.map(lesson => lesson?.id === lessonId ? { ...lesson, status: LESSON_STATUS_ENUMS.FINISHED } : lesson )
+                    return oldData?.map(lesson => lesson?.id === lessonId ? { ...lesson, status: LESSON_STATUS_ENUMS.FINISHED } : lesson)
                 })
             })
         }
@@ -103,11 +98,17 @@ const GroupLessons = () => {
                 isOpen={isOpenNewLessonModal}
                 onClose={() => setIsOpenNewLessonModal(false)}
             />
-            <MediaPreviewer
-                visible={!!videoUrl}
-                urls={[videoUrl]}
-                setVisible={() => setVideoUrl('')}
-            />
+            {videoPreview?.status === "merging" ?
+                <MediaMergingDialog
+                    isOpen={videoPreview?.isOpen}
+                    onClose={() => setVideoPreview({ isOpen: false, status: null, url: '' })}
+                />
+                : <MediaPreviewer
+                    urls={[videoPreview?.url]}
+                    visible={videoPreview?.isOpen}
+                    setVisible={() => setVideoPreview({ isOpen: false, status: null, url: '' })}
+                />
+            }
             <div className={cls.lessons__header}>
                 <div className={cls.lessons__header__title}><PersonsIcon fill="var(--blue-color)" />{groupInfo?.title}</div>
                 <Button
@@ -127,8 +128,11 @@ const GroupLessons = () => {
                             date={lesson?.date}
                             duration={lesson?.duration}
                             isLive={lesson?.status === LESSON_STATUS_ENUMS.ONGOING}
+                            // videoStatus={lesson?.videoStatus}
+                            // setVideoStatus={setVideoStatus}
+                            // setIsOpen={setIsOpen}
                             onClick={() => navigate(lesson?.id)}
-                            onClickVideo={() => handleVideoPreview(lesson?.video)}
+                            onClickVideo={() => setVideoPreview({ isOpen: true, status: lesson?.videoStatus, url: lesson?.video })}
                             onClickLesson={() => redirectToPlatform(lesson?.mentorUrl, mentorId)}
                         />
                     )) : (

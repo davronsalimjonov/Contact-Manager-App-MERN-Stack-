@@ -7,8 +7,7 @@ import { useGetUserId } from "./useGetUser";
 export const useGetGroupsByLevel = (level, params) => {
     return useQuery(
         ["groups", level, ...Object.values(removeEmptyKeys(params))],
-        () => getGroupsByLevel({ level, ...params }),
-        { cacheTime: Infinity, staleTime: Infinity }
+        () => getGroupsByLevel({ level, ...params })
     );
 };
 

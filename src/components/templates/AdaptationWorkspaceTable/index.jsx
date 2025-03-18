@@ -7,14 +7,17 @@ import WorkspaceTable from '@/components/templates/WorkspaceTable';
 import { updateStudentAdaptationStatus } from '@/services/students';
 import StudentAdaptationCard from '@/components/UI/moleculs/StudentAdaptationCard';
 import ReminderFormModal from '@/components/UI/organisms/ReminderFormModal';
+import ChangeAdaptationMentorForm from '@/components/UI/organisms/ChangeAdaptationMentorForm';
 
 const AdaptationWorkspaceTable = ({
     students = [],
     redirectToChat = true,
+    allowReplaceMentor = false,
     onDrop
 }) => {
     const navigate = useNavigate()
     const [reminder, setReminder] = useState({ isOpen: false, userId: null, userCourseId: null })
+    const [changeAdaptationMentor, setChangeAdaptationMentor] = useState({isOpen: false, adaptationId: null})
 
     const studentsByStatus = students?.reduce((acc, student) => {
         const studentItem = {
@@ -99,6 +102,7 @@ const AdaptationWorkspaceTable = ({
                 renderItem={(item, status) => (
                     <StudentAdaptationCard
                         key={item.id}
+                        adaptationId={item?.id}
                         phone={item.phone}
                         fullName={item.fullName}
                         commingDate={item.commingDate}
@@ -106,11 +110,18 @@ const AdaptationWorkspaceTable = ({
                         showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
                         showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                         withChatBtn={redirectToChat}
+                        allowReplaceMentor={allowReplaceMentor}
                         onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
                         onClickChat={() => navigate(`/students/chat/${item.userCourseId}`)}
                         onClickTask={() => setReminder({ isOpen: true, userId: item.userId, userCourseId: item.userCourseId })}
+                        onClickChange={() => setChangeAdaptationMentor({ isOpen: true, adaptationId: item.id })}
                     />
                 )}
+            />
+            <ChangeAdaptationMentorForm
+                isOpen={changeAdaptationMentor?.isOpen}
+                adaptationId={changeAdaptationMentor?.adaptationId}
+                onClose={() => setChangeAdaptationMentor({ isOpen: false, adaptationId: null })}
             />
         </>
     )
