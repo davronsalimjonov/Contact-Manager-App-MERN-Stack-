@@ -25,6 +25,7 @@ import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
 import ConnectionTimeFormPopup from '../ConnectionTimeFormPopup';
 import { EditIcon, LeftArrowIcon, PlusIcon } from '../../atoms/icons';
 import cls from './StudentInformationForm.module.scss';
+import FormTextArea from '../../moleculs/Form/FormTextArea';
 
 const StudentInformationForm = ({ courseId = '' }) => {
     const userId = useGetUserId()
@@ -234,6 +235,13 @@ const StudentInformationForm = ({ courseId = '' }) => {
                         placeholder='Telegram akkaunt'
                         register={register('telegram')}
                         error={errors?.telegram?.message}
+                    />
+                    <FormTextArea 
+                        label='Izoh'
+                        placeholder='Izoh'
+                        disabled
+                        value={course?.comment}
+                        wrapperClassName={cls.form__elements__comment}
                     />
                     <Button
                         type='submit'
