@@ -18,16 +18,19 @@ export const useGetAllAdaptation = (params = {}) => {
 export const useChangeAdaptationMentorMutation = () => {
     const queryClient = useQueryClient()
     const changeAdaptationMentorMutation = useMutation({
-        mutationFn: changeAdaptationMentor,
+        mutationFn: async data => {
+            return await changeAdaptationMentor(data?.id, { mentor: data?.mentor })
+        },
         onSuccess: onCreateSuccess
     })
 
-    function onCreateSuccess(data) {
-        const adaptationId = data?.id
-        queryClient.setQueryData(['adaptation', 'change-mentor', adaptationId], oldData => ({
-            ...oldData,
-            items: oldData?.items?.map(item => item.id === adaptationId ? data : item)
-        }))
+    function onCreateSuccess(newAdaptation) {
+        const mentorId = newAdaptation?.mentor?.id
+        const adaptationId = newAdaptation?.id
+
+        const oldMentorId = queryClient.getQueryData(['adaptation'])?.find(adaptation => adaptation.id === adaptationId)?.mentor?.id
+        queryClient.setQueriesData(['adaptation', mentorId], oldData => ([...(oldData || []), newAdaptation]))
+        queryClient.setQueriesData(['adaptation', oldMentorId], oldData => oldData?.filter(adaptation => adaptation.id !== adaptationId))
     }
 
     return changeAdaptationMentorMutation

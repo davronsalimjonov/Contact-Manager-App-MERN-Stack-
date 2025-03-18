@@ -1,30 +1,29 @@
+import toast from 'react-hot-toast'
+import { useForm } from 'react-hook-form'
+import { getUserFullName } from '@/utils/lib'
 import { useGetMentorsForOptions } from '@/hooks/useMentor'
+import { useChangeAdaptationMentorMutation } from '@/hooks/useAdaptation'
 import Dialog from '../../moleculs/Dialog'
 import FormSelect from '../../moleculs/Form/FormSelect'
-import cls from './ChangeAdaptationMentorForm.module.scss'
-import { getUserFullName } from '@/utils/lib'
-import { useForm } from 'react-hook-form'
 import Button from '../../atoms/Buttons/Button'
-import { useChangeAdaptationMentorMutation } from '@/hooks/useAdaptation'
-import toast from 'react-hot-toast'
+import cls from './ChangeAdaptationMentorForm.module.scss'
 
 const ChangeAdaptationMentorForm = ({
     isOpen = false,
-    setIsOpen,
-    adaptationId=""
+    adaptationId = "",
+    onClose,
 }) => {
-    const { control, handleSubmit, reset,  formState: { isSubmitting, isDirty } } = useForm()
+    const { control, handleSubmit, reset, formState: { isSubmitting, isDirty } } = useForm()
     const { callMentors: { data: callMentors } } = useGetMentorsForOptions()
     const changeAdaptationMentorMutation = useChangeAdaptationMentorMutation()
 
-    const options = [{ value: 'mentorsiz', label: 'Mentorsiz' }]
-    callMentors?.forEach(mentor => options.push({ value: mentor.id, label: getUserFullName(mentor) }))
+    const options = callMentors?.map(mentor => ({ value: mentor.id, label: getUserFullName(mentor) }))
 
     const handleChangeAdaptationMentor = async (data) => {
         data.id = adaptationId
         await changeAdaptationMentorMutation.mutateAsync(data, {
             onSuccess: () => {
-                setIsOpen(false)
+                onClose?.()
                 toast.success('Mentor O\'zgartirildi')
                 reset({})
             },
@@ -33,7 +32,7 @@ const ChangeAdaptationMentorForm = ({
     }
 
     return (
-        <Dialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <Dialog isOpen={isOpen} onClose={onClose}>
             <form className={cls.ChangeAdaptationMentorForm} onSubmit={handleSubmit(handleChangeAdaptationMentor)}>
                 <h2>Adaptatsiya Mentor Almashtirish</h2>
                 <FormSelect
@@ -53,7 +52,6 @@ const ChangeAdaptationMentorForm = ({
                 >
                     Yangilash
                 </Button>
-
             </form>
         </Dialog>
     )

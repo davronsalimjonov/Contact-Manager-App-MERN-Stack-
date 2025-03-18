@@ -3,7 +3,6 @@ import { cn } from '@/utils/lib'
 import { getTimeFromMinutes } from '@/utils/time'
 import { ArrowRightIcon, CalendarIcon, ClockIcon, LiveIcon } from '../../atoms/icons'
 import cls from "./LessonCard.module.scss"
-import { useEffect } from 'react'
 
 const LessonCard = ({
     lessonNumber = 0,
@@ -12,22 +11,9 @@ const LessonCard = ({
     duration = 0,
     onClickVideo,
     isLive = false,
-    videoStatus="",
-    setVideoStatus,
-    setIsOpen,
     onClick,
     onClickLesson
 }) => {
-
-    useEffect(() => {
-        setVideoStatus(prev => (prev !== videoStatus ? videoStatus : prev))
-
-        if (videoStatus !== 'merging') {
-            setIsOpen(false)
-        }
-
-    }, [videoStatus])
-
     return (
         <div className={cn(cls.card, isLive && cls.live)} onClick={onClick}>
             {isLive && <div className={cls.live__icon}><LiveIcon /></div>}
@@ -44,10 +30,7 @@ const LessonCard = ({
                             <span>{getTimeFromMinutes(duration)} soat</span>
                         </div>
                     ) : <div></div>}
-                    <button className={cls.card__details__btn} onClick={e => {
-                        (e.stopPropagation(), onClickVideo?.())
-                        setIsOpen(true)
-                    }}>
+                    <button className={cls.card__details__btn} onClick={e => (e.stopPropagation(), onClickVideo?.())}>
                         Dars videosini ko'rish <ArrowRightIcon />
                     </button>
                 </div>  

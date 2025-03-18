@@ -12,12 +12,12 @@ import ChangeAdaptationMentorForm from '@/components/UI/organisms/ChangeAdaptati
 const AdaptationWorkspaceTable = ({
     students = [],
     redirectToChat = true,
+    allowReplaceMentor = false,
     onDrop
 }) => {
     const navigate = useNavigate()
     const [reminder, setReminder] = useState({ isOpen: false, userId: null, userCourseId: null })
-    const [adaptationId, setAdaptationId] = useState('')
-    const [isModal, setIsModal] = useState(false)
+    const [changeAdaptationMentor, setChangeAdaptationMentor] = useState({isOpen: false, adaptationId: null})
 
     const studentsByStatus = students?.reduce((acc, student) => {
         const studentItem = {
@@ -110,18 +110,18 @@ const AdaptationWorkspaceTable = ({
                         showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
                         showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                         withChatBtn={redirectToChat}
-                        setAdaptationId={setAdaptationId}
+                        allowReplaceMentor={allowReplaceMentor}
                         onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
                         onClickChat={() => navigate(`/students/chat/${item.userCourseId}`)}
                         onClickTask={() => setReminder({ isOpen: true, userId: item.userId, userCourseId: item.userCourseId })}
-                        onClickChange={() => setIsModal(true)}
+                        onClickChange={() => setChangeAdaptationMentor({ isOpen: true, adaptationId: item.id })}
                     />
                 )}
             />
             <ChangeAdaptationMentorForm
-                isOpen={isModal}
-                setIsOpen={setIsModal}
-                adaptationId={adaptationId}
+                isOpen={changeAdaptationMentor?.isOpen}
+                adaptationId={changeAdaptationMentor?.adaptationId}
+                onClose={() => setChangeAdaptationMentor({ isOpen: false, adaptationId: null })}
             />
         </>
     )

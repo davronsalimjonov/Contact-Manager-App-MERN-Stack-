@@ -1,23 +1,22 @@
 import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
+import { useQueryClient } from 'react-query'
 import { useNavigate, useParams } from 'react-router-dom'
+import { redirectToPlatform } from '@/utils/lib'
 import Loader from "@/components/UI/atoms/Loader"
 import { useGetUserId } from '@/hooks/useGetUser'
 import { useGetGroupInfo } from '@/hooks/useGroups'
 import { convertMinutesFromUTC0 } from '@/utils/time'
+import { useSocket } from '@/providers/SocketProvider'
+import { LESSON_STATUS_ENUMS } from '@/constants/enum'
 import { useGetGroupLessons } from '@/hooks/useLessons'
 import Button from "@/components/UI/atoms/Buttons/Button"
 import EmptyData from "@/components/UI/organisms/EmptyData"
 import LessonCard from '@/components/UI/moleculs/LessonCard'
 import { PersonsIcon, PlusIcon } from "@/components/UI/atoms/icons"
 import MediaPreviewer from '@/components/UI/moleculs/MediaPreviewer'
+import MediaMergingDialog from '@/components/templates/MediaMergingDialog'
 import CreateNewLessonForm from '@/components/UI/organisms/CreateNewLessonForm'
 import cls from "./GroupLessons.module.scss"
-import { redirectToPlatform } from '@/utils/lib'
-import { useSocket } from '@/providers/SocketProvider'
-import { useQueryClient } from 'react-query'
-import { LESSON_STATUS_ENUMS } from '@/constants/enum'
-import MediaMergingDialog from '@/components/templates/MediaMergingDialog'
 
 function checkSchedule(data = []) {
     const scheduleData = JSON.parse(JSON.stringify(data))
@@ -73,17 +72,10 @@ const GroupLessons = () => {
     const navigate = useNavigate()
     const mentorId = useGetUserId()
     const queryClient = useQueryClient()
-    const [videoUrl, setVideoUrl] = useState('')
-    const [videoStatus, setVideoStatus] = useState('')
-    const [isOpen, setIsOpen] = useState(false)
     const [isOpenNewLessonModal, setIsOpenNewLessonModal] = useState(false)
+    const [videoPreview, setVideoPreview] = useState({ isOpen: false, status: null, url: '' })
     const { data: groupLesson, isLoading: isGroupLessonLoading } = useGetGroupLessons(groupId)
     const { data: groupInfo } = useGetGroupInfo(groupId)
-
-    const handleVideoPreview = (url) => {
-        if (!url) return toast.error('Video topilmadi')
-        setVideoUrl(url)
-    }
 
     const isLessonAvailable = checkSchedule(groupInfo?.lessonSchedules);
 
@@ -98,7 +90,7 @@ const GroupLessons = () => {
             })
         }
     }, [socket])
-    
+
     return (
         <div className={cls.lessons}>
             <CreateNewLessonForm
@@ -106,15 +98,15 @@ const GroupLessons = () => {
                 isOpen={isOpenNewLessonModal}
                 onClose={() => setIsOpenNewLessonModal(false)}
             />
-            {videoStatus === "merging" ?
+            {videoPreview?.status === "merging" ?
                 <MediaMergingDialog
-                    isOpen={isOpen}
-                    setIsOpen={setIsOpen}
+                    isOpen={videoPreview?.isOpen}
+                    onClose={() => setVideoPreview({ isOpen: false, status: null, url: '' })}
                 />
                 : <MediaPreviewer
-                    visible={!!videoUrl}
-                    urls={[videoUrl]}
-                    setVisible={() => setVideoUrl('')}
+                    urls={[videoPreview?.url]}
+                    visible={videoPreview?.isOpen}
+                    setVisible={() => setVideoPreview({ isOpen: false, status: null, url: '' })}
                 />
             }
             <div className={cls.lessons__header}>
@@ -136,11 +128,11 @@ const GroupLessons = () => {
                             date={lesson?.date}
                             duration={lesson?.duration}
                             isLive={lesson?.status === LESSON_STATUS_ENUMS.ONGOING}
-                            videoStatus={lesson?.videoStatus}
-                            setVideoStatus={setVideoStatus}
-                            setIsOpen={setIsOpen}
+                            // videoStatus={lesson?.videoStatus}
+                            // setVideoStatus={setVideoStatus}
+                            // setIsOpen={setIsOpen}
                             onClick={() => navigate(lesson?.id)}
-                            onClickVideo={() => handleVideoPreview(lesson?.video)}
+                            onClickVideo={() => setVideoPreview({ isOpen: true, status: lesson?.videoStatus, url: lesson?.video })}
                             onClickLesson={() => redirectToPlatform(lesson?.mentorUrl, mentorId)}
                         />
                     )) : (
