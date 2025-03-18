@@ -5,10 +5,12 @@ import { useStopwatch } from '@/hooks/useTimer';
 import { getDateDifference } from '@/utils/time';
 import { BellIcon, ReAssignAdaptationMentor } from '../../atoms/icons';
 import cls from './StudentAdaptationCard.module.scss';
+import SalesInfo from '../../atoms/SalesInfo';
 
 const StudentAdaptationCard = ({
     fullName = '',
     phone = '',
+    operator = '',
     commingDate = '',
     showStatus = false,
     showTimer = false,
@@ -42,6 +44,9 @@ const StudentAdaptationCard = ({
                 <BellIcon />
                 <span>{days > 0 && `${days} kun `}{hours > 0 && `${hours} soat `}{minutes} minut</span>
             </div>}
+            <SalesInfo
+                fullName={operator}
+            />
             <div className={cls.card__btns} onClick={e => e.stopPropagation()}>
                 <button onClick={onClickTask}>Task Biriktirish</button>
                 {withChatBtn && <button onClick={onClickChat}>Chat</button>}
