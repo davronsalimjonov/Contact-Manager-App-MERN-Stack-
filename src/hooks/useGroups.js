@@ -87,7 +87,6 @@ export const useTransferMutation = () => {
                 if(studentIds.includes(student?.id)) {
                     student.group = {id: response?.id, title: response?.title}
                     student.teacher = response?.academyMentor
-                    student.secondTeacher = response?.callMentor
                 }
                 return student
             })

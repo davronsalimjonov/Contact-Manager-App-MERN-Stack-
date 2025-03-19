@@ -29,6 +29,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/settings', title: 'Sozlamalar', showBackButton: false },
         { path: '/salary', title: 'Oylik maosh', showBackButton: true },
         // Nazoratchi
+        { path: '/all-students', title: 'Barcha o\'quvchilar' },
         { path: '/tasks', title: 'Vazifalarim', showBackButton: false },
         { path: '/adaptation-workspace', title: 'Workspace', showBackButton: false },
         // Sotuv 

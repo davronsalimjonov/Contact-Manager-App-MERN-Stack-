@@ -51,3 +51,23 @@ export const useUserCourseMutations = (userCourseId) => {
         updateStatusMutation
     }
 }
+
+export const useUpdateCallMentorMutation = (userCourseId) => {
+    const queryClient = useQueryClient()
+    const updateMutation = useMutation({
+        mutationFn: data => updateUserCourse(userCourseId, data),
+        onSuccess: updateUserCourseState
+    })
+
+    function updateUserCourseState(newData) {
+        queryClient.setQueriesData(['students', 'all'], oldData => ({
+           ...oldData,
+           items: oldData?.items?.map(student => {
+                if (student?.id === userCourseId) student = newData
+                return student
+            }) 
+        }))
+    }
+
+    return updateMutation
+}
