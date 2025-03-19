@@ -60,10 +60,10 @@ export const useUpdateCallMentorMutation = (userCourseId) => {
     })
 
     function updateUserCourseState(newData) {
-        queryClient.setQueriesData(['students', 'all'], oldData => ({
+        queryClient.setQueriesData(['students-all'], oldData => ({
            ...oldData,
            items: oldData?.items?.map(student => {
-                if (student?.id === userCourseId) student = newData
+                if (student?.id === userCourseId) student.secondTeacher = newData?.secondTeacher
                 return student
             }) 
         }))
