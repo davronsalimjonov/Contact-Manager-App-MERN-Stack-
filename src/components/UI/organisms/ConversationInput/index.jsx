@@ -217,7 +217,7 @@ const ConversationInput = ({
                     placeholder={getTextAreaPlaceholder(messageType)}
                     {...register('message', {
                         required: !selectedFile,
-                        validate: (message) => selectedFile || message?.trim()?.length > 0,
+ validate: (message) => selectedFile || message?.trim()?.length > 0,
                         onChange: adjustHeight
                     })}
                 ></textarea>

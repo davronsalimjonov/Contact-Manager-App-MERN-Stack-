@@ -52,6 +52,7 @@ const Avatar = ({
         color: "white",
         background: color,
         fontSize: `${fontSize}px`,
+        lineHeight: 1,
         // margin: "auto"
     }
 

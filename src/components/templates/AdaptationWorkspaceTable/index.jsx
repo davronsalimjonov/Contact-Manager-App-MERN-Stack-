@@ -28,7 +28,8 @@ const AdaptationWorkspaceTable = ({
             phone: student?.userCourse?.user?.phone,
             commingDate: student?.startDate,
             firstContactDate: student?.firstContactDate,
-            operator: getUserFullName(student?.userCourse?.salesManager)
+            operator: getUserFullName(student?.userCourse?.salesManager),
+            mentor: student?.mentor
         }
 
         if (!acc[student?.status]) {
@@ -113,6 +114,8 @@ const AdaptationWorkspaceTable = ({
                         showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
                         withChatBtn={redirectToChat}
                         allowReplaceMentor={allowReplaceMentor}
+                        callMentorFullName={getUserFullName(item?.mentor)}
+                        callMentorAvatar={item?.mentor?.url}
                         onClick={() => navigate(`/students/${item.userCourseId}/${item.userId}`)}
                         onClickChat={() => navigate(`/students/chat/${item.userCourseId}`)}
                         onClickTask={() => setReminder({ isOpen: true, userId: item.userId, userCourseId: item.userCourseId })}
