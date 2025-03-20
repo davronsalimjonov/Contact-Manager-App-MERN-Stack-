@@ -35,6 +35,9 @@ const NotificationsPopup = ({
         } else if(notification?.type === 'adaptation-notification') {
             navigate(`/students/${notification?.typeId}`)
             handleClose?.()
+        } else if(notification?.type === 'task') {
+            navigate(`/students/chat/${notification?.typeId}`)
+            handleClose?.()
         }
     }
 

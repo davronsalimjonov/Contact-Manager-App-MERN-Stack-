@@ -1,19 +1,16 @@
 import { useState } from "react"
-import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
 import { useGetLessonInfo } from "@/hooks/useLessons"
+import MediaMergingDialog from "@/components/templates/MediaMergingDialog"
 import Button from "../../atoms/Buttons/Button"
 import MediaPreviewer from "../../moleculs/MediaPreviewer"
 import { ArrowRightIcon, BookPlayIcon, PlusIcon } from "../../atoms/icons"
 import cls from "./LessonInfoCard.module.scss"
-import MediaMergingDialog from "@/components/templates/MediaMergingDialog"
 
 const LessonInfoCard = ({ lessonId = '' }) => {
     const navigate = useNavigate()
     const { data: lessonInfo } = useGetLessonInfo(lessonId)
-    const [isOpenVideoModal, setIsOpenVideoModal] = useState(false)
     const [videoPreview, setVideoPreview] = useState({ isOpen: false, status: null, url: '' })
-    const lessonVideoUrl = lessonInfo?.video || ''
 
     return (
         <div className={cls.card}>
@@ -21,9 +18,10 @@ const LessonInfoCard = ({ lessonId = '' }) => {
                 <BookPlayIcon /> {lessonInfo?.title}
             </h2>
             <div className={cls.card__details}>
-                <button className={cls.card__details__btn} onClick={() => {
-                    lessonInfo.videoStatus === "merging" ? setVideoPreview({ isOpen: true, status: null, url: '' }) :  (lessonVideoUrl ? setIsOpenVideoModal(true) : toast.error('Video topilmadi')) && setVideoPreview({ isOpen: false, status: null, url: '' })
-                }}>
+                <button 
+                    className={cls.card__details__btn} 
+                    onClick={() => setVideoPreview({ isOpen: true, status: lessonInfo?.videoStatus, url: lessonInfo?.video })}
+                >
                     Videoni Ko'rish <ArrowRightIcon />
                 </button>
                 {lessonInfo?.lessonHomeTask ? (
@@ -37,15 +35,18 @@ const LessonInfoCard = ({ lessonId = '' }) => {
                     <Button onClick={() => navigate(`create-homework`)}>Vazifa Yaratish <PlusIcon height={18} width={18} /></Button>
                 )}
             </div>
-            <MediaPreviewer
-                visible={isOpenVideoModal}
-                urls={[lessonVideoUrl]}
-                setVisible={() => setIsOpenVideoModal(false)}
-            />
-            <MediaMergingDialog
-                isOpen={videoPreview?.isOpen}
-                onClose={() => setVideoPreview({ isOpen: false, status: null, url: '' })}
-            />
+            {videoPreview?.status === 'merging' ? (
+                <MediaMergingDialog
+                    isOpen={videoPreview?.isOpen}
+                    onClose={() => setVideoPreview({ isOpen: false, status: null, url: '' })}
+                />
+            ): (
+                <MediaPreviewer
+                    visible={videoPreview?.isOpen}
+                    urls={[videoPreview?.url]}
+                    setVisible={() => setVideoPreview({ isOpen: false, status: null, url: '' })}
+                />
+            )}
         </div>
     )
 }

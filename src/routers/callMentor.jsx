@@ -13,7 +13,9 @@ import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace"
 import Settings from "@/components/pages/Settings"
 import MentorTasks from "@/components/pages/MentorTasks"
 import PageNotFound from "@/components/pages/PageNotFound"
-import { HouseIcon, MenuBookIcon, PersonsIcon, TaskIcon, TranslateIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons"
+import { HouseIcon, MenuBookIcon, PersonsGroupIcon, PersonsIcon, TaskIcon, TranslateIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons"
+import AllStudents from "@/components/pages/AllStudents"
+import RedirectToStudentSingle from "@/components/pages/RedirectToStudentSingle"
 
 const links = [
     {
@@ -51,7 +53,13 @@ const links = [
         link: '/adaptation-workspace',
         label: 'Adaptatsiya workspace',
         icon: WorkHistoryIcon()
-    }
+    },
+    {
+        id: 7,
+        link: '/all-students',
+        label: 'Barcha o\'quvchilar',
+        icon: PersonsGroupIcon()
+    },
 ]
 
 export const CallMentorRoutes = () => createBrowserRouter([
@@ -72,6 +80,10 @@ export const CallMentorRoutes = () => createBrowserRouter([
                 element: <MentorSalary />
             },
             {
+                path: '/all-students',
+                element: <AllStudents />
+            },
+            {
                 path: '/students',
                 element: <MyStudents />
             },
@@ -82,6 +94,10 @@ export const CallMentorRoutes = () => createBrowserRouter([
             {
                 path: '/students/:courseId/:userId',
                 element: <SingleStudent />
+            },
+            {
+                path: '/all-students/:courseId/:userId',
+                element: <RedirectToStudentSingle />
             },
             {
                 path: '/user-course/:userCourseId',

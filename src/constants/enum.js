@@ -1,3 +1,9 @@
+export const EMPLOYEE_ROLES = {
+    CALL_MENTOR: 4,
+    MAIN_MENTOR: 2,
+    ACADEMY_MANAGER: 6,
+    SELLER: 5
+}
 
 export const MessageTypes = {
     MESSAGE: 'message',
@@ -50,7 +56,7 @@ export const USER_TYPE_ENUMS = {
     STUDENT: 'O\'quvchi'
 }
 
-export const MENTOR_STATUS_ENUM = {
+export const EMPLOYEE_STATUS_ENUM = {
     TRIAL_PERIOD: 'Sinovda',
     ACTIVE: 'Ishlayapti',
     PAUSED: 'Vaqtincha Ta`tilda',

@@ -6,7 +6,7 @@ import ChatSidebar from '@/components/templates/ChatSidebar';
 import ChatConversation from '@/components/templates/ChatConversation';
 import cls from './Chat.module.scss';
 
-const Chat = ({ allowedMessagesTypes }) => {
+const Chat = ({ allowedMessagesTypes, disableTaskAttachment = false }) => {
     const { userCourseId } = useParams()
     const { data: info, isLoading: isLoadingInfo, conversationId } = useGetChat(userCourseId)
 
@@ -32,7 +32,7 @@ const Chat = ({ allowedMessagesTypes }) => {
                         status={info?.userCourse?.status}
                         email={info?.user?.email}
                         comment={info?.userCourse?.comment}
-                        hasSecondTeacher={Boolean(info?.userCourse?.secondTeacher)}
+                        disableTaskAttachment={!Boolean(info?.userCourse?.secondTeacher) || disableTaskAttachment}
                     />
                 </>
             ) : (

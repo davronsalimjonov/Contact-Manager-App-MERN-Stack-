@@ -1,6 +1,6 @@
 import { generateTimeOptions } from "@/utils/time";
-import { USER_ROLES } from ".";
-import { MENTOR_STATUS_ENUM, SALE_TYPE, USER_TYPE_ENUMS } from "./enum";
+import { EMPLOYEE_ROLES } from "./enum";
+import { EMPLOYEE_STATUS_ENUM, SALE_TYPE, USER_TYPE_ENUMS } from "./enum";
 
 export const GENDER_OPTIONS = [
     { value: '1', label: 'Erkak' },
@@ -54,8 +54,8 @@ export const WEEKDAY_OPTIONS = [
 export const LESSON_TIME_OPTIONS = generateTimeOptions()
 
 export const MENTOR_TYPES = [
-    { label: 'Nazoratchi Mentor', value: USER_ROLES.CALL_MENTOR },
-    { label: 'Asosiy Mentor', value: USER_ROLES.MAIN_MENTOR },
+    { label: 'Nazoratchi Mentor', value: EMPLOYEE_ROLES.CALL_MENTOR },
+    { label: 'Asosiy Mentor', value: EMPLOYEE_ROLES.MAIN_MENTOR },
 ]
 
 export const USER_TYPE_OPTIONS = [
@@ -64,10 +64,10 @@ export const USER_TYPE_OPTIONS = [
 ]
 
 export const MENTOR_STATUS_OPTIONS = [
-    { label: 'Sinovda', value: MENTOR_STATUS_ENUM.TRIAL_PERIOD },
-    { label: 'Ishlayapti', value: MENTOR_STATUS_ENUM.ACTIVE },
-    { label: 'Vaqtincha Ta`tilda', value: MENTOR_STATUS_ENUM.PAUSED },
-    { label: 'Ishdan Ketdi', value: MENTOR_STATUS_ENUM.QUIT },
+    { label: 'Sinovda', value: EMPLOYEE_STATUS_ENUM.TRIAL_PERIOD },
+    { label: 'Ishlayapti', value: EMPLOYEE_STATUS_ENUM.ACTIVE },
+    { label: 'Vaqtincha Ta`tilda', value: EMPLOYEE_STATUS_ENUM.PAUSED },
+    { label: 'Ishdan Ketdi', value: EMPLOYEE_STATUS_ENUM.QUIT },
 ]
 
 export const SALE_TYPE_OPTIONS = [

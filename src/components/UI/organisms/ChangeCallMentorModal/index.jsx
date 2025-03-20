@@ -8,6 +8,7 @@ import { CloseIcon } from '../../atoms/icons';
 import Dialog from '../../moleculs/Dialog';
 import FormSelect from '../../moleculs/Form/FormSelect';
 import cls from './ChangeCallMentorModal.module.scss';
+import { useUpdateCallMentorMutation } from '@/hooks/useUserCourse';
 
 const ChangeCallMentorModal = ({
     isOpen = false,
@@ -15,8 +16,9 @@ const ChangeCallMentorModal = ({
     currentMentorId,
     onClose
 }) => {
-    const [isLoadingSubmit, setIsLoadingSubmit] = useState(false)
     const [selectedMentor, setSelectedMentor] = useState()
+    const [isLoadingSubmit, setIsLoadingSubmit] = useState(false)
+    const updateCallMentorMutation = useUpdateCallMentorMutation(userCourseId)
     const { callMentors: { data: callMentors } } = useGetMentorsForOptions()
     const callMentorOptions = callMentors?.map(mentor => ({ value: mentor?.id, label: getUserFullName(mentor) }))?.filter(option => option?.value !== currentMentorId)
 
@@ -24,7 +26,7 @@ const ChangeCallMentorModal = ({
         try {
             e.preventDefault()
             setIsLoadingSubmit(true)
-            await updateUserCourse(userCourseId, { secondTeacher: selectedMentor })
+            await updateCallMentorMutation.mutateAsync({ secondTeacher: selectedMentor })
             toast.success('Mentor muvaffaqiyatli oʼzgartirildi!')
             onClose()
         } catch (error) {

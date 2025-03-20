@@ -111,5 +111,5 @@ export const useGetMainMentorStudents = (params = {}) => {
 }
 
 export function useGetAllStudents(params) {
-    return useQuery(['students', 'all', params], () => getAllStudents(params), { staleTime: Infinity, cacheTime: Infinity })
+    return useQuery(['students-all', params], () => getAllStudents(params), { staleTime: Infinity, cacheTime: Infinity })
 }

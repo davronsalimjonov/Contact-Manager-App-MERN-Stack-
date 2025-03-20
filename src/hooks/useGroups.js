@@ -81,13 +81,12 @@ export const useTransferMutation = () => {
 
         queryClient.invalidateQueries(['students', mentorId, from])
         queryClient.invalidateQueries(['students', mentorId, to])
-        queryClient.setQueriesData(['students', 'all'], (oldData) => ({
+        queryClient.setQueriesData(['students-all'], (oldData) => ({
             ...oldData,
             items: oldData?.items?.map(student => {
                 if(studentIds.includes(student?.id)) {
                     student.group = {id: response?.id, title: response?.title}
                     student.teacher = response?.academyMentor
-                    student.secondTeacher = response?.callMentor
                 }
                 return student
             })

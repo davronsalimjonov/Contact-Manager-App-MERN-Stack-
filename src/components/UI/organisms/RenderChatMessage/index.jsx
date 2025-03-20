@@ -189,6 +189,7 @@ const RenderMessage = memo(({
                         fullName={getUserFullName(owner)}
                         text={message?.sms?.text}
                         time={message?.createdAt}
+                        status={message?.sms?.status}
                     />
                 </div>
             );

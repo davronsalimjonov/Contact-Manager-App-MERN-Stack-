@@ -30,6 +30,7 @@ import MainLayout from "@/components/templates/MainLayout";
 import { AutoStoriesIcon, HouseIcon, LanIcon, PersonsIcon, SchoolIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons";
 import MainMentorsStatistic from "@/components/pages/MainMentorsStatistic";
 import SingleSeller from "@/components/pages/SingleSeller";
+import Chat from "@/components/pages/Chat";
 
 const links = [
     {
@@ -171,6 +172,10 @@ const AcademyManagerRoutes = () => createBrowserRouter([
             {
                 path: '/students',
                 element: <AllStudents />
+            },
+            {
+                path: '/students/chat/:userCourseId',
+                element: <Chat allowedMessagesTypes={[]} disableTaskAttachment />
             },
             {
                 path: '/students/:courseId/:userId',
