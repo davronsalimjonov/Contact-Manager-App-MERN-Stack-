@@ -12,7 +12,7 @@ import FormInput from '../../moleculs/Form/FormInput';
 import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import FormPasswordInput from '../../moleculs/Form/FormPasswordInput';
 import cls from './LoginForm.module.scss';
-import { USER_ROLES } from '@/constants';
+import { EMPLOYEE_ROLES } from '@/constants/enum';
 
 const LoginForm = () => {
     const authState = useAuth()
@@ -39,7 +39,7 @@ const LoginForm = () => {
             localStorage.setItem('access-token', JSON.stringify(res.accessToken))
             localStorage.setItem('refresh-token', JSON.stringify(res.refreshToken))
 
-            if(res?.user?.role === USER_ROLES.CALL_MENTOR || res?.user?.role === USER_ROLES.MAIN_MENTOR) {
+            if(res?.user?.role === EMPLOYEE_ROLES.CALL_MENTOR || res?.user?.role === EMPLOYEE_ROLES.MAIN_MENTOR) {
                 await queryClient.invalidateQueries(['user-info'])
             } else {
                 queryClient.setQueryData(['user-info'], res?.user)

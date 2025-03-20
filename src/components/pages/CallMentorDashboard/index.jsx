@@ -1,6 +1,6 @@
 import Avatar from 'react-avatar'
 import { useNavigate, useOutletContext } from 'react-router-dom'
-import { USER_ROLES } from '@/constants'
+import { EMPLOYEE_ROLES } from '@/constants/enum'
 import Loader from '@/components/UI/atoms/Loader'
 import { useGetUserId } from '@/hooks/useGetUser'
 import { LEVEL_COLORS } from '@/constants/colors'
@@ -20,7 +20,7 @@ const CallMentorDashboard = ({ userId, withUserInfo = false }) => {
     const [period] = useOutletContext()
     const mentorId = userId || useGetUserId()
 
-    const { data: mentor, isLoading: isLoadingMentor } = useGetEmployeeById(mentorId, { role: USER_ROLES.CALL_MENTOR }, { enabled: withUserInfo })
+    const { data: mentor, isLoading: isLoadingMentor } = useGetEmployeeById(mentorId, { role: EMPLOYEE_ROLES.CALL_MENTOR }, { enabled: withUserInfo })
     const { data: callMentorStatistic, isLoading: isLoadingCallMentorStatistic } = useGetCallMentorStatistic({ mentorId, startDate: period.startDate, endDate: period.endDate })
     const { data: studentsCountByCourse, isLoading: isLoadingStudentsCountByCourse } = useGetStudentsCountByCourse({ mentorId, startDate: period.startDate, endDate: period.endDate })
     const { data: studentsCountByLevel, isLoading: isLoadingStudentsCountByLevel } = useGetStudentsCountByLevel({ mentorId, startDate: period.startDate, endDate: period.endDate })

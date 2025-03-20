@@ -1,6 +1,6 @@
 import Avatar from 'react-avatar';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { USER_ROLES } from '@/constants';
+import { EMPLOYEE_ROLES } from '@/constants/enum';
 import useGetUser from '@/hooks/useGetUser';
 import { getUserFullName } from '@/utils/lib';
 import { changeAdaptationStatus } from '@/services/user';
@@ -15,11 +15,11 @@ const Navbar = ({ onPerionChange }) => {
     const navigate = useNavigate()
     const { data: user } = useGetUser()
     const timeperiodPickerPath = ['/', '/main-teachers', '/main-teachers/:id', '/call-teachers', '/call-teachers/:id', '/dashboard', '/statistics/lessons', '/statistics/app-rate']
-    const adaptationAllowedRoles = [USER_ROLES.CALL_MENTOR]
-    const isMentor = user?.role === USER_ROLES.CALL_MENTOR || user?.role === USER_ROLES.MAIN_MENTOR
+    const adaptationAllowedRoles = [EMPLOYEE_ROLES.CALL_MENTOR]
+    const isMentor = user?.role === EMPLOYEE_ROLES.CALL_MENTOR || user?.role === EMPLOYEE_ROLES.MAIN_MENTOR
 
     const routeConfig = [
-        { path: '/', title: 'Dashboard', roleTitles: { [USER_ROLES.SELLER]: 'Home' }, showBackButton: false },
+        { path: '/', title: 'Dashboard', roleTitles: { [EMPLOYEE_ROLES.SELLER]: 'Home' }, showBackButton: false },
         { path: '/students', title: 'O’quvchilarim', showBackButton: false },
         { path: '/students/chat/:id', title: 'O’quvchilarim', showBackButton: true },
         { path: '/students/:courseId/:userId', title: 'O’quvchi ma’lumotlari', showBackButton: false },
@@ -33,7 +33,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/tasks', title: 'Vazifalarim', showBackButton: false },
         { path: '/adaptation-workspace', title: 'Workspace', showBackButton: false },
         // Sotuv 
-        { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [USER_ROLES.SELLER]: true }, showBackButton: false },
+        { path: '/dashboard', title: 'Dashboard', rangeTimepicker: { [EMPLOYEE_ROLES.SELLER]: true }, showBackButton: false },
         { path: '/sales-form', title: 'Sotuv formasi', showBackButton: true },
         { path: '/checks', title: 'Checks', showBackButton: true },
         // Asosiy mentor

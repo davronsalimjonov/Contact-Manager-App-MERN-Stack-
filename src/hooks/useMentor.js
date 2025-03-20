@@ -1,5 +1,5 @@
 import { useQuery } from "react-query"
-import { USER_ROLES } from "@/constants"
+import { EMPLOYEE_ROLES } from "@/constants/enum"
 import { removeEmptyKeys } from "@/utils/lib"
 import { getCallMentorsStatistic, getMainMentorsStatistic, getMentors, getMentorsForOptions } from "@/services/mentors"
 
@@ -8,8 +8,8 @@ export const useGetMentors = (params = {}, options = {}) => {
 }
 
 export const useGetMentorsForOptions = (options = {}) => {
-    const callMentors = useQuery(['call-mentors'], () => getMentorsForOptions(USER_ROLES.CALL_MENTOR), { cacheTime: Infinity, staleTime: Infinity, ...options })
-    const mainMentors = useQuery(['main-mentors'], () => getMentorsForOptions(USER_ROLES.MAIN_MENTOR), { cacheTime: Infinity, staleTime: Infinity, ...options })
+    const callMentors = useQuery(['call-mentors'], () => getMentorsForOptions(EMPLOYEE_ROLES.CALL_MENTOR), { cacheTime: Infinity, staleTime: Infinity, ...options })
+    const mainMentors = useQuery(['main-mentors'], () => getMentorsForOptions(EMPLOYEE_ROLES.MAIN_MENTOR), { cacheTime: Infinity, staleTime: Infinity, ...options })
     return { callMentors, mainMentors }
 }
 

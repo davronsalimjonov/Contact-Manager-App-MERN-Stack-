@@ -4,7 +4,7 @@ import { fileToObject, getFileType } from "@/utils/lib";
 import { MessageTypes } from "@/constants/enum";
 import { getChatInfo, getChatMessages } from "@/services/chat";
 import useGetUser, { useGetUserId } from "./useGetUser";
-import { USER_ROLES } from "@/constants";
+import { EMPLOYEE_ROLES } from "@/constants/enum";
 
 export const useGetChatMessages = (chatId) => {
     const queryClient = useQueryClient()
@@ -88,9 +88,9 @@ const useGetChat = (userCourseId) => {
     const removeUnreadedMessagesCount = (count) => {
         let studentsQueryKey = null
 
-        if (userRole === USER_ROLES.SELLER) studentsQueryKey = ['seller-students', userId]
-        else if (userRole === USER_ROLES.CALL_MENTOR) studentsQueryKey = ['students', userId]
-        else if (userRole === USER_ROLES.MAIN_MENTOR) studentsQueryKey = ['students', userId]
+        if (userRole === EMPLOYEE_ROLES.SELLER) studentsQueryKey = ['seller-students', userId]
+        else if (userRole === EMPLOYEE_ROLES.CALL_MENTOR) studentsQueryKey = ['students', userId]
+        else if (userRole === EMPLOYEE_ROLES.MAIN_MENTOR) studentsQueryKey = ['students', userId]
 
         queryClient.setQueriesData(['chat', 'info', userCourseId], (oldData) => ({ ...oldData, count: Math.max(oldData?.count - count, 0) }))
         if (studentsQueryKey) {
@@ -167,10 +167,10 @@ export const useMessage = (userCourseId) => {
                 shouldScroll: true,
                 dateSeperator,
                 task: {
-                    mentor: userRole === USER_ROLES.SELLER ? mentor : user,
+                    mentor: userRole === EMPLOYEE_ROLES.SELLER ? mentor : user,
                     isCompleted: false,
                     createdBy: userRole,
-                    salesManager: userRole === USER_ROLES.SELLER ? user : null,
+                    salesManager: userRole === EMPLOYEE_ROLES.SELLER ? user : null,
                     ...data
                 },
                 ...options
@@ -192,7 +192,7 @@ export const useMessage = (userCourseId) => {
                 isViewed: false,
                 shouldScroll: true,
                 dateSeperator,
-                comment: { text: data.message, owner: userRole === USER_ROLES.SELLER ? mentor : user, salesManager: userRole === USER_ROLES.SELLER ? user : null, createdBy: userRole },
+                comment: { text: data.message, owner: userRole === EMPLOYEE_ROLES.SELLER ? mentor : user, salesManager: userRole === EMPLOYEE_ROLES.SELLER ? user : null, createdBy: userRole },
                 ...options
             })
             case MessageTypes.CALL: return ({

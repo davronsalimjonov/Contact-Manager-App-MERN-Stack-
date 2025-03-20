@@ -9,13 +9,6 @@ export const WORKSPACE_ENUMS = ['not-connected', 'call-back', 'not-answered', 'c
 
 export const GROUPS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
-export const USER_ROLES = {
-    CALL_MENTOR: 4,
-    MAIN_MENTOR: 2,
-    ACADEMY_MANAGER: 6,
-    SELLER: 5
-}
-
 export const CALL_RECORD_DEFAULT_PEAKS = Array(300).fill(0)
 
 export const UNITS = Array.from(Array(12)).map((_, index) => ({ value: 5 * (index + 1), label: `Unit ${5 * (index + 1)}` }));

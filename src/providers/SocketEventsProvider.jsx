@@ -3,7 +3,7 @@ import { useQueryClient } from "react-query";
 import { autoPlayAudio } from "@/utils/lib";
 import useGetUser, { useGetUserId } from "@/hooks/useGetUser";
 import { useSocket } from "./SocketProvider";
-import { USER_ROLES } from "@/constants";
+import { EMPLOYEE_ROLES } from "@/constants/enum";
 
 const SocketEventsProvider = ({ children }) => {
     const userId = useGetUserId()
@@ -13,7 +13,7 @@ const SocketEventsProvider = ({ children }) => {
 
     useEffect(() => {
         if (socket) {
-            if (user?.role === USER_ROLES.CALL_MENTOR) {
+            if (user?.role === EMPLOYEE_ROLES.CALL_MENTOR) {
                 socket.on('new-adaptation', (newStudent) => {
                     const queryKey = ['adaptation-students', userId]
                     const queryState = queryClient.getQueryState(queryKey)

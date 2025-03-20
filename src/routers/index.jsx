@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { RouterProvider } from "react-router-dom";
-import { USER_ROLES } from "@/constants";
+import { EMPLOYEE_ROLES } from "@/constants/enum";
 import useGetUser from "@/hooks/useGetUser";
 import loadingRoutes from "./loading";
 import emptyRoutes from "./empty";
@@ -10,19 +10,19 @@ import authRoutes from "./auth";
 const getRoutesByRole = async (role) => {
     try {
         switch (role) {
-            case USER_ROLES.MAIN_MENTOR: {
+            case EMPLOYEE_ROLES.MAIN_MENTOR: {
                 const { default: MainMentorRoutes } = await import('./mainMentor');
                 return MainMentorRoutes();
             }
-            case USER_ROLES.CALL_MENTOR: {
+            case EMPLOYEE_ROLES.CALL_MENTOR: {
                 const { default: CallMentorRoutes } = await import('./callMentor');
                 return CallMentorRoutes();
             }
-            case USER_ROLES.ACADEMY_MANAGER: {
+            case EMPLOYEE_ROLES.ACADEMY_MANAGER: {
                 const { default: AcademyManagerRoutes } = await import('./academyManager');
                 return AcademyManagerRoutes();
             }
-            case USER_ROLES.SELLER: {
+            case EMPLOYEE_ROLES.SELLER: {
                 const { default: SellerRoutes } = await import('./seller');
                 return SellerRoutes();
             }

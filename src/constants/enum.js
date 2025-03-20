@@ -1,3 +1,9 @@
+export const EMPLOYEE_ROLES = {
+    CALL_MENTOR: 4,
+    MAIN_MENTOR: 2,
+    ACADEMY_MANAGER: 6,
+    SELLER: 5
+}
 
 export const MessageTypes = {
     MESSAGE: 'message',

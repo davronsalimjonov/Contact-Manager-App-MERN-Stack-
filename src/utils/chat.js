@@ -1,4 +1,4 @@
-import { USER_ROLES } from "@/constants"
+import { EMPLOYEE_ROLES } from "@/constants/enum"
 import { MessageTypes } from "@/constants/enum"
 
 export const getMessageOwner = (message) => {
@@ -8,9 +8,9 @@ export const getMessageOwner = (message) => {
     if(messageType === MessageTypes.MESSAGE) {
         owner = message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user
     } else if(messageType === MessageTypes.COMMENT) {
-        owner = message?.comment?.createdBy === USER_ROLES.SELLER ? message?.comment?.salesManager : message?.comment?.owner 
+        owner = message?.comment?.createdBy === EMPLOYEE_ROLES.SELLER ? message?.comment?.salesManager : message?.comment?.owner 
     } else if(messageType === MessageTypes.TASK) {
-        owner = message?.task?.createdBy === USER_ROLES.SELLER ? message?.task?.salesManager : message?.task?.mentor
+        owner = message?.task?.createdBy === EMPLOYEE_ROLES.SELLER ? message?.task?.salesManager : message?.task?.mentor
     } else if(messageType === MessageTypes.STUDENT_HOME_WORK) {
         owner = message?.studentHomeWork?.student?.user
     } else if(messageType === MessageTypes.SMS) {

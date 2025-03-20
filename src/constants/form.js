@@ -1,5 +1,5 @@
 import { generateTimeOptions } from "@/utils/time";
-import { USER_ROLES } from ".";
+import { EMPLOYEE_ROLES } from "./enum";
 import { EMPLOYEE_STATUS_ENUM, SALE_TYPE, USER_TYPE_ENUMS } from "./enum";
 
 export const GENDER_OPTIONS = [
@@ -54,8 +54,8 @@ export const WEEKDAY_OPTIONS = [
 export const LESSON_TIME_OPTIONS = generateTimeOptions()
 
 export const MENTOR_TYPES = [
-    { label: 'Nazoratchi Mentor', value: USER_ROLES.CALL_MENTOR },
-    { label: 'Asosiy Mentor', value: USER_ROLES.MAIN_MENTOR },
+    { label: 'Nazoratchi Mentor', value: EMPLOYEE_ROLES.CALL_MENTOR },
+    { label: 'Asosiy Mentor', value: EMPLOYEE_ROLES.MAIN_MENTOR },
 ]
 
 export const USER_TYPE_OPTIONS = [
