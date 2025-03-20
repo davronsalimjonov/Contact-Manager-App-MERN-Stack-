@@ -174,7 +174,7 @@ const AcademyManagerRoutes = () => createBrowserRouter([
             },
             {
                 path: '/students/chat/:userCourseId',
-                element: <Chat allowedMessagesTypes={[]} />
+                element: <Chat allowedMessagesTypes={[]} disableTaskAttachment />
             },
             {
                 path: '/students/:courseId/:userId',

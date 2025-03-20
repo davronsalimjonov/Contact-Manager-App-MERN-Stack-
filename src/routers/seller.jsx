@@ -55,7 +55,7 @@ const SellerRoutes = () => createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <SellerStatistics />
-            },
+            },  
             {
                 path: '/students',
                 element: <SellerStudents />
