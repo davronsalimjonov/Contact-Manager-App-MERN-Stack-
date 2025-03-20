@@ -45,6 +45,7 @@
     "redux-persist": "^6.0.0",
     "socket.io-client": "^4.8.1",
     "stars-rating-react-hooks": "^0.2.4",
+    "swiper": "^11.2.6",
     "wavesurfer.js": "^7.8.8",
     "yup": "^1.4.0"
   },
