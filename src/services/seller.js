@@ -29,3 +29,8 @@ export const getSellerInvoice = async (sellerId, params = {}) => {
     const res = await api.get(`/sales-manager/invoice/${sellerId}?${paramsToString(params)}`)
     return res?.data
 }
+
+export const updateSeller = async (sellerId, data) => {
+    const res = await api.put(`/sales-manager/${sellerId}`, data, {headers: { "Content-Type": "multipart/form-data" }})
+    return res?.data
+}

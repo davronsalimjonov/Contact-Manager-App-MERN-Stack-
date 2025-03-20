@@ -13,6 +13,7 @@ import PageNotFound from "@/components/pages/PageNotFound";
 import SinglePageLayout from "@/components/templates/SinglePageLayout";
 import SalesForm from "@/components/pages/SalesForm";
 import SellerChecks from "@/components/pages/SellerChecks";
+import SingleSeller from "@/components/pages/SingleSeller";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
@@ -75,6 +76,10 @@ const SellerRoutes = () => createBrowserRouter([
             {
                 path: '/settings',
                 element: <Settings />
+            },
+            {
+                path: '/sellerSingle/:sellerId',
+                element: <SingleSeller />
             },
             {
                 path: '*',

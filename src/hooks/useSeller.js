@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { removeEmptyKeys } from "@/utils/lib"
-import { createSellerStudent, getSaleStatistic, getSellerInvoice, getSellerMetrics, getSellerStudents, updateSellerPlan } from "@/services/seller"
+import { createSellerStudent, getSaleStatistic, getSellerInvoice, getSellerMetrics, getSellerStudents, updateSeller, updateSellerPlan } from "@/services/seller"
 import { useGetUserId } from "./useGetUser"
 
 const useGetSellerStudents = (params = {}) => {
@@ -52,3 +52,21 @@ export const useSellerMutations = (dateKey) => {
 }
 
 export default useGetSellerStudents
+
+export const useUpdateSellerMutation = () => {
+    const queryClient = useQueryClient()
+    const updateSellerMutation = useMutation({
+        mutationFn: async ({ sellerId, data }) => {
+            return await updateSeller(sellerId, data)
+        },
+        onSuccess: onCreateSuccess
+    })
+
+    function onCreateSuccess(newSeller) {
+        const sellerId = newSeller?.id
+
+        queryClient.setQueriesData(['seller', sellerId], oldData => ([...(oldData || []), newSeller]))
+    }
+
+    return updateSellerMutation
+}
