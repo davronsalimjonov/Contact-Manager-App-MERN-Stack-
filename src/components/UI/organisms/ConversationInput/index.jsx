@@ -125,7 +125,7 @@ const ConversationInput = ({
                     homeTask: {
                         ...oldData.homeTask,
                         ...data,
-                        [data.file ? 'file': '']: data?.file?.name ? {
+                        [data.file ? 'file' : '']: data?.file?.name ? {
                             url: URL.createObjectURL(data?.file),
                             fileName: data?.file?.name,
                             size: (data?.file?.size || 0) / 1024
@@ -214,10 +214,11 @@ const ConversationInput = ({
                     onKeyDown={handleKeyDown}
                     className={cls.input__textarea}
                     readOnly={messageType === MessageTypes.SMS}
+                    disabled={!allowedMessagesTypes?.includes(messageType)}
                     placeholder={getTextAreaPlaceholder(messageType)}
                     {...register('message', {
                         required: !selectedFile,
- validate: (message) => selectedFile || message?.trim()?.length > 0,
+                        validate: (message) => selectedFile || message?.trim()?.length > 0,
                         onChange: adjustHeight
                     })}
                 ></textarea>
@@ -236,7 +237,7 @@ const ConversationInput = ({
                         <SmsTemplateButton
                             onSelect={(message) => (
                                 setValue('message', message, { shouldDirty: true, shouldValidate: true }),
-                                adjustHeight({target: document.getElementById('chat-textarea')})
+                                adjustHeight({ target: document.getElementById('chat-textarea') })
                             )}
                         />
                     )}

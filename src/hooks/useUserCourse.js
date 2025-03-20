@@ -22,15 +22,15 @@ export const useUserCourseMutations = (userCourseId) => {
         onSuccess: updateUserCourseState
     })
     const updateStatusMutation = useMutation({
-        mutationFn: data => updateUserCourse(userCourseId, {status: data}),
+        mutationFn: data => updateUserCourse(userCourseId, { status: data }),
         onSuccess: data => updateStatusState(data)
     })
 
     function updateUserCourseState(data) {
         queryClient.setQueriesData(['user-course', 'single', userCourseId], () => data)
-        queryClient.setQueryData(['chat', 'info', userCourseId], (oldData) => ({ 
-            ...oldData, 
-            userCourse: { ...oldData?.userCourse, ...data } 
+        queryClient.setQueryData(['chat', 'info', userCourseId], (oldData) => ({
+            ...oldData,
+            userCourse: { ...oldData?.userCourse, ...data }
         }))
     }
 
@@ -43,7 +43,7 @@ export const useUserCourseMutations = (userCourseId) => {
                 }
                 return student
             })
-         })
+        })
     }
 
     return {
@@ -61,11 +61,11 @@ export const useUpdateCallMentorMutation = (userCourseId) => {
 
     function updateUserCourseState(newData) {
         queryClient.setQueriesData(['students-all'], oldData => ({
-           ...oldData,
-           items: oldData?.items?.map(student => {
+            ...oldData,
+            items: oldData?.items?.map(student => {
                 if (student?.id === userCourseId) student.secondTeacher = newData?.secondTeacher
                 return student
-            }) 
+            })
         }))
     }
 

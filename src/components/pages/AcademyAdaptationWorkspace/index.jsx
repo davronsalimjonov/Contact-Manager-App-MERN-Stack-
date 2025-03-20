@@ -27,7 +27,7 @@ const AcademyAdaptationWorkspace = () => {
             />
             <AdaptationWorkspaceTable
                 students={students}
-                redirectToChat={false}
+                withReminder={false}
                 allowReplaceMentor
                 onDrop={updateStudentAdaptation}
             />

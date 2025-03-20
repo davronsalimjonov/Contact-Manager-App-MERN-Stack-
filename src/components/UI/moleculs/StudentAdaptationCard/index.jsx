@@ -17,7 +17,7 @@ const StudentAdaptationCard = ({
     showStatus = false,
     showTimer = false,
     firstContactDate = '',
-    withChatBtn = true,
+    withReminder = true,
     allowReplaceMentor = false,
     onClick,
     onClickChat,
@@ -57,8 +57,8 @@ const StudentAdaptationCard = ({
                 </div>
             )}
             <div className={cls.card__btns} onClick={e => e.stopPropagation()}>
-                <button onClick={onClickTask}>Task Biriktirish</button>
-                {withChatBtn && <button onClick={onClickChat}>Chat</button>}
+                {withReminder && <button onClick={onClickTask}>Task Biriktirish</button>}
+                <button onClick={onClickChat}>Chat</button>
                 {allowReplaceMentor && <button onClick={onClickChange}><ReAssignAdaptationMentor /></button>}
             </div>
         </div>

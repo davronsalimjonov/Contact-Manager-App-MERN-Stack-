@@ -11,7 +11,7 @@ import ChangeAdaptationMentorForm from '@/components/UI/organisms/ChangeAdaptati
 
 const AdaptationWorkspaceTable = ({
     students = [],
-    redirectToChat = true,
+    withReminder = true,
     allowReplaceMentor = false,
     onDrop
 }) => {
@@ -112,7 +112,7 @@ const AdaptationWorkspaceTable = ({
                         firstContactDate={item.firstContactDate}
                         showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
                         showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
-                        withChatBtn={redirectToChat}
+                        withReminder={withReminder}
                         allowReplaceMentor={allowReplaceMentor}
                         callMentorFullName={getUserFullName(item?.mentor)}
                         callMentorAvatar={item?.mentor?.url}
