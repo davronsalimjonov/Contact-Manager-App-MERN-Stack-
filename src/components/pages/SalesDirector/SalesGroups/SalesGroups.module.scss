@@ -3,6 +3,7 @@
     flex-direction: column;
     gap: 24px;
     overflow: hidden;
+    height: 100%;
 
     &__header {
         display: flex;
@@ -20,35 +21,6 @@
             display: flex;
             align-items: center;
             gap: 8px;
-        }
-    }
-
-    &__swiper{
-        max-width: 100%;
-        width: 100%;
-        overflow: hidden;
-        position: relative; 
-
-        &__prev, &__next{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            aspect-ratio: 1;
-            border-radius: 50%;
-            background-color: var(--dark-gray-400-color);
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-        }
-
-        &__prev{
-            left: 0;
-        }
-
-        &__next{
-            right: 0;
         }
     }
 }

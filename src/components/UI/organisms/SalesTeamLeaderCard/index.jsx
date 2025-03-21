@@ -1,9 +1,22 @@
+import { ReplaceIcon } from '../../atoms/icons';
+import TableActionButton from '../../moleculs/TableActionButton';
 import cls from './SalesTeamLeaderCard.module.scss';
 
 const SalesTeamLeaderCard = () => {
     return (
-        <div>
-            
+        <div className={cls.card}>
+            <img className={cls.card__image} src="/thewolf.png" alt="" />
+            <div className={cls.card__info}>
+                <h3 className={cls.card__info__title}>Nurbek Abdurahmonov</h3>
+                <span className={cls.card__info__role}>Guruh sardori</span>
+            </div>
+            <div className={cls.card__controls}>
+                <button><ReplaceIcon /></button>
+                <TableActionButton menuItems={[
+                    { label: 'Shaxsiy ma’lumotlari', onClick: () => { } },
+                    { label: 'Parol o’zgartirish', onClick: () => { } }
+                ]} />
+            </div>
         </div>
     );
 }

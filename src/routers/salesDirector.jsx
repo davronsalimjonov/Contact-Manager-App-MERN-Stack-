@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom"
 import MainLayout from "@/components/templates/MainLayout"
 import PageNotFound from "@/components/pages/PageNotFound"
+import SellersDashboard from "@/components/pages/SellersDashboard"
 import SalesGroups from "@/components/pages/SalesDirector/SalesGroups"
-import SellersDashboard from "@/components/pages/SalesDirector/SalesDirectorDashboard"
-import SalesDirectorDashboard from "@/components/pages/SalesDirector/SalesDirectorDashboard"
 import SingleSeller from "@/components/pages/SalesDirector/SingleSeller"
+import SalesDirectorDashboard from "@/components/pages/SalesDirector/SalesDirectorDashboard"
 import { HouseIcon, LeaderboardIcon, PersonsIcon } from "@/components/UI/atoms/icons"
 
 const links = [

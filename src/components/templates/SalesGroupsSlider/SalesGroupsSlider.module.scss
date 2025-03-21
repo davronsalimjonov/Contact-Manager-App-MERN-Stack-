@@ -1,0 +1,30 @@
+.swiper {
+    max-width: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+
+    &__prev,
+    &__next {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: var(--dark-gray-400-color);
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+    }
+
+    &__prev {
+        left: 0;
+    }
+
+    &__next {
+        right: 0;
+    }
+}

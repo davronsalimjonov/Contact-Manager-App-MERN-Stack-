@@ -1,0 +1,55 @@
+.card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background-color: var(--base-white-color);
+
+    &__image {
+        width: 48px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        &__title {
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        &__role {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 100%;
+            color: var(--dark-gray-700-color);
+        }
+    }
+
+    &__controls{
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        & > button, & > div > button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--blue-gray-400-color);
+
+            & path{
+                fill: var(--blue-gray-400-color) !important;
+            }
+        }
+    }
+}

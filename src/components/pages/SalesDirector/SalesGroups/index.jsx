@@ -1,14 +1,32 @@
-import { useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { LeftArrowIcon, PlusIcon, RightArrowIcon } from '@/components/UI/atoms/icons';
+import { PlusIcon } from '@/components/UI/atoms/icons';
 import Button from '@/components/UI/atoms/Buttons/Button';
-import SalesGroupCard from '@/components/UI/moleculs/SalesGroupCard';
+import SalesGroupsSlider from '@/components/templates/SalesGroupsSlider';
 import cls from './SalesGroups.module.scss';
-import 'swiper/css';
+import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
+import Table from '@/components/UI/moleculs/Table';
+import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
+import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 
 const SalesGroups = () => {
-    const swiperRef = useRef();
-    const [swiperState, setSwiperState] = useState({ isBeginning: true, isEnd: false });
+    const columns = [
+        { key: "index", title: "№", render: (_, row, index) => index + 1, style: { width: '41px' } },
+        { key: "fullName", title: "Ism, familiya", render: (_, row) => `${row.firstName} ${row.lastName}` },
+        { key: "birthday", title: "Tug’ilgan kuni", render: (_, row) => row.birthday },
+        { key: "status", title: "Status", render: (_, row) => <EmployeeStatusBadge status={row.status} /> },
+        { key: "address", title: "Doimiy yashash manzili" },
+        { key: "actions", title: "", render: () => <TableActionButton />, style: { width: "48px" } }
+    ]
+
+    const data = [
+        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+    ]
 
     return (
         <div className={cls.page}>
@@ -19,42 +37,12 @@ const SalesGroups = () => {
                     <Button>Guruh qo’shish <PlusIcon /></Button>
                 </div>
             </div>
-            <Swiper
-                className={cls.page__swiper}
-                spaceBetween={24}
-                slidesPerView={3}
-                onSwiper={(swiper) => swiperRef.current = swiper}
-                onSlideChange={() => {
-                    if (swiperRef.current) {
-                        setSwiperState({ isBeginning: swiperRef.current.isBeginning, isEnd: swiperRef.current.isEnd });
-                    }
-                }}
-                onAfterInit={(swiper) => setSwiperState({ isBeginning: swiper.isBeginning, isEnd: swiper.isEnd })}
-            >
-                {!swiperState.isBeginning && (
-                    <button className={cls.page__swiper__prev} onClick={() => swiperRef.current?.slidePrev()}>
-                        <LeftArrowIcon />
-                    </button>
-                )}
-
-                {!swiperState.isEnd && (
-                    <button className={cls.page__swiper__next} onClick={() => swiperRef.current?.slideNext()}>
-                        <RightArrowIcon />
-                    </button>
-                )}
-                <SwiperSlide>
-                    <SalesGroupCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <SalesGroupCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <SalesGroupCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                    <SalesGroupCard />
-                </SwiperSlide>
-            </Swiper>
+            <SalesGroupsSlider />
+            <SalesTeamLeaderCard />
+            <Table
+                columns={columns}
+                data={data}
+            />
         </div>
     );
 }

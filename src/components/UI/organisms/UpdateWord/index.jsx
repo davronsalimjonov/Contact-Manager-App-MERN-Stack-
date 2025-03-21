@@ -1,4 +1,3 @@
-import { Modal } from "antd";
 import { useGetWord } from "@/hooks/useGetWord";
 import Loader from "../../atoms/Loader";
 import UpdateWordForm from "../UpdateWordForm";

@@ -4,7 +4,7 @@ import { cn } from '@/utils/lib';
 import { useStopwatch } from '@/hooks/useTimer';
 import { getDateDifference } from '@/utils/time';
 import Avatar from '../../atoms/Avatar';
-import { BellIcon, ReAssignAdaptationMentor, SalesmanIcon } from '../../atoms/icons';
+import { BellIcon, ReplaceIcon, SalesmanIcon } from '../../atoms/icons';
 import cls from './StudentAdaptationCard.module.scss';
 
 const StudentAdaptationCard = ({
@@ -59,7 +59,7 @@ const StudentAdaptationCard = ({
             <div className={cls.card__btns} onClick={e => e.stopPropagation()}>
                 {withReminder && <button onClick={onClickTask}>Task Biriktirish</button>}
                 <button onClick={onClickChat}>Chat</button>
-                {allowReplaceMentor && <button onClick={onClickChange}><ReAssignAdaptationMentor /></button>}
+                {allowReplaceMentor && <button onClick={onClickChange}><ReplaceIcon /></button>}
             </div>
         </div>
     );
