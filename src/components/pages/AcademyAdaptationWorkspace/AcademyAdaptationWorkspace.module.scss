@@ -6,8 +6,13 @@
     gap: 24px;
     overflow: hidden;
 
-    &__select{
-        width: 255px;
+    &__filter{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+
+    &__select, &__input{
         background-color: white;
     }
 }
