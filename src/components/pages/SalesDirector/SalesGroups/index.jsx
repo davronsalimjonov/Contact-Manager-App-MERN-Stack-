@@ -1,20 +1,30 @@
+import { useNavigate } from 'react-router-dom';
+import Table from '@/components/UI/moleculs/Table';
 import { PlusIcon } from '@/components/UI/atoms/icons';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import SalesGroupsSlider from '@/components/templates/SalesGroupsSlider';
-import cls from './SalesGroups.module.scss';
-import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
-import Table from '@/components/UI/moleculs/Table';
-import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
 import TableActionButton from '@/components/UI/moleculs/TableActionButton';
+import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
+import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
+import cls from './SalesGroups.module.scss';
 
 const SalesGroups = () => {
+    const navigate = useNavigate()
+
+    const tableActionButtons = [
+        { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate('/sellers/1') },
+        { label: 'Transfer qilish', onClick: () => { } },
+        { label: 'Parol o’zgartirish', onClick: () => { } },
+        { label: 'Plan qo’yish', onClick: () => { } }
+    ]
+
     const columns = [
         { key: "index", title: "№", render: (_, row, index) => index + 1, style: { width: '41px' } },
         { key: "fullName", title: "Ism, familiya", render: (_, row) => `${row.firstName} ${row.lastName}` },
         { key: "birthday", title: "Tug’ilgan kuni", render: (_, row) => row.birthday },
         { key: "status", title: "Status", render: (_, row) => <EmployeeStatusBadge status={row.status} /> },
         { key: "address", title: "Doimiy yashash manzili" },
-        { key: "actions", title: "", render: () => <TableActionButton />, style: { width: "48px" } }
+        { key: "actions", title: "", render: () => <TableActionButton menuItems={tableActionButtons} />, style: { width: "48px" } }
     ]
 
     const data = [
@@ -39,10 +49,7 @@ const SalesGroups = () => {
             </div>
             <SalesGroupsSlider />
             <SalesTeamLeaderCard />
-            <Table
-                columns={columns}
-                data={data}
-            />
+            <Table columns={columns} data={data} />
         </div>
     );
 }

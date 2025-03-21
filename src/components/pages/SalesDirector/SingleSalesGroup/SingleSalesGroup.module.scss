@@ -1,0 +1,15 @@
+
+.page{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 100%;
+    overflow: hidden;
+
+    &__title{
+        font-family: Montserrat;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 100%;
+    }
+}

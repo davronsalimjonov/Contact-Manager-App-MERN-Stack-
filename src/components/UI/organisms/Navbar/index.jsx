@@ -63,7 +63,9 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/groups', title: 'Guruhlar', showBackButton: false },
         { path: '/groups/:id', title: 'Guruh ma’lumotlari', showBackButton: true },
         { path: '/groups/:id/lesson-schedule', title: 'Jadval', showBackButton: true },
-        { path: '/adaptation', title: 'Adaptatsiya', showBackButton: false }
+        { path: '/adaptation', title: 'Adaptatsiya', showBackButton: false },
+        // Sotuv dirictor
+        { path: '/sellers/:id', title: 'Sotuvchilar', showBackButton: true }
     ];
 
     const matchRoute = (pattern, pathname) => {

@@ -4,6 +4,7 @@ import PageNotFound from "@/components/pages/PageNotFound"
 import SellersDashboard from "@/components/pages/SellersDashboard"
 import SalesGroups from "@/components/pages/SalesDirector/SalesGroups"
 import SingleSeller from "@/components/pages/SalesDirector/SingleSeller"
+import SingleSalesGroup from "@/components/pages/SalesDirector/SingleSalesGroup"
 import SalesDirectorDashboard from "@/components/pages/SalesDirector/SalesDirectorDashboard"
 import { HouseIcon, LeaderboardIcon, PersonsIcon } from "@/components/UI/atoms/icons"
 
@@ -21,6 +22,7 @@ const SalesDirectorRoutes = () => createBrowserRouter([
             { path: '', element: <SellersDashboard /> },
             { path: '/dashboard', element: <SalesDirectorDashboard /> },
             { path: '/groups', element: <SalesGroups /> },
+            { path: '/groups/:groupId', element: <SingleSalesGroup /> },
             { path: '/sellers/:sellerId', element: <SingleSeller /> },
             { path: '*', element: <PageNotFound /> }
         ]

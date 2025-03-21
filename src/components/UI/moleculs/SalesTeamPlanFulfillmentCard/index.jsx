@@ -1,8 +1,9 @@
 import cls from './SalesTeamPlanFulfillmentCard.module.scss';
 
-const SalesTeamPlanFulfillmentCard = () => {
+const SalesTeamPlanFulfillmentCard = ({ onClick }) => {
+    
     return (
-        <div className={cls.card}>
+        <div className={cls.card} onClick={onClick}>
             <img className={cls.card__image} src='/thewolf.png' alt='the wolf' />
             <h2 className={cls.card__title}>“THE WOLF” jamoasi</h2>
             <div className={cls.card__details}>
