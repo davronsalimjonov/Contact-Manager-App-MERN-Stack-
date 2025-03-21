@@ -31,3 +31,5 @@ export const PAYMENT_LINK = [
 ]
 
 export const MEDIA_FILES_TYPES = 'image/*, application/pdf, video/*, audio/*, .doc, .docx'
+
+export const MEDIA_PHOTO_TYPES = 'image/*'

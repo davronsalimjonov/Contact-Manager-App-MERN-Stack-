@@ -4,10 +4,12 @@ import SalesGroupCard from '@/components/UI/moleculs/SalesGroupCard';
 import { LeftArrowIcon, RightArrowIcon } from '@/components/UI/atoms/icons';
 import cls from './SalesGroupsSlider.module.scss';
 import 'swiper/css';
+import AddAndEditSalesForm from '@/components/UI/organisms/AddAndEditSalesForm';
 
 const SalesGroupsSlider = () => {
     const swiperRef = useRef();
     const [swiperState, setSwiperState] = useState({ isBeginning: true, isEnd: false });
+    const [isOpen, setIsOpen] = useState({isOpen: false, type: 'edit'})
 
     return (
         <Swiper
@@ -33,7 +35,9 @@ const SalesGroupsSlider = () => {
                 </button>
             )}
             <SwiperSlide>
-                <SalesGroupCard />
+                <SalesGroupCard
+                    setIsOpen={setIsOpen}
+                />
             </SwiperSlide>
             <SwiperSlide>
                 <SalesGroupCard />
@@ -44,6 +48,11 @@ const SalesGroupsSlider = () => {
             <SwiperSlide>
                 <SalesGroupCard />
             </SwiperSlide>
+            <AddAndEditSalesForm
+                onClose={() => setIsOpen({ isOpen: false, type: 'edit' })}
+                isOpen={isOpen.isOpen}
+                type={isOpen.type}
+            />
         </Swiper>
     );
 }

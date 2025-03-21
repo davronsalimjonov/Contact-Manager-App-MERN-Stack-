@@ -7,9 +7,15 @@ import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
 import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
 import cls from './SalesGroups.module.scss';
+import Table from '@/components/UI/moleculs/Table';
+import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
+import TableActionButton from '@/components/UI/moleculs/TableActionButton';
+import AddAndEditSalesForm from '@/components/UI/organisms/AddAndEditSalesForm';
+import { useState } from 'react';
 
 const SalesGroups = () => {
     const navigate = useNavigate()
+    const [isOpen, setIsOpen] = useState({isOpen: false, type: 'create'})
 
     const tableActionButtons = [
         { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate('/sellers/1') },
@@ -44,12 +50,17 @@ const SalesGroups = () => {
                 <h1 className={cls.page__header__title}>“MILLIARD” jamoasi</h1>
                 <div className={cls.page__header__btns}>
                     <Button>Xodim qo’shish <PlusIcon /></Button>
-                    <Button>Guruh qo’shish <PlusIcon /></Button>
+                    <Button onClick={() => setIsOpen({ isOpen: true, type: 'add'})}>Guruh qo’shish <PlusIcon /></Button>
                 </div>
             </div>
             <SalesGroupsSlider />
             <SalesTeamLeaderCard />
             <Table columns={columns} data={data} />
+            <AddAndEditSalesForm
+                onClose={() => setIsOpen({ isOpen: false, type: 'add' })}
+                isOpen={isOpen.isOpen}
+                type={isOpen.type}
+            />
         </div>
     );
 }
