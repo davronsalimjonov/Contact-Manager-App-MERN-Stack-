@@ -29,6 +29,7 @@ import Users from "@/components/pages/Users";
 import MainLayout from "@/components/templates/MainLayout";
 import { AutoStoriesIcon, HouseIcon, LanIcon, PersonsIcon, SchoolIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons";
 import MainMentorsStatistic from "@/components/pages/MainMentorsStatistic";
+import SingleSeller from "@/components/pages/SalesDirector/SingleSeller";
 import Chat from "@/components/pages/Chat";
 
 const links = [

@@ -1,0 +1,13 @@
+.input {
+    padding: 10px 16px;
+    border-radius: 4px;
+    background-color: var(--blue-200-color);
+    font-size: 14px;
+    line-height: 20px;
+    font-family: inherit;
+    border: 1px solid transparent;
+}
+
+.error {
+    border-color: var(--red-color) !important;
+}

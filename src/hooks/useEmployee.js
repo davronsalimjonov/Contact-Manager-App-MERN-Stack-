@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { removeEmptyKeys } from "@/utils/lib"
-import { createMentorEmployee, getEmployeeById, updateEmployee } from "@/services/employee"
+import { createMentorEmployee, getEmployeeById, updateEmployee, updateSeller } from "@/services/employee"
 
 export const useGetEmployeeById = (employeeId, params = {}, options = {}) => {
     return useQuery(['employee', employeeId, ...Object.values(removeEmptyKeys(params))], () => getEmployeeById(employeeId, params), { cacheTime: Infinity, staleTime: Infinity, ...options })
@@ -36,13 +36,24 @@ export const useCreateMentorEmployeeMutation = () => {
         onSuccess: onCreateSuccess
     })
 
-    function onCreateSuccess(data) {
+    function onCreateSuccess() {
         queryClient.invalidateQueries(['all-mentors'])
-        // queryClient.setQueriesData(['all-mentors'], (oldData) => ({
-        //     ...oldData,
-        //     items: [data, ...oldData?.items]
-        // }))
     }
 
     return createMutation
+}
+
+export const useUpdateSellerMutation = () => {
+    const queryClient = useQueryClient()
+    const updateSellerMutation = useMutation({
+        mutationFn: ({ id, body, params }) => updateSeller(id, body, params),
+        onSuccess: onUpdateSuccess
+    })
+
+    function onUpdateSuccess(updatedData) {
+        const sellerId = updatedData?.id
+        queryClient.setQueriesData(['employee', sellerId], oldData => ({ ...oldData, ...updatedData }))
+    }
+
+    return updateSellerMutation
 }
