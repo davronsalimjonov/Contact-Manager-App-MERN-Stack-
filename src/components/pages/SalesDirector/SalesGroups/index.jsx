@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from '@/components/UI/moleculs/Table';
 import { PlusIcon } from '@/components/UI/atoms/icons';
@@ -6,12 +7,8 @@ import SalesGroupsSlider from '@/components/templates/SalesGroupsSlider';
 import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
 import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
-import cls from './SalesGroups.module.scss';
-import Table from '@/components/UI/moleculs/Table';
-import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
-import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 import AddAndEditSalesForm from '@/components/UI/organisms/AddAndEditSalesForm';
-import { useState } from 'react';
+import cls from './SalesGroups.module.scss';
 
 const SalesGroups = () => {
     const navigate = useNavigate()
