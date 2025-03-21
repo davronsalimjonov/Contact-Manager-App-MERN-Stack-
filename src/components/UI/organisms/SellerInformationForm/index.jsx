@@ -1,44 +1,53 @@
-import { useNavigate, useParams } from "react-router-dom"
+import { useEffect } from "react"
+import toast from "react-hot-toast"
+import { useForm } from "react-hook-form"
+import { GENDER_OPTIONS, MENTOR_STATUS_OPTIONS } from "@/constants/form"
+import { sellerSchema } from "@/schemas/employee"
+import { EMPLOYEE_ROLES } from "@/constants/enum"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useUpdateSellerMutation } from "@/hooks/useEmployee"
+import { objectToFormData, removeEmptyKeys } from "@/utils/lib"
 import Button from "../../atoms/Buttons/Button"
 import RedButton from "../../atoms/Buttons/RedButton"
 import AvatarUpload from "../../moleculs/AvatarUpload"
-import FormDatepicker from "../../moleculs/Form/FormDatepicker"
 import FormInput from "../../moleculs/Form/FormInput"
 import FormSelect from "../../moleculs/Form/FormSelect"
+import FormMaskInput from "../../moleculs/Form/FormMaskInput"
+import FormDatepicker from "../../moleculs/Form/FormDatepicker"
+import FormPhoneInput from "../../moleculs/Form/FormPhoneInput"
+import FormRadioGroup from "../../moleculs/Form/FormRadioGroup"
 import cls from "./SellerInformationForm.module.scss"
-import { useUpdateSellerMutation } from "@/hooks/useSeller"
-import { useForm } from "react-hook-form"
-import { objectToFormData, removeEmptyKeys } from "@/utils/lib"
-import toast from "react-hot-toast"
-import { MENTOR_STATUS_OPTIONS } from "@/constants/form"
 
-const SellerInformationForm = () => {
-    const navigate = useNavigate()
+const SellerInformationForm = ({ sellerId, defaultValues }) => {
     const updateSeller = useUpdateSellerMutation()
-    const params = useParams()
-    const sellerId = params?.sellerId
-    const { register, control, reset, watch, handleSubmit, setValue, formState: { isDirty, errors, isSubmitting } } = useForm({
-        mode: 'onSubmit'
+    const { register, control, reset, watch, handleSubmit, setValue, formState: { isDirty, errors, isSubmitting, isSubmitSuccessful } } = useForm({
+        defaultValues,
+        mode: 'onSubmit',
+        resolver: yupResolver(sellerSchema)
     })
     const avatar = watch('avatar')
 
     const onSubmit = async (data) => {
-        const updateSellerInfo = { ...data }
-    
-        if (!updateSellerInfo?.birthday) delete updateSellerInfo.birthday
+        const updateSellerInfo = Object.assign({}, data)
         if (!(updateSellerInfo?.avatar instanceof File) && updateSellerInfo?.avatar !== null) delete updateSellerInfo.avatar
-    
         const fd = objectToFormData(removeEmptyKeys(updateSellerInfo))
-    
-        await updateSeller.mutateAsync({ sellerId, data: fd }, { 
-            onSuccess: () => {
-                toast.success("Ma'lumotlar Saqlandi")
-                reset()
-            },
+
+        await updateSeller.mutateAsync({ id: sellerId, body: fd, params: { role: EMPLOYEE_ROLES.SELLER } }, { 
+            onSuccess: () => toast.success("Ma'lumotlar saqlandi"),
             onError: (err) => toast.error(err?.response?.data?.message || 'Xatolik yuz berdi')
         })
     }
-    
+
+    const handleChangePassportField = (e) => {
+        const upperCaseValue = e.target.value.toUpperCase();    
+        e.target.value = upperCaseValue;
+    }
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset(defaultValues)
+        }
+    }, [isSubmitSuccessful])
 
     return (
         <form className={cls.form} onSubmit={handleSubmit(onSubmit)}>
@@ -53,14 +62,21 @@ const SellerInformationForm = () => {
                 <FormInput
                     label='Ismi'
                     placeholder='Ismi'
-                    register={{ ...register('firstName') }}
+                    register={register('firstName')}
                     error={errors?.firstName?.message}
                 />
                 <FormInput
                     label='Familyasi'
                     placeholder='Familyasi'
-                    register={{ ...register('lastName') }}
+                    register={register('lastName')}
                     error={errors?.lastName?.message}
+                />
+                <FormPhoneInput 
+                    label="Telefon nomer"
+                    placeholder="Telefon nomer"
+                    name="phone"
+                    control={control}
+                    error={errors?.phone?.message}
                 />
                 <FormDatepicker
                     name="birthday"
@@ -69,37 +85,52 @@ const SellerInformationForm = () => {
                     control={control}
                     error={errors?.birthday?.message}
                 />
-                <FormInput
+                <FormRadioGroup
+                    label="Jinsi"
+                    options={GENDER_OPTIONS}
+                    register={register('gender')}
+                    error={errors?.gender?.message}
+                />
+                <FormMaskInput 
                     label='Passport Seriyasi'
-                    placeholder='AA0123456789'
-                    register={{ ...register('passport')}}
+                    placeholder='Seriya raqami'
+                    mask='aa9999999'
+                    maskChar="_"
+                    formatChars={{ '9': '[0-9]', 'a': '[A-Za-z]'}}
+                    onChange={handleChangePassportField}
+                    name="passport"
+                    control={control}
                     error={errors?.passport?.message}
                 />
                 <FormSelect
                     label="Statusi"
                     options={MENTOR_STATUS_OPTIONS}
-                    register={{ ...register('status')}}
+                    name="status"
+                    control={control}                    
                     error={errors?.status?.message}
                     isSearchable
-                    isclearable
                 />
-                <FormInput
+                <FormMaskInput 
                     label='SIP'
-                    placeholder='123456'
-                    register={{ ...register('sip')}}
-                    error={errors?.status?.message}
+                    placeholder='SIP raqami'
+                    mask="999"
+                    name="sip"
+                    control={control}
+                    error={errors?.sip?.message}
                 />
-                <FormInput
+                <FormMaskInput 
                     label='Amo CRM ID'
-                    placeholder='123456'
-                    register={{ ...register('amocrmId')}}
-                    error={errors?.status?.message}
+                    placeholder='Amo CRM ID'
+                    mask="99999999"
+                    name="amocrmId"
+                    control={control}
+                    error={errors?.amocrmId?.message}
                 />
                 <FormInput
                     label='Doimiy Yashash Manzili'
-                    placeholder='AA0123456789'
-                    register={{ ...register('addresss')}}
-                    error={errors?.addresss?.message}
+                    placeholder='Yashash manzili'
+                    register={register('address')}
+                    error={errors?.address?.message}
                 />
             </div>
             <div className={cls.form__btns}>
@@ -110,10 +141,7 @@ const SellerInformationForm = () => {
                 >
                     Tahrirlash
                 </Button>
-                <RedButton type="button" onClick={() => {
-                    navigate(-1)
-                    reset()
-                }}>
+                <RedButton type="button" onClick={() => reset()}>
                     Bekor qilish
                 </RedButton>
             </div>

@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import Loader from '@/components/UI/atoms/Loader';
+import UserCourseTable from '@/components/templates/UserCourseTable';
 import useGetStudentCourseById from '@/hooks/useGetStudentCourseById';
 import StudentInformationForm from '@/components/UI/organisms/StudentInformationForm';
 import StudentPersonalInfo from '@/components/UI/organisms/StudentPersonalInfo';
 import StudentActionHistory from '@/components/UI/organisms/StudentActionHistory';
 import cls from './SingleStudent.module.scss';
-import UserCourseTable from '@/components/templates/UserCourseTable';
 
 const SingleStudent = () => {
     const { courseId, userId } = useParams()

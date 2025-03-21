@@ -19,3 +19,8 @@ export const updateMentorPassword = async (mentorId, params) => {
     const res = await api.put(`/employee/change-password/by-admin/${mentorId}?${paramsToString(params)}`)
     return res.data
 }
+
+export const updateSeller = async (id, data, params = {}) => {
+    const res = await api.put(`/sales-manager/${id}?${paramsToString(params)}`, data, { headers: { "Content-Type": "multipart/form-data" } })
+    return res?.data
+}
