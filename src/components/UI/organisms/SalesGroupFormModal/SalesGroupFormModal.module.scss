@@ -1,18 +1,16 @@
 .form {
   width: 412px;
-  max-width: 412px;
-  padding: 16px;
+  padding: 20px 16px;
   background-color: var(--base-white-color);
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 24px;
 
   &__heading {
     font-weight: 600;
     font-size: 24px;
     line-height: 100%;
-    letter-spacing: 0%;
   }
 }
 
@@ -21,11 +19,4 @@
   align-items: center;
   justify-content: start;
   gap: 8px;
-}
-
-/* For Chrome, Safari, Edge, and Opera */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }

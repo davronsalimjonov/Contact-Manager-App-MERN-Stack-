@@ -1,18 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loader from '@/components/UI/atoms/Loader';
 import Table from '@/components/UI/moleculs/Table';
+import { useGetSalesGroups } from '@/hooks/useSales';
 import { PlusIcon } from '@/components/UI/atoms/icons';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import SalesGroupsSlider from '@/components/templates/SalesGroupsSlider';
 import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
 import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
-import AddAndEditSalesForm from '@/components/UI/organisms/AddAndEditSalesForm';
+import SalesGroupFormModal from '@/components/UI/organisms/SalesGroupFormModal';
 import cls from './SalesGroups.module.scss';
 
 const SalesGroups = () => {
     const navigate = useNavigate()
-    const [isOpen, setIsOpen] = useState({isOpen: false, type: 'create'})
+    const [activeGroup, setActiveGroup] = useState(null)
+    const [isOpenGroupModal, setIsOpenGroupModal] = useState(false)
+    const { data: salesGroups, isLoading: isLoadingSalesGroups } = useGetSalesGroups()
+
+    useEffect(() => {
+        if(!isLoadingSalesGroups && salesGroups?.length > 0){
+            setActiveGroup(salesGroups[0])
+        }
+    }, [isLoadingSalesGroups])
 
     const tableActionButtons = [
         { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate('/sellers/1') },
@@ -41,25 +51,31 @@ const SalesGroups = () => {
         { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
     ]
 
-    return (
+    return !isLoadingSalesGroups ? (
         <div className={cls.page}>
             <div className={cls.page__header}>
-                <h1 className={cls.page__header__title}>“MILLIARD” jamoasi</h1>
+                <h1 className={cls.page__header__title}>“{activeGroup?.title}” jamoasi</h1>
                 <div className={cls.page__header__btns}>
                     <Button>Xodim qo’shish <PlusIcon /></Button>
-                    <Button onClick={() => setIsOpen({ isOpen: true, type: 'add'})}>Guruh qo’shish <PlusIcon /></Button>
+                    <Button onClick={() => setIsOpenGroupModal(true)}>Guruh qo’shish <PlusIcon /></Button>
                 </div>
             </div>
-            <SalesGroupsSlider />
+            <SalesGroupsSlider 
+                items={salesGroups}
+                activeGroup={activeGroup} 
+                onClickGroup={group => setActiveGroup(group)} 
+            />
             <SalesTeamLeaderCard />
             <Table columns={columns} data={data} />
-            <AddAndEditSalesForm
-                onClose={() => setIsOpen({ isOpen: false, type: 'add' })}
-                isOpen={isOpen.isOpen}
-                type={isOpen.type}
+            <SalesGroupFormModal
+                onClose={() => setIsOpenGroupModal(false)}
+                isOpen={isOpenGroupModal}
+                isCreate
             />
         </div>
-    );
+    ) : (
+        <Loader />
+    )
 }
 
 export default SalesGroups;

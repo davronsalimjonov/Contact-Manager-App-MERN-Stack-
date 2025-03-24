@@ -5,6 +5,11 @@ export const formatPrice = num => {
     return new Intl.NumberFormat('ru-RU').format(num)
 }
 
+export function extractPrice(value) {
+    const numericValue = value.replace(/\D/g, "");
+    return parseInt(numericValue, 10) || 0;
+}
+
 export function cn(...args) {
     return args
         .flatMap(arg => {

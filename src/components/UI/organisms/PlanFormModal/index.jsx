@@ -1,20 +1,12 @@
-import Button from '../../atoms/Buttons/Button';
+import { useForm } from 'react-hook-form';
+import { extractPrice } from '@/utils/lib';
 import Dialog from '../../moleculs/Dialog';
+import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
 import cls from './PlanFormModal.module.scss';
-import { useForm } from 'react-hook-form';
 
-const PlanFormModal = ({
-    isOpen = false,
-    onClose,
-    onSubmit
-}) => {
+const PlanFormModal = ({ isOpen = false, onClose, onSubmit }) => {
     const { register, handleSubmit, formState: { isDirty, isSubmitting, errors } } = useForm()
-
-    function extractPrice(value) {
-        const numericValue = value.replace(/\D/g, "");
-        return parseInt(numericValue, 10) || 0;
-    }
 
     const formatToCurrency = (inputValue) => {
         const numericValue = inputValue.replace(/\D/g, "");
