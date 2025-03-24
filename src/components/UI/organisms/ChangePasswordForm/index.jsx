@@ -14,8 +14,8 @@ const ChangePasswordForm = ({
 
     useEffect(() => {
         if(isSubmitSuccessful){
-            reset()
             onClose?.()
+            setTimeout(() => reset(), 300)
         }
     }, [isSubmitSuccessful])
 

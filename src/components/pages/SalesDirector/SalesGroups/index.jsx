@@ -1,78 +1,98 @@
+import format from 'date-fns/format'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { formatPrice, getUserFullName } from '@/utils/lib';
+import { EMPLOYEE_ROLES } from '@/constants/enum';
 import Loader from '@/components/UI/atoms/Loader';
 import Table from '@/components/UI/moleculs/Table';
-import { useGetSalesGroups } from '@/hooks/useSales';
+import useSessionState from '@/hooks/useSessionState';
 import { PlusIcon } from '@/components/UI/atoms/icons';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import SalesGroupsSlider from '@/components/templates/SalesGroupsSlider';
+import { useGetSalesGroups, useGetSellersByGroup } from '@/hooks/useSales';
 import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
 import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
 import SalesGroupFormModal from '@/components/UI/organisms/SalesGroupFormModal';
+import ChangeEmployeePasswordModal from '@/components/templates/ChangeEmployeePasswordModal';
 import cls from './SalesGroups.module.scss';
 
 const SalesGroups = () => {
     const navigate = useNavigate()
-    const [activeGroup, setActiveGroup] = useState(null)
     const [isOpenGroupModal, setIsOpenGroupModal] = useState(false)
+    const [passwordModal, setPasswordModal] = useState({ isOpen: false, employeeId: null, role: null })
+    const [activeGroup, setActiveGroup] = useSessionState('activeGroup', null)
     const { data: salesGroups, isLoading: isLoadingSalesGroups } = useGetSalesGroups()
+    const { data: sellers, isLoading: isLoadingSellers } = useGetSellersByGroup(activeGroup?.id)
 
     useEffect(() => {
-        if(!isLoadingSalesGroups && salesGroups?.length > 0){
+        if (!isLoadingSalesGroups && salesGroups?.length > 0 && !activeGroup) {
             setActiveGroup(salesGroups[0])
         }
     }, [isLoadingSalesGroups])
 
-    const tableActionButtons = [
-        { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate('/sellers/1') },
+    const tableActionButtons = row => ([
+        { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate(`/sellers/${row.id}`) },
         { label: 'Transfer qilish', onClick: () => { } },
-        { label: 'Parol o’zgartirish', onClick: () => { } },
+        { label: 'Parol o’zgartirish', onClick: () => setPasswordModal({ isOpen: true, employeeId: row.id, role: row.role }) },
         { label: 'Plan qo’yish', onClick: () => { } }
-    ]
+    ])
 
     const columns = [
         { key: "index", title: "№", render: (_, row, index) => index + 1, style: { width: '41px' } },
-        { key: "fullName", title: "Ism, familiya", render: (_, row) => `${row.firstName} ${row.lastName}` },
-        { key: "birthday", title: "Tug’ilgan kuni", render: (_, row) => row.birthday },
+        { key: "fullName", title: "Ism, familiya", render: (_, row) => getUserFullName(row) },
+        { key: "birthday", title: "Tug’ilgan kuni", render: (_, row) => row.birthday ? format(row.birthday, 'dd.MM.yyyy') : '' },
         { key: "status", title: "Status", render: (_, row) => <EmployeeStatusBadge status={row.status} /> },
+        { key: 'plan', title: 'Plan', render: (_, row) => `${formatPrice(row.plan)} so'm` },
         { key: "address", title: "Doimiy yashash manzili" },
-        { key: "actions", title: "", render: () => <TableActionButton menuItems={tableActionButtons} />, style: { width: "48px" } }
-    ]
-
-    const data = [
-        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
-        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
-        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
-        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
-        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
-        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
-        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
-        { firstName: "Nurbek", lastName: "Abdurahmonov", birthday: "12.12.1780", status: "Ishlayapti", address: "Navoiy viloyati, Xatirchi tumani, Bo’zchi mahallasi" },
+        { key: "actions", title: "", render: (_, row) => <TableActionButton menuItems={tableActionButtons(row)} />, style: { width: "48px" } }
     ]
 
     return !isLoadingSalesGroups ? (
-        <div className={cls.page}>
-            <div className={cls.page__header}>
-                <h1 className={cls.page__header__title}>“{activeGroup?.title}” jamoasi</h1>
-                <div className={cls.page__header__btns}>
-                    <Button>Xodim qo’shish <PlusIcon /></Button>
-                    <Button onClick={() => setIsOpenGroupModal(true)}>Guruh qo’shish <PlusIcon /></Button>
-                </div>
-            </div>
-            <SalesGroupsSlider 
-                items={salesGroups}
-                activeGroup={activeGroup} 
-                onClickGroup={group => setActiveGroup(group)} 
-            />
-            <SalesTeamLeaderCard />
-            <Table columns={columns} data={data} />
+        <>
             <SalesGroupFormModal
                 onClose={() => setIsOpenGroupModal(false)}
                 isOpen={isOpenGroupModal}
                 isCreate
             />
-        </div>
+            <ChangeEmployeePasswordModal 
+                isOpen={passwordModal?.isOpen}
+                employeeId={passwordModal?.employeeId}
+                role={passwordModal?.role}
+                onClose={() => setPasswordModal({ isOpen: false, employeeId: null, role: null })}
+            />
+            <div className={cls.page}>
+                <div className={cls.page__header}>
+                    <h1 className={cls.page__header__title}>“{activeGroup?.title}” jamoasi</h1>
+                    <div className={cls.page__header__btns}>
+                        <Button>Xodim qo’shish <PlusIcon /></Button>
+                        <Button onClick={() => setIsOpenGroupModal(true)}>Guruh qo’shish <PlusIcon /></Button>
+                    </div>
+                </div>
+                <SalesGroupsSlider
+                    items={salesGroups}
+                    activeGroup={activeGroup}
+                    onClickGroup={group => setActiveGroup(group)}
+                    onChangePassword={() => { }}
+                />
+                {!isLoadingSellers ? (
+                    <>
+                        <SalesTeamLeaderCard
+                            fullName={getUserFullName(sellers?.teamLead)}
+                            avatar={sellers?.teamLead?.url}
+                            onClickDetails={() => navigate(`/sellers/${sellers?.teamLead?.id}`)}
+                            onClickChangePassword={() => setPasswordModal({ isOpen: true, employeeId: sellers?.teamLead?.id, role: EMPLOYEE_ROLES.SALES_TEAM_LEADER })}
+                        />
+                        <Table 
+                            columns={columns} 
+                            data={sellers?.items} 
+                        />
+                    </>
+                ) : (
+                    <Loader />
+                )}
+            </div>
+        </>
     ) : (
         <Loader />
     )

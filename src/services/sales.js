@@ -19,3 +19,13 @@ export const updateSalesGroup = async (id, data) => {
     const res = await api.put(`/sales-group/${id}`, data, { headers: { "Content-Type": "multipart/form-data" } })
     return res.data
 }
+
+export const setGroupPlan = async (id, data) => {
+    const res = await api.patch(`/sales-group/set-plan/${id}`, data)
+    return res.data
+}
+
+export const getSellersByGroup = async (groupId) => {
+    const res = await api.get(`/sales-manager/by-group/${groupId}`)
+    return res.data
+}

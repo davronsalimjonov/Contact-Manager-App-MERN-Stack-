@@ -15,7 +15,7 @@ export const createMentorEmployee = async (data) => {
     return res.data
 }
 
-export const updateMentorPassword = async (mentorId, params) => {
+export const updateEmployeePassword = async (mentorId, params) => {
     const res = await api.put(`/employee/change-password/by-admin/${mentorId}?${paramsToString(params)}`)
     return res.data
 }

@@ -1,18 +1,18 @@
 import toast from 'react-hot-toast';
 import { copyToClipboard } from '@/utils/lib';
-import { updateMentorPassword } from '@/services/employee';
+import { updateEmployeePassword } from '@/services/employee';
 import ChangePasswordForm from '@/components/UI/organisms/ChangePasswordForm';
 
-const MentorChangePasswordModal = ({
+const ChangeEmployeePasswordModal = ({
     isOpen,
     onClose,
-    mentorId,
+    employeeId,
     role
 }) => {
 
     const handleSubmitForm = async (data) => {
         try {
-            await updateMentorPassword(mentorId, { ...data, role })
+            await updateEmployeePassword(employeeId, { ...data, role })
             copyToClipboard(data?.password)
             toast.success('Parol muvaffaqiyatli oʼzgartirildi va buferga kopiyalandi!')
         } catch (error) {
@@ -29,4 +29,4 @@ const MentorChangePasswordModal = ({
     );
 }
 
-export default MentorChangePasswordModal;
+export default ChangeEmployeePasswordModal;

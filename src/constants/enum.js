@@ -3,7 +3,8 @@ export const EMPLOYEE_ROLES = {
     CALL_MENTOR: 4,
     SELLER: 5,
     ACADEMY_MANAGER: 6,
-    SALES_DIRECTOR: 7
+    SALES_DIRECTOR: 7,
+    SALES_TEAM_LEADER: 8
 }
 
 export const MessageTypes = {

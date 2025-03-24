@@ -5,7 +5,7 @@ import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
 import cls from './PlanFormModal.module.scss';
 
-const PlanFormModal = ({ isOpen = false, onClose, onSubmit }) => {
+const PlanFormModal = ({ isOpen = false, onClose, onSubmit, title = 'Plan kiritish' }) => {
     const { register, handleSubmit, formState: { isDirty, isSubmitting, errors } } = useForm()
 
     const formatToCurrency = (inputValue) => {
@@ -30,9 +30,9 @@ const PlanFormModal = ({ isOpen = false, onClose, onSubmit }) => {
         });
     };
 
-    const handleSubmitForm = (data) => {
+    const handleSubmitForm = async (data) => {
         data.plan = extractPrice(data.plan)
-        onSubmit?.(data)
+        await onSubmit?.(data)
     }
 
     return (
@@ -41,10 +41,10 @@ const PlanFormModal = ({ isOpen = false, onClose, onSubmit }) => {
             onClose={onClose}
         >
             <form className={cls.form} onSubmit={handleSubmit(handleSubmitForm)}>
-                <h2>Plan kiritish</h2>
+                <h2>{title}</h2>
                 <FormInput
                     label='Plan kiriting'
-                    placeholder='100 000 000 so’m'
+                    placeholder='Plan kiriting'
                     onChange={handleChange}
                     register={register('plan', {
                         validate: (value) => extractPrice(value) >= 20_000_000 || "Minimal plan 20 000 000 so'm",

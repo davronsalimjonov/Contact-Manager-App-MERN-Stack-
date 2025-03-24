@@ -8,12 +8,13 @@ const SalesGroupCard = ({
     plan = 0,
     isActive = false,
     onClick,
+    onClickSetPlan,
     onClickEdit
 }) => {
     return (
         <div className={cn(cls.card, { [cls.active]: isActive })} onClick={onClick}>
             <div className={cls.card__controls}>
-                <button><PlusIcon fill='var(--blue-gray-600-color)' width={20} height={20} /></button>
+                <button onClick={onClickSetPlan}><PlusIcon fill='var(--blue-gray-600-color)' width={20} height={20} /></button>
                 <button onClick={onClickEdit}><EditIcon fill='var(--blue-gray-600-color)' width={20} height={20} /></button>
             </div>
             <img className={cls.card__logo} src={logoUrl} alt={title} onError={onImageError} />

@@ -1,6 +1,7 @@
 import { cn } from '@/utils/lib';
 import cls from './Table.module.scss';
 import EmptyData from '../../organisms/EmptyData';
+import EmptyDataText from '../../atoms/EmptyDataText';
 
 const Table = ({ columns = [], data = [], className }) => {
     const gridTemplate = columns.map(col => col.style?.width || `minmax(${100/columns.length/2}%, auto)`).join(" ");
@@ -24,7 +25,7 @@ const Table = ({ columns = [], data = [], className }) => {
                             <tr key={row.id || rowIndex}>
                                 {columns.map((col) => (
                                     <td key={col.key}>
-                                        {col.render ? col.render(row[col.key], row, rowIndex) : row[col.key]}
+                                        {col.render ? (col.render(row[col.key], row, rowIndex) || <EmptyDataText />) : (row[col.key] || <EmptyDataText />)}
                                     </td>
                                 ))}
                             </tr>

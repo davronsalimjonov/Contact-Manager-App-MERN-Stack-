@@ -4,8 +4,8 @@ import { getUserFullName } from '@/utils/lib';
 import EmptyData from '@/components/UI/organisms/EmptyData';
 import MentorsTableRow from '@/components/UI/moleculs/MentorsTableRow';
 import CreateMentorCardModal from '@/components/UI/organisms/CreateMentorCardModal';
+import ChangeEmployeePasswordModal from '../ChangeEmployeePasswordModal';
 import cls from './MentorsTable.module.scss';
-import MentorChangePasswordModal from '../MentorChangePasswordModal';
 
 const MentorsTable = ({
     mentors = [],
@@ -22,9 +22,9 @@ const MentorsTable = ({
                 mentorId={mentorCardModal.mentorId}
                 onClose={() => setMentorCardModal({ isOpen: false, mentorId: null })}
             />
-            <MentorChangePasswordModal 
+            <ChangeEmployeePasswordModal 
                 isOpen={changePassword?.isOpen}
-                mentorId={changePassword?.mentorId}
+                employeeId={changePassword?.mentorId}
                 role={changePassword?.role}
                 onClose={() => setChangePassword({ isOpen: false, mentorId: null, role: null })}
             />
