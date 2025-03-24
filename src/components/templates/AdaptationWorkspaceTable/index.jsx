@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { getUserFullName } from '@/utils/lib';
@@ -16,8 +16,9 @@ const AdaptationWorkspaceTable = ({
     onDrop
 }) => {
     const navigate = useNavigate()
+    const errorCount = useRef(0)
     const [reminder, setReminder] = useState({ isOpen: false, userId: null, userCourseId: null })
-    const [changeAdaptationMentor, setChangeAdaptationMentor] = useState({isOpen: false, adaptationId: null})
+    const [changeAdaptationMentor, setChangeAdaptationMentor] = useState({ isOpen: false, adaptationId: null })
 
     const studentsByStatus = students?.reduce((acc, student) => {
         const studentItem = {
@@ -78,27 +79,29 @@ const AdaptationWorkspaceTable = ({
         }
     ]
 
-    const handleStatusChange = async ({ draggableId, destination: { droppableId, index } }) => {
+    const handleStatusChange = async ({ draggableId, destination: { droppableId, index }, source: { droppableId: sourceDroppableId } }) => {
         try {
             await updateStudentAdaptationStatus(draggableId, { status: droppableId, index })
             const student = studentsByStatus[draggableId]?.find(item => item.id === draggableId)
             const firstContactDate = student?.firstContactDate || new Date().toISOString()
             onDrop?.(draggableId, { status: droppableId, index, firstContactDate })
         } catch (error) {
+            errorCount.current= errorCount?.current + 1
+            onDrop?.(draggableId, { status: sourceDroppableId, index })
             toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
         }
     }
 
     return (
         <>
-            <ReminderFormModal 
+            <ReminderFormModal
                 isOpen={reminder.isOpen}
                 type='adaptation-notification'
                 typeId={`${reminder?.userCourseId}/${reminder?.userId}`}
                 onClose={() => setReminder({ isOpen: false, userId: null, userCourseId: null })}
             />
             <WorkspaceTable
-                key={students?.length}
+                key={students?.length + (errorCount?.current + '')}
                 columns={workspaceColumns}
                 onChange={handleStatusChange}
                 renderItem={(item, status) => (
