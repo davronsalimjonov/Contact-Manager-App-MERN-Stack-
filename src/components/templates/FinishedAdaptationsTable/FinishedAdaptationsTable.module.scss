@@ -1,0 +1,38 @@
+
+.table{
+    & > tbody  td{
+        color: var(--dark-gray-900-color) !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }
+}
+
+.employees {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    & > span{
+        color: rgba(18, 15, 40, 1);
+    }
+
+    &__mentor {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 100%;
+    }
+
+    &__seller {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 16px;
+
+        & > svg{
+            width: 15px;
+            height: 15px;
+        }
+    }
+}

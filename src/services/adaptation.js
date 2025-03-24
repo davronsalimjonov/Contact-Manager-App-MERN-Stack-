@@ -9,3 +9,8 @@ export const changeAdaptationMentor = async (adaptationId, body) => {
     const res = await api.put(`/adaptation/mentor/${adaptationId}`, body)
     return res.data
 }
+
+export const getFinishedAdaptations = async (params = {}) => {
+    const res = await api.get(`/adaptation/finished?${paramsToString(params)}`)
+    return res.data
+}

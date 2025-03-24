@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { removeEmptyKeys } from "@/utils/lib"
-import { changeAdaptationMentor, getAllAdaptation } from "@/services/adaptation"
+import { changeAdaptationMentor, getAllAdaptation, getFinishedAdaptations } from "@/services/adaptation"
 
 export const useGetAllAdaptation = (params = {}) => {
     const queryClient = useQueryClient()
@@ -13,6 +13,10 @@ export const useGetAllAdaptation = (params = {}) => {
     }
 
     return { ...query, updateStudentAdaptation }
+}
+
+export const useGetFinishedAdaptations = (params = {}) => {
+    return useQuery(['finished-adaptations', ...Object.values(removeEmptyKeys(params))], () => getFinishedAdaptations(params))
 }
 
 export const useChangeAdaptationMentorMutation = () => {

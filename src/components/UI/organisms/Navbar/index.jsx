@@ -64,6 +64,7 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/groups/:id', title: 'Guruh ma’lumotlari', showBackButton: true },
         { path: '/groups/:id/lesson-schedule', title: 'Jadval', showBackButton: true },
         { path: '/adaptation', title: 'Adaptatsiya', showBackButton: false },
+        { path: '/adaptation/finished', title: 'Bajarilgan adaptatsiyalar', showBackButton: true },
         // Sotuv dirictor
         { path: '/sellers/:id', title: 'Sotuvchilar', showBackButton: true }
     ];

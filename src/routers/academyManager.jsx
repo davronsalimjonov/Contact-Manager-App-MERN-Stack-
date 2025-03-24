@@ -31,6 +31,7 @@ import { AutoStoriesIcon, HouseIcon, LanIcon, PersonsIcon, SchoolIcon, WorkHisto
 import MainMentorsStatistic from "@/components/pages/MainMentorsStatistic";
 import SingleSeller from "@/components/pages/SalesDirector/SingleSeller";
 import Chat from "@/components/pages/Chat";
+import FinishedAdaptations from "@/components/pages/FinishedAdaptations";
 
 const links = [
     {
@@ -244,6 +245,10 @@ const AcademyManagerRoutes = () => createBrowserRouter([
             {
                 path: '/adaptation',
                 element: <AcademyAdaptationWorkspace />
+            },
+            {
+                path: '/adaptation/finished',
+                element: <FinishedAdaptations />
             },
             {
                 path: '/settings',
