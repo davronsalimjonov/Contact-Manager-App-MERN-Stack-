@@ -20,7 +20,7 @@ const FormPasswordInput = ({
 
     return (
         <FormElementWrapper label={label} error={error}>
-            <div className={cls.input__wrapper}>
+            <div className={`${cls.input__wrapper} ${className}`}>
                 <div className={cls.input__wrapper__icon}>
                     <PasswordLockIcon />
                 </div>

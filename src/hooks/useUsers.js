@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { getAllUsers, getUserById, updateUser } from "@/services/user"
+import { getAllUsers, getUserById, updateSelfPassword, updateUser } from "@/services/user"
 import { removeEmptyKeys } from "@/utils/lib"
 
 export const useGetUsers = (params = {}) => {
@@ -22,6 +22,36 @@ export const useUpdateUserMutation = () => {
     })
 
     function onUpdateUserSuccess(response) {
+        const userId = response?.id
+        queryClient.setQueryData(['user', userId], response)
+        queryClient.setQueriesData(['users'], oldData => ({
+            ...oldData,
+            items: oldData?.items?.map(item => {
+                if (item?.id === userId) {
+                    return response
+                }
+                return item
+            })
+        }))
+    }
+
+    return updateMutation
+}
+
+export const updateSelfPasswordMutation = () => {
+    const queryClient = useQueryClient()
+    const updateMutation = useMutation({
+        mutationFn: async (data) => {
+            const userId = data.id
+            const role = data.role
+            delete data.role
+            delete data.id
+            return await updateSelfPassword(userId,role, data)
+        },
+        onSuccess: onUpdateUserPasswordSuccess
+    })
+
+    function onUpdateUserPasswordSuccess(response) {
         const userId = response?.id
         queryClient.setQueryData(['user', userId], response)
         queryClient.setQueriesData(['users'], oldData => ({
