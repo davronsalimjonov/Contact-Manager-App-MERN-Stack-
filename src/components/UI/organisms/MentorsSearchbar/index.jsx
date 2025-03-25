@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debounce } from '@/utils/lib';
-import { ENGLISH_LEVEL_OPTIONS, MENTOR_STATUS_OPTIONS } from '@/constants/form';
+import { ENGLISH_LEVEL_OPTIONS, EMPLOYEE_STATUS_OPTIONS } from '@/constants/form';
 import Input from '../../atoms/Form/Input';
 import Select from '../../atoms/Form/Select';
 import { PlusIcon } from '../../atoms/icons';
@@ -42,8 +42,8 @@ const MentorsSearchBar = ({ onChange, defaultValue }) => {
             <Select
                 className={cls.bar__form__select}
                 placeholder='Statusi'
-                options={MENTOR_STATUS_OPTIONS}
-                defaultValue={MENTOR_STATUS_OPTIONS.find(option => option.value === filters.status) || null}
+                options={EMPLOYEE_STATUS_OPTIONS}
+                defaultValue={EMPLOYEE_STATUS_OPTIONS.find(option => option.value === filters.status) || null}
                 onChange={option => handleChange("status", option?.value)}
                 isclearable
             />

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useForm } from "react-hook-form"
-import { GENDER_OPTIONS, MENTOR_STATUS_OPTIONS } from "@/constants/form"
+import { GENDER_OPTIONS, EMPLOYEE_STATUS_OPTIONS } from "@/constants/form"
 import { sellerSchema } from "@/schemas/employee"
 import { EMPLOYEE_ROLES } from "@/constants/enum"
 import { yupResolver } from "@hookform/resolvers/yup"
@@ -17,6 +17,7 @@ import FormDatepicker from "../../moleculs/Form/FormDatepicker"
 import FormPhoneInput from "../../moleculs/Form/FormPhoneInput"
 import FormRadioGroup from "../../moleculs/Form/FormRadioGroup"
 import cls from "./SellerInformationForm.module.scss"
+import FormPassportInput from "../../moleculs/Form/FormPassportInput"
 
 const SellerInformationForm = ({ sellerId, defaultValues }) => {
     const updateSeller = useUpdateSellerMutation()
@@ -36,11 +37,6 @@ const SellerInformationForm = ({ sellerId, defaultValues }) => {
             onSuccess: () => toast.success("Ma'lumotlar saqlandi"),
             onError: (err) => toast.error(err?.response?.data?.message || 'Xatolik yuz berdi')
         })
-    }
-
-    const handleChangePassportField = (e) => {
-        const upperCaseValue = e.target.value.toUpperCase();    
-        e.target.value = upperCaseValue;
     }
 
     useEffect(() => {
@@ -91,20 +87,16 @@ const SellerInformationForm = ({ sellerId, defaultValues }) => {
                     register={register('gender')}
                     error={errors?.gender?.message}
                 />
-                <FormMaskInput 
+                <FormPassportInput 
                     label='Passport Seriyasi'
                     placeholder='Seriya raqami'
-                    mask='aa9999999'
-                    maskChar="_"
-                    formatChars={{ '9': '[0-9]', 'a': '[A-Za-z]'}}
-                    onChange={handleChangePassportField}
                     name="passport"
                     control={control}
                     error={errors?.passport?.message}
                 />
                 <FormSelect
                     label="Statusi"
-                    options={MENTOR_STATUS_OPTIONS}
+                    options={EMPLOYEE_STATUS_OPTIONS}
                     name="status"
                     control={control}                    
                     error={errors?.status?.message}

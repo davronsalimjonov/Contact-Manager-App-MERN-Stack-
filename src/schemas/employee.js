@@ -36,7 +36,19 @@ export const sellerSchema = Yup.object().shape({
     phone: phoneNumberSchema.required("Telefon raqam majburiy"),
     gender: genderSchema,
     birthday: birthdaySchema,
-    passport: Yup.string().test("is-complete", "Passport seriyasini toliq kiriting", (value) => value ? !value.includes("_") : false),
-    sip: Yup.string().test("is-complete", "SIP raqamini toliq kiriting", (value) => value ? !value.includes("_") : false).required('SIP raqamini kiritish majburiy'),
-    amocrmId: Yup.string().test("is-complete", "Amo CRM ID raqamini toliq kiriting", (value) => value ? !value.includes("_") : false).required('Amo CRM ID raqamini kiritish majburiy'),
+    passport: Yup.string().test("is-complete", "Passport seriyasini toliq kiriting", (value) => value ? !value.includes("_") : true),
+    sip: Yup.string().test("is-complete", "SIP raqamini toliq kiriting", (value) => value ? !value.includes("_") : true),
+    amocrmId: Yup.string().test("is-complete", "Amo CRM ID raqamini toliq kiriting", (value) => value ? !value.includes("_") : true),
+})
+
+export const createSellerSchema = Yup.object().shape({
+    firstName: Yup.string().required('Ism kiritish majburiy'),  
+    lastName: Yup.string().required('Familiya kiritish majburiy'),  
+    phone: phoneNumberSchema.required("Telefon raqam majburiy"),
+    gender: genderSchema,
+    birthday: birthdaySchema,
+    passport: Yup.string().test("is-complete", "Passport seriyasini toliq kiriting", (value) => value ? !value.includes("_") : true),
+    sip: Yup.string().test("is-complete", "SIP raqamini toliq kiriting", (value) => value ? !value.includes("_") : true),
+    amocrmId: Yup.string().test("is-complete", "Amo CRM ID raqamini toliq kiriting", (value) => value ? !value.includes("_") : true),
+    salesGroup: Yup.string().required('Guruhni tanlash majburiy')
 })

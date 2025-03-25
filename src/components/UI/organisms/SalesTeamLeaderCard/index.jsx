@@ -1,8 +1,7 @@
-import { onImageError } from '@/utils/lib';
+import Avatar from '../../atoms/Avatar';
 import { ReplaceIcon } from '../../atoms/icons';
 import TableActionButton from '../../moleculs/TableActionButton';
 import cls from './SalesTeamLeaderCard.module.scss';
-import Avatar from '../../atoms/Avatar';
 
 const SalesTeamLeaderCard = ({
     fullName = '',

@@ -1,9 +1,8 @@
-import * as Yup from 'yup'
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { mentorSchema } from '@/schemas/employee';
-import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS, MENTOR_STATUS_OPTIONS, MENTOR_TYPES } from '@/constants/form';
+import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS, EMPLOYEE_STATUS_OPTIONS, MENTOR_TYPES } from '@/constants/form';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
 import RedButton from '../../atoms/Buttons/RedButton';
@@ -102,7 +101,7 @@ const MentorInformationForm = ({
                     <FormSelect 
                         label='Status'
                         placeholder="Statusni Tanlang"
-                        options={MENTOR_STATUS_OPTIONS}
+                        options={EMPLOYEE_STATUS_OPTIONS}
                         defaultValue={'Ishlayapti'}
                         control={control}
                         name='status'

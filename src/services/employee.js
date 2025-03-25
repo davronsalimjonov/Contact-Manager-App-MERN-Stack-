@@ -25,7 +25,12 @@ export const updateSeller = async (id, data, params = {}) => {
     return res?.data
 }
 
-export const updateSelfPassword = async (userId, data, params) => { 
+export const createSeller = async (data) => {
+    const res = await api.post(`/sales-manager`, data)
+    return res?.data
+}
+
+export const updateSelfPassword = async (userId, data, params) => {
     const res = await api.put(`/employee/change-password/${userId}?${paramsToString(params)}`, data)
     return res.data
 }

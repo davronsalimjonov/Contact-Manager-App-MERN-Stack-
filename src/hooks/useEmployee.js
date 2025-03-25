@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { removeEmptyKeys } from "@/utils/lib"
-import { createMentorEmployee, getEmployeeById, updateEmployee, updateSelfPassword, updateSeller } from "@/services/employee"
+import { createMentorEmployee, createSeller, getEmployeeById, updateEmployee, updateSelfPassword, updateSeller } from "@/services/employee"
 
 export const useGetEmployeeById = (employeeId, params = {}, options = {}) => {
     return useQuery(['employee', employeeId, ...Object.values(removeEmptyKeys(params))], () => getEmployeeById(employeeId, params), { cacheTime: Infinity, staleTime: Infinity, ...options })
@@ -70,4 +70,21 @@ export const useUpdateSelfPasswordMutation = () => {
     })
 
     return updateMutation
+}
+
+export const useCreateSellerMutation = () => {
+    const queryClient = useQueryClient()
+    const createMutation = useMutation({
+        mutationFn: createSeller,
+        onSuccess: onCreateSuccess
+    })
+
+    function onCreateSuccess(res, body) {
+        queryClient.setQueriesData(['sellers', body?.salesGroup], (oldData) => ({
+            ...oldData,
+            items: [...(oldData?.items || []), res]
+        }))
+    }
+
+    return createMutation
 }

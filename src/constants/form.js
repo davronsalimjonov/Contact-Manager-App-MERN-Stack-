@@ -63,7 +63,7 @@ export const USER_TYPE_OPTIONS = [
     { label: 'Free', value: USER_TYPE_ENUMS.FREE },
 ]
 
-export const MENTOR_STATUS_OPTIONS = [
+export const EMPLOYEE_STATUS_OPTIONS = [
     { label: 'Sinovda', value: EMPLOYEE_STATUS_ENUM.TRIAL_PERIOD },
     { label: 'Ishlayapti', value: EMPLOYEE_STATUS_ENUM.ACTIVE },
     { label: 'Vaqtincha Ta`tilda', value: EMPLOYEE_STATUS_ENUM.PAUSED },

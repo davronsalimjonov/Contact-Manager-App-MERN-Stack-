@@ -16,12 +16,14 @@ import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
 import SalesGroupFormModal from '@/components/UI/organisms/SalesGroupFormModal';
 import ChangeEmployeePasswordModal from '@/components/templates/ChangeEmployeePasswordModal';
 import cls from './SalesGroups.module.scss';
+import CreateSellerFormModal from '@/components/UI/organisms/CreateSellerFormModal';
 
 const SalesGroups = () => {
     const navigate = useNavigate()
     const [isOpenGroupModal, setIsOpenGroupModal] = useState(false)
-    const [passwordModal, setPasswordModal] = useState({ isOpen: false, employeeId: null, role: null })
     const [activeGroup, setActiveGroup] = useSessionState('activeGroup', null)
+    const [isOpenCreateSellerModal, setIsOpenCreateSellerModal] = useState(false)
+    const [passwordModal, setPasswordModal] = useState({ isOpen: false, employeeId: null, role: null })
     const { data: salesGroups, isLoading: isLoadingSalesGroups } = useGetSalesGroups()
     const { data: sellers, isLoading: isLoadingSellers } = useGetSellersByGroup(activeGroup?.id)
 
@@ -61,11 +63,15 @@ const SalesGroups = () => {
                 role={passwordModal?.role}
                 onClose={() => setPasswordModal({ isOpen: false, employeeId: null, role: null })}
             />
+            <CreateSellerFormModal
+                isOpen={isOpenCreateSellerModal}
+                onClose={() => setIsOpenCreateSellerModal(false)}
+            />
             <div className={cls.page}>
                 <div className={cls.page__header}>
                     <h1 className={cls.page__header__title}>“{activeGroup?.title}” jamoasi</h1>
                     <div className={cls.page__header__btns}>
-                        <Button>Xodim qo’shish <PlusIcon /></Button>
+                        <Button onClick={() => setIsOpenCreateSellerModal(true)}>Xodim qo’shish <PlusIcon /></Button>
                         <Button onClick={() => setIsOpenGroupModal(true)}>Guruh qo’shish <PlusIcon /></Button>
                     </div>
                 </div>
