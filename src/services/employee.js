@@ -24,3 +24,8 @@ export const updateSeller = async (id, data, params = {}) => {
     const res = await api.put(`/sales-manager/${id}?${paramsToString(params)}`, data, { headers: { "Content-Type": "multipart/form-data" } })
     return res?.data
 }
+
+export const updateSelfPassword = async (userId, data, params) => { 
+    const res = await api.put(`/employee/change-password/${userId}?${paramsToString(params)}`, data)
+    return res.data
+}

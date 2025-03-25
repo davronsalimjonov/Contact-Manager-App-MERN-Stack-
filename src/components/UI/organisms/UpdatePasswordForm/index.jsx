@@ -1,37 +1,21 @@
+import toast from "react-hot-toast"
+import { useForm } from "react-hook-form"
+import { passwordSchema } from "@/schemas/employee"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useUpdateSelfPasswordMutation } from "@/hooks/useEmployee"
 import Button from "../../atoms/Buttons/Button"
 import FormPasswordInput from "../../moleculs/Form/FormPasswordInput"
 import cls from "./UpdatePasswordForm.module.scss"
-import { useForm } from "react-hook-form"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { updateSelfPasswordMutation } from "@/hooks/useUsers"
-import toast from "react-hot-toast"
-import { passwordSchema } from "@/schemas/employee"
 
-const UpdatePasswordForm = ({
-    employee
-}) => {
-    const changePasswordMutation = updateSelfPasswordMutation()
-    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm({
-        mode: 'onSubmit',
-        resolver: yupResolver(passwordSchema),
-        defaultValues: {
-            oldPassword: "",
-            newPassword: "",
-            confirmPassword: "",
-        }
-    })
-
-    const newPassword = watch("newPassword");
-    const confirmPassword = watch("confirmPassword");
+const UpdatePasswordForm = ({ employee }) => {
+    const changePasswordMutation = useUpdateSelfPasswordMutation()
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting, isDirty } } = useForm({ mode: 'onSubmit', resolver: yupResolver(passwordSchema) })
 
     const handleUpdatePassword = async (payload) => {
-        const { confirmPassword, ...filteredData } = payload; 
-        
+        const { confirmPassword, ...filteredData } = payload;
+
         filteredData.id = employee?.id;
         filteredData.role = String(employee?.role);
-
-        console.log(filteredData, 'filteredData');
-        
 
         await changePasswordMutation.mutateAsync(filteredData, {
             onSuccess: () => {
@@ -41,10 +25,6 @@ const UpdatePasswordForm = ({
             onError: (err) => toast.error(err?.response?.data?.message || 'Xatolik yuz berdi'),
         });
     };
-    
-
-    console.log(newPassword, confirmPassword, 'passwords');
-    
 
     return (
         <form className={cls.passwordForm} onSubmit={handleSubmit(handleUpdatePassword)}>
@@ -72,10 +52,14 @@ const UpdatePasswordForm = ({
                     className={cls.customInput}
                 />
             </div>
-            <div className={cls.passwordForm__btn}>
-                <button></button>
-                <Button type="submit">Tahrirlash</Button>
-            </div>
+            <Button 
+                type="submit"
+                disabled={!isDirty}
+                isLoading={isSubmitting}
+                className={cls.passwordForm__btn} 
+            >
+                Tahrirlash
+            </Button>
         </form>
     )
 }

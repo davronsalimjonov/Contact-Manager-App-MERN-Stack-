@@ -15,11 +15,6 @@ export const updateUser = async (userId, data) => {
     return res.data
 }
 
-export const updateSelfPassword = async (userId, role, data) => { 
-    const res = await api.put(`/employee/change-password/${userId}?role=${encodeURIComponent(role)}`, data)
-    return res.data
-}
-
 export const updateUserPassword = async (id, params) => {
     const res = await api.put(`/user/change-password/by-admin/${id}?${paramsToString(params)}`)
     return res.data

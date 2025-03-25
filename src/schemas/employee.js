@@ -19,8 +19,6 @@ export const passwordSchema = Yup.object().shape({
         .required("Parolni qayta kiriting"),
 });
 
-
-
 export const mentorSchema = Yup.object().shape({
     firstName: Yup.string().required('Ism kiritish majburiy'),  
     lastName: Yup.string().required('Familiya kiritish majburiy'),  

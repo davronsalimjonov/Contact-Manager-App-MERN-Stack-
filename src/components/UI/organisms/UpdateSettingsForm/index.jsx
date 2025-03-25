@@ -1,16 +1,16 @@
+import toast from "react-hot-toast"
+import { useForm } from "react-hook-form"
+import { useQueryClient } from "react-query"
+import { objectToFormData } from "@/utils/lib"
 import { employeeSchema } from "@/schemas/employee"
 import { updateEmployee } from "@/services/employee"
-import { objectToFormData } from "@/utils/lib"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { useForm } from "react-hook-form"
-import toast from "react-hot-toast"
-import { useQueryClient } from "react-query"
+import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS } from "@/constants/form"
 import FormInput from "../../moleculs/Form/FormInput"
 import RedButton from "../../atoms/Buttons/RedButton"
 import Button from "../../atoms/Buttons/Button"
 import AvatarUpload from "../../moleculs/AvatarUpload"
 import FormSelect from "../../moleculs/Form/FormSelect"
-import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS } from "@/constants/form"
 import FormPhoneInput from "../../moleculs/Form/FormPhoneInput"
 import FormRadioGroup from "../../moleculs/Form/FormRadioGroup"
 import FormDatepicker from "../../moleculs/Form/FormDatepicker"
@@ -28,9 +28,7 @@ const sanitizeEmployeeData = (employee) => {
     }
 }
 
-const UpdateSettingsForm = ({
-    employee
-}) => {
+const UpdateSettingsForm = ({ employee }) => {
     const queryClient = useQueryClient()
     const { register, control, watch, reset, handleSubmit, setValue, formState: { isDirty, isSubmitting, errors } } = useForm({
         mode: 'onSubmit',
