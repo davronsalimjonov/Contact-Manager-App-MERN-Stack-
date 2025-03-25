@@ -10,6 +10,15 @@ export const employeeSchema = Yup.object().shape({
     degree: Yup.string().required('Til bilish darajasini tanlang')
 })
 
+export const passwordSchema = Yup.object().shape({
+    oldPassword: Yup.string().required("Eski parolni kiriting"),
+    newPassword: Yup.string()   
+        .required("Yangi parolni kiriting"),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref("newPassword"), null], "Parollar mos kelmadi")
+        .required("Parolni qayta kiriting"),
+});
+
 export const mentorSchema = Yup.object().shape({
     firstName: Yup.string().required('Ism kiritish majburiy'),  
     lastName: Yup.string().required('Familiya kiritish majburiy'),  
