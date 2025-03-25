@@ -1,20 +1,20 @@
 import ModerationTable from "@/components/templates/ModerationTable";
 import cls from './ModerationAllCourseRate.module.scss';
 import useGetCourseRate from "@/hooks/useGetCourseRate";
-import { Pagination } from "antd";
 import { useState } from "react";
 import ModerationDialog from "../ModerationDialog";
+import Pagination from "../../moleculs/CustomPagination";
 
 const ModerationAllCourseRate = ({ courseId, activeTab }) => {
 
     const [filter, setFilter] = useState({
-        page: 1,
+        page: 0,
         limit: 10,
     }
     );
 
     const { data: comments, isLoading: isLoadingComments } = useGetCourseRate(courseId, {
-        page: filter.page,
+        page: filter.page + 1,
         limit: filter.limit,
         isActive: activeTab
     });
@@ -32,17 +32,6 @@ const ModerationAllCourseRate = ({ courseId, activeTab }) => {
         setIsOpen(true);
     }
 
-
-    const onShowSizeChange = (current, pageSize) => {
-        setFilter((prev) => {
-            return {
-                ...prev,
-                page: current,
-                limit: pageSize,
-            }
-        })
-    };
-
     return (
         <>
             <ModerationTable
@@ -58,21 +47,25 @@ const ModerationAllCourseRate = ({ courseId, activeTab }) => {
             {
                 (comments?.meta?.totalItems > filter.limit) && <div className={cls.pagination}>
                     <Pagination
-                        showSizeChanger
-                        onShowSizeChange={onShowSizeChange}
-                        defaultCurrent={filter.page}
-                        defaultPageSize={filter.limit}
-                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} comments`}
-                        onChange={(page) => {
-                            setFilter((prev) => {
-                                return {
-                                    ...prev,
-                                    page: page,
-                                }
-                            })
-                        }}
-                        total={comments?.meta?.totalItems}
+                        initialPage={filter.page}
+                        pageCount={comments?.meta?.totalPages}
+                        onPageChange={({ selected }) => setFilter({ ...filter, page: selected })}
+                        page={filter.page}
+                        breakLabel={false}
+                        pageRangeDisplayed={3}
+                        marginPagesDisplayed={1}
+                        className={cls.pagination__style}
                     />
+                    <select
+                        value={filter?.limit}
+                        onChange={(e) => setFilter({ ...filter, limit: e.target.value })}
+                    >
+                        <option value={filter.limit} disabled>{filter.limit}</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
                 </div>
             }
             <ModerationDialog comment={comment} isOpen={isOpen} onClose={onClose} courseId={courseId} params={{

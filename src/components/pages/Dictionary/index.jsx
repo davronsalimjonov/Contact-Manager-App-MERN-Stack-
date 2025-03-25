@@ -4,7 +4,6 @@ import cls from './Dictionary.module.scss';
 import { useGetWords } from '@/hooks/useGetWords';
 import Loader from '@/components/UI/atoms/Loader';
 import { useState } from 'react';
-import { Pagination } from 'antd';
 import { useForm } from 'react-hook-form';
 import FormInput from '@/components/UI/moleculs/Form/FormInput';
 import FormSelect from '@/components/UI/moleculs/Form/FormSelect';
@@ -13,6 +12,7 @@ import { SearchIcon } from '@/components/UI/atoms/icons';
 import { DEGREEOPTIONS, UNITS } from '@/constants';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import EmptyData from '@/components/UI/organisms/EmptyData';
+import Pagination from '@/components/UI/moleculs/CustomPagination';
 
 const defaultValues = {
     word: '',
@@ -26,34 +26,16 @@ const Dictionary = () => {
         defaultValues,
         mode: 'onSubmit'
     });
-
-    const [filter, setFilter] = useState({
-        page: 1,
-        limit: 10,
-    }
-    );
-
-    const { data: words, isLoading: isLoadingWords } = useGetWords(filter);
-
+    const [pagination, setPagination] = useState({ page: 0, limit: 10 });
+    const [filter, setFilter] = useState({});
+    const { data: words, isLoading: isLoadingWords } = useGetWords({ ...filter, page: pagination.page + 1, limit: pagination.limit });
 
     const handleSearch = async (data) => {
-        setFilter({ ...data, page: 1, limit: 10 });
+        setFilter({ ...data });
     }
 
-    const onShowSizeChange = (current, pageSize) => {
-        setFilter((prev) => {
-            return {
-                ...prev,
-                page: current,
-                limit: pageSize,
-            }
-        })
-    };
+    console.log(pagination, 'pagination');
 
-
-    if (isLoadingWords) return (
-        <Loader />
-    )
 
     return (
         <>
@@ -93,28 +75,33 @@ const Dictionary = () => {
                 <AddNewWord />
 
             </form>
-            {
-                (words.meta.totalItems > 0) ? <DictionaryTable words={words} /> : <EmptyData text="Lug'atda bunday so'z mavjud emas." />
+            {isLoadingWords ? <Loader /> :
+                (words?.meta?.totalItems > 0) ? <div className={cls.dictionary}>
+                    <DictionaryTable words={words} />
+                    <div className={cls.dictionary__pagination}>
+                        <Pagination
+                            initialPage={pagination.page}
+                            pageCount={words?.meta?.totalPages}
+                            onPageChange={({ selected }) => setPagination({ ...pagination, page: selected })}
+                            page={pagination.page}
+                            breakLabel={false}
+                            pageRangeDisplayed={3}
+                            marginPagesDisplayed={0}
+                            className={cls.dictionary__pagination__style}
+                        />
+                        <select
+                            value={pagination?.limit}
+                            onChange={(e) => setPagination({ ...pagination, limit: e.target.value })}
+                        >
+                            <option value={pagination.limit} disabled>{pagination.limit}</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                        </select>
+                        
+                    </div>
+                </div> : <EmptyData text="Lug'atda bunday so'z mavjud emas." />
             }
-
-            {(words.meta.totalItems > filter.limit) && <div className={cls.pagination}>
-                <Pagination
-                    showSizeChanger
-                    onShowSizeChange={onShowSizeChange}
-                    defaultCurrent={filter.page}
-                    defaultPageSize={filter.limit}
-                    showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} words`}
-                    onChange={(page) => {
-                        setFilter((prev) => {
-                            return {
-                                ...prev,
-                                page: page,
-                            }
-                        })
-                    }}
-                    total={words.meta.totalItems}
-                />
-            </div>}
         </>
     )
 }
