@@ -40,7 +40,7 @@ const CreateSellerFormModal = ({ isOpen, onClose }) => {
             <form className={cls.form} onSubmit={handleSubmit(handleSubmitForm)}>
                 <div className={cls.form__header}>
                     <h2 className={cls.form__header__title}>Xodim qo’shish</h2>
-                    <button><CloseIcon /></button>
+                    <button type='button' onClick={onClose}><CloseIcon /></button>
                 </div>
                 <FormSelect
                     label='Guruh'
