@@ -16,9 +16,11 @@ import HomeworkReview from "@/components/pages/HomeworkReview";
 import CoursesIFrame from "@/components/pages/CoursesIFrame";
 import Settings from "@/components/pages/Settings";
 import PageNotFound from "@/components/pages/PageNotFound";
-import { BooksMoviesAndMusicIcon, HouseIcon, ListIcon, PersonsIcon, TranslateIcon } from "@/components/UI/atoms/icons";
+import { BooksMoviesAndMusicIcon, HouseIcon, ListIcon, PersonsGroupIcon, PersonsIcon, TranslateIcon } from "@/components/UI/atoms/icons";
 import { createBrowserRouter } from "react-router-dom";
 import Chat from "@/components/pages/Chat";
+import AllStudents from "@/components/pages/AllStudents";
+import RedirectToStudentSingle from "@/components/pages/RedirectToStudentSingle";
 
 const links = [
     {
@@ -56,7 +58,13 @@ const links = [
         link: '/materials',
         label: 'Materials',
         icon: BooksMoviesAndMusicIcon()
-    }
+    },
+    {
+        id: 6,
+        link: '/all-students',
+        label: 'Barcha o\'quvchilar',
+        icon: PersonsGroupIcon()
+    },
 ]
 
 const MainMentorRoutes = () => createBrowserRouter([
@@ -79,6 +87,14 @@ const MainMentorRoutes = () => createBrowserRouter([
             {
                 path: '/materials',
                 element: <Materials />
+            },
+            {
+                path: '/all-students',
+                element: <AllStudents />
+            },
+            {
+                path: '/all-students/:courseId/:userId',
+                element: <RedirectToStudentSingle />
             },
             {
                 path: '/students',
