@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setGroupPlan, updateSalesGroup } from "@/services/sales"
+import { changeGroupLeader, createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setGroupPlan, transferSeller, updateSalesGroup } from "@/services/sales"
 
 export const useGetSalesGroups = () => {
     return useQuery(['sales-groups'], getSalesGroups, { staleTime: Infinity, cacheTime: Infinity })
@@ -56,4 +56,49 @@ export const useSetGroupPlanMutation = () => {
     }
 
     return setPlanMutation
+}
+
+export const useChangeGroupLeaderMutation = () => {
+    const queryClient = useQueryClient()
+    const changeLeaderMutation = useMutation({
+        mutationKey: ['sellers'],
+        mutationFn: ({ id, body }) => changeGroupLeader(id, body),
+        onSuccess: onChangeLeaderSuccess
+    })
+
+    function onChangeLeaderSuccess(res) {
+        queryClient.setQueryData(['sellers', res.id], (oldData) => {
+            oldData.teamLead = res.teamLead
+            return oldData
+        })
+    }
+
+    return changeLeaderMutation
+}
+
+export const useTransferSellerMutation = () => {
+    const queryClient = useQueryClient()
+    const transferMutation = useMutation({
+        mutationKey: ['sellers'],
+        mutationFn: ({ id, body }) => transferSeller(id, body),
+        onSuccess: onTransferSuccess
+    })
+
+    function onTransferSuccess(res, body) {
+        body = body.body
+
+        const sellerData = queryClient.getQueryData(['sellers', body.currentGroup])?.items?.find(seller => seller?.id === res?.id)
+        queryClient.setQueryData(['sellers', body.salesGroup], (oldData) => ({
+            ...oldData,
+            items: [...(oldData?.items || []), sellerData]
+        }))
+        if (queryClient.getQueryState(['sellers', body.currentGroup])) {
+            queryClient.setQueryData(['sellers', body.currentGroup], (oldData) => ({
+                ...oldData,
+                items: oldData?.items?.filter(seller => seller?.id !== res?.id)
+            }))
+        }
+    }
+
+    return transferMutation
 }

@@ -29,3 +29,13 @@ export const getSellersByGroup = async (groupId) => {
     const res = await api.get(`/sales-manager/by-group/${groupId}`)
     return res.data
 }
+
+export const changeGroupLeader = async (groupId, body) => {
+    const res = await api.patch(`/sales-group/change-team-lead/${groupId}`, body)
+    return res.data
+}
+
+export const transferSeller = async (sellerId, body) => {
+    const res = await api.patch(`/sales-manager/change-group/${sellerId}`, body)
+    return res.data
+}
