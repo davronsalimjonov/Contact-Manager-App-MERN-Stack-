@@ -34,9 +34,6 @@ const Dictionary = () => {
         setFilter({ ...data });
     }
 
-    console.log(pagination, 'pagination');
-
-
     return (
         <>
             <form onSubmit={handleSubmit(handleSearch)} className={cls.filter}>

@@ -22,7 +22,6 @@ const SalesEmployeePlanFormModal = ({
             plan: Number(String(data.plan).replace(/\s+/g, '')) || 0,
         };
         
-        console.log(cleanedData, 'daataa');
         await updateEmployeePlanMutation.mutateAsync({ id: id, body: cleanedData }, {
             
             onSuccess: () => {
