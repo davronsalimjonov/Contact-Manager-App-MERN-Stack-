@@ -2,6 +2,7 @@ import { onImageError } from '@/utils/lib';
 import { ReplaceIcon } from '../../atoms/icons';
 import TableActionButton from '../../moleculs/TableActionButton';
 import cls from './SalesTeamLeaderCard.module.scss';
+import Avatar from '../../atoms/Avatar';
 
 const SalesTeamLeaderCard = ({
     fullName = '',
@@ -11,7 +12,11 @@ const SalesTeamLeaderCard = ({
 }) => {
     return (
         <div className={cls.card}>
-            <img className={cls.card__image} src={avatar} alt={fullName} onError={onImageError} />
+            <Avatar 
+                name={fullName}
+                src={avatar}
+                size={48}
+            />
             <div className={cls.card__info}>
                 <h3 className={cls.card__info__title}>{fullName}</h3>
                 <span className={cls.card__info__role}>Guruh sardori</span>
