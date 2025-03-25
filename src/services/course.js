@@ -28,6 +28,11 @@ export const updateUserCourse = async (id, data) => {
     return res?.data
 }
 
+export const updateConnectionTimes = async (userCourseId, data) => {
+    const res = await api.patch(`/workspace/user-time/${userCourseId}`, data)
+    return res?.data
+}
+
 export const addUserCourse = async (data) => {
     const res = await api.post(`/user-course/add-course-to-user`, data)
     return res

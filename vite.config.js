@@ -26,7 +26,7 @@ export default defineConfig({
           // State management
           'vendor-state': ['react-redux', '@reduxjs/toolkit', 'redux', 'redux-persist'],
           // UI libraries
-          'vendor-ui': ['antd', 'react-select', 'react-avatar', 'react-beautiful-dnd', 'react-paginate'],
+          'vendor-ui': ['react-select', 'react-avatar', 'react-beautiful-dnd', 'react-paginate'],
           // Forms and validation
           'vendor-forms': ['react-hook-form', '@hookform/resolvers', 'yup', 'react-input-mask', 'react-phone-number-input'],
           // Charts and media

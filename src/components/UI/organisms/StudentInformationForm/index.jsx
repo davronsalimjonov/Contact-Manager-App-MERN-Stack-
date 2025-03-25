@@ -10,7 +10,7 @@ import { updateUser } from '@/services/user';
 import { useGetUserId } from '@/hooks/useGetUser';
 import { GENDER_OPTIONS } from '@/constants/form';
 import { cn, objectToFormData } from '@/utils/lib';
-import { updateUserCourse } from '@/services/course';
+import { updateConnectionTimes } from '@/services/course';
 import { studentInfoSchema } from '@/schemas/student';
 import useGetStudentCourseById from '@/hooks/useGetStudentCourseById';
 import Loader from '../../atoms/Loader';
@@ -89,7 +89,7 @@ const StudentInformationForm = ({ courseId = '' }) => {
                     return item
                 })
             })
-            
+
             setIsEditable(false)
             toast.success("Malumotlar o'zgartirildi")
         } catch (error) {
@@ -102,7 +102,9 @@ const StudentInformationForm = ({ courseId = '' }) => {
     const handleUpdateConnectionTimes = async (data) => {
         try {
             data.days = data?.days?.sort((a, b) => a - b)
-            const updatedUser = await updateUserCourse(courseId, data)
+            const updatedUser = await updateConnectionTimes(courseId, data)
+            queryClient.removeQueries({ queryKey: ['workspace', userId] })
+            queryClient.invalidateQueries({ queryKey: ['workspace', userId] })
             queryClient.setQueryData(['user-course', courseId], oldData => ({ ...oldData, ...data }))
             queryClient.setQueriesData(['students', userId], oldData => {
                 return oldData?.map(item => {
@@ -230,13 +232,13 @@ const StudentInformationForm = ({ courseId = '' }) => {
                             </button>
                         )}
                     />
-                    <FormInput 
+                    <FormInput
                         label='Telegram akkaunt'
                         placeholder='Telegram akkaunt'
                         register={register('telegram')}
                         error={errors?.telegram?.message}
                     />
-                    <FormTextArea 
+                    <FormTextArea
                         label='Izoh'
                         placeholder='Izoh'
                         disabled
