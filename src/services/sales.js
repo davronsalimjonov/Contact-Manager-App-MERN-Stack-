@@ -25,6 +25,11 @@ export const setGroupPlan = async (id, data) => {
     return res.data
 }
 
+export const setEmployeePlan = async(id, data) => {
+    const res = await api.put(`/sales-manager/plan/${id}`, data)
+    return res.data
+}
+
 export const getSellersByGroup = async (groupId) => {
     const res = await api.get(`/sales-manager/by-group/${groupId}`)
     return res.data

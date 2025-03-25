@@ -16,11 +16,13 @@ import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
 import SalesGroupFormModal from '@/components/UI/organisms/SalesGroupFormModal';
 import ChangeEmployeePasswordModal from '@/components/templates/ChangeEmployeePasswordModal';
 import cls from './SalesGroups.module.scss';
+import SalesEmployeePlanFormModal from '@/components/UI/organisms/SalesEmployeePlanFormModal';
 
 const SalesGroups = () => {
     const navigate = useNavigate()
     const [isOpenGroupModal, setIsOpenGroupModal] = useState(false)
     const [passwordModal, setPasswordModal] = useState({ isOpen: false, employeeId: null, role: null })
+    const [planModal, setPlanModal] = useState({ isOpen: false, employeeId: null })
     const [activeGroup, setActiveGroup] = useSessionState('activeGroup', null)
     const { data: salesGroups, isLoading: isLoadingSalesGroups } = useGetSalesGroups()
     const { data: sellers, isLoading: isLoadingSellers } = useGetSellersByGroup(activeGroup?.id)
@@ -35,7 +37,7 @@ const SalesGroups = () => {
         { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate(`/sellers/${row.id}`) },
         { label: 'Transfer qilish', onClick: () => { } },
         { label: 'Parol o’zgartirish', onClick: () => setPasswordModal({ isOpen: true, employeeId: row.id, role: row.role }) },
-        { label: 'Plan qo’yish', onClick: () => { } }
+        { label: 'Plan qo’yish', onClick: () => setPlanModal({ isOpen: true, employeeId: row.id }) }
     ])
 
     const columns = [
@@ -60,6 +62,11 @@ const SalesGroups = () => {
                 employeeId={passwordModal?.employeeId}
                 role={passwordModal?.role}
                 onClose={() => setPasswordModal({ isOpen: false, employeeId: null, role: null })}
+            />
+            <SalesEmployeePlanFormModal
+                id={planModal?.employeeId}
+                isOpen={planModal?.isOpen}
+                onClose={() => setPlanModal({ isOpen: false })}
             />
             <div className={cls.page}>
                 <div className={cls.page__header}>
