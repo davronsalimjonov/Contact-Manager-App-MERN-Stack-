@@ -30,6 +30,10 @@ const getRoutesByRole = async (role) => {
                 const { default: SalesDirectorRoutes } = await import('./salesDirector');
                 return SalesDirectorRoutes();
             }
+            case EMPLOYEE_ROLES.SALES_TEAM_LEADER: {
+                const { default: SalesTeamLeaderRoutes } = await import('./salesTeamLeader');
+                return SalesTeamLeaderRoutes();
+            }
             default: return emptyRoutes
         }
     } catch (error) {
