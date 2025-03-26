@@ -43,7 +43,7 @@ const StudentAdaptationCard = ({
             <span className={cls.card__phone}>{formatPhoneNumberIntl(phone)}</span>
             {showTimer && <div className={cls.card__duration}>
                 <BellIcon />
-                <span>{days > 0 && `${days} kun `}{hours > 0 && `${hours} soat `}{minutes} minut</span>
+                <span>{days > 0 ? `${days} kun ${hours} soat` : `${hours > 0 && `${hours} soat `} ${minutes} minut`}</span>
             </div>}
             {callMentorFullName && (
                 <div className={cls.card__mentor}>
