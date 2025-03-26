@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup } from "@/services/sales"
+import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup, transferSeller, changeGroupLeader } from "@/services/sales"
 
 export const useGetSalesGroups = () => {
     return useQuery(['sales-groups'], getSalesGroups, { staleTime: Infinity, cacheTime: Infinity })
@@ -90,11 +90,8 @@ export const useChangeGroupLeaderMutation = () => {
         onSuccess: onChangeLeaderSuccess
     })
 
-    function onChangeLeaderSuccess(res) {
-        queryClient.setQueryData(['sellers', res.id], (oldData) => {
-            oldData.teamLead = res.teamLead
-            return oldData
-        })
+    function onChangeLeaderSuccess() {
+        queryClient.invalidateQueries({queryKey: ['sellers']})
     }
 
     return changeLeaderMutation

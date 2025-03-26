@@ -41,6 +41,7 @@ const ChangeSalesLeaderFormModal = ({ isOpen, onClose, groupId }) => {
                     placeholder='tanlang'
                     options={sellerOptions}
                     onChange={option => setSelectedSeller(option?.value)}
+                    isSearchable
                 />
                 <div className={cls.form__footer}>
                     <Button type='button' onClick={onClose} className={cls.cancel}>Bekor qilish</Button>
