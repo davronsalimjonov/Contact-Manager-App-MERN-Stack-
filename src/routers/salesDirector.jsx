@@ -21,9 +21,9 @@ const SalesDirectorRoutes = () => createBrowserRouter([
         children: [
             { path: '', element: <SellersDashboard /> },
             { path: '/dashboard', element: <SalesDirectorDashboard /> },
+            { path: '/dashboard/:groupId', element: <SingleSalesGroup /> },
             { path: '/groups', element: <SalesGroups /> },
-            { path: '/groups/:groupId', element: <SingleSalesGroup /> },
-            { path: '/sellers/:sellerId', element: <SingleSeller /> },
+            { path: '/groups/sellers/:sellerId', element: <SingleSeller /> },
             { path: '*', element: <PageNotFound /> }
         ]
     }

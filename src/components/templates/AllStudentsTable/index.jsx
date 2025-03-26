@@ -10,6 +10,7 @@ import ChangeCallMentorModal from '@/components/UI/organisms/ChangeCallMentorMod
 import cls from './AllStudentsTable.module.scss';
 
 const AllStudentsTable = ({
+    navigateToChat = false,
     students = [],
     startIndex = 0
 }) => {
@@ -70,6 +71,7 @@ const AllStudentsTable = ({
                                 lastLogin={student?.user?.lastLogin}
                                 isAdaptation={student?.status === STUDENT_STATUS_ENUMS.ADAPTATION}
                                 adaptationTecherFullName={getUserFullName(student?.adaptation?.mentor)}
+                                onClick={navigateToChat ? () => navigate(`/students/chat/${student?.id}`) : undefined}
                                 onClickUserInfo={() => navigate(`${student?.id}/${student?.user?.id}`)}
                                 onClickChangePassword={() => setChangePassword({ isOpen: true, userId: student?.user?.id })}
                                 onClickTransfer={() => setTransferStudent({ isOpen: true, userIds: [student?.id], groupId: student?.group?.id })}

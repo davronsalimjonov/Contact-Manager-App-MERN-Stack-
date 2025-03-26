@@ -67,10 +67,13 @@ const SalesGroups = () => {
                             groupId={activeGroup?.id}
                             avatar={sellers?.teamLead?.url}
                             fullName={getUserFullName(sellers?.teamLead)}
-                            onClickDetails={() => navigate(`/sellers/${sellers?.teamLead?.id}`)}
+                            onClickDetails={() => navigate(`/groups/sellers/${sellers?.teamLead?.id}`)}
                             onClickChangePassword={() => setPasswordModal({ isOpen: true, employeeId: sellers?.teamLead?.id, role: EMPLOYEE_ROLES.SALES_TEAM_LEADER })}
                         />
-                        <SellersTable items={sellers?.items} />
+                        <SellersTable 
+                            items={sellers?.items}
+                            singleSellerPath="/groups/sellers"
+                        />
                     </>
                 ) : (
                     <Loader />

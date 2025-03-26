@@ -4,6 +4,7 @@ import MainLayout from "@/components/templates/MainLayout";
 import SellersDashboard from "@/components/pages/SellersDashboard";
 import Employees from "@/components/pages/SalesTeamLeader/Employees";
 import { HouseIcon, LeaderboardIcon, PersonsGroupIcon, PersonsIcon } from "@/components/UI/atoms/icons";
+import SingleSeller from "@/components/pages/SalesDirector/SingleSeller";
 
 const links = [
     { id: 0, link: '/', label: 'Home', icon: HouseIcon() },
@@ -19,6 +20,7 @@ const SalesTeamLeaderRoutes = () => createBrowserRouter([
         children: [
             { path: '', element: <SellersDashboard /> },
             { path: '/employees', element: <Employees /> },
+            { path: '/employees/:sellerId', element: <SingleSeller /> },
             { path: '*', element: <PageNotFound /> }
         ]
     }

@@ -66,7 +66,12 @@ const Navbar = ({ onPerionChange }) => {
         { path: '/adaptation', title: 'Adaptatsiya', showBackButton: false },
         { path: '/adaptation/finished', title: 'Bajarilgan adaptatsiyalar', showBackButton: true },
         // Sotuv dirictor
-        { path: '/sellers/:id', title: 'Sotuvchilar', showBackButton: true }
+        { path: '/sellers/:id', title: 'Sotuvchilar', showBackButton: true },
+        { path: '/dashboard/:groupId', title: 'Dashboard', showBackButton: true },
+        { path: '/groups/sellers/:sellerId', title: 'Sotuvchi malumotlari', showBackButton: true },
+        // Sales team leader
+        { path: '/employees', title: 'Xodimlar', showBackButton: false },
+        { path: '/employees/:sellerId', title: 'Xodimlar', showBackButton: true },
     ];
 
     const matchRoute = (pattern, pathname) => {

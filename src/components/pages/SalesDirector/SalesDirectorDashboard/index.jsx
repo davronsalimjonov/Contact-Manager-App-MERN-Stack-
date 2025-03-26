@@ -20,9 +20,9 @@ const SalesDirectorDashboard = () => {
             <Button className={cls.page__btn} onClick={() => setIsOpenPlanModal(true)}>Oylik plan qo’yish <PlusIcon /></Button>
             <SalesMonthlyPlanCard />
             <div className={cls.page__teams}>
-                <SalesTeamPlanFulfillmentCard onClick={() => navigate('/groups/1')} />
-                <SalesTeamPlanFulfillmentCard onClick={() => navigate('/groups/1')} />
-                <SalesTeamPlanFulfillmentCard onClick={() => navigate('/groups/1')} />
+                <SalesTeamPlanFulfillmentCard onClick={() => navigate('1')} />
+                <SalesTeamPlanFulfillmentCard onClick={() => navigate('1')} />
+                <SalesTeamPlanFulfillmentCard onClick={() => navigate('1')} />
             </div>
         </div>
     );

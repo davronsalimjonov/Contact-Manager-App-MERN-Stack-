@@ -172,7 +172,7 @@ const AcademyManagerRoutes = () => createBrowserRouter([
             },
             {
                 path: '/students',
-                element: <AllStudents />
+                element: <AllStudents navigateToChat />
             },
             {
                 path: '/students/chat/:userCourseId',

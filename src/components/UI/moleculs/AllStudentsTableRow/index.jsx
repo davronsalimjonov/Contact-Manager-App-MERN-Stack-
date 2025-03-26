@@ -21,6 +21,7 @@ const AllStudentsTableRow = ({
     lastLogin,
     isAdaptation = false,
     adaptationTecherFullName = '',
+    onClick,
     onClickUserInfo,
     onClickChangePassword,
     onClickTransfer,
@@ -35,7 +36,7 @@ const AllStudentsTableRow = ({
     ]
 
     return (
-        <tr className={cls.row}>
+        <tr className={cls.row} onClick={onClick} style={{ cursor: onClick ? 'pointer' : 'default' }}>
             <td>{index}</td>
             <td className={cls.row__avatar}>
                 <Avatar src={avatar} name={fullName} size={24} round />

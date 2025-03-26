@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import format from 'date-fns/format'
 import { useNavigate } from 'react-router-dom';
+import { EMPLOYEE_ROLES } from '@/constants/enum';
 import Table from '@/components/UI/moleculs/Table';
 import { formatPrice, getUserFullName } from '@/utils/lib';
 import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
@@ -8,9 +9,8 @@ import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 import TransferSellerModal from '@/components/UI/organisms/TransferSellerModal';
 import ChangeEmployeePasswordModal from '../ChangeEmployeePasswordModal';
 import SellerPlanFormModal from '../SellerPlanFormModal';
-import { EMPLOYEE_ROLES } from '@/constants/enum';
 
-const SellersTable = ({ items = [] }) => {
+const SellersTable = ({ items = [], singleSellerPath = '' }) => {
     const navigate = useNavigate()
     const [planModal, setPlanModal] = useState({ isOpen: false, employeeId: null })
     const [transferModal, setTransferModal] = useState({ isOpen: false, employeeId: null })
@@ -18,7 +18,7 @@ const SellersTable = ({ items = [] }) => {
 
     const tableActionButtons = row => {
         const buttons = [
-            { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate(`/sellers/${row.id}`) },
+            { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate(`${singleSellerPath ? singleSellerPath + '/' : ''}${row.id}`) },
             { label: 'Parol o’zgartirish', onClick: () => setPasswordModal({ isOpen: true, employeeId: row.id, role: row.role }) },
             { label: 'Plan qo’yish', onClick: () => setPlanModal({ isOpen: true, employeeId: row.id }) }
         ]

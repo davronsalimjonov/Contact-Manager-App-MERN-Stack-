@@ -6,7 +6,7 @@ import AllStudentsTable from '@/components/templates/AllStudentsTable';
 import AllStudentsSearchBar from '@/components/UI/organisms/AllStudentsSearchBar';
 import cls from './AllStudents.module.scss';
 
-const AllStudents = () => {
+const AllStudents = ({ navigateToChat = false }) => {
     const [filter, setFilter] = useSessionState('all-students-filter', {});
     const [pagination, setPagination] = useSessionState('all-students-pagination', { page: 0, limit: 12 });
     const { data: students, isLoading: isLoadingStudents } = useGetAllStudents({ ...filter, page: pagination.page + 1, limit: pagination.limit });
@@ -24,6 +24,7 @@ const AllStudents = () => {
             />
             {!isLoadingStudents ? (
                 <AllStudentsTable
+                    navigateToChat={navigateToChat}
                     students={students?.items}
                     startIndex={pagination.page * pagination.limit}
                 />
