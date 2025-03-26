@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import PageNotFound from "@/components/pages/PageNotFound";
 import MainLayout from "@/components/templates/MainLayout";
-import { HouseIcon, LeaderboardIcon, PersonsGroupIcon, PersonsIcon } from "@/components/UI/atoms/icons";
 import SellersDashboard from "@/components/pages/SellersDashboard";
+import { HouseIcon, LeaderboardIcon, PersonsGroupIcon, PersonsIcon } from "@/components/UI/atoms/icons";
 
 const links = [
     { id: 0, link: '/', label: 'Home', icon: HouseIcon() },

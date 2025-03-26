@@ -114,7 +114,7 @@ const AdaptationWorkspaceTable = ({
                         commingDate={item.commingDate}
                         firstContactDate={item.firstContactDate}
                         showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
-                        showTimer={status === ADAPTATION_WORKSPACE_STATUS.NEW}
+                        showTimer
                         withReminder={withReminder}
                         allowReplaceMentor={allowReplaceMentor}
                         callMentorFullName={getUserFullName(item?.mentor)}
