@@ -8,7 +8,7 @@ import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 import TransferSellerModal from '@/components/UI/organisms/TransferSellerModal';
 import ChangeEmployeePasswordModal from '../ChangeEmployeePasswordModal';
 import SellerPlanFormModal from '../SellerPlanFormModal';
-import cls from './SellersTable.module.scss';
+import { EMPLOYEE_ROLES } from '@/constants/enum';
 
 const SellersTable = ({ items = [] }) => {
     const navigate = useNavigate()
@@ -16,12 +16,19 @@ const SellersTable = ({ items = [] }) => {
     const [transferModal, setTransferModal] = useState({ isOpen: false, employeeId: null })
     const [passwordModal, setPasswordModal] = useState({ isOpen: false, employeeId: null, role: null })
 
-    const tableActionButtons = row => ([
-        { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate(`/sellers/${row.id}`) },
-        { label: 'Transfer qilish', onClick: () => setTransferModal({ isOpen: true, employeeId: row.id }) },
-        { label: 'Parol o’zgartirish', onClick: () => setPasswordModal({ isOpen: true, employeeId: row.id, role: row.role }) },
-        { label: 'Plan qo’yish', onClick: () => setPlanModal({ isOpen: true, employeeId: row.id }) }
-    ])
+    const tableActionButtons = row => {
+        const buttons = [
+            { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate(`/sellers/${row.id}`) },
+            { label: 'Parol o’zgartirish', onClick: () => setPasswordModal({ isOpen: true, employeeId: row.id, role: row.role }) },
+            { label: 'Plan qo’yish', onClick: () => setPlanModal({ isOpen: true, employeeId: row.id }) }
+        ]
+
+        if(row.role !== EMPLOYEE_ROLES.SALES_TEAM_LEADER) {
+            buttons.push({ label: 'Transfer qilish', onClick: () => setTransferModal({ isOpen: true, employeeId: row.id }) })
+        }
+
+        return buttons
+    }
 
     const columns = [
         { key: "index", title: "№", render: (_, row, index) => index + 1, style: { width: '41px' } },

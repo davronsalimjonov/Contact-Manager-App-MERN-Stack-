@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { GENDER_OPTIONS } from '@/constants/form';
@@ -16,7 +17,6 @@ import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
 import FormPassportInput from '../../moleculs/Form/FormPassportInput';
 import cls from './CreateSellerFormModal.module.scss';
-import { useEffect } from 'react';
 
 const CreateSellerFormModal = ({ groupId, isOpen, onClose }) => {
     const { data: groups } = useGetSalesGroups()

@@ -9,12 +9,12 @@ import cls from './Employees.module.scss';
 const Employees = () => {
     const { data: group } = useGetTeamLeaderGroup()
     const [isOpenCreateSellerModal, setIsOpenCreateSellerModal] = useState(false);
-    const { data: sellers } = useGetSellersByGroup(group.id)
+    const { data: sellers } = useGetSellersByGroup(group?.id)
 
     return (
         <div className={cls.page}>
             <CreateSellerFormModal 
-                groupId={group.id}
+                groupId={group?.id}
                 isOpen={isOpenCreateSellerModal}
                 onClose={() => setIsOpenCreateSellerModal(false)}
             />
