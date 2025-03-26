@@ -18,6 +18,7 @@ import ChangeEmployeePasswordModal from '@/components/templates/ChangeEmployeePa
 import cls from './SalesGroups.module.scss';
 import CreateSellerFormModal from '@/components/UI/organisms/CreateSellerFormModal';
 import TransferSellerModal from '@/components/UI/organisms/TransferSellerModal';
+import SalesEmployeePlanFormModal from '@/components/UI/organisms/SalesEmployeePlanFormModal';
 
 const SalesGroups = () => {
     const navigate = useNavigate()
@@ -39,7 +40,7 @@ const SalesGroups = () => {
         { label: 'Shaxsiy ma’lumotlari', onClick: () => navigate(`/sellers/${row.id}`) },
         { label: 'Transfer qilish', onClick: () => setTransferModal({ isOpen: true, employeeId: row.id }) },
         { label: 'Parol o’zgartirish', onClick: () => setPasswordModal({ isOpen: true, employeeId: row.id, role: row.role }) },
-        { label: 'Plan qo’yish', onClick: () => { } }
+        { label: 'Plan qo’yish', onClick: () => setPlanModal({ isOpen: true, employeeId: row.id }) }
     ])
 
     const columns = [
@@ -74,6 +75,11 @@ const SalesGroups = () => {
                 employeeId={transferModal.employeeId}
                 currentGroup={activeGroup?.id}
                 onClose={() => setTransferModal({ isOpen: false, employeeId: null })}
+            />
+            <SalesEmployeePlanFormModal
+                id={planModal?.employeeId}
+                isOpen={planModal?.isOpen}
+                onClose={() => setPlanModal({ isOpen: false })}
             />
             <div className={cls.page}>
                 <div className={cls.page__header}>

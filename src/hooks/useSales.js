@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { changeGroupLeader, createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setGroupPlan, transferSeller, updateSalesGroup } from "@/services/sales"
+import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setEmployeePlan, setGroupPlan, updateSalesGroup } from "@/services/sales"
 
 export const useGetSalesGroups = () => {
     return useQuery(['sales-groups'], getSalesGroups, { staleTime: Infinity, cacheTime: Infinity })
@@ -41,6 +41,21 @@ export const useUpdateSalesGroupMutation = () => {
     }
 
     return updateMutation
+}
+
+export const useUpdateEmployeePlanMutation = () => {
+    const queryClient = useQueryClient()
+    const updatePlanMutation = useMutation({
+        mutationKey: ['sales-managers'],
+        mutationFn: ({ id, body }) => setEmployeePlan(id, body),
+        onSuccess: onUpdatePlanSuccess
+    })
+
+    function onUpdatePlanSuccess(res) {
+        queryClient.setQueryData(['sales-managers'], (oldData) => (oldData?.map(manager => manager?.id === res?.id ? res : manager)))
+    }
+
+    return updatePlanMutation
 }
 
 export const useSetGroupPlanMutation = () => {
