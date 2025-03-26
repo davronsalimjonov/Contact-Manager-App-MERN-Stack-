@@ -53,6 +53,12 @@ export const useUpdateSellerMutation = () => {
     function onUpdateSuccess(updatedData) {
         const sellerId = updatedData?.id
         queryClient.setQueriesData(['employee', sellerId], oldData => ({ ...oldData, ...updatedData }))
+        queryClient.setQueriesData(['sellers'], oldData => {
+            return {
+                ...oldData,
+                items: oldData?.items?.map(seller => seller.id === sellerId ? {...seller, ...updatedData} : seller)
+            }
+        })
     }
 
     return updateSellerMutation
