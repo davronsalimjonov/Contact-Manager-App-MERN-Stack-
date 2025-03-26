@@ -56,7 +56,7 @@ const AllStudentsTableRow = ({
             <td className={cls.row__course}>{course || <EmptyDataText />}</td>
             <td>{group || <EmptyDataText />}</td>
             <td>{lastLogin ? format(new Date(lastLogin), isSameDay(lastLogin, new Date()) ? 'HH:mm' : 'dd.MM.yyyy') : <EmptyDataText />}</td>
-            <td><TableActionButton menuItems={menuButtons} /></td>
+            <td onClick={e => e.stopPropagation()}><TableActionButton menuItems={menuButtons} /></td>
         </tr>
 
     )
