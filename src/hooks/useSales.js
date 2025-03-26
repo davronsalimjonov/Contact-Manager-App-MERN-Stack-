@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup, transferSeller, changeGroupLeader } from "@/services/sales"
+import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup, transferSeller, changeGroupLeader, getTeamLeaderGroup } from "@/services/sales"
+import { useGetUserId } from "./useGetUser"
 
 export const useGetSalesGroups = () => {
     return useQuery(['sales-groups'], getSalesGroups, { staleTime: Infinity, cacheTime: Infinity })
@@ -11,6 +12,11 @@ export const useGetSellersForSelect = (options = {}) => {
 
 export const useGetSellersByGroup = (groupId) => {
     return useQuery(['sellers', groupId], () => getSellersByGroup(groupId), { staleTime: Infinity, cacheTime: Infinity, enabled: !!groupId })
+}
+
+export const useGetTeamLeaderGroup = () => {
+    const teamLeaderId = useGetUserId()
+    return useQuery(['team-lead-group', teamLeaderId], () => getTeamLeaderGroup(teamLeaderId), { staleTime: Infinity, cacheTime: Infinity, enabled: !!teamLeaderId })
 }
 
 export const useCreateSalesGroupMutation = () => {
@@ -105,20 +111,8 @@ export const useTransferSellerMutation = () => {
         onSuccess: onTransferSuccess
     })
 
-    function onTransferSuccess(res, body) {
-        body = body.body
-
-        const sellerData = queryClient.getQueryData(['sellers', body.currentGroup])?.items?.find(seller => seller?.id === res?.id)
-        queryClient.setQueryData(['sellers', body.salesGroup], (oldData) => ({
-            ...oldData,
-            items: [...(oldData?.items || []), sellerData]
-        }))
-        if (queryClient.getQueryState(['sellers', body.currentGroup])) {
-            queryClient.setQueryData(['sellers', body.currentGroup], (oldData) => ({
-                ...oldData,
-                items: oldData?.items?.filter(seller => seller?.id !== res?.id)
-            }))
-        }
+    function onTransferSuccess() {
+        queryClient.invalidateQueries({ queryKey: ['sellers'] })
     }
 
     return transferMutation

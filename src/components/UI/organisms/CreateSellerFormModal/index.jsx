@@ -16,11 +16,12 @@ import FormPhoneInput from '../../moleculs/Form/FormPhoneInput';
 import FormRadioGroup from '../../moleculs/Form/FormRadioGroup';
 import FormPassportInput from '../../moleculs/Form/FormPassportInput';
 import cls from './CreateSellerFormModal.module.scss';
+import { useEffect } from 'react';
 
-const CreateSellerFormModal = ({ isOpen, onClose }) => {
+const CreateSellerFormModal = ({ groupId, isOpen, onClose }) => {
     const { data: groups } = useGetSalesGroups()
     const createSellerMutation = useCreateSellerMutation()
-    const { register, control, handleSubmit, reset, formState: { errors, isDirty, isSubmitting } } = useForm({ mode: 'onSubmit', resolver: yupResolver(createSellerSchema)})
+    const { register, control, handleSubmit, reset, setValue, formState: { errors, isDirty, isSubmitting } } = useForm({ mode: 'onSubmit', resolver: yupResolver(createSellerSchema) })
 
     const groupOptions = groups?.map(group => ({ label: group.title, value: group.id }))
 
@@ -35,6 +36,10 @@ const CreateSellerFormModal = ({ isOpen, onClose }) => {
         })
     }
 
+    useEffect(() => {
+        if (groupId) setValue('salesGroup', groupId, { shouldDirty: true, shouldValidate: true })
+    }, [groupId])
+
     return (
         <Dialog isOpen={isOpen} onClose={onClose}>
             <form className={cls.form} onSubmit={handleSubmit(handleSubmitForm)}>
@@ -42,14 +47,14 @@ const CreateSellerFormModal = ({ isOpen, onClose }) => {
                     <h2 className={cls.form__header__title}>Xodim qo’shish</h2>
                     <button type='button' onClick={onClose}><CloseIcon /></button>
                 </div>
-                <FormSelect
+                {!groupId && <FormSelect
                     label='Guruh'
                     placeholder='Tanlang'
                     options={groupOptions}
                     name='salesGroup'
                     control={control}
                     error={errors?.salesGroup?.message}
-                />
+                />}
                 <FormInput
                     label='Ismi'
                     placeholder='Ismi'
@@ -69,14 +74,14 @@ const CreateSellerFormModal = ({ isOpen, onClose }) => {
                     control={control}
                     error={errors?.birthday?.message}
                 />
-                <FormPhoneInput 
+                <FormPhoneInput
                     label='Telefon raqami'
                     placeholder='Telefon raqami'
                     name='phone'
                     control={control}
                     error={errors?.phone?.message}
                 />
-                <FormRadioGroup 
+                <FormRadioGroup
                     label='Jins'
                     options={GENDER_OPTIONS}
                     register={register('gender')}
@@ -97,7 +102,7 @@ const CreateSellerFormModal = ({ isOpen, onClose }) => {
                     control={control}
                     error={errors?.sip?.message}
                 />
-                <FormMaskInput 
+                <FormMaskInput
                     label='Amo CRM ID'
                     placeholder='Amo CRM ID'
                     mask="99999999"
@@ -111,7 +116,7 @@ const CreateSellerFormModal = ({ isOpen, onClose }) => {
                     register={register('address')}
                     error={errors?.address?.message}
                 />
-                <Button 
+                <Button
                     type='submit'
                     disabled={!isDirty}
                     isLoading={isSubmitting}

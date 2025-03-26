@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { formatPhoneNumberIntl } from 'react-phone-number-input';
 import { cn } from '@/utils/lib';
 import { useStopwatch } from '@/hooks/useTimer';
-import { getDateDifference } from '@/utils/time';
 import Avatar from '../../atoms/Avatar';
 import { BellIcon, ReplaceIcon, SalesmanIcon } from '../../atoms/icons';
 import cls from './StudentAdaptationCard.module.scss';

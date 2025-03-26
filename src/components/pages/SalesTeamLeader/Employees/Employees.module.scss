@@ -1,0 +1,14 @@
+
+.page{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 100%;
+    overflow: hidden;
+
+    & > button{
+        max-width: 280px;
+        width: 100%;
+        align-self: flex-end;
+    }
+}

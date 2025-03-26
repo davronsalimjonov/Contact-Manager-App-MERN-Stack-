@@ -7,7 +7,7 @@ import CancelButton from '../../atoms/Buttons/CancelButton';
 import SalesGroupSelectCard from '../../moleculs/SalesGroupSelectCard';
 import cls from './TransferSellerModal.module.scss';
 
-const TransferSellerModal = ({ isOpen, onClose, employeeId, currentGroup }) => {
+const TransferSellerModal = ({ isOpen, onClose, employeeId }) => {
     const { data: groups } = useGetSalesGroups()
     const transferMutation = useTransferSellerMutation()
     const [selectedGroup, setSelectedGroup] = useState(null)
@@ -20,7 +20,7 @@ const TransferSellerModal = ({ isOpen, onClose, employeeId, currentGroup }) => {
 
     const handleTransfer = () => {
         setIsLoadingSubmit(true)
-        transferMutation.mutateAsync({ id: employeeId, body: { salesGroup: selectedGroup, currentGroup } }, {
+        transferMutation.mutateAsync({ id: employeeId, body: { salesGroup: selectedGroup } }, {
             onSuccess: () => {
                 toast.success('Xodim transfer qilindi')
                 handleClose()

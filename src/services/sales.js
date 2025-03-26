@@ -44,3 +44,8 @@ export const transferSeller = async (sellerId, body) => {
     const res = await api.patch(`/sales-manager/change-group/${sellerId}`, body)
     return res.data
 }
+
+export const getTeamLeaderGroup = async (teamLeaderId) => {
+    const res = await api.get(`/sales-group/by-team-lead/${teamLeaderId}`)
+    return res.data
+}
