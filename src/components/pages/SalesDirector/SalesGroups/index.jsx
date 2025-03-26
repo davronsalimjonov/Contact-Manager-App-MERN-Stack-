@@ -12,13 +12,13 @@ import SalesGroupsSlider from '@/components/templates/SalesGroupsSlider';
 import { useGetSalesGroups, useGetSellersByGroup } from '@/hooks/useSales';
 import TableActionButton from '@/components/UI/moleculs/TableActionButton';
 import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge';
+import SellerPlanFormModal from '@/components/templates/SellerPlanFormModal';
 import SalesTeamLeaderCard from '@/components/UI/organisms/SalesTeamLeaderCard';
 import SalesGroupFormModal from '@/components/UI/organisms/SalesGroupFormModal';
+import TransferSellerModal from '@/components/UI/organisms/TransferSellerModal';
+import CreateSellerFormModal from '@/components/UI/organisms/CreateSellerFormModal';
 import ChangeEmployeePasswordModal from '@/components/templates/ChangeEmployeePasswordModal';
 import cls from './SalesGroups.module.scss';
-import CreateSellerFormModal from '@/components/UI/organisms/CreateSellerFormModal';
-import TransferSellerModal from '@/components/UI/organisms/TransferSellerModal';
-import SalesEmployeePlanFormModal from '@/components/UI/organisms/SalesEmployeePlanFormModal';
 
 const SalesGroups = () => {
     const navigate = useNavigate()
@@ -27,6 +27,7 @@ const SalesGroups = () => {
     const [isOpenCreateSellerModal, setIsOpenCreateSellerModal] = useState(false)
     const [transferModal, setTransferModal] = useState({ isOpen: false, employeeId: null })
     const [passwordModal, setPasswordModal] = useState({ isOpen: false, employeeId: null, role: null })
+    const [planModal, setPlanModal] = useState({ isOpen: false, employeeId: null })
     const { data: salesGroups, isLoading: isLoadingSalesGroups } = useGetSalesGroups()
     const { data: sellers, isLoading: isLoadingSellers } = useGetSellersByGroup(activeGroup?.id)
 
@@ -76,10 +77,10 @@ const SalesGroups = () => {
                 currentGroup={activeGroup?.id}
                 onClose={() => setTransferModal({ isOpen: false, employeeId: null })}
             />
-            <SalesEmployeePlanFormModal
-                id={planModal?.employeeId}
+            <SellerPlanFormModal
                 isOpen={planModal?.isOpen}
                 onClose={() => setPlanModal({ isOpen: false })}
+                sellerId={planModal?.employeeId}
             />
             <div className={cls.page}>
                 <div className={cls.page__header}>

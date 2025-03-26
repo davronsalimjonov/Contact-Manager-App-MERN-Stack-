@@ -1,4 +1,4 @@
-import cls from './Avatar.module.scss';
+import { onImageError } from '@/utils/lib';
 
 const getInitials = (name) => {
     if (!name) return '?';
@@ -50,14 +50,14 @@ const Avatar = ({
         width: `${size}px`,
         borderRadius: round ? "50%" : "0",
         color: "white",
-        background: color,
+        background: src ? 'transparent' : color,
         fontSize: `${fontSize}px`,
         lineHeight: 1,
         // margin: "auto"
     }
 
     return src ? (
-        <img src={src} alt={name} style={customStyle} className={className} />
+        <img src={src} alt={name} style={customStyle} className={className} onError={onImageError} />
     ) : (
         <div style={customStyle} className={className}>
             <span style={{ margin: 'auto' }}> {initials} </span>

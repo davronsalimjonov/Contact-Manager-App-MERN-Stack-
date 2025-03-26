@@ -4,9 +4,10 @@ import Dialog from '../../moleculs/Dialog';
 import Button from '../../atoms/Buttons/Button';
 import FormInput from '../../moleculs/Form/FormInput';
 import cls from './PlanFormModal.module.scss';
+import { useEffect } from 'react';
 
-const PlanFormModal = ({ isOpen = false, onClose, onSubmit, title = 'Plan kiritish' }) => {
-    const { register, handleSubmit, formState: { isDirty, isSubmitting, errors } } = useForm()
+const PlanFormModal = ({ isOpen = false, onClose, onSubmit, title = 'Plan kiriting' }) => {
+    const { register, handleSubmit, reset, formState: { isDirty, isSubmitting, errors, isSubmitSuccessful } } = useForm()
 
     const formatToCurrency = (inputValue) => {
         const numericValue = inputValue.replace(/\D/g, "");
@@ -35,11 +36,14 @@ const PlanFormModal = ({ isOpen = false, onClose, onSubmit, title = 'Plan kiriti
         await onSubmit?.(data)
     }
 
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset()
+        }
+    }, [isSubmitSuccessful])
+
     return (
-        <Dialog
-            isOpen={isOpen}
-            onClose={onClose}
-        >
+        <Dialog isOpen={isOpen} onClose={onClose}>
             <form className={cls.form} onSubmit={handleSubmit(handleSubmitForm)}>
                 <h2>{title}</h2>
                 <FormInput
