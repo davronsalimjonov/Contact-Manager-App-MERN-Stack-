@@ -112,7 +112,6 @@ const AdaptationWorkspaceTable = ({
                         fullName={item.fullName}
                         operator={item?.operator}
                         commingDate={item.commingDate}
-                        firstContactDate={item.firstContactDate}
                         showStatus={status === ADAPTATION_WORKSPACE_STATUS.NEW && !item?.firstContactDate}
                         showTimer
                         withReminder={withReminder}

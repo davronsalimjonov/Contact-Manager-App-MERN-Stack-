@@ -16,7 +16,6 @@ const StudentAdaptationCard = ({
     commingDate = '',
     showStatus = false,
     showTimer = false,
-    firstContactDate = '',
     withReminder = true,
     allowReplaceMentor = false,
     onClick,
@@ -25,7 +24,7 @@ const StudentAdaptationCard = ({
     onClickChange
 }) => {
     const [status, setStatus] = useState('low')
-    const { days, hours, minutes } = firstContactDate ? getDateDifference(new Date(commingDate), new Date(firstContactDate)) : useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
+    const { days, hours, minutes } = useStopwatch({ autoStart: showStatus, offsetTimestamp: new Date(commingDate) });
 
     useEffect(() => {
         if (hours == 1 && days == 0) setStatus('medium')
