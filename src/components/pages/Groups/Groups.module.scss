@@ -8,7 +8,7 @@
     &__filter {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 1fr 1fr 1fr minmax(133px, auto);
         gap: 8px;
 
         &__select, &__input{
