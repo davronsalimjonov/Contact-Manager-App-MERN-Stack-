@@ -1,7 +1,7 @@
-import { api } from "./api"
+import { api, paramsToString } from "./api"
 
-export const getSellersForSelect = async () => {
-    const res = await api.get('/sales-manager/for-select')
+export const getSellersForSelect = async (params) => {
+    const res = await api.get(`/sales-manager/for-select?${paramsToString(params)}`)
     return res.data
 }
 

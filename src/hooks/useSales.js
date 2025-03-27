@@ -6,8 +6,8 @@ export const useGetSalesGroups = () => {
     return useQuery(['sales-groups'], getSalesGroups, { staleTime: Infinity, cacheTime: Infinity })
 }
 
-export const useGetSellersForSelect = (options = {}) => {
-    return useQuery(['sellers-for-select'], getSellersForSelect, { staleTime: Infinity, cacheTime: Infinity, ...options })
+export const useGetSellersForSelect = (params, options = {}) => {
+    return useQuery(['sellers-for-select'], () => getSellersForSelect(params), { staleTime: Infinity, cacheTime: Infinity, ...options })
 }
 
 export const useGetSellersByGroup = (groupId) => {

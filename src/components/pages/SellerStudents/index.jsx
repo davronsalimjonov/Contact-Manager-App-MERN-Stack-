@@ -11,7 +11,7 @@ import cls from './SellerStudents.module.scss';
 const SellerStudents = () => {
     const navigate = useNavigate() 
     const [filter, setFilter] = useSessionState('seller-students-filter', {})
-    const { data: students, isLoading: isLoadingStudents } = useGetSellerStudents(filter)
+    const { data: students, isLoading: isLoadingStudents } = useGetSellerStudents(null, filter)
 
     return (
         <div className={cls.page}>

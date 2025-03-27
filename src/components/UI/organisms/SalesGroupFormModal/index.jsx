@@ -21,7 +21,7 @@ const SalesGroupFormModal = ({
     const queryClient = useQueryClient()
     const createGroupMutation = useCreateSalesGroupMutation()
     const updateGroupMutation = useUpdateSalesGroupMutation()
-    const { data: sellers } = useGetSellersForSelect({ enabled: isOpen && isCreate })
+    const { data: sellers } = useGetSellersForSelect({}, { enabled: isOpen && isCreate })
     const { register, control, setValue, handleSubmit, reset, watch, formState: { errors, isSubmitting, isDirty } } = useForm();
 
     const logo = watch('image')

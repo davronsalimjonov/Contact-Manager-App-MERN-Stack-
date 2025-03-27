@@ -3,8 +3,9 @@ import { removeEmptyKeys } from "@/utils/lib"
 import { createSellerStudent, getSaleStatistic, getSellerInvoice, getSellerMetrics, getSellerStudents, updateSellerPlan } from "@/services/seller"
 import { useGetUserId } from "./useGetUser"
 
-const useGetSellerStudents = (params = {}) => {
-    const userId = useGetUserId()
+const useGetSellerStudents = (sellerId, params = {}) => {
+    let userId = useGetUserId()
+    if(sellerId) userId = sellerId
     return useQuery(
         ['seller-students', userId, ...Object.values(removeEmptyKeys(params))],
         () => getSellerStudents(userId, params),
