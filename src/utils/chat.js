@@ -8,7 +8,7 @@ export const getMessageOwner = (message) => {
     if(messageType === MessageTypes.MESSAGE) {
         owner = message?.message?.whoSended === 'mentor' ? message?.message?.mentor : message?.message?.user
     } else if(messageType === MessageTypes.COMMENT) {
-        owner = message?.comment?.createdBy === EMPLOYEE_ROLES.SELLER ? message?.comment?.salesManager : message?.comment?.owner 
+        owner = [EMPLOYEE_ROLES.SELLER, EMPLOYEE_ROLES.SALES_TEAM_LEADER].includes(message?.comment?.createdBy) ? message?.comment?.salesManager : message?.comment?.owner 
     } else if(messageType === MessageTypes.TASK) {
         owner = message?.task?.createdBy === EMPLOYEE_ROLES.SELLER ? message?.task?.salesManager : message?.task?.mentor
     } else if(messageType === MessageTypes.STUDENT_HOME_WORK) {

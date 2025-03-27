@@ -5,11 +5,15 @@
     overflow: hidden;
     height: 100%;
 
-    &__addGroup {
+    &__filter {
         width: 100%;
-        display: flex;
-        justify-content: end;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+
+        &__select, &__input{
+            background-color: var(--base-white-color);
+        }
     }
 
     &__tabs {

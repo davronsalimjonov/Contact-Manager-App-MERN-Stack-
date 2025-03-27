@@ -61,8 +61,9 @@ const ChatConversation = ({
     const handleMessageVisible = (message) => {
         const messageOwner = getMessageOwner(message)
         const messageSenderId = messageOwner?.id
+        const lastReadedMessageIndex = data?.[0]?.index
         
-        if (messageSenderId && messageSenderId !== userId && !message?.isViewed) {
+        if (messageSenderId && messageSenderId !== userId && message?.index > lastReadedMessageIndex) {
             if (!unreadedMessages.current?.ids?.includes(messageSenderId)) {
                 unreadedMessages.current.ids = [...unreadedMessages.current.ids, message?.id]
                 unreadedMessages.current.index = message?.index

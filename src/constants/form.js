@@ -1,5 +1,5 @@
 import { generateTimeOptions } from "@/utils/time";
-import { EMPLOYEE_ROLES } from "./enum";
+import { EMPLOYEE_ROLES, GROUP_STATUS } from "./enum";
 import { EMPLOYEE_STATUS_ENUM, SALE_TYPE, USER_TYPE_ENUMS } from "./enum";
 
 export const GENDER_OPTIONS = [
@@ -90,4 +90,10 @@ export const PAYMENT_TYPE_OPTIONS = [
     { label: 'Paylater-6', value: 'paylater-6' },
     { label: 'Paylater-9', value: 'paylater-9' },
     { label: 'Paylater-12', value: 'paylater-12' },
+]
+
+export const GROUP_STATUS_OPTIONS = [
+    { label: 'Faol', value: GROUP_STATUS.ACTIVE },
+    { label: 'Yig’ilyapti', value: GROUP_STATUS.COLLECTING },
+    { label: 'Tugatilgan', value: GROUP_STATUS.CLOSED },
 ]

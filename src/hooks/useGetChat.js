@@ -77,7 +77,7 @@ export const useGetChatMessages = (chatId) => {
     }
 }
 
-const useGetChat = (userCourseId) => {
+const  useGetChat = (userCourseId) => {
     const userId = useGetUserId()
     const { data: user } = useGetUser()
     const userRole = user?.role
@@ -88,7 +88,7 @@ const useGetChat = (userCourseId) => {
     const removeUnreadedMessagesCount = (count) => {
         let studentsQueryKey = null
 
-        if (userRole === EMPLOYEE_ROLES.SELLER) studentsQueryKey = ['seller-students', userId]
+        if (userRole === EMPLOYEE_ROLES.SELLER || userRole === EMPLOYEE_ROLES.SALES_TEAM_LEADER) studentsQueryKey = ['seller-students', userId]
         else if (userRole === EMPLOYEE_ROLES.CALL_MENTOR) studentsQueryKey = ['students', userId]
         else if (userRole === EMPLOYEE_ROLES.MAIN_MENTOR) studentsQueryKey = ['students', userId]
 
@@ -192,7 +192,12 @@ export const useMessage = (userCourseId) => {
                 isViewed: false,
                 shouldScroll: true,
                 dateSeperator,
-                comment: { text: data.message, owner: userRole === EMPLOYEE_ROLES.SELLER ? mentor : user, salesManager: userRole === EMPLOYEE_ROLES.SELLER ? user : null, createdBy: userRole },
+                comment: { 
+                    text: data.message, 
+                    owner: ![EMPLOYEE_ROLES.SELLER, EMPLOYEE_ROLES.SALES_TEAM_LEADER].includes(userRole) ? mentor : null, 
+                    salesManager: [EMPLOYEE_ROLES.SELLER, EMPLOYEE_ROLES.SALES_TEAM_LEADER].includes(userRole) ? user : null, 
+                    createdBy: userRole 
+                },
                 ...options
             })
             case MessageTypes.CALL: return ({
