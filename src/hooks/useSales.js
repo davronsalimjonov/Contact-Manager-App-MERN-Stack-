@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup, transferSeller, changeGroupLeader, getTeamLeaderGroup } from "@/services/sales"
+import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup, transferSeller, changeGroupLeader, getTeamLeaderGroup, getSalesStatistics, setMonthlyPlan, getGroupsStatistics } from "@/services/sales"
 import { useGetUserId } from "./useGetUser"
+import { removeEmptyKeys } from "@/utils/lib"
 
 export const useGetSalesGroups = () => {
     return useQuery(['sales-groups'], getSalesGroups, { staleTime: Infinity, cacheTime: Infinity })
@@ -17,6 +18,14 @@ export const useGetSellersByGroup = (groupId) => {
 export const useGetTeamLeaderGroup = () => {
     const teamLeaderId = useGetUserId()
     return useQuery(['team-lead-group', teamLeaderId], () => getTeamLeaderGroup(teamLeaderId), { staleTime: Infinity, cacheTime: Infinity, enabled: !!teamLeaderId })
+}
+
+export const useGetSalesStatistics = (params) => {
+    return useQuery(['sales-statistics', ...Object.values(removeEmptyKeys(params))], () => getSalesStatistics(params))
+}
+
+export const useGetGroupsStatistics = (params) => {
+    return useQuery(['groups-statistics', ...Object.values(removeEmptyKeys(params))], () => getGroupsStatistics(params))
 }
 
 export const useCreateSalesGroupMutation = () => {
@@ -63,7 +72,7 @@ export const useSetSellerPlanMutation = () => {
             return {
                 ...oldData,
                 items: oldData?.items?.map(seller => {
-                    if(seller?.id === sellerId) seller.plan = body.body.plan
+                    if (seller?.id === sellerId) seller.plan = body.body.plan
                     return seller
                 })
             }
@@ -88,6 +97,21 @@ export const useSetGroupPlanMutation = () => {
     return setPlanMutation
 }
 
+export const useSetMonthlyPlanMutation = () => {
+    const queryClient = useQueryClient()
+    const setPlanMutation = useMutation({
+        mutationKey: ['sales-statistics'],
+        mutationFn: setMonthlyPlan,
+        onSuccess: onSetPlanSuccess
+    })
+
+    function onSetPlanSuccess() {
+        queryClient.invalidateQueries({ queryKey: ['sales-statistics'] })
+    }
+
+    return setPlanMutation
+}
+
 export const useChangeGroupLeaderMutation = () => {
     const queryClient = useQueryClient()
     const changeLeaderMutation = useMutation({
@@ -97,7 +121,7 @@ export const useChangeGroupLeaderMutation = () => {
     })
 
     function onChangeLeaderSuccess() {
-        queryClient.invalidateQueries({queryKey: ['sellers']})
+        queryClient.invalidateQueries({ queryKey: ['sellers'] })
     }
 
     return changeLeaderMutation

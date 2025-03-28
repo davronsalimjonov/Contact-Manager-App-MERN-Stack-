@@ -20,6 +20,11 @@ export const updateSalesGroup = async (id, data) => {
     return res.data
 }
 
+export const setMonthlyPlan = async (data) => {
+    const res = await api.patch(`/sale-statistic/set-plan`, data)
+    return res.data
+}
+
 export const setGroupPlan = async (id, data) => {
     const res = await api.patch(`/sales-group/set-plan/${id}`, data)
     return res.data
@@ -47,5 +52,15 @@ export const transferSeller = async (sellerId, body) => {
 
 export const getTeamLeaderGroup = async (teamLeaderId) => {
     const res = await api.get(`/sales-group/by-team-lead/${teamLeaderId}`)
+    return res.data
+}
+
+export const getSalesStatistics = async (params) => {
+    const res = await api.get(`/sale-statistic?${paramsToString(params)}`)
+    return res.data
+}
+
+export const getGroupsStatistics = async (params) => {
+    const res = await api.get(`/sale-statistic/group?${paramsToString(params)}`)
     return res.data
 }
