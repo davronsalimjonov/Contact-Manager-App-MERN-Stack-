@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
 import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup, transferSeller, changeGroupLeader, getTeamLeaderGroup, getSalesStatistics, setMonthlyPlan, getGroupsStatistics, getGroupStatistic } from "@/services/sales"
-import { useGetUserId } from "./useGetUser"
+import useGetUser, { useGetUserId } from "./useGetUser"
 import { removeEmptyKeys } from "@/utils/lib"
+import { EMPLOYEE_ROLES } from "@/constants/enum"
 
 export const useGetSalesGroups = () => {
     return useQuery(['sales-groups'], getSalesGroups, { staleTime: Infinity, cacheTime: Infinity })
@@ -20,16 +21,16 @@ export const useGetTeamLeaderGroup = () => {
     return useQuery(['team-lead-group', teamLeaderId], () => getTeamLeaderGroup(teamLeaderId), { staleTime: Infinity, cacheTime: Infinity, enabled: !!teamLeaderId })
 }
 
-export const useGetSalesStatistics = (params) => {
-    return useQuery(['sales-statistics', ...Object.values(removeEmptyKeys(params))], () => getSalesStatistics(params))
+export const useGetSalesStatistics = (params, options) => {
+    return useQuery(['sales-statistics', ...Object.values(removeEmptyKeys(params))], () => getSalesStatistics(params), options)
 }
 
 export const useGetGroupsStatistics = (params) => {
     return useQuery(['sales-groups-statistics', ...Object.values(removeEmptyKeys(params))], () => getGroupsStatistics(params))
 }
 
-export const useGetGroupStatistic = (id, params) => {
-    return useQuery(['sales-group-statistic', id, ...Object.values(removeEmptyKeys(params))], () => getGroupStatistic(id, params))
+export const useGetGroupStatistic = (id, params, options) => {
+    return useQuery(['sales-group-statistic', id, ...Object.values(removeEmptyKeys(params))], () => getGroupStatistic(id, params), options)
 }
 
 export const useCreateSalesGroupMutation = () => {
@@ -87,6 +88,7 @@ export const useSetSellerPlanMutation = () => {
 }
 
 export const useSetGroupPlanMutation = () => {
+    const { data: user } = useGetUser()
     const queryClient = useQueryClient()
     const setPlanMutation = useMutation({
         mutationKey: ['sales-groups'],
@@ -96,6 +98,10 @@ export const useSetGroupPlanMutation = () => {
 
     function onSetPlanSuccess(res) {
         queryClient.setQueryData(['sales-groups'], (oldData) => (oldData?.map(group => group?.id === res?.id ? res : group)))
+
+        if (user?.role === EMPLOYEE_ROLES.SALES_TEAM_LEADER) {
+            queryClient.invalidateQueries({ queryKey: ['sales-statistics'] })
+        }
     }
 
     return setPlanMutation

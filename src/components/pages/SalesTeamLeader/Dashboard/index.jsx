@@ -1,35 +1,38 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { isSameMonth } from 'date-fns';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
+import Tabs from '@/components/UI/moleculs/Tabs';
 import Loader from '@/components/UI/atoms/Loader';
 import Button from '@/components/UI/atoms/Buttons/Button';
 import { EditIcon, PlusIcon } from '@/components/UI/atoms/icons';
 import PlanFormModal from '@/components/UI/organisms/PlanFormModal';
 import SalesMonthlyPlanCard from '@/components/templates/SalesMonthlyPlanCard';
-import SalesTeamPlanFulfillmentCard from '@/components/UI/moleculs/SalesTeamPlanFulfillmentCard';
-import { useGetGroupsStatistics, useGetSalesStatistics, useSetMonthlyPlanMutation } from '@/hooks/useSales';
-import cls from './SalesDirectorDashboard.module.scss';
+import SellerStatisticsTableByCall from '@/components/templates/SellerStatisticsTableByCall';
+import SellerStatisticsTableBySumm from '@/components/templates/SellerStatisticsTableBySumm';
+import { useGetGroupStatistic, useGetSalesStatistics, useGetTeamLeaderGroup, useSetGroupPlanMutation } from '@/hooks/useSales';
+import cls from './Dashboard.module.scss';
 
-const SalesDirectorDashboard = () => {
-    const navigate = useNavigate()
+const Dashboard = () => {
     const [period] = useOutletContext()
+    const [tab, setTab] = useState('summ')
     const [isOpenPlanModal, setIsOpenPlanModal] = useState(false)
-    const setMonthlyPlanMutation = useSetMonthlyPlanMutation()
-    const { data: salesStatistics, isLoading } = useGetSalesStatistics({ startDate: period?.startDate, endDate: period?.endDate })
-    const { data: groupsStatistics, isLoading: isLoadingGroups } = useGetGroupsStatistics({ startDate: period?.startDate, endDate: period?.endDate })
+    const setGroupPlanMutation = useSetGroupPlanMutation()
+    const { data: group, isLoading } = useGetTeamLeaderGroup()
+    const { data: salesStatistics, isLoading: isLoadingSalesStatistics } = useGetSalesStatistics({ startDate: period?.startDate, endDate: period?.endDate, group: group?.id }, { enabled: !!group?.id })
+    const { data: groupStatistic, isLoading: isLoadingGroupStatistic } = useGetGroupStatistic(group?.id, { startDate: period?.startDate, endDate: period?.endDate }, { enabled: !!group?.id })
 
     const handleSetMonthlyPlan = async (data) => {
-        await setMonthlyPlanMutation.mutateAsync(data, {
+        await setGroupPlanMutation.mutateAsync({ id: group?.id, body: data }, {
             onSuccess: () => {
-                toast.success('Oylik plan qo’yildи')
+                toast.success('Plan qo’yildi')
                 setIsOpenPlanModal(false)
             },
-            onError: error => toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
+            onError: (error) => toast.error(error?.response?.data?.message || 'Xatolik yuz berdi')
         })
     }
 
-    return (!isLoading && !isLoadingGroups) ? (
+    return (!isLoading && !isLoadingSalesStatistics && !isLoadingGroupStatistic) ? (
         <div className={cls.page}>
             <PlanFormModal
                 isOpen={isOpenPlanModal}
@@ -52,25 +55,19 @@ const SalesDirectorDashboard = () => {
                 currentMonthSales={salesStatistics?.selectedMonthDailySaleStatistic}
                 prevMonthSales={salesStatistics?.selectedPreviousMonthDailySaleStatistic}
             />
-            <div className={cls.page__teams}>
-                {groupsStatistics?.length > 0 && groupsStatistics?.map(group => (
-                    <SalesTeamPlanFulfillmentCard
-                        key={group?.id}
-                        name={group?.title}
-                        logoUrl={group?.url}
-                        plan={group?.plan}
-                        dailyPlan={group?.dailyPlan}
-                        sale={group?.sale}
-                        dailySale={group?.dailySale}
-                        conversion={group?.conversion}
-                        onClick={() => navigate(group?.id)} 
-                    />
-                ))}
-            </div>
+            <Tabs
+                options={[
+                    { value: 'summ', label: 'Summa bo’yicha' },
+                    { value: 'call', label: 'SIP bo’yicha' }
+                ]}
+                onChange={setTab}
+            />
+            {tab === 'summ' && <SellerStatisticsTableBySumm items={groupStatistic?.items} />}
+            {tab === 'call' && <SellerStatisticsTableByCall items={groupStatistic?.items} />}
         </div>
     ) : (
         <Loader />
     )
 }
 
-export default SalesDirectorDashboard;
+export default Dashboard;

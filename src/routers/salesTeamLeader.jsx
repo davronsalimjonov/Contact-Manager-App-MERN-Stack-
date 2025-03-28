@@ -10,6 +10,7 @@ import SinglePageLayout from "@/components/templates/SinglePageLayout";
 import SalesForm from "@/components/pages/SalesForm";
 import { MessageTypes } from "@/constants/enum";
 import Chat from "@/components/pages/Chat";
+import Dashboard from "@/components/pages/SalesTeamLeader/Dashboard";
 
 const links = [
     { id: 0, link: '/', label: 'Home', icon: HouseIcon() },
@@ -24,6 +25,7 @@ const SalesTeamLeaderRoutes = () => createBrowserRouter([
         element: <MainLayout sidebarLinks={links} />,
         children: [
             { path: '', element: <SellersDashboard /> },
+            { path: '/dashboard', element: <Dashboard /> },
             { path: '/students', element: <Students /> },
             {
                 path: '/students/chat/:userCourseId',
