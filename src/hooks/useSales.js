@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query"
-import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup, transferSeller, changeGroupLeader, getTeamLeaderGroup, getSalesStatistics, setMonthlyPlan, getGroupsStatistics } from "@/services/sales"
+import { createSalesGroup, getSalesGroups, getSellersByGroup, getSellersForSelect, setSellerPlan, setGroupPlan, updateSalesGroup, transferSeller, changeGroupLeader, getTeamLeaderGroup, getSalesStatistics, setMonthlyPlan, getGroupsStatistics, getGroupStatistic } from "@/services/sales"
 import { useGetUserId } from "./useGetUser"
 import { removeEmptyKeys } from "@/utils/lib"
 
@@ -25,7 +25,11 @@ export const useGetSalesStatistics = (params) => {
 }
 
 export const useGetGroupsStatistics = (params) => {
-    return useQuery(['groups-statistics', ...Object.values(removeEmptyKeys(params))], () => getGroupsStatistics(params))
+    return useQuery(['sales-groups-statistics', ...Object.values(removeEmptyKeys(params))], () => getGroupsStatistics(params))
+}
+
+export const useGetGroupStatistic = (id, params) => {
+    return useQuery(['sales-group-statistic', id, ...Object.values(removeEmptyKeys(params))], () => getGroupStatistic(id, params))
 }
 
 export const useCreateSalesGroupMutation = () => {

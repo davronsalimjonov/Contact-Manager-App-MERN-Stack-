@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, formatDuration, intervalToDuration } from 'date-fns';
 import { uz } from 'date-fns/locale';
 import { daysOfWeekFull, daysOfWeekShort } from "@/constants";
 
@@ -109,3 +109,8 @@ export function generateTimeOptions() {
     }
     return options;
 }  
+
+export const convertMinutesToHoursAndMinutes = (minutes) => {
+    const duration = intervalToDuration({ start: 0, end: minutes * 60 * 1000 });  
+    return formatDuration(duration, { format: ["hours", "minutes"], locale: uz }) || "0 minut";
+};

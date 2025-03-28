@@ -64,3 +64,8 @@ export const getGroupsStatistics = async (params) => {
     const res = await api.get(`/sale-statistic/group?${paramsToString(params)}`)
     return res.data
 }
+
+export const getGroupStatistic = async (id, params) => {
+    const res = await api.get(`/sale-statistic/group/${id}?${paramsToString(params)}`)
+    return res.data
+}
