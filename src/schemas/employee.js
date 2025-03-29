@@ -37,8 +37,8 @@ export const sellerSchema = Yup.object().shape({
     gender: genderSchema,
     birthday: birthdaySchema,
     passport: Yup.string().test("is-complete", "Passport seriyasini toliq kiriting", (value) => value ? !value.includes("_") : true).nullable(),
-    sip: Yup.string().test("is-complete", "SIP raqamini toliq kiriting", (value) => value ? !value.includes("_") : true),
-    amocrmId: Yup.string().test("is-complete", "Amo CRM ID raqamini toliq kiriting", (value) => value ? !value.includes("_") : true),
+    sip: Yup.string().test("is-complete", "SIP raqamini toliq kiriting", (value) => value ? !value.includes("_") : true).nullable(),
+    amocrmId: Yup.string().test("is-complete", "Amo CRM ID raqamini toliq kiriting", (value) => value ? !value.includes("_") : true).nullable(),
 })
 
 export const createSellerSchema = Yup.object().shape({
@@ -48,7 +48,7 @@ export const createSellerSchema = Yup.object().shape({
     gender: genderSchema,
     birthday: birthdaySchema,
     passport: Yup.string().test("is-complete", "Passport seriyasini toliq kiriting", (value) => value ? !value.includes("_") : true).nullable(),
-    sip: Yup.string().test("is-complete", "SIP raqamini toliq kiriting", (value) => value ? !value.includes("_") : true),
-    amocrmId: Yup.string().test("is-complete", "Amo CRM ID raqamini toliq kiriting", (value) => value ? !value.includes("_") : true),
+    sip: Yup.string().test("is-complete", "SIP raqamini toliq kiriting", (value) => value ? !value.includes("_") : true).nullable(),
+    amocrmId: Yup.string().test("is-complete", "Amo CRM ID raqamini toliq kiriting", (value) => value ? !value.includes("_") : true).nullable(),
     salesGroup: Yup.string().required('Guruhni tanlash majburiy')
 })
