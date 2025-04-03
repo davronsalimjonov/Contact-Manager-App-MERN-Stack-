@@ -16,31 +16,11 @@ import SellerChecks from "@/components/pages/SellerChecks";
 
 const sellerAllowedMessagesTypes = [MessageTypes.COMMENT]
 
-const links =[
-    {
-        id: 0,
-        link: '/',
-        label: 'Home',
-        icon: HouseIcon()
-    },
-    {
-        id: 1,
-        link: '/dashboard',
-        label: 'Dashboard',
-        icon: LeaderboardIcon()
-    },
-    {
-        id: 2,
-        link: '/students',
-        label: 'O’quvchilarim',
-        icon: PersonsIcon()
-    },
-    {
-        id: 3,
-        link: '/workspace',
-        label: 'Workspace',
-        icon: MenuBookIcon()
-    }
+const links = [
+    { id: 0, link: '/', label: 'Home', icon: HouseIcon() },
+    { id: 1, link: '/dashboard', label: 'Dashboard', icon: LeaderboardIcon() },
+    { id: 2, link: '/students', label: 'O’quvchilarim', icon: PersonsIcon() },
+    { id: 3, link: '/workspace', label: 'Workspace', icon: MenuBookIcon() }
 ]
 
 const SellerRoutes = () => createBrowserRouter([
@@ -48,52 +28,22 @@ const SellerRoutes = () => createBrowserRouter([
         path: '/',
         element: <MainLayout sidebarLinks={links} />,
         children: [
-            {
-                path: '/',
-                element: <SellersDashboard />
-            },
-            {
-                path: '/dashboard',
-                element: <SellerStatistics />
-            },  
-            {
-                path: '/students',
-                element: <SellerStudents />
-            },
-            {
-                path: '/students/:courseId',
-                element: <SingleStudent />
-            },
-            {
-                path: '/students/chat/:userCourseId',
-                element: <Chat allowedMessagesTypes={sellerAllowedMessagesTypes} />
-            },
-            {
-                path: '/workspace',
-                element: <SellerWorkspace />
-            },
-            {
-                path: '/settings',
-                element: <Settings />
-            },
-            {
-                path: '*',
-                element: <PageNotFound />
-            }
+            { path: '/', element: <SellersDashboard /> },
+            { path: '/dashboard', element: <SellerStatistics /> },
+            { path: '/students', element: <SellerStudents /> },
+            { path: '/students/:courseId', element: <SingleStudent /> },
+            { path: '/students/chat/:userCourseId', element: <Chat allowedMessagesTypes={sellerAllowedMessagesTypes} /> },
+            { path: '/workspace', element: <SellerWorkspace /> },
+            { path: '/settings', element: <Settings /> },
+            { path: '*', element: <PageNotFound /> }
         ]
     },
     {
         path: '',
         element: <SinglePageLayout />,
         children: [
-            {
-                path: '/sales-form',
-                element: <SalesForm />
-            },
-            {
-                path: '/checks',
-                element: <SellerChecks />
-            }
+            { path: '/sales-form', element: <SalesForm /> },
+            { path: '/checks', element: <SellerChecks /> }
         ]
     },
 ])

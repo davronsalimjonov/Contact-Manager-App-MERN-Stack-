@@ -5,12 +5,11 @@ import { objectToFormData } from "@/utils/lib"
 import { employeeSchema } from "@/schemas/employee"
 import { updateEmployee } from "@/services/employee"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { ENGLISH_LEVEL_OPTIONS, GENDER_OPTIONS } from "@/constants/form"
+import { GENDER_OPTIONS } from "@/constants/form"
 import FormInput from "../../moleculs/Form/FormInput"
 import RedButton from "../../atoms/Buttons/RedButton"
 import Button from "../../atoms/Buttons/Button"
 import AvatarUpload from "../../moleculs/AvatarUpload"
-import FormSelect from "../../moleculs/Form/FormSelect"
 import FormPhoneInput from "../../moleculs/Form/FormPhoneInput"
 import FormRadioGroup from "../../moleculs/Form/FormRadioGroup"
 import FormDatepicker from "../../moleculs/Form/FormDatepicker"
@@ -24,7 +23,7 @@ const sanitizeEmployeeData = (employee) => {
         birthday: employee?.birthday,
         gender: String(employee?.gender),
         phone: employee?.phone,
-        degree: employee?.degree
+        address: employee?.address
     }
 }
 
@@ -39,6 +38,7 @@ const UpdateSettingsForm = ({ employee }) => {
 
     const handleUpdateEmployee = async (data) => {
         try {
+            data = Object.assign({}, data)
             if (!data?.birthday) delete data.birthday
             if (!(data?.avatar instanceof File) && data?.avatar !== null) delete data.avatar
             const fd = objectToFormData(data)
@@ -81,13 +81,12 @@ const UpdateSettingsForm = ({ employee }) => {
                     placeholder='Telefon nomer'
                     error={errors?.phone?.message}
                 />
-                <FormSelect
-                    name="degree"
-                    label='Til bilish darajasi'
-                    placeholder="Til bilish darajasi"
+                <FormDatepicker
+                    label="Tug’ilgan sanasi"
+                    placeholder='Tug’ilgan sanasi'
                     control={control}
-                    options={ENGLISH_LEVEL_OPTIONS}
-                    error={errors?.degree?.message}
+                    name="birthday"
+                    error={errors?.birthday?.message}
                 />
                 <FormRadioGroup
                     label="Jinsi"
@@ -96,12 +95,11 @@ const UpdateSettingsForm = ({ employee }) => {
                     register={{ ...register('gender') }}
                     error={errors?.gender?.message}
                 />
-                <FormDatepicker
-                    label="Tug’ilgan sanasi"
-                    placeholder='Tug’ilgan sanasi'
-                    control={control}
-                    name="birthday"
-                    error={errors?.birthday?.message}
+                <FormInput
+                    label="Manzil"
+                    placeholder='Manzil'
+                    register={{ ...register('address') }}
+                    error={errors?.address?.message}
                 />
             </div>
             <div className={cls.form__btns}>

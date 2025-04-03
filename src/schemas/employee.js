@@ -7,7 +7,6 @@ export const employeeSchema = Yup.object().shape({
     phone: phoneNumberSchema.required("Telefon raqam majburiy"),
     gender: genderSchema,
     birthday: birthdaySchema,
-    degree: Yup.string().required('Til bilish darajasini tanlang')
 })
 
 export const passwordSchema = Yup.object().shape({

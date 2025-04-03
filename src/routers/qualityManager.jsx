@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Settings from "@/components/pages/Settings";
 import MainLayout from "@/components/templates/MainLayout";
 import PageNotFound from "@/components/pages/PageNotFound";
 import { TripIcon } from "@/components/UI/atoms/Icons/trip";
@@ -20,6 +21,7 @@ const QualityManagerRoutes = () => createBrowserRouter([
         element: <MainLayout sidebarLinks={links} />,
         children: [
             { path: '/employees', element: <Employees /> },
+            { path: '/settings', element: <Settings /> },
             { path: '*', element: <PageNotFound /> }
         ]
     }
