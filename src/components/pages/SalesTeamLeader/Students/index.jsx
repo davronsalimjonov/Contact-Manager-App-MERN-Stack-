@@ -16,7 +16,7 @@ const Students = () => {
     const [filter, setFilter] = useSessionState('teamlead-student-filter', { seller: null })
     const { data: group } = useGetTeamLeaderGroup()
     const { data: sellers } = useGetSellersForSelect({ group: group?.id }, { enabled: !!group?.id })
-    const { data: students, isLoading: isLoadingStudents } = useGetSellerStudents(filter?.seller, filter)
+    const { data: students, isLoading: isLoadingStudents } = useGetSellerStudents(filter?.seller, {status: filter?.status, firstName: filter?.firstName, lastName: filter?.lastName, phone: filter?.phone})
     const sellerOptions = sellers?.map(seller => ({ value: seller?.id, label: getUserFullName(seller) }))
 
     return (
