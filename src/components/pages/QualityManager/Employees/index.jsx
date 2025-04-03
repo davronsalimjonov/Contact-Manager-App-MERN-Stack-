@@ -28,4 +28,4 @@ const Employees = () => {
     )
 }
 
-export default QualityControlEmployees
+export default Employees
