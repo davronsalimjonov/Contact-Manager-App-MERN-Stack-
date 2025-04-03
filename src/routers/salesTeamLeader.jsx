@@ -11,6 +11,7 @@ import SalesForm from "@/components/pages/SalesForm";
 import { MessageTypes } from "@/constants/enum";
 import Chat from "@/components/pages/Chat";
 import Dashboard from "@/components/pages/SalesTeamLeader/Dashboard";
+import Settings from "@/components/pages/Settings";
 
 const links = [
     { id: 0, link: '/', label: 'Home', icon: HouseIcon() },
@@ -33,6 +34,7 @@ const SalesTeamLeaderRoutes = () => createBrowserRouter([
             },
             { path: '/employees', element: <Employees /> },
             { path: '/employees/:sellerId', element: <SingleSeller /> },
+            { path: '/settings', element: <Settings /> },
             { path: '*', element: <PageNotFound /> }
         ]
     },

@@ -4,7 +4,9 @@ export const EMPLOYEE_ROLES = {
     SELLER: 5,
     ACADEMY_MANAGER: 6,
     SALES_DIRECTOR: 7,
-    SALES_TEAM_LEADER: 8
+    SALES_TEAM_LEADER: 8,
+    QUALITY_CONTROLLER: 9,
+    QUALITY_MANAGER: 10,
 }
 
 export const MessageTypes = {

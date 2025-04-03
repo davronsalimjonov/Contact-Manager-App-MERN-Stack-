@@ -25,48 +25,13 @@ import QualityControlSales from "@/components/pages/QualityControlSales";
 import QualityControlEmployees from "@/components/pages/QualityControlEmployees";
 
 const links = [
-    {
-        id: 0,
-        link: '/',
-        label: 'Dashboard',
-        icon: HouseIcon()
-    },
-    {
-        id: 1,
-        link: '/students',
-        label: 'O’quvchilarim',
-        icon: PersonsIcon()
-    },
-    {
-        id: 2,
-        link: '/dictionary',
-        label: 'Lug’at',
-        icon: TranslateIcon()
-    },
-    {
-        id: 3,
-        link: '/lessons-schedule',
-        label: 'Dars jadvali',
-        icon: ListIcon()    
-    },
-    {
-        id: 4,
-        link: '/platform',
-        label: 'Plaforma',
-        icon: ListIcon()    
-    },
-    {
-        id: 5,
-        link: '/materials',
-        label: 'Materials',
-        icon: BooksMoviesAndMusicIcon()
-    },
-    {
-        id: 6,
-        link: '/all-students',
-        label: 'Barcha o\'quvchilar',
-        icon: PersonsGroupIcon()
-    },
+    { id: 0, link: '/', label: 'Dashboard', icon: HouseIcon() },
+    { id: 1, link: '/students', label: 'O’quvchilarim', icon: PersonsIcon() },
+    { id: 2, link: '/dictionary', label: 'Lug’at', icon: TranslateIcon() },
+    { id: 3, link: '/lessons-schedule', label: 'Dars jadvali', icon: ListIcon() },
+    { id: 4, link: '/platform', label: 'Plaforma', icon: ListIcon() },
+    { id: 5, link: '/materials', label: 'Materials', icon: BooksMoviesAndMusicIcon() },
+    { id: 6, link: '/all-students', label: 'Barcha o\'quvchilar', icon: PersonsGroupIcon() },
 ]
 
 const MainMentorRoutes = () => createBrowserRouter([
@@ -78,82 +43,25 @@ const MainMentorRoutes = () => createBrowserRouter([
             </MentorCardsProvider>
         ),
         children: [
-            {
-                path: '',
-                element: <MainMentorDashboard />
-            },
-            {
-                path: '/salary',
-                element: <MentorSalary />
-            },
-            {
-                path: '/materials',
-                element: <Materials />
-            },
-            {
-                path: '/all-students',
-                element: <AllStudents />
-            },
-            {
-                path: '/all-students/:courseId/:userId',
-                element: <RedirectToStudentSingle />
-            },
-            {
-                path: '/students',
-                element: <MainMentorStudents />
-            },
-            {
-                path: '/students/chat/:userCourseId',
-                element: <Chat />
-            },
-            {
-                path: '/students/:courseId/:userId',
-                element: <SingleStudent />
-            },
-            {
-                path: '/user-course/:userCourseId',
-                element: <UserCourseUpdate />
-            },
-            {
-                path: '/dictionary',
-                element: <Dictionary />
-            },
-            {
-                path: '/lessons-schedule',
-                element: <LessonsSchedule />
-            },
-            {
-                path: '/lessons-schedule/:groupId',
-                element: <GroupLessons />
-            },
-            {
-                path: '/lessons-schedule/:groupId/:lessonId',
-                element: <SingleLesson />
-            },
-            {
-                path: '/lessons-schedule/:groupId/:lessonId/create-homework',
-                element: <CreateLessonHomework />
-            },
-            {
-                path: '/lessons-schedule/:groupId/:lessonId/hometask/:homeTaskId',
-                element: <UpdateLessonHomework />
-            },
-            {
-                path: '/homework/:homeWorkId',
-                element: <HomeworkReview />
-            },
-            {
-                path: '/platform',
-                element: <CoursesIFrame />
-            },
-            {
-                path: '/settings',
-                element: <Settings />
-            },
-            {
-                path: '*',
-                element: <PageNotFound />
-            },
+            { path: '', element: <MainMentorDashboard /> },
+            { path: '/salary', element: <MentorSalary /> },
+            { path: '/materials', element: <Materials /> },
+            { path: '/all-students', element: <AllStudents /> },
+            { path: '/all-students/:courseId/:userId', element: <RedirectToStudentSingle /> },
+            { path: '/students', element: <MainMentorStudents /> },
+            { path: '/students/chat/:userCourseId', element: <Chat /> },
+            { path: '/students/:courseId/:userId', element: <SingleStudent /> },
+            { path: '/user-course/:userCourseId', element: <UserCourseUpdate />},
+            { path: '/dictionary', element: <Dictionary /> },
+            { path: '/lessons-schedule', element: <LessonsSchedule /> },
+            { path: '/lessons-schedule/:groupId', element: <GroupLessons /> },
+            { path: '/lessons-schedule/:groupId/:lessonId', element: <SingleLesson /> },
+            { path: '/lessons-schedule/:groupId/:lessonId/create-homework', element: <CreateLessonHomework /> },
+            { path: '/lessons-schedule/:groupId/:lessonId/hometask/:homeTaskId', element: <UpdateLessonHomework /> },
+            { path: '/homework/:homeWorkId', element: <HomeworkReview /> },
+            { path: '/platform', element: <CoursesIFrame /> },
+            { path: '/settings', element: <Settings /> },
+            { path: '*', element: <PageNotFound /> },
         ]
     }
 ])

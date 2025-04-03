@@ -13,53 +13,18 @@ import AdaptationWorkspace from "@/components/pages/AdaptationWorkspace"
 import Settings from "@/components/pages/Settings"
 import MentorTasks from "@/components/pages/MentorTasks"
 import PageNotFound from "@/components/pages/PageNotFound"
-import { HouseIcon, MenuBookIcon, PersonsGroupIcon, PersonsIcon, TaskIcon, TranslateIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons"
 import AllStudents from "@/components/pages/AllStudents"
 import RedirectToStudentSingle from "@/components/pages/RedirectToStudentSingle"
+import { HouseIcon, MenuBookIcon, PersonsGroupIcon, PersonsIcon, TaskIcon, TranslateIcon, WorkHistoryIcon } from "@/components/UI/atoms/icons"
 
 const links = [
-    {
-        id: 0,
-        link: '/',
-        label: 'Dashboard',
-        icon: HouseIcon()
-    },
-    {
-        id: 1,
-        link: '/students',
-        label: 'O’quvchilarim',
-        icon: PersonsIcon()
-    },
-    {
-        id: 2,
-        link: '/dictionary',
-        label: 'Lug’at',
-        icon: TranslateIcon()
-    },
-    {
-        id: 4,
-        link: '/workspace',
-        label: 'Workspace',
-        icon: MenuBookIcon()
-    },
-    {
-        id: 5,
-        link: '/tasks',
-        label: 'Tasks',
-        icon: TaskIcon()
-    },
-    {
-        id: 6,
-        link: '/adaptation-workspace',
-        label: 'Adaptatsiya workspace',
-        icon: WorkHistoryIcon()
-    },
-    {
-        id: 7,
-        link: '/all-students',
-        label: 'Barcha o\'quvchilar',
-        icon: PersonsGroupIcon()
-    },
+    { id: 0, link: '/', label: 'Dashboard', icon: HouseIcon() },
+    { id: 1, link: '/students', label: 'O’quvchilarim', icon: PersonsIcon() },
+    { id: 2, link: '/dictionary', label: 'Lug’at', icon: TranslateIcon() },
+    { id: 3, link: '/workspace', label: 'Workspace', icon: MenuBookIcon() },
+    { id: 4, link: '/tasks', label: 'Tasks', icon: TaskIcon() },
+    { id: 5, link: '/adaptation-workspace', label: 'Adaptatsiya workspace', icon: WorkHistoryIcon() },
+    { id: 6, link: '/all-students', label: 'Barcha o\'quvchilar', icon: PersonsGroupIcon() },
 ]
 
 export const CallMentorRoutes = () => createBrowserRouter([
@@ -71,62 +36,20 @@ export const CallMentorRoutes = () => createBrowserRouter([
             </MentorCardsProvider>
         ),
         children: [
-            {
-                path: '',
-                element: <CallMentorDashboard />
-            },
-            {
-                path: '/salary',
-                element: <MentorSalary />
-            },
-            {
-                path: '/all-students',
-                element: <AllStudents />
-            },
-            {
-                path: '/students',
-                element: <MyStudents />
-            },
-            {
-                path: '/students/chat/:userCourseId',
-                element: <Chat />
-            },
-            {
-                path: '/students/:courseId/:userId',
-                element: <SingleStudent />
-            },
-            {
-                path: '/all-students/:courseId/:userId',
-                element: <RedirectToStudentSingle />
-            },
-            {
-                path: '/user-course/:userCourseId',
-                element: <UserCourseUpdate />
-            },
-            {
-                path: '/workspace',
-                element: <Workspace />
-            },
-            {
-                path: '/dictionary',
-                element: <Dictionary />
-            },
-            {
-                path: '/adaptation-workspace',
-                element: <AdaptationWorkspace />
-            },
-            {
-                path: '/settings',
-                element: <Settings />
-            },
-            {
-                path: '/tasks',
-                element: <MentorTasks />
-            },
-            {
-                path: '*',
-                element: <PageNotFound />
-            }
+            { path: '', element: <CallMentorDashboard /> },
+            { path: '/salary', element: <MentorSalary /> },
+            { path: '/all-students', element: <AllStudents />},
+            { path: '/students', element: <MyStudents /> },
+            { path: '/students/chat/:userCourseId', element: <Chat /> },
+            { path: '/students/:courseId/:userId', element: <SingleStudent /> },
+            { path: '/all-students/:courseId/:userId', element: <RedirectToStudentSingle /> },
+            { path: '/user-course/:userCourseId', element: <UserCourseUpdate /> },
+            { path: '/workspace', element: <Workspace /> },
+            { path: '/dictionary', element: <Dictionary /> },
+            { path: '/adaptation-workspace', element: <AdaptationWorkspace /> },
+            { path: '/settings', element: <Settings /> },
+            { path: '/tasks', element: <MentorTasks /> },
+            { path: '*', element: <PageNotFound /> }
         ]
     },
 ])
