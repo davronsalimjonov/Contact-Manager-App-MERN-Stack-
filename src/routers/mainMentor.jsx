@@ -21,6 +21,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Chat from "@/components/pages/Chat";
 import AllStudents from "@/components/pages/AllStudents";
 import RedirectToStudentSingle from "@/components/pages/RedirectToStudentSingle";
+import QualityControlSales from "@/components/pages/QualityControlSales";
+import QualityControlEmployees from "@/components/pages/QualityControlEmployees";
 
 const links = [
     {

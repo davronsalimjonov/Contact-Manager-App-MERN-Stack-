@@ -5,6 +5,8 @@ export const daysOfWeekShort = ['Ya', 'Du', 'Se', 'Cho', 'Pa', 'Ju', 'Sha'];
 
 export const STUDENT_STATUS_ENUMS = ['Yangi', 'Adaptatsiya', "O'qiyapti", 'Pauza', 'Muammoli', 'Vaqti tugadi', 'Bitirdi', 'Bekor qilindi', 'Mentorsiz', 'Muvaffaqiyatli'];
 
+export const EMPLOYEE_STATUS_ENUMS = ['Sinovda', 'Ishlayapti', 'Vaqtincha Ta`tilda','Ishdan Ketdi']
+
 export const WORKSPACE_ENUMS = ['not-connected', 'call-back', 'not-answered', 'connected', 'filled-form', 'level-determined', 'attached-to-the-teacher']
 
 export const GROUPS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']

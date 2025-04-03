@@ -1,0 +1,47 @@
+.row {
+    &:hover td {
+        background-color: rgba(255, 250, 241, 1);
+    }
+
+    &>td {
+        display: flex;
+        padding: 10px 12px;
+        align-items: center;
+
+        &>span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        font-family:"Raleway";
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+
+        background-color: var(--base-white-color);
+        border-bottom: 1px solid var(--dark-gray-300-color);
+    }
+
+    & td:last-child {
+        justify-content: flex-end;
+        padding-right: 32px;
+    }
+
+    &__center {
+        display: flex;
+        align-items: center !important;
+        justify-content: center;
+    }
+
+    &__operator {
+        & div {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+    }
+}
