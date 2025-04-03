@@ -4,8 +4,8 @@ import MainLayout from "@/components/templates/MainLayout";
 import PageNotFound from "@/components/pages/PageNotFound";
 import { TripIcon } from "@/components/UI/atoms/Icons/trip";
 import CommentIcon from "@/components/UI/atoms/Icons/comment";
-import Employees from "@/components/pages/QualityManager/Employees";
 import { SchoolIcon, MetricCashIcon, HouseIcon } from "@/components/UI/atoms/icons";
+import Employees from "@/components/pages/QualityManager/Employees";
 
 const links = [
     { id: 1, link: '/', label: 'Dashboard', icon: HouseIcon() },

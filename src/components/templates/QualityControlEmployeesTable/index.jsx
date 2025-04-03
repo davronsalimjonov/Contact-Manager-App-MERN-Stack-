@@ -1,40 +1,26 @@
-import QualityControlEmployeesTableRow from '@/components/UI/moleculs/QualityControlEmployeesTableRow'
-import cls from './QualityControlEmployeesTable.module.scss'
-import EmptyData from '@/components/UI/organisms/EmptyData'
+import { formatPhoneNumberIntl } from 'react-phone-number-input'
 import { getUserFullName } from '@/utils/lib'
+import Table from '@/components/UI/moleculs/Table'
+import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge'
+import TableActionButton from '@/components/UI/moleculs/TableActionButton'
 
-const QualityControlEmployeesTable = ({
-    employees = []
-}) => {
+
+const QualityControlEmployeesTable = ({ items = [] }) => {
+    const menuItems = [
+        { label: 'Shaxsiy ma’lumotlari', onClick: () => { } },
+        { label: 'Parol ozgartirish', onClick: () => { } },
+    ]
+    
+    const columns = [
+        { key: 'index', title: '№', render: (_, row, index) => index + 1, style: { width: '44px' } },
+        { key: 'fullName', title: 'Ism,familiya', render: (_, row) => getUserFullName(row) },
+        { key: 'phoneNumber', title: 'Telefon nomer', render: (_, row) => formatPhoneNumberIntl(row?.employee?.phone) },
+        { key: 'status', title: 'Status', render: (status) => <EmployeeStatusBadge status={status} /> },
+        { key: 'action', title: '', render: () => <TableActionButton menuItems={menuItems} />, style: { width: '44px' } }
+    ]
+
     return (
-        <div style={{ overflow: 'auto', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-            {employees?.length === 0 ? (
-                <EmptyData text='Ma`lumotlar mavjud emas' />
-            ) : (
-                <table className={cls.table}>
-                    <thead className={cls.head}>
-                        <tr >
-                            <th>№</th>
-                            <th>Ism,familiya</th>
-                            <th>Telefon nomer</th>
-                            <th>Status</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {employees.map((employee, index) => (
-                            <QualityControlEmployeesTableRow
-                                key={employee?.id}
-                                index={index + 1}
-                                fullName={getUserFullName(employee)}
-                                phoneNumber={employee?.employee?.phone}
-                                status={employee?.status}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-            )}
-        </div>
+        <Table columns={columns} data={items} />
     )
 }
 
