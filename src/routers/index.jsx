@@ -34,6 +34,14 @@ const getRoutesByRole = async (role) => {
                 const { default: SalesTeamLeaderRoutes } = await import('./salesTeamLeader');
                 return SalesTeamLeaderRoutes();
             }
+            case EMPLOYEE_ROLES.QUALITY_MANAGER: {
+                const { default: QualityManagerRoutes } = await import('./qualityManager');
+                return QualityManagerRoutes();
+            }
+            case EMPLOYEE_ROLES.QUALITY_CONTROLLER: {
+                const { default: QualityControllerRoutes } = await import('./qualityController');
+                return QualityControllerRoutes();
+            }
             default: return emptyRoutes
         }
     } catch (error) {
