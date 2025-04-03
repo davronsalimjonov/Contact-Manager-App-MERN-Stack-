@@ -110,7 +110,7 @@ export function generateTimeOptions() {
     return options;
 }  
 
-export const convertMinutesToHoursAndMinutes = (minutes) => {
-    const duration = intervalToDuration({ start: 0, end: minutes * 60 * 1000 });  
+export const convertSecondsToHoursAndMinutes = (seconds) => {
+    const duration = intervalToDuration({ start: 0, end: seconds * 1000 });  
     return formatDuration(duration, { format: ["hours", "minutes"], locale: uz }) || "0 minut";
 };

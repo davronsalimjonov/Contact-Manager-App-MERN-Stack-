@@ -1,6 +1,6 @@
 import { getUserFullName } from '@/utils/lib';
 import Table from '@/components/UI/moleculs/Table';
-import { convertMinutesToHoursAndMinutes } from '@/utils/time';
+import { convertSecondsToHoursAndMinutes } from '@/utils/time';
 import cls from './SellerStatisticsTableByCall.module.scss';
 
 const columns = [
@@ -8,7 +8,7 @@ const columns = [
     { key: 'fullName', title: 'Ism, familiya', render: (_, row) => getUserFullName(row) },
     { key: 'callCount', title: 'Qo\'g\'iroqlar soni', render: (_, row) => row?.callCount + ' ta' },
     { key: 'successCallCount', title: 'Muvaffaqiyatli', render: (_, row) => row?.successCallCount + ' ta' },
-    { key: 'time', title: 'Umumiy vaqt', render: (_, row) => convertMinutesToHoursAndMinutes(row?.time) },
+    { key: 'time', title: 'Umumiy vaqt', render: (_, row) => convertSecondsToHoursAndMinutes(row?.time) },
 ]
 
 const SellerStatisticsTableByCall = ({ items = [] }) => {
