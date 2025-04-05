@@ -3,12 +3,16 @@ import { getUserFullName } from '@/utils/lib'
 import Table from '@/components/UI/moleculs/Table'
 import EmployeeStatusBadge from '@/components/UI/atoms/EmployeeStatusBadge'
 import TableActionButton from '@/components/UI/moleculs/TableActionButton'
+import QualityControlChangePasswordForm from '@/components/UI/organisms/QualityControlChangePasswordForm'
+import { useState } from 'react'
 
 
 const QualityControlEmployeesTable = ({ items = [] }) => {
+    const [isOpen, setIsOpen] = useState({ isOpen: false })
+
     const menuItems = [
         { label: 'Shaxsiy ma’lumotlari', onClick: () => { } },
-        { label: 'Parol ozgartirish', onClick: () => { } },
+        { label: 'Parol ozgartirish', onClick: () => setIsOpen({ isOpen: true }) },
     ]
     
     const columns = [
@@ -20,7 +24,14 @@ const QualityControlEmployeesTable = ({ items = [] }) => {
     ]
 
     return (
-        <Table columns={columns} data={items} />
+        <>  
+            <QualityControlChangePasswordForm
+                isOpen={isOpen.isOpen}
+                setIsOpen={setIsOpen}
+                onClose={() => setIsOpen({ isOpen: false })}
+            />
+            <Table columns={columns} data={items} />
+        </>
     )
 }
 

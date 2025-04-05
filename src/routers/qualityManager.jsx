@@ -6,6 +6,7 @@ import { TripIcon } from "@/components/UI/atoms/Icons/trip";
 import CommentIcon from "@/components/UI/atoms/Icons/comment";
 import { SchoolIcon, MetricCashIcon, HouseIcon } from "@/components/UI/atoms/icons";
 import Employees from "@/components/pages/QualityManager/Employees";
+import Sales from "@/components/pages/QualityManager/Sales";
 
 const links = [
     { id: 1, link: '/', label: 'Dashboard', icon: HouseIcon() },
@@ -21,6 +22,7 @@ const QualityManagerRoutes = () => createBrowserRouter([
         element: <MainLayout sidebarLinks={links} />,
         children: [
             { path: '/employees', element: <Employees /> },
+            { path: '/sales', element: <Sales /> },
             { path: '/settings', element: <Settings /> },
             { path: '*', element: <PageNotFound /> }
         ]

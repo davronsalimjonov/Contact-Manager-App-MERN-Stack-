@@ -9,7 +9,8 @@ import { debounce } from '@/utils/lib'
 
 const QualityControlEmployeesSearchBar = ({
     onChange,
-    defaultValue
+    defaultValue,
+    setIsOpen
 }) => {
     const [filters, setFilters] = useState(defaultValue)
     const statusOptions = EMPLOYEE_STATUS_ENUMS.map((status) => ({ value: status, label: status}))
@@ -49,7 +50,7 @@ const QualityControlEmployeesSearchBar = ({
             defaultValue={filters.lastName} 
             onChange={debounce(e => handleChange('lastName', e.target.value?.trim()))}
         />
-        <Button>Xodim Qo'shish</Button>
+        <Button onClick={() => setIsOpen({ isOpen: true })}>Xodim Qo'shish</Button>
     </div>
   )
 }

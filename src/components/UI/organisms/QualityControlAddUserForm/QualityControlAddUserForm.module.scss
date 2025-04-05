@@ -1,0 +1,23 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    width: 572px;
+    padding: 20px 16px;
+    border-radius: 10px;
+    gap: 24px;
+
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &__close {
+            cursor: pointer;
+        }
+    }
+}
+
+.statusBadge {
+    width: fit-content;
+}
