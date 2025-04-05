@@ -11,6 +11,7 @@ export const useUpdateEmployeeMutation = () => {
     const updateMutation = useMutation({
         mutationFn: async (fd) => {
             const employeeId = fd.get('id')
+            
             fd.delete('id')
             return await updateEmployee(employeeId, fd)
         },
