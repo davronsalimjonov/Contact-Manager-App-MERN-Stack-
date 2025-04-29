@@ -20,7 +20,6 @@ JWT
 Bcrypt
 
 📦 Setup
-using-bash
 git clone https://github.com/your-username/contact-manager-api.git
 cd contact-manager-api
 npm install
@@ -29,9 +28,6 @@ npm install
 PORT=5001
 CONNECTION_STRING=mongodb+srv://admin:admin@cluster0.tqj6r.mongodb.net/mycontacts_backend?retryWrites=true&w=majority&appName=Cluster0
 ACCESS_TOKEN_SECRET=wtfisbackend   
-Start the server:
 
-bash
-Copy
-Edit
+Start the server:
 npm run dev
