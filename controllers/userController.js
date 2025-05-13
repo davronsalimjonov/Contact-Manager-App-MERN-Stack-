@@ -8,6 +8,8 @@ const registerUser = asyncHandler(async (req, res) => {
     if (!username || !email || !password || !phone) {
         throw { status: 400, message: "Please add all fields" }
     }
+
+
     const userAvailable = await Users.findOne({
         $or: [{ username }, { email }]
     })
@@ -21,12 +23,12 @@ const registerUser = asyncHandler(async (req, res) => {
         username,
         email,
         password: hashedPassword,
-        phone
+        phone,
+        role: "user"
     })
 
     if (user) {
-        
-        res.status(201).json({ user_id: user.id, username: user.username, email: user.email })
+        res.status(201).json({ user_id: user.id, username: user.username, email: user.email, role: user.role })
     } else {
         throw { status: 400, message: "User Status is not valid" }
     }
@@ -45,10 +47,11 @@ const loginUser = asyncHandler(async (req, res) => {
             user: {
                 id: user._id, 
                 username: user.username,
-                email: user.email
+                email: user.email,
+                role: user.role
             }
         }, process.env.ACCESS_TOKEN_SECRET, {
-            expiresIn: "15m"
+            expiresIn: "30d"
         })
         res.status(200).json({ accessToken })
     } else {
